@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:sammilani_delegate/authentication/signup_screen.dart';
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
 import 'package:sammilani_delegate/utilities/color_utilities.dart';
 
@@ -46,8 +45,21 @@ class _SignInScreenState extends State<SignInScreen> {
                 reusableTextField("Enter Password", Icons.lock_outline, true,
                     _passwordTextController),
                 const SizedBox(
-                  height: 5,
+                  height: 21,
                 ),
+           ElevatedButton(
+            onPressed: () {
+              
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple,
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                textStyle: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.normal),
+             ),
+            child: const Text('Sign in'), ),
+
                 forgetPassword(context),
                 // firebaseUIButton(context, "Sign In", () {
                 //   FirebaseAuth.instance
@@ -76,16 +88,79 @@ class _SignInScreenState extends State<SignInScreen> {
       children: [
         const Text("Don't have account?",
             style: TextStyle(color: Colors.white70)),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SignUpScreen()));
-          },
-          child: const Text(
-            " Sign Up",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        )
+       SizedBox(
+        
+         width: 80
+         ,
+         child: SizedBox(
+           child: TextButton(
+               onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return  AlertDialog(
+                      backgroundColor: Colors.white,
+          
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            contentPadding: const EdgeInsets.only(top: 10),
+            content:  Stack(
+  
+    alignment: Alignment.center,
+    children: <Widget>[
+      SizedBox(
+        width: MediaQuery.of(context).size.width/1.2,
+       height: MediaQuery.of(context).size.height/3,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          const Text("Signup by:",style:TextStyle(
+            color: Colors.red,
+              fontWeight: FontWeight.bold,fontSize: 25,
+            ) ,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+             ElevatedButton(onPressed: (){
+              
+             }, child: const Text('Email',style:TextStyle(
+              fontWeight: FontWeight.bold,fontSize: 30,
+            ) ,)),
+            const SizedBox(
+              height: 10,
+            ),
+              ElevatedButton(onPressed: (){}, child: const Text('Phone',style:TextStyle(
+              fontWeight: FontWeight.bold,fontSize: 30,
+            ) ,)),
+             
+          ],
+        ),
+      ),
+     Positioned(
+              top: -5,
+              right: 0.0,
+              child: FloatingActionButton(
+                child: const Icon(Icons.close),
+                onPressed: (){
+                Navigator.pop(context);
+                },
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80)),
+                backgroundColor: Colors.red,
+                mini: true,
+                elevation: 5.0,
+              ),
+            ),
+    ],
+                    ));
+                  },
+  
+);
+               },
+               child: const Text('Sign Up'),
+             ),
+         ),
+       )
       ],
     );
   }
@@ -102,7 +177,7 @@ class _SignInScreenState extends State<SignInScreen> {
           textAlign: TextAlign.right,
         ),
         onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ResetPassword())),
+            context, MaterialPageRoute(builder: (context) => const ResetPassword())),
       ),
     );
   }
