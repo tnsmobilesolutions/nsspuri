@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "29623966317",
+    "project_id": "nsspuridelegate",
+    "storage_bucket": "nsspuridelegate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29623966317:android:97bc27c64fab7a5f667d64",
+        "android_client_info": {
+          "package_name": "com.tnsmobilesolutions.sammilani_delegate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj1S-MDZQIHnkt9sCDX5rhHaJEYrdk7qI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
