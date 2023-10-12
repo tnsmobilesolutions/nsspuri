@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
@@ -36,32 +35,31 @@ class _SignInScreenState extends State<SignInScreen> {
                 20, MediaQuery.of(context).size.height * 0.2, 20, 0),
             child: Column(
               children: <Widget>[
-                logoWidget("assets/images/logo1.png"),
+                LogoWidget("assets/images/nsslogo.png"),
                 const SizedBox(
                   height: 30,
                 ),
-                reusableTextField("Enter UserName", Icons.person_outline, false,
+                ReusableTextField("Enter UserName", Icons.person_outline, false,
                     _emailTextController),
                 const SizedBox(
                   height: 20,
                 ),
-                reusableTextField("Enter Password", Icons.lock_outline, true,
+                ReusableTextField("Enter Password", Icons.lock_outline, true,
                     _passwordTextController),
                 const SizedBox(
                   height: 21,
                 ),
-           ElevatedButton(
-            onPressed: () {
-              
-            },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple.shade400,
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                textStyle: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.normal),
-             ),
-            child: const Text('Sign in'), ),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple.shade400,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 16),
+                    textStyle: const TextStyle(
+                        fontSize: 22, fontWeight: FontWeight.normal),
+                  ),
+                  child: const Text('Sign in'),
+                ),
 
                 forgetPassword(context),
                 // firebaseUIButton(context, "Sign In", () {
@@ -91,101 +89,111 @@ class _SignInScreenState extends State<SignInScreen> {
       children: [
         const Text("Don't have account?",
             style: TextStyle(color: Colors.white70)),
-       SizedBox(
-        
-         width: 80
-         ,
-         child: SizedBox(
-           child: TextButton(
-               onPressed: () {
+        SizedBox(
+          width: 80,
+          child: SizedBox(
+            child: TextButton(
+              onPressed: () {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return  AlertDialog(
-                      backgroundColor: Colors.white,
-          
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(32.0))),
-            contentPadding: const EdgeInsets.only(top: 10),
-            content:  Stack(
-  
-    alignment: Alignment.center,
-    children: <Widget>[
-      SizedBox(
-        width: MediaQuery.of(context).size.width/1.2,
-       height: MediaQuery.of(context).size.height/3,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          const Text("Signup by:",style:TextStyle(
-            color: Colors.black,
-              fontWeight: FontWeight.bold,fontSize: 25,
-            ) ,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-             SizedBox(
-              height: 40,
-              width:200,
-               child: ElevatedButton(
-                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple, // foreground
-               ),
-                onPressed: (){
-                 Navigator.push(
-                 context,
-                 MaterialPageRoute(builder: (context) => const SignupEmailScreen()),
-               );
-                
-               },
-                child: const Text('Email',style:TextStyle(
-                
-                fontWeight: FontWeight.bold,fontSize: 22,
-                         ) ,)),
-             ),
-            const SizedBox(
-              height: 10,
-            ),
-              SizedBox(
-                height: 40,
-              width:200,
-                child: ElevatedButton(
-                         style: ElevatedButton.styleFrom(
-                   backgroundColor: Colors.purple, // foreground
-                ),
-                  onPressed: (){}, child: const Text('Phone',style:TextStyle(
-                fontWeight: FontWeight.bold,fontSize: 22,
-                          ) ,)),
-              ),
-             
-          ],
-        ),
-      ),
-     Positioned(
-              top: -5,
-              right: 0.0,
-              child: FloatingActionButton(
-                child: const Icon(Icons.close),
-                onPressed: (){
-                Navigator.pop(context);
-                },
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80)),
-                backgroundColor: Colors.purple,
-                mini: true,
-                elevation: 5.0,
-              ),
-            ),
-    ],
-                    ));
+                    return AlertDialog(
+                        backgroundColor: Colors.white,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(32.0))),
+                        contentPadding: const EdgeInsets.only(top: 10),
+                        content: Stack(
+                          alignment: Alignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              height: MediaQuery.of(context).size.height / 3,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Signup by:",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: 200,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              Colors.purple, // foreground
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const SignupEmailScreen()),
+                                          );
+                                        },
+                                        child: const Text(
+                                          'Email',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22,
+                                          ),
+                                        )),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: 200,
+                                    child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              Colors.purple, // foreground
+                                        ),
+                                        onPressed: () {},
+                                        child: const Text(
+                                          'Phone',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22,
+                                          ),
+                                        )),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Positioned(
+                              top: -5,
+                              right: 0.0,
+                              child: FloatingActionButton(
+                                child: const Icon(Icons.close),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(80)),
+                                backgroundColor: Colors.purple,
+                                mini: true,
+                                elevation: 5.0,
+                              ),
+                            ),
+                          ],
+                        ));
                   },
-  
-);
-               },
-               child: const Text('Sign Up'),
-             ),
-         ),
-       )
+                );
+              },
+              child: const Text('Sign Up'),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -201,8 +209,8 @@ class _SignInScreenState extends State<SignInScreen> {
           style: TextStyle(color: Colors.white70),
           textAlign: TextAlign.right,
         ),
-        onPressed: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const ResetPassword())),
+        onPressed: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ResetPassword())),
       ),
     );
   }
