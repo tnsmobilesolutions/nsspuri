@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+
+import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
+
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
 import 'package:sammilani_delegate/utilities/color_utilities.dart';
 
@@ -52,8 +55,8 @@ class _SignInScreenState extends State<SignInScreen> {
               
             },
             style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple,
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                backgroundColor: Colors.purple.shade400,
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                 textStyle: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.normal),
@@ -115,24 +118,46 @@ class _SignInScreenState extends State<SignInScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
           const Text("Signup by:",style:TextStyle(
-            color: Colors.red,
+            color: Colors.black,
               fontWeight: FontWeight.bold,fontSize: 25,
             ) ,
             ),
             const SizedBox(
               height: 30,
             ),
-             ElevatedButton(onPressed: (){
-              
-             }, child: const Text('Email',style:TextStyle(
-              fontWeight: FontWeight.bold,fontSize: 30,
-            ) ,)),
+             SizedBox(
+              height: 40,
+              width:200,
+               child: ElevatedButton(
+                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple, // foreground
+               ),
+                onPressed: (){
+                 Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) => const SignupEmailScreen()),
+               );
+                
+               },
+                child: const Text('Email',style:TextStyle(
+                
+                fontWeight: FontWeight.bold,fontSize: 22,
+                         ) ,)),
+             ),
             const SizedBox(
               height: 10,
             ),
-              ElevatedButton(onPressed: (){}, child: const Text('Phone',style:TextStyle(
-              fontWeight: FontWeight.bold,fontSize: 30,
-            ) ,)),
+              SizedBox(
+                height: 40,
+              width:200,
+                child: ElevatedButton(
+                         style: ElevatedButton.styleFrom(
+                   backgroundColor: Colors.purple, // foreground
+                ),
+                  onPressed: (){}, child: const Text('Phone',style:TextStyle(
+                fontWeight: FontWeight.bold,fontSize: 22,
+                          ) ,)),
+              ),
              
           ],
         ),
@@ -146,7 +171,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 Navigator.pop(context);
                 },
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80)),
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.purple,
                 mini: true,
                 elevation: 5.0,
               ),
