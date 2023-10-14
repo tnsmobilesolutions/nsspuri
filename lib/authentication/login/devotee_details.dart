@@ -1,25 +1,22 @@
 import 'dart:io';
-import 'dart:ui';
-
-
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:image_picker/image_picker.dart';
-
+import 'package:sammilani_delegate/home_page/home_page.dart';
 
 
 // ignore: depend_on_referenced_packages
 
-
 // ignore: must_be_immutable
 class DevoteeDetailsPage extends StatefulWidget {
-  DevoteeDetailsPage({Key? key, }) : super(key: key);
-  
+  DevoteeDetailsPage({
+    Key? key,
+  }) : super(key: key);
+
   get currentUser => null;
-  
 
   @override
   State<DevoteeDetailsPage> createState() => _DevoteeDetailsPageState();
@@ -30,15 +27,15 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   String? profileImage;
   XFile? previewImage;
   List<String> bloodGrouplist = <String>[
-  'A+',
-  'A-',
-  'B+',
-  'B-',
-  'O+',
-  'O-',
-  'AB+',
-  'AB-',
-];
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'O+',
+    'O-',
+    'AB+',
+    'AB-',
+  ];
 
   get districtList => null;
   void selectImage(ImageSource source) async {
@@ -85,191 +82,339 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
 
   String? dropdownValue;
 
-
-  final TextEditingController cityController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+   final TextEditingController genderController = TextEditingController();
   final TextEditingController professionController = TextEditingController();
   final TextEditingController sanghaController = TextEditingController();
-
+  final TextEditingController cityController = TextEditingController();
 
   //return image name
-  String getImageName(XFile image) {
-    return image.path.split("/").last;
-  }
+  // String getImageName(XFile image) {
+  //   return image.path.split("/").last;
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purple,
-        title: const Text('Edit Profile'),
+        
+        title: const Text('Devotee Details'),
       ),
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            CupertinoButton(
-              onPressed: () {
-                showPhotoOptions();
-              },
-              child: CircleAvatar(
-                backgroundColor: const Color(0xFF530E62),
-                backgroundImage:
-                    previewImage != null && previewImage!.path.isNotEmpty
-                        ? Image.file(
-                            File('${previewImage?.path}'),
-                            fit: BoxFit.cover,
-                          ).image
-                        : NetworkImage('${widget.currentUser?.profilepicURL}'),
-                radius: 60,
-                child: const Align(
-                  alignment: Alignment.bottomRight,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 20.0,
-                    child: Icon(
-                      Icons.camera_alt,
-                      size: 25.0,
-                      color: Color(0xFF404040),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/white-texture.jpeg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center, 
+                  children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      
+                      ElevatedButton(onPressed: () {
+                         Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const HomePage()),
+  );
+                        
+                      }, child: const Text('Skip')),
+                    ],
+                  ),
+                  CupertinoButton(
+                    onPressed: () {
+                      showPhotoOptions();
+                    },
+                    child: CircleAvatar(
+                     
+                      radius: 60,
+                      child: const Align(
+                        alignment: Alignment.bottomRight,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 20.0,
+                          child: Icon(
+                            Icons.camera_alt,
+                            size: 25.0,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Icon(Icons.bloodtype,  color: Colors.purple,),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: DropdownButtonFormField(
-                    value: dropdownValue,
-
-                    elevation: 16,
-                    hint: const Text('Select BloodGroup'),
-                    // style: const TextStyle(color: Colors.deepPurple),
-
-                    onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        dropdownValue = value;
-                      });
-                    },
-                   items: bloodGrouplist.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: nameController,
-              onSaved: (newValue) => nameController,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
-              ],
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter name';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.person,
-                    color: Colors.purple,
-                  ),
-                  // hintText: 'Name',
-                  labelText: "Name"),
-            ),
-            TextFormField(
-              controller: nameController,
-              onSaved: (newValue) => nameController,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
-              ],
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter name';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.person,
-                    color: Colors.purple,
-                  ),
-                  // hintText: 'Name',
-                  labelText: "Gender"),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              keyboardType: TextInputType.phone,
-              controller: mobileController,
-              onSaved: (newValue) => mobileController,
-              validator: (value) {
-                RegExp regex = RegExp(r'^.{10}$');
-                if (value!.isEmpty) {
-                  return ("Please enter Phone Number");
-                }
-                if (!regex.hasMatch(value) && value.length != 10) {
-                  return ("Enter 10 Digit Mobile Number");
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.phone,
-                    color: Colors.purple,
-                  ),
-                  // hintText: 'Enter Your Mobile Number',
-                  labelText: 'Mobile Number'),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: sanghaController,
-              decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.temple_buddhist,
-                    color: Colors.purple,
-                  ),
-                  labelText: "Sangha"),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: cityController,
-              decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.location_city_rounded,
-                    color: Colors.purple,
-                  ),
-                  labelText: "City"),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              controller: professionController,
-              decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.work,
-                    color: Colors.purple,
-                  ),
-                  labelText: "Profession"),
-            ),
-            const SizedBox(height: 10),
-
-            //Row
-
-            const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: SizedBox(
+                            height: 60,
+                           width: MediaQuery.of(context).size.width,
+                            child: DropdownButtonFormField(
+                              
+                                     decoration: InputDecoration(
+      
+   
+      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.grey.withOpacity(0.3),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+    ),
           
-          ]),
+                              
+                              
+                                          
+                              value: dropdownValue,
+                                          
+                              elevation: 16,
+                              hint: const Text('Select BloodGroup'),
+                              // style: const TextStyle(color: Colors.deepPurple),
+                                          
+                              onChanged: (String? value) {
+                                // This is called when the user selects an item.
+                                setState(() {
+                                  dropdownValue = value;
+                                });
+                              },
+                              items: bloodGrouplist
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: nameController,
+                    onSaved: (newValue) => nameController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
+                    ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter name';
+                      }
+                      return null;
+                    },
+                          decoration: InputDecoration(
+      
+      labelText: "Name",
+      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.grey.withOpacity(0.3),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+    ),
+          
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextFormField(
+                    controller: emailController,
+                    onSaved: (newValue) => emailController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
+                    ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter Email';
+                      }
+                      return null;
+                    },
+                           decoration: InputDecoration(
+      
+      labelText: " Email",
+      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.grey.withOpacity(0.3),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+    ),
+          
+                  ),
+              
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.phone,
+                    controller: mobileController,
+                    onSaved: (newValue) => mobileController,
+                    validator: (value) {
+                      RegExp regex = RegExp(r'^.{10}$');
+                      if (value!.isEmpty) {
+                        return ("Please enter Phone Number");
+                      }
+                      if (!regex.hasMatch(value) && value.length != 10) {
+                        return ("Enter 10 Digit Mobile Number");
+                      }
+                      return null;
+                    },
+                            decoration: InputDecoration(
+      
+      labelText: " Mobile number",
+      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.grey.withOpacity(0.3),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+    ),
+          
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextFormField(
+                    controller: genderController,
+                    onSaved: (newValue) => genderController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
+                    ],
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter gender';
+                      }
+                      return null;
+                    },
+                           decoration: InputDecoration(
+      
+      labelText: " Gender",
+      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.grey.withOpacity(0.3),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+    ),
+          
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextFormField(
+                    controller: sanghaController,
+                            decoration: InputDecoration(
+      
+      labelText: " Sangha",
+      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.grey.withOpacity(0.3),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+    ),
+          
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextFormField(
+                    controller: sanghaController,
+                          decoration: InputDecoration(
+      
+      labelText: " Permanent Address",
+      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.grey.withOpacity(0.3),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+    ),
+          
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextFormField(
+                    controller: cityController,
+                            decoration: InputDecoration(
+      
+      labelText:  "Present Address",
+      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.grey.withOpacity(0.3),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+    ),
+          
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  TextFormField(
+                    controller: professionController,
+                           decoration: InputDecoration(
+      
+      labelText: " Profession",
+      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+      filled: true,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      fillColor: Colors.grey.withOpacity(0.3),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
+    ),
+          
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                 
+                   ElevatedButton(
+                    onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const HomePage()),
+                          );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                      textStyle: const TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.normal),
+                    ),
+                    child: const Text('Signup'),
+                  ),
+              
+                  //Row
+              
+                  const SizedBox(height: 20),
+                ]),
+              )),
         ),
-      )),
+      ),
     );
   }
 }
 
- 
+
+

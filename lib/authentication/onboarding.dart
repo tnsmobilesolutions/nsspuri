@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 
 class OnBoarding extends StatelessWidget {
+  const OnBoarding({super.key});
+
   @override
   Widget build(BuildContext context) {
     return OnBoardingSlider(
@@ -17,10 +18,10 @@ class OnBoarding extends StatelessWidget {
         //   ),
         // );
       },
-      finishButtonStyle: FinishButtonStyle(
+      finishButtonStyle: const FinishButtonStyle(
         backgroundColor: Colors.deepOrange,
       ),
-      skipTextButton: Text(
+      skipTextButton: const Text(
         'Skip',
         style: TextStyle(
           fontSize: 16,
@@ -28,7 +29,7 @@ class OnBoarding extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
-      trailing: Text(
+      trailing: const Text(
         'Login',
         style: TextStyle(
           fontSize: 16,
@@ -80,11 +81,11 @@ class OnBoarding extends StatelessWidget {
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
+              SizedBox(
                 height: 80,
               ),
               Text(
@@ -96,7 +97,7 @@ class OnBoarding extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
               TextField(
@@ -120,7 +121,7 @@ class OnBoarding extends StatelessWidget {
               const SizedBox(
                 height: 80,
               ),
-              Text(
+              const Text(
                 'Please enter your age',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -133,7 +134,7 @@ class OnBoarding extends StatelessWidget {
                 height: 20,
               ),
               TextField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Age',
                 ),
@@ -150,11 +151,11 @@ class OnBoarding extends StatelessWidget {
           alignment: Alignment.center,
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
+              SizedBox(
                 height: 80,
               ),
               Text(
@@ -166,10 +167,10 @@ class OnBoarding extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
-              const Text(
+              Text(
                 'Where everything is possible and customize your onboarding.',
                 textAlign: TextAlign.center,
                 style: TextStyle(

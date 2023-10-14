@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
 
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
-import 'package:sammilani_delegate/utilities/color_utilities.dart';
 
 import 'reset_password.dart';
 
@@ -15,26 +14,21 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/white-texture.jpeg"),
             fit: BoxFit.cover,
           ),
         ),
-        // decoration: BoxDecoration(
-        //     gradient: LinearGradient(colors: [
-        //   hexStringToColor("CB2B93"),
-        //   hexStringToColor("9546C4"),
-        //   hexStringToColor("5E61F4")
-        // ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+   
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -55,19 +49,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 21,
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple.shade400,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 16),
-                    textStyle: const TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.normal),
-                  ),
-                  child: const Text('Sign in'),
-                ),
-
-                forgetPassword(context),
                 // firebaseUIButton(context, "Sign In", () {
                 //   FirebaseAuth.instance
                 //       .signInWithEmailAndPassword(
@@ -75,11 +56,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 //           password: _passwordTextController.text)
                 //       .then((value) {
                 //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) => HomeScreen()));
+                //         MaterialPageRoute(builder: (context) => HomePage()));
                 //   }).onError((error, stackTrace) {
                 //     print("Error ${error.toString()}");
                 //   });
                 // }),
+
+                forgetPassword(context),
+
                 signUpOption()
               ],
             ),
@@ -94,110 +78,116 @@ class _SignInScreenState extends State<SignInScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text("Don't have account?",
-            style: TextStyle(color: Colors.white70)),
+            style: TextStyle(color: Colors.black)),
         SizedBox(
           width: 80,
-          child: SizedBox(
-            child: TextButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                        backgroundColor: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(32.0))),
-                        contentPadding: const EdgeInsets.only(top: 10),
-                        content: Stack(
-                          alignment: Alignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 1.2,
-                              height: MediaQuery.of(context).size.height / 3,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "Signup by:",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                    ),
+          child: TextButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    
+                    
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(15))),
+                      contentPadding: const EdgeInsets.all(5),
+                      content: Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width/2,
+        height: MediaQuery.of(context).size.height/2,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/white-texture.jpeg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+                      
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "Signup by:",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25,
                                   ),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  SizedBox(
-                                    height: 40,
-                                    width: 200,
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              Colors.purple, // foreground
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                  width: 200,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                           Colors.blue // foreground
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SignupScreen()),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'Email',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
                                         ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const SignupEmailScreen()),
-                                          );
-                                        },
-                                        child: const Text(
-                                          'Email',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 22,
-                                          ),
-                                        )),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  SizedBox(
-                                    height: 40,
-                                    width: 200,
-                                    child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              Colors.purple, // foreground
+                                      )),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                  width: 200,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            Colors.blue, // foreground
+                                      ),
+                                      onPressed: () {},
+                                      child: const Text(
+                                        'Phone',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
                                         ),
-                                        onPressed: () {},
-                                        child: const Text(
-                                          'Phone',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 22,
-                                          ),
-                                        )),
-                                  ),
-                                ],
-                              ),
+                                      )),
+                                ),
+                              ],
                             ),
-                            Positioned(
-                              top: -5,
-                              right: 0.0,
-                              child: FloatingActionButton(
-                                child: const Icon(Icons.close),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(80)),
-                                backgroundColor: Colors.purple,
-                                mini: true,
-                                elevation: 5.0,
-                              ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0.0,
+                            child: FloatingActionButton(
+                              child: const Icon(Icons.close),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(80)),
+                              backgroundColor: Colors.blue,
+                              mini: true,
+                              elevation: 5.0,
                             ),
-                          ],
-                        ));
-                  },
-                );
-              },
-              child: const Text('Sign Up'),
-            ),
+                          ),
+                        ],
+                      ));
+                },
+              );
+            },
+            child: const Text('Sign Up'),
           ),
         )
       ],
@@ -212,7 +202,7 @@ class _SignInScreenState extends State<SignInScreen> {
       child: TextButton(
         child: const Text(
           "Forgot Password?",
-          style: TextStyle(color: Colors.white70),
+          style: TextStyle(color: Colors.black),
           textAlign: TextAlign.right,
         ),
         onPressed: () => Navigator.push(context,
