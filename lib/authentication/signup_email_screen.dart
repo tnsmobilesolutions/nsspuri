@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/authentication/login/devotee_details.dart';
+import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/theme/theme.dart';
 
 
@@ -132,8 +133,15 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 21,
               ),
               ElevatedButton(
-               onPressed: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) =>  DevoteeDetailsPage())),
+               onPressed: () async{
+
+                String? uid =  await FirebaseAuthentication().signupWithpassword(emailController.text, passwordController.text);
+                if (uid != null) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return DevoteeDetailsPage();
+                  },));
+                }
+               },
                 style: ElevatedButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 16),

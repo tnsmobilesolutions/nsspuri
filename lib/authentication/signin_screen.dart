@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
+import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
+import 'package:sammilani_delegate/home_page/home_page.dart';
 
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
 
@@ -49,18 +52,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 21,
                 ),
-                // firebaseUIButton(context, "Sign In", () {
-                //   FirebaseAuth.instance
-                //       .signInWithEmailAndPassword(
-                //           email: _emailTextController.text,
-                //           password: _passwordTextController.text)
-                //       .then((value) {
-                //     Navigator.push(context,
-                //         MaterialPageRoute(builder: (context) => HomePage()));
-                //   }).onError((error, stackTrace) {
-                //     print("Error ${error.toString()}");
-                //   });
-                // }),
+                firebaseUIButton(context, "Sign In", () async{
+             String? uid =  await FirebaseAuthentication().signinWithFirebase(_emailTextController.text, _passwordTextController.text);
+             if (uid != null) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return HomePage();
+              },));
+             }
+                }),
 
                 forgetPassword(context),
 
