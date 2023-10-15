@@ -134,7 +134,6 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               ElevatedButton(
                onPressed: () async{
-
                 String? uid =  await FirebaseAuthentication().signupWithpassword(emailController.text, passwordController.text);
                 if (uid != null) {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
