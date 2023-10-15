@@ -141,6 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   },));
                 }
                },
+               
                 style: ElevatedButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
