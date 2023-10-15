@@ -45,7 +45,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
              Text(
           "Signup",
-          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,color: Colors.black),
         ),
         SizedBox(
           height: 40,
