@@ -119,7 +119,15 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   Row(mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       
-                      ElevatedButton(onPressed: () {
+                      ElevatedButton(
+                         style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepOrange,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                  textStyle: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.normal),
+                ),
+                        onPressed: () {
                          Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => const HomePage()),

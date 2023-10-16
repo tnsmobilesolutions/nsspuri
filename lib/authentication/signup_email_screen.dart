@@ -45,7 +45,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
              Text(
           "Signup",
-          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,color: Colors.black),
         ),
         SizedBox(
           height: 40,
@@ -134,7 +134,6 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               ElevatedButton(
                onPressed: () async{
-
                 String? uid =  await FirebaseAuthentication().signupWithpassword(emailController.text, passwordController.text);
                 if (uid != null) {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -142,6 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   },));
                 }
                },
+               
                 style: ElevatedButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
