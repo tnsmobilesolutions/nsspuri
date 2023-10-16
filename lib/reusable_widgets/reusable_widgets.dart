@@ -63,7 +63,7 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
             return Colors.deepOrange;
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)))),
     ),
   );
 }
