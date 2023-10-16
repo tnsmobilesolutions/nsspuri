@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sammilani_delegate/authentication/login/devotee_details.dart';
+import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/theme/theme.dart';
 
@@ -178,6 +178,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   // }
                 },
                 style: ElevatedButton.styleFrom(
+                  
                   backgroundColor: Colors.deepOrange,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
