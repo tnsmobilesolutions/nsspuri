@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 
 class OnBoarding extends StatelessWidget {

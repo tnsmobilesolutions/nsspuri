@@ -77,16 +77,41 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   }
 
   final nameController = TextEditingController();
-  // final emailController = TextEditingController();
+  
   final mobileController = TextEditingController();
 
   String? dropdownValue;
+  List gender=["Male","Female","Other"];
 
-  final TextEditingController emailController = TextEditingController();
-   final TextEditingController genderController = TextEditingController();
+  String? select;
+
+ Row addRadioButton(int btnValue, String title) {
+    return Row(
+  mainAxisAlignment: MainAxisAlignment.start,
+  children: <Widget>[
+    Radio(
+      activeColor: Theme.of(context).primaryColor,
+      value: gender[btnValue],
+      groupValue: select,
+      onChanged: (value){
+        setState(() {
+          print(value);
+          select=value;
+        });
+      },
+    ),
+    Text(title)
+  ],
+);
+ }
+    
+
+ 
+  
   final TextEditingController professionController = TextEditingController();
   final TextEditingController sanghaController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
+  
 
   //return image name
   // String getImageName(XFile image) {
@@ -140,10 +165,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     onPressed: () {
                       showPhotoOptions();
                     },
-                    child: CircleAvatar(
-                     
+                    child:  CircleAvatar(
+                      backgroundColor: const Color(0xFFfa6e0f),
+                backgroundImage:
+                    previewImage != null && previewImage!.path.isNotEmpty
+                        ? Image.file(
+                            File('${previewImage?.path}'),
+                            fit: BoxFit.cover,
+                          ).image
+                        : null,
+               
                       radius: 60,
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.bottomRight,
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
@@ -237,31 +270,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   const SizedBox(
                     height: 12,
                   ),
-                  TextFormField(
-                    controller: emailController,
-                    onSaved: (newValue) => emailController,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
-                    ],
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter Email';
-                      }
-                      return null;
-                    },
-                           decoration: InputDecoration(
-      
-      labelText: " Email",
-      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-      filled: true,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.grey.withOpacity(0.3),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
-    ),
-          
-                  ),
+               
               
                   const SizedBox(
                     height: 12,
@@ -296,31 +305,9 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   const SizedBox(
                     height: 12,
                   ),
-                  TextFormField(
-                    controller: genderController,
-                    onSaved: (newValue) => genderController,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
-                    ],
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter gender';
-                      }
-                      return null;
-                    },
-                           decoration: InputDecoration(
-      
-      labelText: " Gender",
-      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-      filled: true,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.grey.withOpacity(0.3),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
-    ),
-          
-                  ),
+                addRadioButton(0, 'Male'),
+                  addRadioButton(1, 'Female'),
+                  addRadioButton(2, 'Others'),
                   const SizedBox(
                     height: 12,
                   ),
@@ -398,6 +385,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   ),
                  
                    ElevatedButton(
+                    
                     onPressed: () {
                         Navigator.push(
                             context,
@@ -405,6 +393,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           );
                     },
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepOrange,
                       padding:
                           const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                       textStyle: const TextStyle(
