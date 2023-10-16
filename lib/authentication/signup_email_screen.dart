@@ -1,14 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/authentication/login/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/theme/theme.dart';
-
-
-
-
-
-
 
 import 'reset_password.dart';
 
@@ -21,15 +14,26 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
-   final passwordController = TextEditingController();
+  final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  final textFieldFocusNode = FocusNode();
+  bool _obscured = false;
+
+  void _toggleObscured() {
+    setState(() {
+      _obscured = !_obscured;
+      if (textFieldFocusNode.hasPrimaryFocus)
+        return; // If focus is on text field, dont unfocus
+      textFieldFocusNode.canRequestFocus =
+          false; // Prevents focus if tap on eye
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      body: Container
-      (
-
+      body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
@@ -42,16 +46,16 @@ class _SignupScreenState extends State<SignupScreen> {
           padding: const EdgeInsets.fromLTRB(12, 150, 12, 0),
           child: Column(
             children: [
-
-             Text(
-          "Signup",
-          style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,color: Colors.black),
-        ),
-        SizedBox(
-          height: 40,
-        ),
-          
-              
+              Text(
+                "Signup",
+                style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+              SizedBox(
+                height: 40,
+              ),
               TextFormField(
                 controller: emailController,
                 onSaved: (newValue) => emailController,
@@ -61,25 +65,23 @@ class _SignupScreenState extends State<SignupScreen> {
                   }
                   return null;
                 },
-           decoration: InputDecoration(
-      
-      labelText: " Enter your email",
-      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-      filled: true,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.grey.withOpacity(0.3),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
-    ),
-                
-                    // hintText: 'Name',
-               
+                decoration: InputDecoration(
+                  labelText: " Enter your email",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+
+                // hintText: 'Name',
               ),
               const SizedBox(
                 height: 20,
               ),
-                
               TextFormField(
                 controller: passwordController,
                 onSaved: (newValue) => passwordController,
@@ -89,20 +91,35 @@ class _SignupScreenState extends State<SignupScreen> {
                   }
                   return null;
                 },
-                       decoration: InputDecoration(
-      
-      labelText: " Password",
-      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-      filled: true,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.grey.withOpacity(0.3),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
-    ),
-          
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: _obscured,
+                focusNode: textFieldFocusNode,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior
+                      .never, //Hides label on focus or if filled
+                  labelText: "Password",
+                  filled: true, // Needed for adding a fill color
+
+                  isDense: true, // Reduces height a bit
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                  prefixIcon: Icon(Icons.lock_rounded, size: 24),
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                    child: GestureDetector(
+                      onTap: _toggleObscured,
+                      child: Icon(
+                        _obscured
+                            ? Icons.visibility_rounded
+                            : Icons.visibility_off_rounded,
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                ),
               ),
-                
               const SizedBox(
                 height: 21,
               ),
@@ -111,38 +128,57 @@ class _SignupScreenState extends State<SignupScreen> {
                 onSaved: (newValue) => confirmPasswordController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return ' Confirm Password';
+                    return 'Confirm Pasword';
                   }
                   return null;
                 },
-                       decoration: InputDecoration(
-      
-      labelText: " Confirm Password",
-      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-      filled: true,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.grey.withOpacity(0.3),
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide: const BorderSide(width: 0, style: BorderStyle.none)),
-    ),
-          
-              ),
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: _obscured,
                 
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior
+                      .never, //Hides label on focus or if filled
+                  labelText: "Confirm Password",
+                  filled: true, // Needed for adding a fill color
+
+                  isDense: true, // Reduces height a bit
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                  prefixIcon: Icon(Icons.lock_rounded, size: 24),
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                    child: GestureDetector(
+                      onTap: _toggleObscured,
+                      child: Icon(
+                        _obscured
+                            ? Icons.visibility_rounded
+                            : Icons.visibility_off_rounded,
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 21,
               ),
               ElevatedButton(
-               onPressed: () async{
-                String? uid =  await FirebaseAuthentication().signupWithpassword(emailController.text, passwordController.text);
-                if (uid != null) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return DevoteeDetailsPage();
-                  },));
-                }
-               },
-               
+                onPressed: () async {
+                  // String? uid = await FirebaseAuthentication()
+                  //     .signupWithpassword(
+                  //         emailController.text, passwordController.text);
+                  // if (uid != null) {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return DevoteeDetailsPage();
+                      },
+                    ));
+                  // }
+                },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepOrange,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                   textStyle: const TextStyle(
@@ -150,16 +186,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 child: const Text('Next'),
               ),
-           
-           
             ],
           ),
         ),
       ),
     );
   }
-
- 
-
- 
 }

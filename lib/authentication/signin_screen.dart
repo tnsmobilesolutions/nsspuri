@@ -31,7 +31,6 @@ class _SignInScreenState extends State<SignInScreen> {
             fit: BoxFit.cover,
           ),
         ),
-   
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -52,17 +51,24 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 21,
                 ),
-                firebaseUIButton(context, "Sign In", () async{
-             String? uid =  await FirebaseAuthentication().signinWithFirebase(_emailTextController.text, _passwordTextController.text);
-             if (uid != null) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HomePage();
-              },));
-             }
+                firebaseUIButton(
+                  
+                  context, "Sign In", () async {
+                  String? uid = await FirebaseAuthentication()
+                      .signinWithFirebase(_emailTextController.text,
+                          _passwordTextController.text);
+                  if (uid != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return HomePage();
+                        },
+                      ),
+                    );
+                  }
                 }),
-
                 forgetPassword(context),
-
                 signUpOption()
               ],
             ),
@@ -82,11 +88,16 @@ class _SignInScreenState extends State<SignInScreen> {
           width: 80,
           child: TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return SignupScreen();
-              },));
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return SignupScreen();
+                },
+              ));
             },
-            child: const Text('Sign Up'),
+            child: const Text(
+              'Sign Up',
+              style: TextStyle(color: Colors.deepOrange),
+            ),
           ),
         )
       ],
