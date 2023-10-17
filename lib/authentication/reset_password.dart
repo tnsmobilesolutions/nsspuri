@@ -12,21 +12,11 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
   TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _newPasswodTextController = TextEditingController();
-  TextEditingController _newTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.deepOrange,
-        elevation: 0,
-        title: const Text(
-          "Reset Password",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
       body: Center(
         child: Container(
             width: MediaQuery.of(context).size.width,
@@ -45,13 +35,18 @@ class _ResetPasswordState extends State<ResetPassword> {
                   const SizedBox(
                     height: 20,
                   ),
+                  Text(
+                    'Reset Password',
+                    style: TextStyle(fontSize: 22),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   ReusableTextField("Enter Email Id", Icons.email, false,
                       _emailTextController),
                   const SizedBox(
                     height: 20,
                   ),
-                  ReusableTextField("Enter new Password", Icons.lock, false,
-                      _emailTextController),
                   const SizedBox(
                     height: 20,
                   ),
