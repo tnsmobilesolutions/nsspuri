@@ -1,19 +1,19 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:image_picker/image_picker.dart';
+import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
+import 'package:sammilani_delegate/model/devotte_model.dart';
 
 // ignore: depend_on_referenced_packages
 
 // ignore: must_be_immutable
 class DevoteeDetailsPage extends StatefulWidget {
-  const DevoteeDetailsPage({
+  DevoteeDetailsPage({
     Key? key,
   }) : super(key: key);
 
@@ -39,6 +39,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   ];
 
   get districtList => null;
+
   void selectImage(ImageSource source) async {
     XFile? pickedFile = await ImagePicker().pickImage(source: source);
     setState(() {
@@ -78,13 +79,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   }
 
   final nameController = TextEditingController();
-
   final mobileController = TextEditingController();
+  // final bloodGroupController = TextEditingController();
+  // final genderController = TextEditingController();
+  final professionController = TextEditingController();
+  final permanentAdressController = TextEditingController();
+  final presentAddressController = TextEditingController();
+  final sanghaController = TextEditingController();
 
-  String? dropdownValue;
+  String? bloodGroupController;
   List gender = ["Male", "Female", "Other"];
 
-  String? select;
+  String? genderController;
 
   Row addRadioButton(int btnValue, String title) {
     return Row(
@@ -93,11 +99,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
         Radio(
           activeColor: Theme.of(context).primaryColor,
           value: gender[btnValue],
-          groupValue: select,
+          groupValue: genderController,
           onChanged: (value) {
             setState(() {
               print(value);
-              select = value;
+              genderController = value;
             });
           },
         ),
@@ -106,20 +112,25 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     );
   }
 
-  int _groupValue = -1;
+  Future<String?> uploadImageToFirebaseStorage(XFile image) async {
+    // print('**************${getImageName(image)}**************');
+    Reference storage = FirebaseStorage.instance
+        .ref('${widget.currentUser?.name}/${getImageName(image)}');
+    await storage.putFile(File(image.path));
+    return await storage.getDownloadURL();
+  }
 
-  final TextEditingController professionController = TextEditingController();
-  final TextEditingController sanghaController = TextEditingController();
-  final TextEditingController cityController = TextEditingController();
-
-  //return image name
-  // String getImageName(XFile image) {
-  //   return image.path.split("/").last;
-  // }
+  // return image name
+  String getImageName(XFile image) {
+    return image.path.split("/").last;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Devotee Details'),
+      ),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -138,19 +149,22 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const HomePage();
-                        },
-                      ));
-                    },
-                    child: const Text(
-                      'Skip >',
-                      style: TextStyle(color: Colors.deepOrange),
-                    ),
-                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepOrange,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 16),
+                        textStyle: const TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.normal),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
+                        );
+                      },
+                      child: const Text('Skip')),
                 ],
               ),
               CupertinoButton(
@@ -180,47 +194,53 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    height: 60,
-                    width: MediaQuery.of(context).size.width / 1.1,
-                    child: DropdownButtonFormField(
-                      decoration: InputDecoration(
-                        labelStyle:
-                            TextStyle(color: Colors.grey.withOpacity(0.3)),
-                        filled: true,
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        fillColor: Colors.grey.withOpacity(0.3),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: const BorderSide(
-                                width: 0, style: BorderStyle.none)),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: SizedBox(
+                        height: 60,
+                        width: MediaQuery.of(context).size.width,
+                        child: DropdownButtonFormField(
+                          decoration: InputDecoration(
+                            labelStyle:
+                                TextStyle(color: Colors.grey.withOpacity(0.9)),
+                            filled: true,
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            fillColor: Colors.grey.withOpacity(0.3),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                borderSide: const BorderSide(
+                                    width: 0, style: BorderStyle.none)),
+                          ),
+
+                          value: bloodGroupController,
+
+                          elevation: 16,
+                          hint: const Text('Select BloodGroup'),
+                          // style: const TextStyle(color: Colors.deepPurple),
+
+                          onChanged: (String? value) {
+                            // This is called when the user selects an item.
+                            setState(() {
+                              bloodGroupController = value;
+                            });
+                          },
+                          items: bloodGrouplist
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
                       ),
-
-                      value: dropdownValue,
-
-                      elevation: 16,
-                      hint: const Text('Select BloodGroup'),
-                      // style: const TextStyle(color: Colors.deepPurple),
-
-                      onChanged: (String? value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          dropdownValue = value;
-                        });
-                      },
-                      items: bloodGrouplist
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -250,6 +270,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               const SizedBox(
                 height: 12,
               ),
+
               const SizedBox(
                 height: 12,
               ),
@@ -268,7 +289,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: " Mobile Number",
+                  labelText: " Mobile number",
                   labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -282,120 +303,26 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               const SizedBox(
                 height: 12,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  const Text('Gender', style: TextStyle(fontSize: 18)),
-                  Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            flex: 1,
-                            child: RadioListTile(
-                              value: 0,
-                              groupValue: _groupValue,
-                              title: const Text("Male"),
-                              onChanged: (newValue) =>
-                                  setState(() => _groupValue = newValue!),
-                              activeColor: Colors.deepOrange,
-                              selected: false,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: RadioListTile(
-                              value: 1,
-                              groupValue: _groupValue,
-                              title: const Text("Female"),
-                              onChanged: (newValue) =>
-                                  setState(() => _groupValue = newValue!),
-                              activeColor: Colors.deepOrange,
-                              selected: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              addRadioButton(0, 'Male'),
+              addRadioButton(1, 'Female'),
+              addRadioButton(2, 'Others'),
               const SizedBox(
                 height: 12,
               ),
-              SizedBox(
-                  height: 40,
-                  width: double.infinity,
-                  child: TypeAheadField(
-                    noItemsFoundBuilder: (context) => const SizedBox(
-                      height: 50,
-                      child: Center(
-                        child: Text('No Item Found'),
-                      ),
-                    ),
-                    suggestionsBoxDecoration: const SuggestionsBoxDecoration(
-                        color: Colors.white,
-                        elevation: 4.0,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                        )),
-                    debounceDuration: const Duration(milliseconds: 400),
-                    textFieldConfiguration: TextFieldConfiguration(
-                        decoration: InputDecoration(
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                            ),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                              15.0,
-                            )),
-                            enabledBorder: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15.0),
-                                ),
-                                borderSide: BorderSide(color: Colors.black)),
-                            hintText: "Search",
-                            contentPadding:
-                                const EdgeInsets.only(top: 4, left: 10),
-                            hintStyle: const TextStyle(
-                                color: Colors.grey, fontSize: 14),
-                            suffixIcon: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.search,
-                                    color: Colors.grey)),
-                            fillColor: Colors.white,
-                            filled: true)),
-                    suggestionsCallback: (value) {
-                      return StateService.getSuggestions(value);
-                    },
-                    itemBuilder: (context, String suggestion) {
-                      return Row(
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Text(
-                                suggestion,
-                                maxLines: 1,
-                                // style: TextStyle(color: Colors.red),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          )
-                        ],
-                      );
-                    },
-                    onSuggestionSelected: (String suggestion) {
-                      setState(() {
-                        var userSelected = suggestion;
-                      });
-                    },
-                  )),
+              TextFormField(
+                controller: sanghaController,
+                decoration: InputDecoration(
+                  labelText: " Sangha",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
               const SizedBox(
                 height: 12,
               ),
@@ -416,20 +343,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               const SizedBox(
                 height: 12,
               ),
-              TextFormField(
-                controller: cityController,
-                decoration: InputDecoration(
-                  labelText: "Present Address",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
-              ),
+
               const SizedBox(
                 height: 12,
               ),
@@ -450,38 +364,41 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               const SizedBox(
                 height: 12,
               ),
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(90)),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()));
-                    },
-                    child: Text(
-                      'Signup',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith((states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return Colors.deepOrange;
-                          }
-                          return Colors.deepOrange;
-                        }),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(90)))),
 
-                    //Row
-                  ))
+              ElevatedButton(
+                onPressed: () async {
+                  String? profileURL = previewImage != null
+                      ? await uploadImageToFirebaseStorage(
+                          previewImage as XFile)
+                      : null;
+                  DevoteeModel newDevotee = DevoteeModel(
+                      bloodGroup: bloodGroupController,
+                      devoteeName: nameController.text,
+                      gender: genderController,
+                      mobileNumber: mobileController.text,
+                      permanentAddress: permanentAdressController.text,
+                      presentAddress: presentAddressController.text,
+                      profession: professionController.text,
+                      profileImageURL: profileURL);
+                  await DevoteeAPI().addDevotee(newDevotee);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepOrange,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                  textStyle: const TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.normal),
+                ),
+                child: const Text('Signup'),
+              ),
+
+              //Row
+
+              const SizedBox(height: 20),
             ]),
           )),
         ),
