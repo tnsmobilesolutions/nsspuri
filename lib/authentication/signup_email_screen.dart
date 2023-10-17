@@ -126,7 +126,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               const SizedBox(
-                height: 21,
+                height: 22,
               ),
               TextFormField(
                 controller: confirmPasswordController,
@@ -173,28 +173,42 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 21,
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  // String? uid = await FirebaseAuthentication()
-                  //     .signupWithpassword(
-                  //         emailController.text, passwordController.text);
-                  // if (uid != null) {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return DevoteeDetailsPage();
-                    },
-                  ));
-                  // }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                  textStyle: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.normal),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(90)),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    // String? uid = await FirebaseAuthentication()
+                    //     .signupWithpassword(
+                    //         emailController.text, passwordController.text);
+                    // if (uid != null) {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return DevoteeDetailsPage();
+                      },
+                    ));
+                    // }
+                  },
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Colors.deepOrange;
+                        }
+                        return Colors.deepOrange;
+                      }),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(90)))),
+                  child: const Text(
+                    'Next',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
-                child: const Text('Next'),
-              ),
+              )
             ],
           ),
         ),
