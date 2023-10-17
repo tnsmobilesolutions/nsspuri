@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/home_page/delegate_card.dart';
@@ -20,7 +20,10 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Home"),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
             onPressed: () {
               Navigator.push(
                 context,
