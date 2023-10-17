@@ -122,6 +122,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Devotee Details'),
+        elevation: 0,
+        flexibleSpace: Image(
+          image: AssetImage('assets/images/white-texture.jpeg'),
+          fit: BoxFit.cover,
+        ),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
