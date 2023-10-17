@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: Themes.light,
-      darkTheme: Themes.dark,
+      // theme: Themes.light,
+      // darkTheme: Themes.dark,
       home: const SignInScreen(),
     );
 
@@ -68,6 +68,6 @@ class MyApp extends StatelessWidget {
 
 
 
-    
+
   }
 }

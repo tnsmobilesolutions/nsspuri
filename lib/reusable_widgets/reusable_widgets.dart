@@ -6,7 +6,7 @@ Image LogoWidget(String imageName) {
     fit: BoxFit.fitWidth,
     width: 240,
     height: 240,
-    
+
     // color: Colors.white,
   );
 }
@@ -21,10 +21,7 @@ TextField ReusableTextField(String text, IconData icon, bool isPasswordType,
     cursorColor: Colors.black,
     style: TextStyle(color: Colors.black.withOpacity(0.9)),
     decoration: InputDecoration(
-      prefixIcon: Icon(
-        icon,
-        color: Colors.grey
-      ),
+      prefixIcon: Icon(icon, color: Colors.grey),
       labelText: text,
       labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
       filled: true,
@@ -53,7 +50,7 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
       child: Text(
         title,
         style: const TextStyle(
-            color:Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
       ),
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {

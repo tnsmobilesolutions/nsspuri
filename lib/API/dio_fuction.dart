@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-String baseUrl = "https://apiqa.mymedstore.in/";
+String baseUrl = "https://api.nsspuri.org/";
 
 abstract class DioFuctionAPI {
   final dio = Dio();
@@ -42,8 +42,6 @@ abstract class DioFuctionAPI {
           "status": 500,
           "error": ['An error occurred: ${e.toString()}', false]
         };
-
-       
       }
     }
   }
