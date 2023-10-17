@@ -253,7 +253,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               const SizedBox(
                 height: 12,
               ),
-
               const SizedBox(
                 height: 12,
               ),
@@ -272,7 +271,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   return null;
                 },
                 decoration: InputDecoration(
-                  labelText: " Mobile number",
+                  labelText: " Mobile Number",
                   labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -325,7 +324,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   ),
                 ],
               ),
-
               const SizedBox(
                 height: 12,
               ),
@@ -378,13 +376,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     itemBuilder: (context, String suggestion) {
                       return Row(
                         children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Icon(
-                            Icons.refresh,
-                            color: Colors.grey,
-                          ),
                           const SizedBox(
                             width: 10,
                           ),
@@ -462,27 +453,38 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               const SizedBox(
                 height: 12,
               ),
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(90)),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+                    },
+                    child: Text(
+                      'Signup',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.deepOrange;
+                          }
+                          return Colors.deepOrange;
+                        }),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(90)))),
 
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
-                  textStyle: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.normal),
-                ),
-                child: const Text('Signup'),
-              ),
-
-              //Row
-
-              const SizedBox(height: 20),
+                    //Row
+                  ))
             ]),
           )),
         ),

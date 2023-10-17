@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/home_page/delegate_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,9 +15,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepOrange,
         leading: const Icon(Icons.menu),
         title: const Text("Home"),
-        actions: const [IconButton(icon: Icon(Icons.logout), onPressed: null)],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignInScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
           child: Container(
@@ -28,7 +40,7 @@ class _HomePageState extends State<HomePage> {
             fit: BoxFit.cover,
           ),
         ),
-        child: DelegateCard(),
+        child: const DelegateCard(),
       )),
     );
   }
