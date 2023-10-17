@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sammilani_delegate/API/post_devotee.dart';
+import 'package:intl/intl.dart';
+import 'package:sammilani_delegate/authentication/address_screen.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
@@ -26,14 +27,14 @@ class DevoteeDetailsPage extends StatefulWidget {
 
 class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   final nameController = TextEditingController();
-  final mobileController = TextEditingController();
-  final professionController = TextEditingController();
-  final permanentAdressController = TextEditingController();
-  final presentAddressController = TextEditingController();
   final sanghaController = TextEditingController();
+  TextEditingController dateinput = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  String name = "";
   String? bloodGroupController;
+
   List gender = ["Male", "Female"];
-  int genderController = -1;
+  int genderController = 0;
   String? birthDistrict;
   String? profileImage;
   XFile? previewImage;
@@ -123,6 +124,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     return image.path.split("/").last;
   }
 
+  void initState() {
+    dateinput.text = ""; //set the initial value of text field
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -186,47 +192,9 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   ),
                 ),
               ),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    height: 60,
-                    width: MediaQuery.of(context).size.width / 1.1,
-                    child: DropdownButtonFormField(
-                      decoration: InputDecoration(
-                        labelStyle:
-                            TextStyle(color: Colors.grey.withOpacity(0.3)),
-                        filled: true,
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        fillColor: Colors.grey.withOpacity(0.3),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: const BorderSide(
-                                width: 0, style: BorderStyle.none)),
-                      ),
-
-                      value: bloodGroupController,
-
-                      elevation: 16,
-                      hint: const Text('Select BloodGroup'),
-                      // style: const TextStyle(color: Colors.deepPurple),
-
-                      onChanged: (String? value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          bloodGroupController = value;
-                        });
-                      },
-                      items: bloodGrouplist
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ],
+                children: [],
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -243,38 +211,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 },
                 decoration: InputDecoration(
                   labelText: "Name",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              TextFormField(
-                keyboardType: TextInputType.phone,
-                controller: mobileController,
-                onSaved: (newValue) => mobileController,
-                validator: (value) {
-                  RegExp regex = RegExp(r'^.{10}$');
-                  if (value!.isEmpty) {
-                    return ("Please enter Phone Number");
-                  }
-                  if (!regex.hasMatch(value) && value.length != 10) {
-                    return ("Enter 10 Digit Mobile Number");
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: " Mobile Number",
                   labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -344,7 +280,88 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 ],
               ),
               const SizedBox(
-                height: 12,
+                height: 20,
+              ),
+              GestureDetector(
+                child: TextField(
+                  style: const TextStyle(color: Colors.white),
+                  controller: dateinput, //editing controller of this TextField
+                  decoration: const InputDecoration(
+                      labelStyle: TextStyle(color: Colors.black),
+                      icon: Icon(Icons.calendar_today),
+                      iconColor: Colors.deepOrange, //icon of text field
+                      labelText: "Enter Date Of Birth" //label text of field
+                      ),
+                  readOnly:
+                      true, //set it true, so that user will not able to edit text
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(
+                            1900), //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2040));
+
+                    if (pickedDate != null) {
+                      print(
+                          pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                      String formattedDate =
+                          DateFormat('dd-MM-yyyy').format(pickedDate);
+                      print(
+                          formattedDate); //formatted date output using intl package =>  2021-03-16
+                      //you can implement different kind of Date Format here according to your requirement
+
+                      setState(() {
+                        dateinput.text =
+                            formattedDate; //set output date to TextField value.
+                      });
+                    } else {
+                      print("Date is not selected");
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                height: 60,
+                width: MediaQuery.of(context).size.width / 1.1,
+                child: DropdownButtonFormField(
+                  decoration: InputDecoration(
+                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.3)),
+                    filled: true,
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    fillColor: Colors.grey.withOpacity(0.3),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
+                  ),
+
+                  value: bloodGroupController,
+
+                  elevation: 16,
+                  hint: const Text('Select BloodGroup'),
+                  // style: const TextStyle(color: Colors.deepPurple),
+
+                  onChanged: (String? value) {
+                    // This is called when the user selects an item.
+                    setState(() {
+                      bloodGroupController = value;
+                    });
+                  },
+                  items: bloodGrouplist
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               SizedBox(
                   height: 40,
@@ -406,7 +423,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               child: Text(
                                 suggestion,
                                 maxLines: 1,
-                                style: TextStyle(color: Colors.black),
+                                style: const TextStyle(color: Colors.black),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -423,39 +440,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               const SizedBox(
                 height: 12,
               ),
-              TextFormField(
-                controller: permanentAdressController,
-                decoration: InputDecoration(
-                  labelText: " Permanent Address",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
-              ),
               const SizedBox(
                 height: 12,
               ),
               const SizedBox(
                 height: 12,
-              ),
-              TextFormField(
-                controller: professionController,
-                decoration: InputDecoration(
-                  labelText: " Profession",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
               ),
               const SizedBox(
                 height: 12,
@@ -476,22 +465,15 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           bloodGroup: bloodGroupController,
                           devoteeName: nameController.text,
                           gender: gender[genderController],
-                          mobileNumber: mobileController.text,
-                          permanentAddress: permanentAdressController.text,
-                          presentAddress: presentAddressController.text,
-                          profession: professionController.text,
                           profileImageURL: profileURL);
                       // await DevoteeAPI().addDevotee(newDevotee);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage()),
+                        MaterialPageRoute(builder: (context) {
+                          return AddressDetailsScreen();
+                        }),
                       );
                     },
-                    child: Text(
-                      'Signup',
-                      style: TextStyle(fontSize: 18),
-                    ),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.resolveWith((states) {
@@ -504,6 +486,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(90)))),
+                    child: const Text(
+                      'Next >',
+                      style: TextStyle(fontSize: 18),
+                    ),
 
                     //Row
                   ))

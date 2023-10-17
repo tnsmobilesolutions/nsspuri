@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
-import 'package:sammilani_delegate/theme/theme.dart';
-
-import 'reset_password.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -76,6 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderSide:
                           const BorderSide(width: 0, style: BorderStyle.none)),
                 ),
+                style: TextStyle(fontSize: 20.0, color: Colors.black),
 
                 // hintText: 'Name',
               ),
@@ -124,6 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
+                style: TextStyle(fontSize: 20.0, color: Colors.black),
               ),
               const SizedBox(
                 height: 22,
@@ -169,6 +168,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
+                style: TextStyle(fontSize: 20.0, color: Colors.black),
               ),
               const SizedBox(
                 height: 21,
@@ -180,6 +180,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(90)),
                 child: ElevatedButton(
+                    style: ButtonStyle(),
                     child: Text('Next'),
                     onPressed: () async {
                       String? uid = await FirebaseAuthentication()
@@ -193,7 +194,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         ));
                         // }
 
-                      
                         ButtonStyle(
                             backgroundColor:
                                 MaterialStateProperty.resolveWith((states) {

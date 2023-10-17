@@ -44,6 +44,7 @@ dependencies:
   flutter_onboarding_slider: ^1.0.10
   flutter_typeahead: ^4.8.0
   dio: ^5.3.3
+  dob_input_field: ^2.0.0
   
 
 
