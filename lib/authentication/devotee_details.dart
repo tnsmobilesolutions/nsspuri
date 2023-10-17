@@ -349,7 +349,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               SizedBox(
                   height: 40,
                   width: double.infinity,
-                  child: TypeAheadField(
+                  child: TypeAheadFormField(
                     noItemsFoundBuilder: (context) => const SizedBox(
                       height: 50,
                       child: Center(
@@ -365,6 +365,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         )),
                     debounceDuration: const Duration(milliseconds: 400),
                     textFieldConfiguration: TextFieldConfiguration(
+                        controller: sanghaController,
                         decoration: InputDecoration(
                             focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
@@ -387,7 +388,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                                 onPressed: () {},
                                 icon: const Icon(Icons.search,
                                     color: Colors.grey)),
-                            fillColor: Colors.white,
+
+                            // fillColor: Colors.white,
                             filled: true)),
                     suggestionsCallback: (value) {
                       return StateService.getSuggestions(value);
@@ -404,7 +406,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               child: Text(
                                 suggestion,
                                 maxLines: 1,
-                                // style: TextStyle(color: Colors.red),
+                                style: TextStyle(color: Colors.black),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -414,7 +416,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     },
                     onSuggestionSelected: (String suggestion) {
                       setState(() {
-                        var userSelected = suggestion;
+                        sanghaController.text = suggestion;
                       });
                     },
                   )),
@@ -422,7 +424,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 height: 12,
               ),
               TextFormField(
-                controller: sanghaController,
+                controller: permanentAdressController,
                 decoration: InputDecoration(
                   labelText: " Permanent Address",
                   labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
@@ -479,7 +481,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           presentAddress: presentAddressController.text,
                           profession: professionController.text,
                           profileImageURL: profileURL);
-                      await DevoteeAPI().addDevotee(newDevotee);
+                      // await DevoteeAPI().addDevotee(newDevotee);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

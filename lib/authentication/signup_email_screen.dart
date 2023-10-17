@@ -180,34 +180,34 @@ class _SignupScreenState extends State<SignupScreen> {
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(90)),
                 child: ElevatedButton(
-                  onPressed: () async {
-                    // String? uid = await FirebaseAuthentication()
-                    //     .signupWithpassword(
-                    //         emailController.text, passwordController.text);
-                    // if (uid != null) {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return DevoteeDetailsPage();
-                      },
-                    ));
-                    // }
-                  },
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.pressed)) {
-                          return Colors.deepOrange;
-                        }
-                        return Colors.deepOrange;
-                      }),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(90)))),
-                  child: const Text(
-                    'Next',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
+                    child: Text('Next'),
+                    onPressed: () async {
+                      String? uid = await FirebaseAuthentication()
+                          .signupWithpassword(
+                              emailController.text, passwordController.text);
+                      if (uid != null) {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return DevoteeDetailsPage();
+                          },
+                        ));
+                        // }
+
+                      
+                        ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith((states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return Colors.deepOrange;
+                              }
+                              return Colors.deepOrange;
+                            }),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(90))));
+                      }
+                    }),
               )
             ],
           ),
