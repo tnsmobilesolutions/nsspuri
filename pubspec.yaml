@@ -43,6 +43,7 @@ dependencies:
   firebase_storage: ^11.2.8
   flutter_onboarding_slider: ^1.0.10
   flutter_typeahead: ^4.8.0
+  dio: ^5.3.3
   
 
 
