@@ -34,26 +34,29 @@ abstract class DioFuctionAPI {
       if (response.statusCode == 200) {
         return {"statusCode": response.statusCode, "data": response.data};
       } else {
-        return {"status": response.statusCode, "error": "Error in Post API"};
+        return {
+          "statusCode": response.statusCode,
+          "error": "Error in Post API"
+        };
       }
     } catch (e) {
       if (e is DioException) {
         if (e.response != null) {
           print("error message : ${e.response!.data["message"]}");
           return {
-            "status": 500,
+            "statusCode": 500,
             "error": [e.response!.data["message"], false]
           };
         } else {
           return {
-            "status": 500,
+            "statusCode": 500,
             "error": [e.response!.data["message"], false]
           };
           // return ['Dio error: ${e.message}', false];
         }
       } else {
         return {
-          "status": 500,
+          "statusCode": 500,
           "error": ['An error occurred: ${e.toString()}', false]
         };
       }
@@ -72,28 +75,31 @@ abstract class DioFuctionAPI {
       );
 
       if (response.statusCode == 200) {
-        return {"status": response.statusCode, "data": response.data};
+        return {"statusCode": response.statusCode, "data": response.data};
       } else {
-        return {"status": response.statusCode, "error": "Error in Post API"};
+        return {
+          "statusCode": response.statusCode,
+          "error": "Error in Post API"
+        };
       }
     } catch (e) {
       if (e is DioException) {
         if (e.response != null) {
           print("error message : ${e.response!.data["message"]}");
           return {
-            "status": 500,
+            "statusCode": 500,
             "error": [e.response!.data["message"], false]
           };
         } else {
           return {
-            "status": 500,
+            "statusCode": 500,
             "error": [e.response!.data["message"], false]
           };
           // return ['Dio error: ${e.message}', false];
         }
       } else {
         return {
-          "status": 500,
+          "statusCode": 500,
           "error": ['An error occurred: ${e.toString()}', false]
         };
       }
