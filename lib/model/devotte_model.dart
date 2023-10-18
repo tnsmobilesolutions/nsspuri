@@ -1,56 +1,80 @@
 import 'dart:convert';
 
+import 'package:sammilani_delegate/model/address_model.dart';
+
 class DevoteeModel {
-  String? devoteeName;
+  String? devoteeId;
+  String? name;
+  String? emailId;
   String? mobileNumber;
   String? bloodGroup;
-  String? profileImageURL;
+  String? profilePhotoUrl;
   String? gender;
-  String? profession;
-  String? sanghaName;
-  String? presentAddress;
-  String? permanentAddress;
+  String? sangha;
+  String? uid;
+  String? dob;
+  String? createdAt;
+  String? updatedAt;
+  AddressModel? address;
   DevoteeModel({
-    this.devoteeName,
+    this.devoteeId,
+    this.name,
+    this.emailId,
     this.mobileNumber,
     this.bloodGroup,
-    this.profileImageURL,
+    this.profilePhotoUrl,
     this.gender,
-    this.profession,
-    this.sanghaName,
-    this.presentAddress,
-    this.permanentAddress,
+    this.sangha,
+    this.uid,
+    this.dob,
+    this.createdAt,
+    this.updatedAt,
+    this.address,
   });
 
   DevoteeModel copyWith({
-    String? devoteeName,
+    String? devoteeId,
+    String? name,
+    String? emailId,
     String? mobileNumber,
     String? bloodGroup,
-    String? profileImageURL,
+    String? profilePhotoUrl,
     String? gender,
-    String? profession,
-    String? sanghaName,
-    String? presentAddress,
-    String? permanentAddress,
+    String? sangha,
+    String? uid,
+    String? dob,
+    String? createdAt,
+    String? updatedAt,
+    AddressModel? address,
   }) {
     return DevoteeModel(
-      devoteeName: devoteeName ?? this.devoteeName,
+      devoteeId: devoteeId ?? this.devoteeId,
+      name: name ?? this.name,
+      emailId: emailId ?? this.emailId,
       mobileNumber: mobileNumber ?? this.mobileNumber,
       bloodGroup: bloodGroup ?? this.bloodGroup,
-      profileImageURL: profileImageURL ?? this.profileImageURL,
+      profilePhotoUrl: profilePhotoUrl ?? this.profilePhotoUrl,
       gender: gender ?? this.gender,
-      profession: profession ?? this.profession,
-      sanghaName: sanghaName ?? this.sanghaName,
-      presentAddress: presentAddress ?? this.presentAddress,
-      permanentAddress: permanentAddress ?? this.permanentAddress,
+      sangha: sangha ?? this.sangha,
+      uid: uid ?? this.uid,
+      dob: dob ?? this.dob,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      address: address ?? this.address,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
   
-    if(devoteeName != null){
-      result.addAll({'devoteeName': devoteeName});
+    if(devoteeId != null){
+      result.addAll({'devoteeId': devoteeId});
+    }
+    if(name != null){
+      result.addAll({'name': name});
+    }
+    if(emailId != null){
+      result.addAll({'emailId': emailId});
     }
     if(mobileNumber != null){
       result.addAll({'mobileNumber': mobileNumber});
@@ -58,23 +82,29 @@ class DevoteeModel {
     if(bloodGroup != null){
       result.addAll({'bloodGroup': bloodGroup});
     }
-    if(profileImageURL != null){
-      result.addAll({'profileImageURL': profileImageURL});
+    if(profilePhotoUrl != null){
+      result.addAll({'profilePhotoUrl': profilePhotoUrl});
     }
     if(gender != null){
       result.addAll({'gender': gender});
     }
-    if(profession != null){
-      result.addAll({'profession': profession});
+    if(sangha != null){
+      result.addAll({'sangha': sangha});
     }
-    if(sanghaName != null){
-      result.addAll({'sanghaName': sanghaName});
+    if(uid != null){
+      result.addAll({'uid': uid});
     }
-    if(presentAddress != null){
-      result.addAll({'presentAddress': presentAddress});
+    if(dob != null){
+      result.addAll({'dob': dob});
     }
-    if(permanentAddress != null){
-      result.addAll({'permanentAddress': permanentAddress});
+    if(createdAt != null){
+      result.addAll({'createdAt': createdAt});
+    }
+    if(updatedAt != null){
+      result.addAll({'updatedAt': updatedAt});
+    }
+    if(address != null){
+      result.addAll({'address': address!.toMap()});
     }
   
     return result;
@@ -82,25 +112,30 @@ class DevoteeModel {
 
   factory DevoteeModel.fromMap(Map<String, dynamic> map) {
     return DevoteeModel(
-      devoteeName: map['devoteeName'],
+      devoteeId: map['devoteeId'],
+      name: map['name'],
+      emailId: map['emailId'],
       mobileNumber: map['mobileNumber'],
       bloodGroup: map['bloodGroup'],
-      profileImageURL: map['profileImageURL'],
+      profilePhotoUrl: map['profilePhotoUrl'],
       gender: map['gender'],
-      profession: map['profession'],
-      sanghaName: map['sanghaName'],
-      presentAddress: map['presentAddress'],
-      permanentAddress: map['permanentAddress'],
+      sangha: map['sangha'],
+      uid: map['uid'],
+      dob: map['dob'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      address: map['address'] != null ? AddressModel.fromMap(map['address']) : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory DevoteeModel.fromJson(String source) => DevoteeModel.fromMap(json.decode(source));
+  factory DevoteeModel.fromJson(String source) =>
+      DevoteeModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'DevoteeModel(devoteeName: $devoteeName, mobileNumber: $mobileNumber, bloodGroup: $bloodGroup, profileImageURL: $profileImageURL, gender: $gender, profession: $profession, sanghaName: $sanghaName, presentAddress: $presentAddress, permanentAddress: $permanentAddress)';
+    return 'DevoteeModel(devoteeId: $devoteeId, name: $name, emailId: $emailId, mobileNumber: $mobileNumber, bloodGroup: $bloodGroup, profilePhotoUrl: $profilePhotoUrl, gender: $gender, sangha: $sangha, uid: $uid, dob: $dob, createdAt: $createdAt, updatedAt: $updatedAt, address: $address)';
   }
 
   @override
@@ -108,27 +143,35 @@ class DevoteeModel {
     if (identical(this, other)) return true;
   
     return other is DevoteeModel &&
-      other.devoteeName == devoteeName &&
+      other.devoteeId == devoteeId &&
+      other.name == name &&
+      other.emailId == emailId &&
       other.mobileNumber == mobileNumber &&
       other.bloodGroup == bloodGroup &&
-      other.profileImageURL == profileImageURL &&
+      other.profilePhotoUrl == profilePhotoUrl &&
       other.gender == gender &&
-      other.profession == profession &&
-      other.sanghaName == sanghaName &&
-      other.presentAddress == presentAddress &&
-      other.permanentAddress == permanentAddress;
+      other.sangha == sangha &&
+      other.uid == uid &&
+      other.dob == dob &&
+      other.createdAt == createdAt &&
+      other.updatedAt == updatedAt &&
+      other.address == address;
   }
 
   @override
   int get hashCode {
-    return devoteeName.hashCode ^
+    return devoteeId.hashCode ^
+      name.hashCode ^
+      emailId.hashCode ^
       mobileNumber.hashCode ^
       bloodGroup.hashCode ^
-      profileImageURL.hashCode ^
+      profilePhotoUrl.hashCode ^
       gender.hashCode ^
-      profession.hashCode ^
-      sanghaName.hashCode ^
-      presentAddress.hashCode ^
-      permanentAddress.hashCode;
+      sangha.hashCode ^
+      uid.hashCode ^
+      dob.hashCode ^
+      createdAt.hashCode ^
+      updatedAt.hashCode ^
+      address.hashCode;
   }
 }

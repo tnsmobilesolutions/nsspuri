@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
+import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:uuid/uuid.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -43,14 +46,14 @@ class _SignupScreenState extends State<SignupScreen> {
           padding: const EdgeInsets.fromLTRB(12, 150, 12, 0),
           child: Column(
             children: [
-              Text(
+              const Text(
                 "Signup",
                 style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               TextFormField(
@@ -73,7 +76,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       borderSide:
                           const BorderSide(width: 0, style: BorderStyle.none)),
                 ),
-                style: TextStyle(fontSize: 20.0, color: Colors.black),
+                style: const TextStyle(fontSize: 20.0, color: Colors.black),
 
                 // hintText: 'Name',
               ),
@@ -122,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
-                style: TextStyle(fontSize: 20.0, color: Colors.black),
+                style: const TextStyle(fontSize: 20.0, color: Colors.black),
               ),
               const SizedBox(
                 height: 22,
@@ -168,51 +171,60 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
-                style: TextStyle(fontSize: 20.0, color: Colors.black),
+                style: const TextStyle(fontSize: 20.0, color: Colors.black),
               ),
               const SizedBox(
                 height: 21,
               ),
-           
-
-             Container(
-    width: MediaQuery.of(context).size.width,
-    height: 50,
-    margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
-    decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
-     
-    child: ElevatedButton(
-       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.pressed)) {
-              return Colors.deepOrange;
-            }
-            return Colors.deepOrange;
-          }),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)))),
-          onPressed: () async {
-                      String? uid = await FirebaseAuthentication()
-                          .signupWithpassword(
-                              emailController.text, passwordController.text);
-                      if (uid != null) {
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(90)),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Colors.deepOrange;
+                        }
+                        return Colors.deepOrange;
+                      }),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(90)))),
+                  onPressed: () async {
+                    String? uid = await FirebaseAuthentication()
+                        .signupWithpassword(
+                            emailController.text, passwordController.text);
+                    if (uid != null) {
+                      String devoteeId = Uuid().v4();
+                      DevoteeModel newDevotee = DevoteeModel(
+                          emailId: emailController.text, devoteeId: devoteeId);
+                      int statusCode =
+                          await PostDevoteeAPI().addDevotee(newDevotee);
+                      if (statusCode == 200) {
+                        // ignore: use_build_context_synchronously
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return DevoteeDetailsPage();
+                            return DevoteeDetailsPage(
+                              devoteeId: devoteeId,
+                            );
                           },
                         ));
-                        
-
-                       
-                      }
-                    },
-      child: Text("Next", style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
-        
-       
-      ),
-    ),
-  
+                      } else {}
+                    } else {}
+                  },
+                  child: Text(
+                    "Next",
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
