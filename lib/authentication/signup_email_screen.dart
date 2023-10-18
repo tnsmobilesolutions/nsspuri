@@ -199,7 +199,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         .signupWithpassword(
                             emailController.text, passwordController.text);
                     if (uid != null) {
-                      String devoteeId = Uuid().v4();
+                      String devoteeId = Uuid().v1();
                       DevoteeModel newDevotee = DevoteeModel(
                           emailId: emailController.text, devoteeId: devoteeId);
                       final response =

@@ -57,7 +57,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return HomePage();
+                          return HomePage(
+                            devoteeId: widget.devoteeId,
+                          );
                         },
                       ));
                     },
@@ -223,9 +225,17 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                               country: countryController.text,
                               pincode: postalCodeController.text,
                               state: stateController.text));
-                     final response = await PutDevoteeAPI()
+                      final response = await PutDevoteeAPI()
                           .updateDevotee(devoteeAddress, widget.devoteeId);
+                      if (response["statusCode"] == 200) {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return HomePage(devoteeId: widget.devoteeId);
+                          },
+                        ));
+                      }
                     },
+
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.resolveWith((states) {
