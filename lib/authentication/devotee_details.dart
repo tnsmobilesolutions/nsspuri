@@ -474,13 +474,19 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           gender: gender[genderController],
                           profilePhotoUrl: profileURL);
 
-                      await PutDevoteeAPI().updateDevotee(newDevotee, widget.devoteeId);
-                      Navigator.push(
+                     final response =  await PutDevoteeAPI().updateDevotee(newDevotee, widget.devoteeId);
+                     if(response["statusCode"] == 200){
+  // ignore: use_build_context_synchronously
+  Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
                           return AddressDetailsScreen(devoteeId: widget.devoteeId);
                         }),
                       );
+                     }else{
+
+                     }
+                    
                     },
                     style: ButtonStyle(
                         backgroundColor:

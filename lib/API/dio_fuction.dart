@@ -32,7 +32,7 @@ abstract class DioFuctionAPI {
       );
 
       if (response.statusCode == 200) {
-        return {"status": response.statusCode, "data": response.data};
+        return {"statusCode": response.statusCode, "data": response.data};
       } else {
         return {"status": response.statusCode, "error": "Error in Post API"};
       }
