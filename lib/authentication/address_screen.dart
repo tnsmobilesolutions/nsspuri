@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
+import 'package:sammilani_delegate/model/address_model.dart';
+import 'package:sammilani_delegate/model/devotte_model.dart';
 
+// ignore: must_be_immutable
 class AddressDetailsScreen extends StatefulWidget {
-  const AddressDetailsScreen({super.key});
+  AddressDetailsScreen({super.key, required this.devoteeId});
+  String devoteeId;
 
   @override
   State<AddressDetailsScreen> createState() => _AddressDetailsScreenState();
@@ -52,7 +57,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return const HomePage();
+                          return HomePage();
                         },
                       ));
                     },
@@ -209,7 +214,18 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                 Container(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      DevoteeModel devoteeAddress = DevoteeModel(
+                          address: AddressModel(
+                              addressLine1: addressLine1Controller.text,
+                              addressLine2: addressLine2Controller.text,
+                              city: cityController.text,
+                              country: countryController.text,
+                              pincode: postalCodeController.text,
+                              state: stateController.text));
+                      await PutDevoteeAPI()
+                          .updateDevotee(devoteeAddress, widget.devoteeId);
+                    },
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.resolveWith((states) {

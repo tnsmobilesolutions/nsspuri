@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:sammilani_delegate/API/post_devotee.dart';
+import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/authentication/address_screen.dart';
-import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
@@ -16,10 +15,10 @@ import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 
 // ignore: must_be_immutable
 class DevoteeDetailsPage extends StatefulWidget {
-  const DevoteeDetailsPage({
-    Key? key,
+   DevoteeDetailsPage({
+    Key? key,required this.devoteeId
   }) : super(key: key);
-
+  String devoteeId;
   get currentUser => null;
 
   @override
@@ -471,14 +470,15 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           : null;
                       DevoteeModel newDevotee = DevoteeModel(
                           bloodGroup: bloodGroupController,
-                          devoteeName: nameController.text,
+                          name: nameController.text,
                           gender: gender[genderController],
-                          profileImageURL: profileURL);
-                      await DevoteeAPI().addDevotee(newDevotee);
+                          profilePhotoUrl: profileURL);
+
+                      await PutDevoteeAPI().updateDevotee(newDevotee, widget.devoteeId);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return AddressDetailsScreen();
+                          return AddressDetailsScreen(devoteeId: widget.devoteeId);
                         }),
                       );
                     },

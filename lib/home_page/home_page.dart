@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/home_page/delegate_card.dart';
+import 'package:sammilani_delegate/model/devotte_model.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+   HomePage({super.key, this.devotee});
+  DevoteeModel? devotee;
 
   @override
   State<HomePage> createState() => _HomePageState();

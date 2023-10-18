@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
+import 'package:sammilani_delegate/model/devotte_model.dart';
 
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
 
@@ -51,18 +51,18 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 21,
                 ),
-                firebaseUIButton(
-                  
-                  context, "Sign In", () async {
-                  String? uid = await FirebaseAuthentication()
+                firebaseUIButton(context, "Sign In", () async {
+                  Map<String, dynamic> data = await FirebaseAuthentication()
                       .signinWithFirebase(_emailTextController.text,
                           _passwordTextController.text);
-                  if (uid != null) {
+                  DevoteeModel? devotee = data["devotee"];
+                  if (devotee != null) {
+                    // ignore: use_build_context_synchronously
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return HomePage();
+                          return  HomePage(devotee:  devotee,);
                         },
                       ),
                     );
@@ -90,7 +90,7 @@ class _SignInScreenState extends State<SignInScreen> {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
-                  return SignupScreen();
+                  return const SignupScreen();
                 },
               ));
             },
