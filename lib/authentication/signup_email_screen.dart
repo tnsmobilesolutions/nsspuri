@@ -216,6 +216,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             builder: (context) {
                               return DevoteeDetailsPage(
                                 uid: uid,
+                                devoteeId: devoteeId ,
                               );
                             },
                           ));

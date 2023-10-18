@@ -6,8 +6,9 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 
 // ignore: must_be_immutable
 class AddressDetailsScreen extends StatefulWidget {
-  AddressDetailsScreen({super.key, required this.devoteeId});
-  String devoteeId;
+  AddressDetailsScreen({super.key, required this.uid, required this.devoteeId});
+  String uid;
+  string devoteeId;
 
   @override
   State<AddressDetailsScreen> createState() => _AddressDetailsScreenState();
@@ -58,7 +59,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return HomePage(
-                            uid: widget.devoteeId,
+                            uid: widget.uid,
                           );
                         },
                       ));
@@ -231,7 +232,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                         // ignore: use_build_context_synchronously
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return HomePage(uid: widget.devoteeId);
+                            return HomePage(uid: widget.uid);
                           },
                         ));
                       }

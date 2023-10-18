@@ -15,8 +15,9 @@ import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 
 // ignore: must_be_immutable
 class DevoteeDetailsPage extends StatefulWidget {
-  DevoteeDetailsPage({Key? key, required this.uid}) : super(key: key);
+  DevoteeDetailsPage({Key? key, required this.uid, required this.devoteeId}) : super(key: key);
   String uid;
+  String devoteeId;
   get currentUser => null;
 
   @override
@@ -489,14 +490,13 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                             );
 
                             final response = await PutDevoteeAPI()
-                                .updateDevotee(newDevotee, widget.uid);
+                                .updateDevotee(newDevotee, widget.devoteeId);
                             if (response["statusCode"] == 200) {
                               // ignore: use_build_context_synchronously
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) {
-                                  return AddressDetailsScreen(
-                                      devoteeId: widget.uid);
+                                  return AddressDetailsScreen(uid: widget.uid, devoteeId: widget.devoteeId);
                                 }),
                               );
                             } else {}
