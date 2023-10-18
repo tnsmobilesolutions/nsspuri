@@ -8,7 +8,7 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 class AddressDetailsScreen extends StatefulWidget {
   AddressDetailsScreen({super.key, required this.uid, required this.devoteeId});
   String uid;
-  string devoteeId;
+  String devoteeId;
 
   @override
   State<AddressDetailsScreen> createState() => _AddressDetailsScreenState();
