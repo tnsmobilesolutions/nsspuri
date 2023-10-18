@@ -8,7 +8,7 @@ addDevotee (DevoteeModel devotee) async {
     // Dio dio = Dio();
     var encodedata = jsonEncode(devotee.toMap());
     try {
-      postAPI("devotee", encodedata);
+     await postAPI("devotee", encodedata);
       print("devotee Encooded Data - $encodedata");
     } catch (e) {
       print("Post Error....");

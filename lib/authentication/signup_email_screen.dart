@@ -173,16 +173,25 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 21,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 50,
-                margin: const EdgeInsets.fromLTRB(0, 11, 0, 11),
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(90)),
-                child: ElevatedButton(
-                    style: ButtonStyle(),
-                    child: Text('Next'),
-                    onPressed: () async {
+           
+
+             Container(
+    width: MediaQuery.of(context).size.width,
+    height: 50,
+    margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+    decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
+     
+    child: ElevatedButton(
+       style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.pressed)) {
+              return Colors.deepOrange;
+            }
+            return Colors.deepOrange;
+          }),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(90)))),
+          onPressed: () async {
                       String? uid = await FirebaseAuthentication()
                           .signupWithpassword(
                               emailController.text, passwordController.text);
@@ -192,23 +201,18 @@ class _SignupScreenState extends State<SignupScreen> {
                             return DevoteeDetailsPage();
                           },
                         ));
-                        // }
+                        
 
-                        ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.resolveWith((states) {
-                              if (states.contains(MaterialState.pressed)) {
-                                return Colors.deepOrange;
-                              }
-                              return Colors.deepOrange;
-                            }),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(90))));
+                       
                       }
-                    }),
-              )
+                    },
+      child: Text("Next", style: const TextStyle(
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
+        
+       
+      ),
+    ),
+  
             ],
           ),
         ),

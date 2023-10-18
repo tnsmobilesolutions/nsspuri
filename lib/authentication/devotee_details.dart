@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/authentication/address_screen.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -27,6 +28,7 @@ class DevoteeDetailsPage extends StatefulWidget {
 
 class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   final nameController = TextEditingController();
+  final mobileController = TextEditingController();
   final sanghaController = TextEditingController();
   TextEditingController dateinput = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -111,10 +113,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     );
   }
 
-  Future<String?> uploadImageToFirebaseStorage(XFile image) async {
+  Future<String?> uploadImageToFirebaseStorage(XFile image, String name) async {
     // print('**************${getImageName(image)}**************');
-    Reference storage = FirebaseStorage.instance
-        .ref('${widget.currentUser?.name}/${getImageName(image)}');
+    Reference storage =
+        FirebaseStorage.instance.ref('${name}/${getImageName(image)}');
     await storage.putFile(File(image.path));
     return await storage.getDownloadURL();
   }
@@ -149,21 +151,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const HomePage();
-                        },
-                      ));
-                    },
-                    child: const Text(
-                      'Skip >',
-                      style: TextStyle(color: Colors.deepOrange),
-                    ),
-                  ),
-                ],
+                children: [],
               ),
               CupertinoButton(
                 onPressed: () {
@@ -224,6 +212,32 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               const SizedBox(
                 height: 12,
               ),
+              const SizedBox(height: 10),
+              TextFormField(
+                keyboardType: TextInputType.phone,
+                controller: mobileController,
+                onSaved: (newValue) => mobileController,
+                validator: (value) {
+                  RegExp regex = RegExp(r'^.{10}$');
+                  if (value!.isEmpty) {
+                    return ("Please enter Phone Number");
+                  }
+                  if (!regex.hasMatch(value) && value.length != 10) {
+                    return ("Enter 10 Digit Mobile Number");
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                    icon: Icon(
+                      Icons.phone,
+                      color: Colors.deepOrange,
+                    ),
+                    // hintText: 'Enter Your Mobile Number',
+                    labelText: 'Mobile Number'),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -237,7 +251,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           Expanded(
                             flex: 1,
                             child: RadioListTile(
-                              fillColor: MaterialStateProperty.all(Colors.blue),
+                              fillColor:
+                                  MaterialStateProperty.all(Colors.deepOrange),
                               value: 0,
                               groupValue: genderController,
                               title: const Text("Male",
@@ -245,8 +260,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                                       fontSize: 18, color: Colors.black)),
                               onChanged: (newValue) => setState(
                                   () => genderController = newValue ?? 0),
-                              activeColor: Colors
-                                  .blue, // Set the unselected color to blue
+                              activeColor: Colors.deepOrange,
+                              // Set the unselected color to blue
                               selectedTileColor:
                                   Colors.deepOrange, // Set the selected color
                               selected: false,
@@ -257,7 +272,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                             child: RadioListTile(
                               value: 1,
                               groupValue: genderController,
-                              fillColor: MaterialStateProperty.all(Colors.blue),
+                              fillColor:
+                                  MaterialStateProperty.all(Colors.deepOrange),
                               title: const Text("Female",
                                   style: TextStyle(
                                       fontSize: 18, color: Colors.black)),
@@ -266,8 +282,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                                   genderController = newValue ?? 0;
                                 });
                               },
-                              activeColor: Colors
-                                  .blue, // Set the unselected color to blue
+                              activeColor: Colors.deepOrange,
+                              // Set the unselected color to blue
                               selectedTileColor:
                                   Colors.deepOrange, // Set the selected color
                               selected: false,
@@ -284,7 +300,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               ),
               GestureDetector(
                 child: TextField(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   controller: dateinput, //editing controller of this TextField
                   decoration: const InputDecoration(
                       labelStyle: TextStyle(color: Colors.black),
@@ -375,7 +391,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     ),
                     suggestionsBoxDecoration: const SuggestionsBoxDecoration(
                         color: Colors.white,
-                        elevation: 4.0,
+                        elevation: 0,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10),
@@ -385,7 +401,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         controller: sanghaController,
                         decoration: InputDecoration(
                             focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
+                              borderSide: BorderSide(color: Colors.transparent),
                             ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
@@ -393,10 +409,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                             )),
                             enabledBorder: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(15.0),
+                                  Radius.circular(25.0),
                                 ),
                                 borderSide: BorderSide(color: Colors.black)),
-                            hintText: "Search",
+                            hintText: "Sangha name",
                             contentPadding:
                                 const EdgeInsets.only(top: 4, left: 10),
                             hintStyle: const TextStyle(
@@ -416,6 +432,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         children: [
                           const SizedBox(
                             width: 10,
+                            height: 50,
                           ),
                           Flexible(
                             child: Padding(
@@ -438,16 +455,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     },
                   )),
               const SizedBox(
-                height: 12,
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const SizedBox(
-                height: 12,
+                height: 40,
               ),
               Container(
                   width: MediaQuery.of(context).size.width,
@@ -459,14 +467,14 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     onPressed: () async {
                       String? profileURL = previewImage != null
                           ? await uploadImageToFirebaseStorage(
-                              previewImage as XFile)
+                              previewImage as XFile, nameController.text)
                           : null;
                       DevoteeModel newDevotee = DevoteeModel(
                           bloodGroup: bloodGroupController,
                           devoteeName: nameController.text,
                           gender: gender[genderController],
                           profileImageURL: profileURL);
-                      // await DevoteeAPI().addDevotee(newDevotee);
+                      await DevoteeAPI().addDevotee(newDevotee);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
