@@ -28,7 +28,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text(
+        title: const Text(
           "Address Details",
           style: TextStyle(color: Colors.black),
         ),
@@ -48,7 +48,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
             padding: const EdgeInsets.all(12),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 80,
                 ),
                 Padding(
@@ -88,7 +88,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                             width: 0, style: BorderStyle.none)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -112,7 +112,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                             width: 0, style: BorderStyle.none)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -136,7 +136,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                             width: 0, style: BorderStyle.none)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -160,7 +160,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                             width: 0, style: BorderStyle.none)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -184,7 +184,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                             width: 0, style: BorderStyle.none)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
@@ -208,7 +208,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                             width: 0, style: BorderStyle.none)),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
