@@ -202,9 +202,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       String devoteeId = Uuid().v4();
                       DevoteeModel newDevotee = DevoteeModel(
                           emailId: emailController.text, devoteeId: devoteeId);
-                      int statusCode =
+                      final response =
                           await PostDevoteeAPI().addDevotee(newDevotee);
-                      if (statusCode == 200) {
+                      if (response["statusCode"] == 200) {
                         // ignore: use_build_context_synchronously
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
