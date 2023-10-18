@@ -6,7 +6,7 @@ class AddressModel {
   String? city;
   String? state;
   String? country;
-  String? pincode;
+  int? pincode;
   AddressModel({
     this.addressLine1,
     this.addressLine2,
@@ -22,7 +22,7 @@ class AddressModel {
     String? city,
     String? state,
     String? country,
-    String? pincode,
+    int? pincode,
   }) {
     return AddressModel(
       addressLine1: addressLine1 ?? this.addressLine1,
@@ -66,7 +66,7 @@ class AddressModel {
       city: map['city'],
       state: map['state'],
       country: map['country'],
-      pincode: map['pincode'],
+      pincode: map['pincode']?.toInt(),
     );
   }
 

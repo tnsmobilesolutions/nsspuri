@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sammilani_delegate/API/get_devotee.dart';
 
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
@@ -52,17 +53,17 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 21,
                 ),
                 firebaseUIButton(context, "Sign In", () async {
-                  Map<String, dynamic> data = await FirebaseAuthentication()
-                      .signinWithFirebase(_emailTextController.text,
-                          _passwordTextController.text);
-                  DevoteeModel? devotee = data["devotee"];
-                  if (devotee != null) {
+                  final uid = await FirebaseAuthentication().signinWithFirebase(
+                      _emailTextController.text, _passwordTextController.text);
+                  DevoteeModel devotee =
+                      await GetDevoteeAPI().loginDevotee(uid.toString());
+                  if (devotee.uid == uid) {
                     // ignore: use_build_context_synchronously
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return  HomePage(devoteeId: devotee.devoteeId.toString());
+                          return HomePage(uid: devotee.devoteeId.toString());
                         },
                       ),
                     );
