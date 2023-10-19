@@ -8,27 +8,33 @@ class DelegateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: SizedBox(
-        width: double.infinity,
-        height: 300,
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 400,
         child: Card(
-          elevation: 8,
+          elevation: 6,
           margin: const EdgeInsets.all(20),
-          color: Color.fromARGB(255, 204, 245, 249).withOpacity(.5),
+          color: Color.fromARGB(255, 225, 225, 225).withOpacity(.3),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12))),
           child: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Center(
+                const Center(
                   child: Text(
                     'ଜୟଗୁରୁ',
                     style: TextStyle(fontSize: 24, color: Colors.black),
                   ),
                 ),
-                Text("Name - ${devotee.name}"),
-                Row(
+                const Divider(
+                  thickness: 2,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CircleAvatar(
                       backgroundColor: const Color(0xFFfa6e0f),
@@ -38,17 +44,59 @@ class DelegateCard extends StatelessWidget {
                               fit: BoxFit.cover,
                             ).image
                           : null,
-                      radius: 60,
+                      radius: 40,
                     ),
-                    Column(
-                      children: [
-                        Text("Sangha - ${devotee.sangha}"),
-                        Text("Mobile - ${devotee.mobileNumber}"),
-                        Text("Gender - ${devotee.gender}"),
-                        Text("DOB - ${devotee.dob}"),
-                        Text("BloodGroup - ${devotee.bloodGroup}"),
-                      ],
-                    )
+                    Text(
+                      "Name       :   ${devotee.name}",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Sangha    :     ${devotee.sangha}",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      softWrap: true, // Enable text wrapping
+                      overflow: TextOverflow
+                          .visible, // Define overflow behavior if the text doesn't fit
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Mobile     :    ${devotee.mobileNumber}",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Gender    :    ${devotee.gender}",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "DOB         :    ${devotee.dob}",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "BloodGroup :    ${devotee.bloodGroup}",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                   ],
                 )
               ],
