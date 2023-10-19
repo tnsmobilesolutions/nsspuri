@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: DelegateCard(devotee: snapshot.data),
+                child: DelegateCard(devotee: snapshot.data["data"]),
               ));
             }
           },

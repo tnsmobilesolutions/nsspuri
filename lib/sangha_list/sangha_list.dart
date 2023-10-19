@@ -1,5 +1,5 @@
-class StateService {
-  static final List<String> states = [
+class SanghaList {
+  static final List<String> sangha = [
     'Angul Sakha Sangha',
     'Bikrampur Sakha Sangha',
     'Jagannathpur Sakha Sangha',
@@ -186,7 +186,7 @@ class StateService {
 
   static List<String> getSuggestions(String query) {
     List<String> matches = [];
-    matches.addAll(states);
+    matches.addAll(sangha);
     matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
     return matches;
   }

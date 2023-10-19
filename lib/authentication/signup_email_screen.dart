@@ -18,11 +18,22 @@ class _SignupScreenState extends State<SignupScreen> {
   final confirmPasswordController = TextEditingController();
 
   final textFieldFocusNode = FocusNode();
-  bool _obscured = false;
+  bool _obscured1 = false;
+  bool _obscured2 = false;
 
-  void _toggleObscured() {
+  void _toggleObscured1() {
     setState(() {
-      _obscured = !_obscured;
+      _obscured1 = !_obscured1;
+      if (textFieldFocusNode.hasPrimaryFocus)
+        return; // If focus is on text field, dont unfocus
+      textFieldFocusNode.canRequestFocus =
+          false; // Prevents focus if tap on eye
+    });
+  }
+
+  void _toggleObscured2() {
+    setState(() {
+      _obscured2 = !_obscured2;
       if (textFieldFocusNode.hasPrimaryFocus)
         return; // If focus is on text field, dont unfocus
       textFieldFocusNode.canRequestFocus =
@@ -94,7 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     return null;
                   },
                   keyboardType: TextInputType.visiblePassword,
-                  obscureText: _obscured,
+                  obscureText: _obscured1,
                   focusNode: textFieldFocusNode,
                   decoration: InputDecoration(
                     labelText: " Enter your password",
@@ -116,11 +127,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                       child: GestureDetector(
-                        onTap: _toggleObscured,
+                        onTap: _toggleObscured1,
                         child: Icon(
-                          _obscured
-                              ? Icons.visibility_rounded
-                              : Icons.visibility_off_rounded,
+                          _obscured1
+                              ? Icons.visibility_off_rounded
+                              : Icons.visibility_rounded,
                           size: 24,
                         ),
                       ),
@@ -135,13 +146,15 @@ class _SignupScreenState extends State<SignupScreen> {
                   controller: confirmPasswordController,
                   onSaved: (newValue) => confirmPasswordController,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        value != passwordController.text) {
                       return 'Confirm Pasword';
                     }
                     return null;
                   },
                   keyboardType: TextInputType.visiblePassword,
-                  obscureText: _obscured,
+                  obscureText: _obscured2,
                   decoration: InputDecoration(
                     labelText: " Confirm password",
                     labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
@@ -162,11 +175,11 @@ class _SignupScreenState extends State<SignupScreen> {
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                       child: GestureDetector(
-                        onTap: _toggleObscured,
+                        onTap: _toggleObscured2,
                         child: Icon(
-                          _obscured
-                              ? Icons.visibility_rounded
-                              : Icons.visibility_off_rounded,
+                          _obscured2
+                              ? Icons.visibility_off_rounded
+                              : Icons.visibility_rounded,
                           size: 24,
                         ),
                       ),
@@ -185,50 +198,94 @@ class _SignupScreenState extends State<SignupScreen> {
                       BoxDecoration(borderRadius: BorderRadius.circular(90)),
                   child: ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith((states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return Colors.deepOrange;
-                          }
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed)) {
                           return Colors.deepOrange;
-                        }),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(90)))),
+                        }
+                        return Colors.deepOrange;
+                      }),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(90),
+                        ),
+                      ),
+                    ),
                     onPressed: () async {
-                      String? uid = await FirebaseAuthentication()
-                          .signupWithpassword(
-                              emailController.text, passwordController.text);
+                     try {
+                        String? uid =
+                          await FirebaseAuthentication().signupWithpassword(
+                        emailController.text,
+                        passwordController.text,
+                      );
                       if (uid != null) {
                         String devoteeId = const Uuid().v1();
                         DevoteeModel newDevotee = DevoteeModel(
-                            emailId: emailController.text,
-                            uid: uid,
-                            createdAt: DateTime.now().toString(),
-                            updatedAt: DateTime.now().toString(),
-                            devoteeId: devoteeId);
+                          emailId: emailController.text,
+                          uid: uid,
+                          createdAt: DateTime.now().toString(),
+                          updatedAt: DateTime.now().toString(),
+                          devoteeId: devoteeId,
+                        );
+
                         final response =
                             await PostDevoteeAPI().addDevotee(newDevotee);
+
                         if (response["statusCode"] == 200) {
+                          // Show a circular progress indicator while navigating
                           // ignore: use_build_context_synchronously
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return DevoteeDetailsPage(
-                                uid: uid,
-                                devoteeId: devoteeId ,
+                          showDialog(
+                            context: context,
+                            barrierDismissible:
+                                false, // Prevent dismissing by tapping outside
+                            builder: (BuildContext context) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
                               );
                             },
-                          ));
-                        } else {}
-                      } else {}
+                          );
+
+                          // Navigate to the next screen
+                          await Future.delayed(
+                              const Duration(seconds: 1)); // Simulating a delay
+                          // ignore: use_build_context_synchronously
+                          Navigator.of(context)
+                              .pop(); // Close the circular progress indicator
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return DevoteeDetailsPage(
+                                  uid: uid,
+                                  devoteeId: devoteeId,
+                                );
+                              },
+                            ),
+                          );
+                        } else {
+                           ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Signup failed')));
+                          // Handle the case where the response status code is not 200
+                        }
+                      } else {
+                         ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Signup failed')));
+                        // Handle the case where uid is null
+                      } 
+                     } catch (e) {
+                       ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())));
+                       print(e); 
+                     }
                     },
                     child: const Text(
                       "Next",
                       style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),

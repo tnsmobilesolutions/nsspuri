@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
-
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
-
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
-
 import 'reset_password.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -52,23 +49,64 @@ class _SignInScreenState extends State<SignInScreen> {
                 const SizedBox(
                   height: 21,
                 ),
-                firebaseUIButton(context, "Sign In", () async {
-                  final uid = await FirebaseAuthentication().signinWithFirebase(
-                      _emailTextController.text, _passwordTextController.text);
-                  DevoteeModel devotee =
-                      await GetDevoteeAPI().loginDevotee(uid.toString());
-                  if (devotee.uid == uid) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return HomePage(uid: devotee.devoteeId.toString());
-                        },
-                      ),
-                    );
-                  }
-                }),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(90)),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        final uid = await FirebaseAuthentication()
+                          .signinWithFirebase(_emailTextController.text,
+                              _passwordTextController.text);
+                      final data =
+                          await GetDevoteeAPI().loginDevotee(uid.toString());
+                      DevoteeModel devotee = data["data"];
+                      if (devotee.uid == uid) {
+                         ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Signin Successful')));
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return HomePage(
+                                  uid: devotee.devoteeId.toString());
+                            },
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Signin failed')));
+                      } 
+                      } catch (e) {
+                         ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())));
+                      }
+                    },
+                    child: Text(
+                      "Sign In",
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.deepOrange;
+                          }
+                          return Colors.deepOrange;
+                        }),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(90)))),
+                  ),
+                ),
                 forgetPassword(context),
                 signUpOption()
               ],

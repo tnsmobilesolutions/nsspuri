@@ -70,25 +70,28 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     ),
                   ),
                 ),
-                TextFormField(
-                  controller: addressLine1Controller,
-                  onSaved: (newValue) => addressLine1Controller,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter address line 1';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    labelText: "Address line 1",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
+                SingleChildScrollView(
+                  child: TextFormField(
+                    controller: addressLine1Controller,
+                    onSaved: (newValue) => addressLine1Controller,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter address line 1';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Address line 1",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -216,6 +219,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                 ),
                 Container(
                   width: double.infinity,
+                  height: MediaQuery.of(context).size.height / 18,
                   child: ElevatedButton(
                     onPressed: () async {
                       DevoteeModel devoteeAddress = DevoteeModel(
@@ -229,6 +233,25 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                       final response = await PutDevoteeAPI()
                           .updateDevotee(devoteeAddress, widget.devoteeId);
                       if (response["statusCode"] == 200) {
+                        // Show a circular progress indicator while navigating
+                        // ignore: use_build_context_synchronously
+                        showDialog(
+                          context: context,
+                          barrierDismissible:
+                              false, // Prevent dismissing by tapping outside
+                          builder: (BuildContext context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        );
+
+                        // Navigate to the next screen
+                        await Future.delayed(
+                            const Duration(seconds: 1)); // Simulating a delay
+                        // ignore: use_build_context_synchronously
+                        Navigator.of(context)
+                            .pop(); // Close the circular progress indicator
                         // ignore: use_build_context_synchronously
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
@@ -249,10 +272,10 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(90)))),
+                                    borderRadius: BorderRadius.circular(60)))),
                     child: const Text(
                       'Signup',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 22),
                     ),
 
                     //Row
