@@ -11,7 +11,7 @@ class GetDevoteeAPI extends DioFuctionAPI {
       return {"statusCode": 200, "data": devotee};
     } catch (e) {
       print(e);
-      return {"statusCode": 500, "data": DevoteeModel.fromMap(null)};
+      return {"statusCode": 500, "data": null};
     }
   }
 

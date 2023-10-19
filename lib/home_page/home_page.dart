@@ -42,10 +42,7 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            print(snapshot.data);
-            return Center(
-                child: DelegateCard(
-                    devotee: snapshot.data["data"] ? snapshot.data["data"] : null));
+            return Center(child: DelegateCard(devoteeData: snapshot.data));
           }
         },
       ),

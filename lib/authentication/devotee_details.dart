@@ -133,26 +133,24 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/white-texture.jpeg"),
-              fit: BoxFit.cover,
-            ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/white-texture.jpeg"),
+            fit: BoxFit.cover,
           ),
-          child: SafeArea(
-              child: Padding(
-            padding: const EdgeInsets.all(15),
+        ),
+        child: SafeArea(
+            child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: SingleChildScrollView(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              SingleChildScrollView(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [],
               ),
               CupertinoButton(
                 onPressed: () {
@@ -456,59 +454,59 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     BoxDecoration(borderRadius: BorderRadius.circular(90)),
                 child: ElevatedButton(
                   onPressed: () async {
-                   try {
+                    try {
                       String? profileURL = previewImage != null
-                        ? await uploadImageToFirebaseStorage(
-                            previewImage as XFile, nameController.text)
-                        : null;
-                    DevoteeModel newDevotee = DevoteeModel(
-                      bloodGroup: bloodGroupController,
-                      name: nameController.text,
-                      gender: gender[genderController],
-                      profilePhotoUrl: profileURL,
-                      sangha: sanghaController.text,
-                      dob: dateinput.text,
-                      mobileNumber: mobileController.text,
-                      updatedAt: DateTime.now().toString(),
-                    );
-
-                    final response = await PutDevoteeAPI()
-                        .updateDevotee(newDevotee, widget.devoteeId);
-                    if (response["statusCode"] == 200) {
-                      // Show a circular progress indicator while navigating
-                      showDialog(
-                        context: context,
-                        barrierDismissible:
-                            false, // Prevent dismissing by tapping outside
-                        builder: (BuildContext context) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
+                          ? await uploadImageToFirebaseStorage(
+                              previewImage as XFile, nameController.text)
+                          : null;
+                      DevoteeModel newDevotee = DevoteeModel(
+                        bloodGroup: bloodGroupController,
+                        name: nameController.text,
+                        gender: gender[genderController],
+                        profilePhotoUrl: profileURL,
+                        sangha: sanghaController.text,
+                        dob: dateinput.text,
+                        mobileNumber: mobileController.text,
+                        updatedAt: DateTime.now().toString(),
                       );
 
-                      // Navigate to the next screen
-                      await Future.delayed(
-                          Duration(seconds: 1)); // Simulating a delay
-                      Navigator.of(context)
-                          .pop(); // Close the circular progress indicator
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return AddressDetailsScreen(
-                              uid: widget.uid, devoteeId: widget.devoteeId);
-                        }),
-                      );
-                    } else {
-                       ScaffoldMessenger.of(context).showSnackBar(
+                      final response = await PutDevoteeAPI()
+                          .updateDevotee(newDevotee, widget.devoteeId);
+                      if (response["statusCode"] == 200) {
+                        // Show a circular progress indicator while navigating
+                        showDialog(
+                          context: context,
+                          barrierDismissible:
+                              false, // Prevent dismissing by tapping outside
+                          builder: (BuildContext context) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        );
+
+                        // Navigate to the next screen
+                        await Future.delayed(
+                            Duration(seconds: 1)); // Simulating a delay
+                        Navigator.of(context)
+                            .pop(); // Close the circular progress indicator
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return AddressDetailsScreen(
+                                uid: widget.uid, devoteeId: widget.devoteeId);
+                          }),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('devotee update issue')));
-                    } 
-                   } catch (e) {
-                     ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(e.toString())));
-                     print(e); 
-                   }
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(e.toString())));
+                      print(e);
+                    }
                   },
                   style: ButtonStyle(
                       backgroundColor:
@@ -530,8 +528,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 ),
               ),
             ]),
-          )),
-        ),
+          ),
+        )),
       ),
     );
   }
