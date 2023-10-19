@@ -14,29 +14,17 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
     return AnimatedSplashScreen(
-      splash: const Image(
-        image: AssetImage('assets/images/nsslogo.png'),
-      ),
-      splashIconSize: 200,
-      splashTransition: SplashTransition.scaleTransition,
-      nextScreen: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            final user = snapshot.data;
-            if (user == null) {
-              return const SignInScreen();
-            } else {
-              return HomePage(
-                uid: user.uid,
-              );
-            }
-          } else {
-            return const SignInScreen();
-          }
-        },
-      ),
-    );
+        splash: const Image(
+          image: AssetImage('assets/images/nsslogo.png'),
+        ),
+        splashIconSize: 200,
+        splashTransition: SplashTransition.scaleTransition,
+        nextScreen: uid != null
+            ? HomePage(
+                uid: uid,
+              )
+            : const SignInScreen());
   }
 }
