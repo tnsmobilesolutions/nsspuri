@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/screen/edit_devotee.dart';
 
 // ignore: must_be_immutable
 class DelegateCard extends StatelessWidget {
@@ -8,8 +9,8 @@ class DelegateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DevoteeModel? devotee = devoteeData["data"];
-    if (devotee == null) {
+    DevoteeModel devotee = devoteeData["data"];
+    if (devotee.uid != null) {
       return const Center(child: Text("No data"));
     }
     return Center(
@@ -27,6 +28,22 @@ class DelegateCard extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  devotee.devoteeId != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) {
+                                        return EditDevoteeDetailsPage(
+                                            devotee: devotee);
+                                      },
+                                    ));
+                                  },
+                                  icon: const Icon(Icons.edit))
+                            ])
+                      : SizedBox(),
                   const Center(
                     child: Text(
                       'ଜୟଗୁରୁ',
@@ -51,7 +68,7 @@ class DelegateCard extends StatelessWidget {
                             : null,
                         radius: 40,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Column(
@@ -64,7 +81,7 @@ class DelegateCard extends StatelessWidget {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 )
-                              : Text("Name :- Please Update your Name"),
+                              : const Text("Name :- Please Update your Name"),
                           const SizedBox(
                             height: 10,
                           ),
@@ -78,7 +95,8 @@ class DelegateCard extends StatelessWidget {
                                   overflow: TextOverflow
                                       .visible, // Define overflow behavior if the text doesn't fit
                                 )
-                              : Text("Sanga :- Please Update your Sangha"),
+                              : const Text(
+                                  "Sanga :- Please Update your Sangha"),
                           const SizedBox(
                             height: 10,
                           ),
@@ -89,7 +107,7 @@ class DelegateCard extends StatelessWidget {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 )
-                              : Text(
+                              : const Text(
                                   "Mobile :- Please Update your Mobile Number"),
                           const SizedBox(
                             height: 10,
@@ -101,7 +119,8 @@ class DelegateCard extends StatelessWidget {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 )
-                              : Text("Gender :- Please Update your Gender"),
+                              : const Text(
+                                  "Gender :- Please Update your Gender"),
                           const SizedBox(
                             height: 10,
                           ),
@@ -112,7 +131,8 @@ class DelegateCard extends StatelessWidget {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 )
-                              : Text("DOB :- Please Update your Date of birth"),
+                              : const Text(
+                                  "DOB :- Please Update your Date of birth"),
                           const SizedBox(
                             height: 10,
                           ),
@@ -123,7 +143,7 @@ class DelegateCard extends StatelessWidget {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 )
-                              : Text(
+                              : const Text(
                                   "Bloodgroup :- Please Update your Bloodgroup"),
                         ],
                       ),

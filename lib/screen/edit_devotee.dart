@@ -8,34 +8,33 @@ import 'package:intl/intl.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/authentication/address_screen.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 
 // ignore: depend_on_referenced_packages
 
 // ignore: must_be_immutable
-class DevoteeDetailsPage extends StatefulWidget {
-  DevoteeDetailsPage({Key? key, required this.uid, required this.devoteeId})
-      : super(key: key);
-  String uid;
-  String devoteeId;
+class EditDevoteeDetailsPage extends StatefulWidget {
+  EditDevoteeDetailsPage({Key? key, required this.devotee}) : super(key: key);
+  DevoteeModel devotee;
   get currentUser => null;
 
   @override
-  State<DevoteeDetailsPage> createState() => _DevoteeDetailsPageState();
+  State<EditDevoteeDetailsPage> createState() => _EditDevoteeDetailsPageState();
 }
 
-class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
+class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   final nameController = TextEditingController();
   final mobileController = TextEditingController();
   final sanghaController = TextEditingController();
   TextEditingController dateinput = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  String name = "";
   String? bloodGroupController;
 
   List gender = ["Male", "Female"];
   int genderController = 0;
+  String? profileURL;
 
   String? profileImage;
   XFile? previewImage;
@@ -92,6 +91,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
 
   String? select;
 
+  @override
+  void initState() {
+    super.initState();
+    nameController.text = widget.devotee.name ?? "";
+    mobileController.text = widget.devotee.mobileNumber ?? "";
+    sanghaController.text = widget.devotee.sangha ?? "";
+    dateinput.text = widget.devotee.dob ?? "";
+    bloodGroupController = widget.devotee.bloodGroup ?? "";
+    profileURL = widget.devotee.profilePhotoUrl ?? "";
+    
+  }
+
   Row addRadioButton(int btnValue, String title) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -123,11 +134,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   // return image name
   String getImageName(XFile image) {
     return image.path.split("/").last;
-  }
-
-  void initState() {
-    dateinput.text = ""; //set the initial value of text field
-    super.initState();
   }
 
   @override
@@ -451,23 +457,23 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                      String? profileURL = previewImage != null
+                       profileURL = previewImage != null
                           ? await uploadImageToFirebaseStorage(
                               previewImage as XFile, nameController.text)
                           : null;
-                      DevoteeModel newDevotee = DevoteeModel(
-                        bloodGroup: bloodGroupController,
-                        name: nameController.text,
-                        gender: gender[genderController],
-                        profilePhotoUrl: profileURL,
-                        sangha: sanghaController.text,
-                        dob: dateinput.text,
-                        mobileNumber: mobileController.text,
-                        updatedAt: DateTime.now().toString(),
-                      );
+                      DevoteeModel updateDevotee = DevoteeModel(
+                          bloodGroup: bloodGroupController,
+                          name: nameController.text,
+                          gender: gender[genderController],
+                          profilePhotoUrl: profileURL,
+                          sangha: sanghaController.text,
+                          dob: dateinput.text,
+                          mobileNumber: mobileController.text,
+                          updatedAt: DateTime.now().toString(),
+                          address: AddressModel());
 
                       final response = await PutDevoteeAPI()
-                          .updateDevotee(newDevotee, widget.devoteeId);
+                          .updateDevotee(updateDevotee, widget.devotee.devoteeId.toString());
                       if (response["statusCode"] == 200) {
                         // Show a circular progress indicator while navigating
                         showDialog(
@@ -491,7 +497,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           context,
                           MaterialPageRoute(builder: (context) {
                             return AddressDetailsScreen(
-                                uid: widget.uid, devoteeId: widget.devoteeId);
+                                uid: widget.devotee.uid.toString(), devoteeId: widget.devotee.devoteeId.toString());
                           }),
                         );
                       } else {

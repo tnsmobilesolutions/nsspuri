@@ -42,7 +42,13 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            return Center(child: DelegateCard(devoteeData: snapshot.data));
+            if (snapshot.data["statusCode"] == 200) {
+              return Center(child: DelegateCard(devoteeData: snapshot.data));
+            } else {
+              return const Center(
+                child: Text("404 Error"),
+              );
+            }
           }
         },
       ),
