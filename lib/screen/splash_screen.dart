@@ -1,10 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
-import 'package:sammilani_delegate/model/devotte_model.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,13 +12,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  String? devoteeId;
-
-  devoteedata(String uid) async {
-    DevoteeModel devotee = await GetDevoteeAPI().loginDevotee(uid);
-    devoteeId = devotee.devoteeId;
-  }
-
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
@@ -42,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
               );
             }
           } else {
-            return SignInScreen();
+            return const SignInScreen();
           }
         },
       ),

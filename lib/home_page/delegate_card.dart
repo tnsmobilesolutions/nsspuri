@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 
+// ignore: must_be_immutable
 class DelegateCard extends StatelessWidget {
   DelegateCard({super.key, required this.devotee});
   DevoteeModel devotee;
