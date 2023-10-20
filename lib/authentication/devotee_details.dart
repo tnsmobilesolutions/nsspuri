@@ -15,7 +15,7 @@ import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 
 // ignore: must_be_immutable
 class DevoteeDetailsPage extends StatefulWidget {
-  DevoteeDetailsPage({Key? key, required this.uid, required this.devoteeId, required DevoteeModel devotee})
+  DevoteeDetailsPage({Key? key, required this.uid, required this.devoteeId})
       : super(key: key);
   String uid;
   String devoteeId;

@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
-import 'package:sammilani_delegate/authentication/address_screen.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/address_model.dart';
@@ -17,12 +16,10 @@ import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 
 // ignore: must_be_immutable
 class EditDevoteeDetailsPage extends StatefulWidget {
-  EditDevoteeDetailsPage(
-      {Key? key,
-      required this.devotee,
-      required String uid,
-      required String devoteeId})
-      : super(key: key);
+  EditDevoteeDetailsPage({
+    Key? key,
+    required this.devotee,
+  }) : super(key: key);
   DevoteeModel devotee;
   get currentUser => null;
 
@@ -104,7 +101,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     mobileController.text = widget.devotee.mobileNumber ?? "";
     sanghaController.text = widget.devotee.sangha ?? "";
     dateinput.text = widget.devotee.dob ?? "";
-    // bloodGroupController = widget.devotee.bloodGroup ?? "";
+    bloodGroupController = widget.devotee.bloodGroup ?? bloodGroupController;
     profileURL = widget.devotee.profilePhotoUrl ?? "";
   }
 
@@ -342,24 +339,35 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               const SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                height: 60,
-                width: MediaQuery.of(context).size.width / 1.1,
-                child: DropdownButtonFormField(
-                  value: bloodGroupController,
-                  onChanged: (String? value) {
-                    setState(() {
-                      bloodGroupController = value;
-                    });
-                  },
-                  items: bloodGrouplist
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(bloodGroupController ?? value),
-                    );
-                  }).toList(),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Icon(Icons.bloodtype, color: Color(0xFFfa6e0f)),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: DropdownButtonFormField(
+                      value: bloodGroupController,
+
+                      elevation: 16,
+                      hint: const Text('Select BloodGroup'),
+                      // style: const TextStyle(color: Colors.deepPurple),
+
+                      onChanged: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          bloodGroupController = value!;
+                        });
+                      },
+                      items: bloodGrouplist
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 20,
@@ -445,11 +453,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                      await Future.delayed(
-                          const Duration(seconds: 1)); // Simulating a delay
-                      // ignore: use_build_context_synchronously
-
-                      // ignore: use_build_context_synchronously
                       profileURL = previewImage != null
                           ? await uploadImageToFirebaseStorage(
                               previewImage as XFile, nameController.text)
@@ -481,9 +484,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           },
                         );
 
-                        // Navigate to the next screen
-                        Navigator.of(context)
-                            .pop(); // Close the circular progress indicator
                         Navigator.push(
                             context,
                             MaterialPageRoute(

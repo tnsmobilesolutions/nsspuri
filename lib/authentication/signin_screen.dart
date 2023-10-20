@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
@@ -58,8 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         DevoteeModel devotee = data?["data"];
                         if (devotee.uid == uid) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Signin Successful')));
-                          // ignore: use_build_context_synchronously
+                              const SnackBar(content: Text('Signin Successful')));
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -71,10 +72,10 @@ class _SignInScreenState extends State<SignInScreen> {
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Signin failed')));
+                              const SnackBar(content: Text('Signin failed')));
                         }
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                             content:
                                 Text('User does not exist. Please sign up.')));
                       }
@@ -83,9 +84,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           .showSnackBar(SnackBar(content: Text(e.toString())));
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     "Sign In",
-                    style: const TextStyle(
+                    style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 16),

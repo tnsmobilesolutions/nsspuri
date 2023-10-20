@@ -47,10 +47,10 @@ class DelegateCard extends StatelessWidget {
                               ),
                               IconButton(
                                   onPressed: () {
-                                    Navigator.pop(context, MaterialPageRoute(
+                                    Navigator.push(context, MaterialPageRoute(
                                       builder: (context) {
                                         return EditDevoteeDetailsPage(
-                                            devotee: devotee, uid: '', devoteeId: '',);
+                                            devotee: devotee);
                                       },
                                     ));
                                   },

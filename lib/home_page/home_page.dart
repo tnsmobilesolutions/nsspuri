@@ -14,88 +14,72 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int selectedPageIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.deepOrange,
-              ),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundColor: Colors.transparent,
-                        backgroundImage:
-                            AssetImage('assets/images/nsslogo.png'),
-                      ),
-                      const Text(
-                        'Welcome',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            ListTile(
-              title: const Text('Profile'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: const Text('Sangha'),
-              onTap: () {},
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.deepOrange),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: const Text(
+            "Home",
+            style: TextStyle(color: Colors.black),
+          ),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout, color: Colors.deepOrange),
+              onPressed: () {
+                FirebaseAuthentication().signOut();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
+                );
+              },
             ),
           ],
         ),
-      ),
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.deepOrange),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text(
-          "Home",
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Colors.deepOrange),
-            onPressed: () {
-              FirebaseAuthentication().signOut();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SignInScreen()),
-              );
-            },
-          ),
-        ],
-      ),
-      body: FutureBuilder(
-        future: GetDevoteeAPI().loginDevotee(widget.uid),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            if (snapshot.data["statusCode"] == 200) {
-              return Center(child: DelegateCard(devoteeData: snapshot.data));
+        body: FutureBuilder(
+          future: GetDevoteeAPI().loginDevotee(widget.uid),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
             } else {
-              return const Center(
-                child: Text("404 Error"),
-              );
+              if (snapshot.data["statusCode"] == 200) {
+                return Center(child: DelegateCard(devoteeData: snapshot.data));
+              } else {
+                return const Center(
+                  child: Text("404 Error"),
+                );
+              }
             }
-          }
-        },
-      ),
-    );
+          },
+        ),
+        bottomNavigationBar: NavigationBar(
+            selectedIndex: selectedPageIndex,
+            onDestinationSelected: (int index) {
+              setState(() {
+                selectedPageIndex = index;
+              });
+            },
+            destinations: const <NavigationDestination>[
+              NavigationDestination(
+                selectedIcon: Icon(Icons.person),
+                icon: Icon(Icons.person_outline),
+                label: 'Learn',
+              ),
+              NavigationDestination(
+                selectedIcon: Icon(Icons.engineering),
+                icon: Icon(Icons.engineering_outlined),
+                label: 'Relearn',
+              ),
+              NavigationDestination(
+                selectedIcon: Icon(Icons.bookmark),
+                icon: Icon(Icons.bookmark_border),
+                label: 'Unlearn',
+              )
+            ]));
   }
 }

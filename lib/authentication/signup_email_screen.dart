@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
+import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
-import 'package:sammilani_delegate/screen/edit_devotee.dart';
+
 import 'package:uuid/uuid.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -252,8 +253,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return EditDevoteeDetailsPage(
-                                    devotee: DevoteeModel(), uid: '', devoteeId: '',
+                                  return DevoteeDetailsPage(
+                                    devoteeId: devoteeId,
+                                    uid: uid,
                                   );
                                 },
                               ),
