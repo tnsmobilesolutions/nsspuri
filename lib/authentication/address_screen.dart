@@ -36,150 +36,43 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
         backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/white-texture.jpeg"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 80,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 250),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return HomePage(
-                            uid: widget.uid,
-                          );
-                        },
-                      ));
-                    },
-                    child: const Text(
-                      'Skip >',
-                      style: TextStyle(fontSize: 16, color: Colors.deepOrange),
-                    ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: TextFormField(
-                    controller: addressLine1Controller,
-                    onSaved: (newValue) => addressLine1Controller,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter address line 1';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: "Address line 1",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: addressLine2Controller,
-                  onSaved: (newValue) => addressLine2Controller,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter address line 2';
-                    }
-                    return null;
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 80,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return HomePage(
+                          uid: widget.uid,
+                        );
+                      },
+                    ));
                   },
-                  decoration: InputDecoration(
-                    labelText: "Address line 2",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
+                  child: const Text(
+                    'Skip >',
+                    style: TextStyle(fontSize: 16, color: Colors.deepOrange),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: cityController,
-                  onSaved: (newValue) => cityController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter city name';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    labelText: "City name",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: stateController,
-                  onSaved: (newValue) => stateController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter state name';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    labelText: "State name",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: countryController,
+              ),
+              SingleChildScrollView(
+                child: TextFormField(
+                  controller: addressLine1Controller,
                   onSaved: (newValue) => addressLine1Controller,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter country name';
+                      return 'Please enter address line 1';
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: "Country name",
+                    labelText: "Address line 1",
                     labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                     filled: true,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -190,99 +83,194 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                             width: 0, style: BorderStyle.none)),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: addressLine2Controller,
+                onSaved: (newValue) => addressLine2Controller,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter address line 2';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "Address line 2",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
                 ),
-                TextFormField(
-                  controller: postalCodeController,
-                  onSaved: (newValue) => postalCodeController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter postal code';
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: cityController,
+                onSaved: (newValue) => cityController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter city name';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "City name",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: stateController,
+                onSaved: (newValue) => stateController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter state name';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "State name",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: countryController,
+                onSaved: (newValue) => addressLine1Controller,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter country name';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "Country name",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: postalCodeController,
+                onSaved: (newValue) => postalCodeController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter postal code';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "Postal code",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    DevoteeModel devoteeAddress = DevoteeModel(
+                        address: AddressModel(
+                            addressLine1: addressLine1Controller.text,
+                            addressLine2: addressLine2Controller.text,
+                            city: cityController.text,
+                            country: countryController.text,
+                            pincode: int.tryParse(postalCodeController.text),
+                            state: stateController.text));
+                    final response = await PutDevoteeAPI()
+                        .updateDevotee(devoteeAddress, widget.devoteeId);
+                    if (response["statusCode"] == 200) {
+                      // Show a circular progress indicator while navigating
+                      // ignore: use_build_context_synchronously
+                      showDialog(
+                        context: context,
+                        barrierDismissible:
+                            false, // Prevent dismissing by tapping outside
+                        builder: (BuildContext context) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      );
+
+                      // Navigate to the next screen
+                      await Future.delayed(
+                          const Duration(seconds: 1)); // Simulating a delay
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context)
+                          .pop(); // Close the circular progress indicator
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return HomePage(uid: widget.uid);
+                        },
+                      ));
                     }
-                    return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "Postal code",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 18,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      DevoteeModel devoteeAddress = DevoteeModel(
-                          address: AddressModel(
-                              addressLine1: addressLine1Controller.text,
-                              addressLine2: addressLine2Controller.text,
-                              city: cityController.text,
-                              country: countryController.text,
-                              pincode: int.tryParse(postalCodeController.text),
-                              state: stateController.text));
-                      final response = await PutDevoteeAPI()
-                          .updateDevotee(devoteeAddress, widget.devoteeId);
-                      if (response["statusCode"] == 200) {
-                        // Show a circular progress indicator while navigating
-                        // ignore: use_build_context_synchronously
-                        showDialog(
-                          context: context,
-                          barrierDismissible:
-                              false, // Prevent dismissing by tapping outside
-                          builder: (BuildContext context) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        );
 
-                        // Navigate to the next screen
-                        await Future.delayed(
-                            const Duration(seconds: 1)); // Simulating a delay
-                        // ignore: use_build_context_synchronously
-                        Navigator.of(context)
-                            .pop(); // Close the circular progress indicator
-                        // ignore: use_build_context_synchronously
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return HomePage(uid: widget.uid);
-                          },
-                        ));
-                      }
-                    },
-
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith((states) {
-                          if (states.contains(MaterialState.pressed)) {
-                            return Colors.deepOrange;
-                          }
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed)) {
                           return Colors.deepOrange;
-                        }),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(60)))),
-                    child: const Text(
-                      'Signup',
-                      style: TextStyle(fontSize: 22),
-                    ),
-
-                    //Row
+                        }
+                        return Colors.deepOrange;
+                      }),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(60)))),
+                  child: const Text(
+                    'Signup',
+                    style: TextStyle(fontSize: 22),
                   ),
-                )
-              ],
-            ),
+
+                  //Row
+                ),
+              )
+            ],
           ),
         ),
       ),
