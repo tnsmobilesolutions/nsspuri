@@ -18,68 +18,46 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.deepOrange),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: const Text(
-            "Home",
-            style: TextStyle(color: Colors.black),
-          ),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.logout, color: Colors.deepOrange),
-              onPressed: () {
-                FirebaseAuthentication().signOut();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignInScreen()),
-                );
-              },
-            ),
-          ],
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        iconTheme: IconThemeData(color: Colors.deepOrange),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text(
+          "Sammilani Delegate",
+          style: TextStyle(color: Colors.black),
         ),
-        body: FutureBuilder(
-          future: GetDevoteeAPI().loginDevotee(widget.uid),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              if (snapshot.data["statusCode"] == 200) {
-                return Center(child: DelegateCard(devoteeData: snapshot.data));
-              } else {
-                return const Center(
-                  child: Text("404 Error"),
-                );
-              }
-            }
-          },
-        ),
-        bottomNavigationBar: NavigationBar(
-            selectedIndex: selectedPageIndex,
-            onDestinationSelected: (int index) {
-              setState(() {
-                selectedPageIndex = index;
-              });
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.deepOrange),
+            onPressed: () {
+              FirebaseAuthentication().signOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SignInScreen()),
+              );
             },
-            destinations: const <NavigationDestination>[
-              NavigationDestination(
-                selectedIcon: Icon(Icons.person),
-                icon: Icon(Icons.person_outline),
-                label: 'Learn',
-              ),
-              NavigationDestination(
-                selectedIcon: Icon(Icons.engineering),
-                icon: Icon(Icons.engineering_outlined),
-                label: 'Relearn',
-              ),
-              NavigationDestination(
-                selectedIcon: Icon(Icons.bookmark),
-                icon: Icon(Icons.bookmark_border),
-                label: 'Unlearn',
-              )
-            ]));
+          ),
+        ],
+      ),
+      body: FutureBuilder(
+        future: GetDevoteeAPI().loginDevotee(widget.uid),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            if (snapshot.data["statusCode"] == 200) {
+              return Center(child: DelegateCard(devoteeData: snapshot.data));
+            } else {
+              return const Center(
+                child: Text("404 Error"),
+              );
+            }
+          }
+        },
+      ),
+    );
   }
 }

@@ -14,12 +14,11 @@ class DelegateCard extends StatelessWidget {
       return const Center(child: Text("No data"));
     }
     return Center(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 2,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Card(
           elevation: 3,
-          margin: const EdgeInsets.all(20),
+          // margin: const EdgeInsets.all(20),
           color: Color.fromARGB(148, 242, 242, 242).withOpacity(.2),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12))),
