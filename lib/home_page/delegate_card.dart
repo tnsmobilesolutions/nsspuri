@@ -14,13 +14,13 @@ class DelegateCard extends StatelessWidget {
       return const Center(child: Text("No data"));
     }
     return Center(
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: 400,
+        height: MediaQuery.of(context).size.height / 2,
         child: Card(
-          elevation: 6,
+          elevation: 3,
           margin: const EdgeInsets.all(20),
-          color: const Color.fromARGB(255, 225, 225, 225).withOpacity(.3),
+          color: Color.fromARGB(148, 242, 242, 242).withOpacity(.2),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12))),
           child: Padding(
@@ -30,26 +30,41 @@ class DelegateCard extends StatelessWidget {
                 children: [
                   devotee.devoteeId != null
                       ? Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 3.2,
+                              ),
+                              const Text(
+                                'ଜୟଗୁରୁ',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 6,
+                              ),
                               IconButton(
                                   onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(
+                                    Navigator.pop(context, MaterialPageRoute(
                                       builder: (context) {
                                         return EditDevoteeDetailsPage(
-                                            devotee: devotee);
+                                            devotee: devotee, uid: '', devoteeId: '',);
                                       },
                                     ));
                                   },
-                                  icon: const Icon(Icons.edit))
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.deepOrange,
+                                  ))
                             ])
-                      : SizedBox(),
-                  const Center(
-                    child: Text(
-                      'ଜୟଗୁରୁ',
-                      style: TextStyle(fontSize: 24, color: Colors.black),
-                    ),
-                  ),
+                      : const Center(
+                          child: Text(
+                            'ଜୟଗୁରୁ',
+                            style: TextStyle(fontSize: 24, color: Colors.black),
+                          ),
+                        ),
                   const Divider(
                     thickness: 2,
                   ),
@@ -59,14 +74,17 @@ class DelegateCard extends StatelessWidget {
                   Column(
                     children: [
                       CircleAvatar(
-                        backgroundColor: const Color(0xFFfa6e0f),
-                        backgroundImage: devotee.profilePhotoUrl != null
-                            ? Image.network(
-                                devotee.profilePhotoUrl.toString(),
-                                fit: BoxFit.cover,
-                              ).image
-                            : null,
-                        radius: 40,
+                        backgroundColor: Colors.white,
+                        radius: 42,
+                        child: CircleAvatar(
+                          backgroundImage: devotee.profilePhotoUrl != null
+                              ? Image.network(
+                                  devotee.profilePhotoUrl.toString(),
+                                  fit: BoxFit.cover,
+                                ).image
+                              : null,
+                          radius: 40,
+                        ),
                       ),
                       const SizedBox(
                         height: 10,

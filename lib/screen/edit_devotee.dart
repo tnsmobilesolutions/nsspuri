@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/authentication/address_screen.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
@@ -16,7 +17,12 @@ import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 
 // ignore: must_be_immutable
 class EditDevoteeDetailsPage extends StatefulWidget {
-  EditDevoteeDetailsPage({Key? key, required this.devotee}) : super(key: key);
+  EditDevoteeDetailsPage(
+      {Key? key,
+      required this.devotee,
+      required String uid,
+      required String devoteeId})
+      : super(key: key);
   DevoteeModel devotee;
   get currentUser => null;
 
@@ -98,9 +104,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     mobileController.text = widget.devotee.mobileNumber ?? "";
     sanghaController.text = widget.devotee.sangha ?? "";
     dateinput.text = widget.devotee.dob ?? "";
-    bloodGroupController = widget.devotee.bloodGroup ?? "";
+    // bloodGroupController = widget.devotee.bloodGroup ?? "";
     profileURL = widget.devotee.profilePhotoUrl ?? "";
-    
   }
 
   Row addRadioButton(int btnValue, String title) {
@@ -232,7 +237,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     // hintText: 'Enter Your Mobile Number',
                     labelText: 'Mobile Number'),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Column(
@@ -341,25 +346,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 height: 60,
                 width: MediaQuery.of(context).size.width / 1.1,
                 child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.3)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
-
                   value: bloodGroupController,
-
-                  elevation: 12,
-                  hint: const Text('Select BloodGroup'),
-                  // style: const TextStyle(color: Colors.deepPurple),
-
                   onChanged: (String? value) {
-                    // This is called when the user selects an item.
                     setState(() {
                       bloodGroupController = value;
                     });
@@ -368,7 +356,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text(bloodGroupController ?? value),
                     );
                   }).toList(),
                 ),
@@ -457,7 +445,12 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                       profileURL = previewImage != null
+                      await Future.delayed(
+                          const Duration(seconds: 1)); // Simulating a delay
+                      // ignore: use_build_context_synchronously
+
+                      // ignore: use_build_context_synchronously
+                      profileURL = previewImage != null
                           ? await uploadImageToFirebaseStorage(
                               previewImage as XFile, nameController.text)
                           : null;
@@ -472,39 +465,39 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           updatedAt: DateTime.now().toString(),
                           address: AddressModel());
 
-                      final response = await PutDevoteeAPI()
-                          .updateDevotee(updateDevotee, widget.devotee.devoteeId.toString());
+                      final response = await PutDevoteeAPI().updateDevotee(
+                          updateDevotee, widget.devotee.devoteeId.toString());
                       if (response["statusCode"] == 200) {
                         // Show a circular progress indicator while navigating
+                        // ignore: use_build_context_synchronously
                         showDialog(
                           context: context,
                           barrierDismissible:
                               false, // Prevent dismissing by tapping outside
                           builder: (BuildContext context) {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           },
                         );
 
                         // Navigate to the next screen
-                        await Future.delayed(
-                            Duration(seconds: 1)); // Simulating a delay
                         Navigator.of(context)
                             .pop(); // Close the circular progress indicator
-                        // ignore: use_build_context_synchronously
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return AddressDetailsScreen(
-                                uid: widget.devotee.uid.toString(), devoteeId: widget.devotee.devoteeId.toString());
-                          }),
-                        );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  HomePage(uid: widget.devotee.uid.toString()),
+                            ));
                       } else {
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('devotee update issue')));
+                            const SnackBar(
+                                content: Text('devotee update issue')));
                       }
                     } catch (e) {
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));
                       print(e);

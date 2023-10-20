@@ -15,7 +15,7 @@ import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 
 // ignore: must_be_immutable
 class DevoteeDetailsPage extends StatefulWidget {
-  DevoteeDetailsPage({Key? key, required this.uid, required this.devoteeId})
+  DevoteeDetailsPage({Key? key, required this.uid, required this.devoteeId, required DevoteeModel devotee})
       : super(key: key);
   String uid;
   String devoteeId;
@@ -153,23 +153,26 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   showPhotoOptions();
                 },
                 child: CircleAvatar(
-                  backgroundColor: const Color(0xFFfa6e0f),
-                  backgroundImage:
-                      previewImage != null && previewImage!.path.isNotEmpty
-                          ? Image.file(
-                              File('${previewImage?.path}'),
-                              fit: BoxFit.cover,
-                            ).image
-                          : null,
-                  radius: 60,
-                  child: const Align(
-                    alignment: Alignment.bottomRight,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 20.0,
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 25.0,
+                  backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                  radius: 70,
+                  child: CircleAvatar(
+                    backgroundImage:
+                        previewImage != null && previewImage!.path.isNotEmpty
+                            ? Image.file(
+                                File('${previewImage?.path}'),
+                                fit: BoxFit.cover,
+                              ).image
+                            : null,
+                    radius: 60,
+                    child: const Align(
+                      alignment: Alignment.bottomRight,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 20.0,
+                        child: Icon(
+                          Icons.camera_alt,
+                          size: 25.0,
+                        ),
                       ),
                     ),
                   ),
@@ -384,32 +387,32 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     )),
-                debounceDuration: const Duration(milliseconds: 400),
+                debounceDuration: const Duration(milliseconds: 300),
                 textFieldConfiguration: TextFieldConfiguration(
-                    controller: sanghaController,
-                    decoration: InputDecoration(
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                          35.0,
-                        )),
-                        enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(35.0),
-                            ),
-                            borderSide: BorderSide(color: Colors.transparent)),
-                        hintText: "Sangha name",
-                        contentPadding: const EdgeInsets.only(top: 4, left: 10),
-                        hintStyle:
-                            const TextStyle(color: Colors.grey, fontSize: 16),
-                        suffixIcon: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.search, color: Colors.grey)),
+                  controller: sanghaController,
+                  decoration: InputDecoration(
+                      fillColor: Colors.black12,
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Color.fromARGB(0, 190, 190, 190)),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(65.0),
+                          ),
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(0, 205, 205, 205))),
+                      hintText: "Sangha name",
+                      contentPadding: const EdgeInsets.only(top: 4, left: 10),
+                      hintStyle:
+                          const TextStyle(color: Colors.grey, fontSize: 16),
+                      suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.search, color: Colors.grey)),
 
-                        // fillColor: Colors.white,
-                        filled: true)),
+                      // fillColor: Colors.white,
+                      filled: true),
+                ),
                 suggestionsCallback: (value) {
                   return SanghaList.getSuggestions(value);
                 },
@@ -418,14 +421,14 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     children: [
                       const SizedBox(
                         width: 10,
-                        height: 50,
+                        height: 30,
                       ),
                       Flexible(
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: Text(
                             suggestion,
-                            maxLines: 2,
+                            maxLines: 6,
                             style: const TextStyle(color: Colors.black),
                           ),
                         ),
@@ -516,7 +519,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(90)))),
                   child: const Text(
-                    'Next >',
+                    'Next',
                     style: TextStyle(fontSize: 18),
                   ),
 

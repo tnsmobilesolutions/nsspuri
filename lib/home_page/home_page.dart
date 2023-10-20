@@ -17,12 +17,56 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.deepOrange,
+              ),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage:
+                            AssetImage('assets/images/nsslogo.png'),
+                      ),
+                      const Text(
+                        'Welcome',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              title: const Text('Profile'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: const Text('Sangha'),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.deepOrange),
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text(
           "Home",
           style: TextStyle(color: Colors.black),
         ),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.logout, color: Colors.deepOrange),

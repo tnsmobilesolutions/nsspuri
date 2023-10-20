@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
-import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:uuid/uuid.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -46,18 +46,18 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 50, 12, 0),
+          padding: const EdgeInsets.fromLTRB(12, 70, 12, 0),
           child: Column(
             children: [
               const Text(
                 "Signup",
                 style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               ),
               const SizedBox(
-                height: 40,
+                height: 30,
               ),
               TextFormField(
                 controller: emailController,
@@ -204,65 +204,70 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   onPressed: () async {
                     try {
-                      String? uid =
-                          await FirebaseAuthentication().signupWithpassword(
-                        emailController.text,
-                        passwordController.text,
-                      );
-                      if (uid != null) {
-                        String devoteeId = const Uuid().v1();
-                        DevoteeModel newDevotee = DevoteeModel(
-                          emailId: emailController.text,
-                          uid: uid,
-                          createdAt: DateTime.now().toString(),
-                          updatedAt: DateTime.now().toString(),
-                          devoteeId: devoteeId,
+                      if (passwordController.text !=
+                          confirmPasswordController.text) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Password does not match')));
+                      } else {
+                        String? uid =
+                            await FirebaseAuthentication().signupWithpassword(
+                          emailController.text,
+                          passwordController.text,
                         );
-
-                        final response =
-                            await PostDevoteeAPI().addDevotee(newDevotee);
-
-                        if (response["statusCode"] == 200) {
-                          // Show a circular progress indicator while navigating
-                          // ignore: use_build_context_synchronously
-                          showDialog(
-                            context: context,
-                            barrierDismissible:
-                                false, // Prevent dismissing by tapping outside
-                            builder: (BuildContext context) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            },
+                        if (uid != null) {
+                          String devoteeId = const Uuid().v1();
+                          DevoteeModel newDevotee = DevoteeModel(
+                            emailId: emailController.text,
+                            uid: uid,
+                            createdAt: DateTime.now().toString(),
+                            updatedAt: DateTime.now().toString(),
+                            devoteeId: devoteeId,
                           );
 
-                          // Navigate to the next screen
-                          await Future.delayed(
-                              const Duration(seconds: 1)); // Simulating a delay
-                          // ignore: use_build_context_synchronously
-                          Navigator.of(context)
-                              .pop(); // Close the circular progress indicator
-                          // ignore: use_build_context_synchronously
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return DevoteeDetailsPage(
-                                  uid: uid,
-                                  devoteeId: devoteeId,
+                          final response =
+                              await PostDevoteeAPI().addDevotee(newDevotee);
+
+                          if (response["statusCode"] == 200) {
+                            // Show a circular progress indicator while navigating
+                            // ignore: use_build_context_synchronously
+                            showDialog(
+                              context: context,
+                              barrierDismissible:
+                                  false, // Prevent dismissing by tapping outside
+                              builder: (BuildContext context) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
                                 );
                               },
-                            ),
-                          );
+                            );
+
+                            // Navigate to the next screen
+                            await Future.delayed(const Duration(
+                                seconds: 1)); // Simulating a delay
+                            // ignore: use_build_context_synchronously
+                            Navigator.of(context)
+                                .pop(); // Close the circular progress indicator
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return EditDevoteeDetailsPage(
+                                    devotee: DevoteeModel(), uid: '', devoteeId: '',
+                                  );
+                                },
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Signup failed')));
+                            // Handle the case where the response status code is not 200
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Signup failed')));
-                          // Handle the case where the response status code is not 200
+                          // Handle the case where uid is null
                         }
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Signup failed')));
-                        // Handle the case where uid is null
                       }
                     } catch (e) {
                       ScaffoldMessenger.of(context)

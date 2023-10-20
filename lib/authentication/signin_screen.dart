@@ -64,7 +64,8 @@ class _SignInScreenState extends State<SignInScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return HomePage(uid: devotee.uid.toString());
+                                return HomePage(
+                                    uid: devotee.devoteeId.toString());
                               },
                             ),
                           );
