@@ -10,7 +10,7 @@ class DelegateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DevoteeModel devotee = devoteeData["data"];
-    if (devotee.uid != null) {
+    if (devotee.uid == null) {
       return const Center(child: Text("No data"));
     }
     return Center(
