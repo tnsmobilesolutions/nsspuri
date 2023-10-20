@@ -17,9 +17,9 @@ class DelegateCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
-          elevation: 3,
+          elevation: 0,
           // margin: const EdgeInsets.all(20),
-          color: Color.fromARGB(148, 242, 242, 242).withOpacity(.2),
+          color: Color.fromARGB(255, 237, 237, 237).withOpacity(.2),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12))),
           child: Padding(

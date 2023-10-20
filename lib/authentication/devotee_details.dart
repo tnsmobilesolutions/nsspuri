@@ -306,8 +306,9 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       true, //set it true, so that user will not able to edit text
                   onTap: () async {
                     DateTime? pickedDate = await showDatePicker(
-                        initialEntryMode: DatePickerEntryMode.calendarOnly,
-                        
+                        initialEntryMode: DatePickerEntryMode
+                            .calendarOnly, // Hide edit button
+
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(

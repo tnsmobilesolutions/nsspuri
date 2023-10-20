@@ -210,6 +210,22 @@ class _SignupScreenState extends State<SignupScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Password does not match')));
                       } else {
+                        showDialog(
+                          context: context,
+                          barrierDismissible:
+                              false, // Prevent dismissing by tapping outside
+                          builder: (BuildContext context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        );
+
+                        // Navigate to the next screen
+                        await Future.delayed(
+                            const Duration(seconds: 1)); // Simulating a delay
+                        // ignore: use_build_context_synchronously
+
                         String? uid =
                             await FirebaseAuthentication().signupWithpassword(
                           emailController.text,
@@ -231,23 +247,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           if (response["statusCode"] == 200) {
                             // Show a circular progress indicator while navigating
                             // ignore: use_build_context_synchronously
-                            showDialog(
-                              context: context,
-                              barrierDismissible:
-                                  false, // Prevent dismissing by tapping outside
-                              builder: (BuildContext context) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                            );
-
-                            // Navigate to the next screen
-                            await Future.delayed(const Duration(
-                                seconds: 1)); // Simulating a delay
-                            // ignore: use_build_context_synchronously
                             Navigator.of(context)
                                 .pop(); // Close the circular progress indicator
+
                             // ignore: use_build_context_synchronously
                             Navigator.push(
                               context,
@@ -261,11 +263,15 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             );
                           } else {
+                            Navigator.of(context)
+                                .pop(); // Close the circular progress indicator
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('Signup failed')));
                             // Handle the case where the response status code is not 200
                           }
                         } else {
+                          Navigator.of(context)
+                              .pop(); // Close the circular progress indicator
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Signup failed')));
                           // Handle the case where uid is null
