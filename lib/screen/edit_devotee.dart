@@ -114,7 +114,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     cityController.text = widget.devotee.address?.city ?? "";
     stateController.text = widget.devotee.address?.state ?? "";
     postalCodeController.text =
-        widget.devotee.address?.pincode.toString() ?? "";
+        widget.devotee.address?.postalCode.toString() ?? "";
     countryController.text = widget.devotee.address?.country ?? "";
   }
 
@@ -209,17 +209,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: "Name",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: const InputDecoration(labelText: "Name"),
               ),
               const SizedBox(
                 height: 12,
@@ -240,10 +230,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   return null;
                 },
                 decoration: const InputDecoration(
-                    icon: Icon(
-                      Icons.phone,
-                      color: Colors.deepOrange,
-                    ),
+
                     // hintText: 'Enter Your Mobile Number',
                     labelText: 'Mobile Number'),
               ),
@@ -314,12 +301,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 child: TextField(
                   style: const TextStyle(color: Colors.black),
                   controller: dateinput, //editing controller of this TextField
-                  decoration: const InputDecoration(
-                      labelStyle: TextStyle(color: Colors.black),
-                      icon: Icon(Icons.calendar_today),
-                      iconColor: Colors.deepOrange, //icon of text field
-                      labelText: "Enter Date Of Birth" //label text of field
-                      ),
+                  decoration: const InputDecoration(labelText: "Date Of Birth"),
                   readOnly:
                       true, //set it true, so that user will not able to edit text
                   onTap: () async {
@@ -358,8 +340,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.bloodtype, color: Color(0xFFfa6e0f)),
-                  const SizedBox(width: 15),
                   Expanded(
                     child: DropdownButtonFormField(
                       value: bloodGroupController,
@@ -404,30 +384,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     )),
                 debounceDuration: const Duration(milliseconds: 400),
                 textFieldConfiguration: TextFieldConfiguration(
-                    controller: sanghaController,
-                    decoration: InputDecoration(
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                          35.0,
-                        )),
-                        enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(35.0),
-                            ),
-                            borderSide: BorderSide(color: Colors.transparent)),
-                        hintText: "Sangha name",
-                        contentPadding: const EdgeInsets.only(top: 4, left: 10),
-                        hintStyle:
-                            const TextStyle(color: Colors.grey, fontSize: 16),
-                        suffixIcon: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.search, color: Colors.grey)),
-
-                        // fillColor: Colors.white,
-                        filled: true)),
+                  controller: sanghaController,
+                  decoration: const InputDecoration(labelText: "Sangha name"),
+                ),
                 suggestionsCallback: (value) {
                   return SanghaList.getSuggestions(value);
                 },
@@ -469,17 +428,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: "Address line 1",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: const InputDecoration(labelText: "Adress Line 1"),
               ),
               const SizedBox(
                 height: 20,
@@ -493,17 +442,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: "Address line 2",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: const InputDecoration(labelText: "Adress Line 2"),
               ),
               const SizedBox(
                 height: 20,
@@ -517,17 +456,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: "City name",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: const InputDecoration(labelText: "City name"),
               ),
               const SizedBox(
                 height: 20,
@@ -541,17 +470,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: "State name",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: const InputDecoration(labelText: "State name"),
               ),
               const SizedBox(
                 height: 20,
@@ -565,17 +484,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: "Country name",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: const InputDecoration(labelText: "Country name"),
               ),
               const SizedBox(
                 height: 20,
@@ -589,17 +498,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: "Postal code",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: const InputDecoration(labelText: "PIN Code"),
               ),
               const SizedBox(
                 height: 20,
@@ -642,7 +541,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                               addressLine2: addressLine2Controller.text,
                               addressLine1: addressLine1Controller.text,
                               country: countryController.text,
-                              pincode: int.tryParse(postalCodeController.text),
+                              postalCode: int.tryParse(postalCodeController.text),
                               city: cityController.text,
                               state: stateController.text));
 

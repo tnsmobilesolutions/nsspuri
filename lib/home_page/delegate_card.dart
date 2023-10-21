@@ -22,156 +22,143 @@ class DelegateCard extends StatelessWidget {
           color: const Color.fromARGB(255, 196, 196, 196).withOpacity(.2),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12))),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  devotee.devoteeId != null
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 3.2,
-                              ),
-                              const Text(
-                                'ଜୟଗୁରୁ',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 6,
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return EditDevoteeDetailsPage(
-                                            devotee: devotee);
-                                      },
-                                    ));
-                                  },
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: Colors.deepOrange,
-                                  ))
-                            ])
-                      : const Center(
-                          child: Text(
-                            'ଜୟଗୁରୁ',
-                            style: TextStyle(fontSize: 24, color: Colors.black),
-                          ),
-                        ),
-                  const Divider(
-                    thickness: 1,
-                    color: Color.fromARGB(240, 228, 228, 228),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Column(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 43,
-                        child: CircleAvatar(
-                          backgroundImage: devotee.profilePhotoUrl != null
-                              ? Image.network(
-                                  devotee.profilePhotoUrl.toString(),
-                                  fit: BoxFit.cover,
-                                ).image
-                              : null,
-                          radius: 40,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                devotee.devoteeId != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          devotee.name != null
-                              ? Text(
-                                  "Name       :   ${devotee.name}",
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              : const Text("Name :- Please Update your Name"),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          devotee.sangha != null
-                              ? Text(
-                                  "Sangha    :     ${devotee.sangha}",
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                  softWrap: true, // Enable text wrapping
-                                  overflow: TextOverflow
-                                      .visible, // Define overflow behavior if the text doesn't fit
-                                )
-                              : const Text(
-                                  "Sanga :- Please Update your Sangha"),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          devotee.mobileNumber != null
-                              ? Text(
-                                  "Mobile     :    ${devotee.mobileNumber}",
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              : const Text(
-                                  "Mobile :- Please Update your Mobile Number"),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          devotee.gender != null
-                              ? Text(
-                                  "Gender    :    ${devotee.gender}",
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              : const Text(
-                                  "Gender :- Please Update your Gender"),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          devotee.dob != null
-                              ? Text(
-                                  "DOB         :    ${devotee.dob}",
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              : const Text(
-                                  "DOB :- Please Update your Date of birth"),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          devotee.bloodGroup != null
-                              ? Text(
-                                  "BloodGroup :    ${devotee.bloodGroup}",
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              : const Text(
-                                  "Bloodgroup :- Please Update your Bloodgroup"),
-                        ],
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 3.2,
+                            ),
+                            const Text(
+                              'ଜୟଗୁରୁ',
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 6,
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return EditDevoteeDetailsPage(
+                                          devotee: devotee);
+                                    },
+                                  ));
+                                },
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: Colors.deepOrange,
+                                ))
+                          ])
+                    : const Center(
+                        child: Text(
+                          'ଜୟଗୁରୁ',
+                          style: TextStyle(fontSize: 24, color: Colors.black),
+                        ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                const Divider(
+                  thickness: 1,
+                  color: Color.fromARGB(240, 228, 228, 228),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Center(
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 43,
+                    child: CircleAvatar(
+                      backgroundImage: devotee.profilePhotoUrl != null
+                          ? Image.network(
+                              devotee.profilePhotoUrl.toString(),
+                              fit: BoxFit.cover,
+                            ).image
+                          : null,
+                      radius: 40,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    devotee.name != null
+                        ? Text(
+                            "Name       :   ${devotee.name}",
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          )
+                        : const Text("Name :- Please Update your Name"),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    devotee.sangha != null
+                        ? Text(
+                            "Sangha    :    ${devotee.sangha}",
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                            softWrap: true, // Enable text wrapping
+                            overflow: TextOverflow
+                                .visible, // Define overflow behavior if the text doesn't fit
+                          )
+                        : const Text("Sanga :- Please Update your Sangha"),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    devotee.mobileNumber != null
+                        ? Text(
+                            "Mobile     :    ${devotee.mobileNumber}",
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          )
+                        : const Text(
+                            "Mobile :- Please Update your Mobile Number"),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    devotee.gender != null
+                        ? Text(
+                            "Gender    :    ${devotee.gender}",
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          )
+                        : const Text("Gender :- Please Update your Gender"),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    devotee.dob != null
+                        ? Text(
+                            "DOB         :    ${devotee.dob}",
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          )
+                        : const Text("DOB :- Please Update your Date of birth"),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    devotee.bloodGroup != null
+                        ? Text(
+                            "Blood Gr :    ${devotee.bloodGroup}",
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          )
+                        : const Text(
+                            "Bloodgroup :- Please Update your Bloodgroup"),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                )
+              ],
             ),
           ),
         ),

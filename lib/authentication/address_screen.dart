@@ -75,7 +75,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     },
                     decoration: InputDecoration(
                       labelText: "Address line 1",
-                      labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
                       filled: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       fillColor: Colors.grey.withOpacity(0.3),
@@ -106,8 +107,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
                   ),
                 ),
                 const SizedBox(
@@ -130,8 +131,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
                   ),
                 ),
                 const SizedBox(
@@ -154,8 +155,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
                   ),
                 ),
                 const SizedBox(
@@ -178,8 +179,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
                   ),
                 ),
                 const SizedBox(
@@ -202,8 +203,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                        borderSide:
-                            const BorderSide(width: 0, style: BorderStyle.none)),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
                   ),
                 ),
                 const SizedBox(
@@ -224,7 +225,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                           );
                         },
                       );
-    
+
                       // Navigate to the next screen
                       await Future.delayed(
                           const Duration(seconds: 1)); // Simulating a delay
@@ -234,7 +235,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                               addressLine2: addressLine2Controller.text,
                               city: cityController.text,
                               country: countryController.text,
-                              pincode: int.tryParse(postalCodeController.text),
+                              postalCode:
+                                  int.tryParse(postalCodeController.text),
                               state: stateController.text));
                       final response = await PutDevoteeAPI()
                           .updateDevotee(devoteeAddress, widget.devoteeId);
@@ -250,11 +252,12 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                       } else {
                         Navigator.of(context)
                             .pop(); // Close the circular progress indicator
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text('Address update failed')));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Address update failed')));
                       }
                     },
-    
+
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.resolveWith((states) {
@@ -263,14 +266,15 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                           }
                           return Colors.deepOrange;
                         }),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(60)))),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(60)))),
                     child: const Text(
                       'Signup',
                       style: TextStyle(fontSize: 22),
                     ),
-    
+
                     //Row
                   ),
                 )

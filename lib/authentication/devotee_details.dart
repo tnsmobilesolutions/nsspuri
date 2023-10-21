@@ -182,57 +182,52 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    TextFormField(
-                      controller: nameController,
-                      onSaved: (newValue) => nameController,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
-                      ],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter name';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: "Name",
-                        labelStyle:
-                            TextStyle(color: Colors.grey.withOpacity(0.9)),
-                        filled: true,
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        fillColor: Colors.grey.withOpacity(0.3),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: const BorderSide(
-                                width: 0, style: BorderStyle.none)),
-                      ),
-                    ),
+                     TextFormField(
+              controller: nameController,
+              onSaved: (newValue) => nameController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter name';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                  icon: Icon(
+                    Icons.person,
+                    color: Color(0xFFfa6e0f),
+                  ),
+                  // hintText: 'Name',
+                  labelText: "Name"),
+            ),
                     const SizedBox(
                       height: 12,
                     ),
                     const SizedBox(height: 10),
-                    TextFormField(
-                      keyboardType: TextInputType.phone,
-                      controller: mobileController,
-                      onSaved: (newValue) => mobileController,
-                      validator: (value) {
-                        RegExp regex = RegExp(r'^.{10}$');
-                        if (value!.isEmpty) {
-                          return ("Please enter Phone Number");
-                        }
-                        if (!regex.hasMatch(value) && value.length != 10) {
-                          return ("Enter 10 Digit Mobile Number");
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                          icon: Icon(
-                            Icons.phone,
-                            color: Colors.deepOrange,
-                          ),
-                          // hintText: 'Enter Your Mobile Number',
-                          labelText: 'Mobile Number'),
-                    ),
+                  TextFormField(
+              keyboardType: TextInputType.phone,
+              controller: mobileController,
+              onSaved: (newValue) => mobileController,
+              validator: (value) {
+                RegExp regex = RegExp(r'^.{10}$');
+                if (value!.isEmpty) {
+                  return ("Please enter Phone Number");
+                }
+                if (!regex.hasMatch(value) && value.length != 10) {
+                  return ("Enter 10 Digit Mobile Number");
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                  icon: Icon(
+                    Icons.phone,
+                    color: Color(0xFFfa6e0f),
+                  ),
+                  // hintText: 'Enter Your Mobile Number',
+                  labelText: 'Mobile Number'),
+            ),
                     SizedBox(
                       height: 20,
                     ),
