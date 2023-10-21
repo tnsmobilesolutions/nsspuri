@@ -17,46 +17,49 @@ class _HomePageState extends State<HomePage> {
   int selectedPageIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        iconTheme: IconThemeData(color: Colors.deepOrange),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text(
-          "Sammilani Delegate",
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Colors.deepOrange),
-            onPressed: () {
-              FirebaseAuthentication().signOut();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SignInScreen()),
-              );
-            },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(color: Colors.deepOrange),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: const Text(
+            "Sammilani Delegate",
+            style: TextStyle(color: Colors.black),
           ),
-        ],
-      ),
-      body: FutureBuilder(
-        future: GetDevoteeAPI().loginDevotee(widget.uid),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            if (snapshot.data["statusCode"] == 200) {
-              return Center(child: DelegateCard(devoteeData: snapshot.data));
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout, color: Colors.deepOrange),
+              onPressed: () {
+                FirebaseAuthentication().signOut();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
+                );
+              },
+            ),
+          ],
+        ),
+        body: FutureBuilder(
+          future: GetDevoteeAPI().loginDevotee(widget.uid),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
             } else {
-              return const Center(
-                child: Text("404 Error"),
-              );
+              if (snapshot.data["statusCode"] == 200) {
+                return Center(child: DelegateCard(devoteeData: snapshot.data));
+              } else {
+                return const Center(
+                  child: Text("404 Error"),
+                );
+              }
             }
-          }
-        },
+          },
+        ),
       ),
     );
   }

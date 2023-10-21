@@ -168,7 +168,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                               File('${previewImage?.path}'),
                               fit: BoxFit.cover,
                             ).image
-                          : null,
+                          : Image.network(profileURL.toString()).image,
                   radius: 60,
                   child: const Align(
                     alignment: Alignment.bottomRight,
@@ -311,7 +311,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                       true, //set it true, so that user will not able to edit text
                   onTap: () async {
                     DateTime? pickedDate = await showDatePicker(
-                      
                         initialEntryMode: DatePickerEntryMode
                             .calendarOnly, // Hide edit button
                         fieldHintText: 'dd-MM-yyyy',
@@ -456,18 +455,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     BoxDecoration(borderRadius: BorderRadius.circular(90)),
                 child: ElevatedButton(
                   onPressed: () async {
-                        showDialog(
-                          context: context,
-                          barrierDismissible:
-                              false, // Prevent dismissing by tapping outside
-                          builder: (BuildContext context) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // Prevent dismissing by tapping outside
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
-                         await Future.delayed(
-                            const Duration(seconds: 1)); // Simulating a delay
+                      },
+                    );
+                    await Future.delayed(
+                        const Duration(seconds: 1)); // Simulating a delay
                     try {
                       profileURL = previewImage != null
                           ? await uploadImageToFirebaseStorage(
@@ -499,8 +498,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                             );
                           },
                         );
-Navigator.of(context)
-                                .pop(); // Close the circular progress indicator
+                        Navigator.of(context)
+                            .pop(); // Close the circular progress indicator
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -509,7 +508,7 @@ Navigator.of(context)
                             ));
                       } else {
                         Navigator.of(context)
-                                .pop(); // Close the circular progress indicator
+                            .pop(); // Close the circular progress indicator
                         // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -517,7 +516,7 @@ Navigator.of(context)
                       }
                     } catch (e) {
                       Navigator.of(context)
-                                .pop(); // Close the circular progress indicator
+                          .pop(); // Close the circular progress indicator
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));
