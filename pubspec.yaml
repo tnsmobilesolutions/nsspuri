@@ -1,5 +1,5 @@
 name: sammilani_delegate
-description: A new Flutter project.
+description: NSS Puri Sammilani Delegate.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -30,13 +30,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  firebase_auth: 
+  firebase_auth: ^4.10.1 
   firebase_core: ^2.17.0
+  intl: ^0.18.1
+  image_picker: ^1.0.4
+  firebase_storage: ^11.2.8
+  flutter_onboarding_slider: ^1.0.10
+  flutter_typeahead: ^4.8.0
+  dio: ^5.3.3
+  dob_input_field: ^2.0.0
+  uuid: ^4.1.0
+  animated_splash_screen: ^1.3.0
+  
 
 
 dev_dependencies:

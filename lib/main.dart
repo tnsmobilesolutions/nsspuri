@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sammilani_delegate/authentication/signin_screen.dart';
-import 'package:sammilani_delegate/firebase_options.dart';
-import 'package:sammilani_delegate/theme/theme.dart';
+
+
+import 'package:sammilani_delegate/firebase/firebase_options.dart';
+import 'package:sammilani_delegate/screen/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +19,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: Themes.light,
-      darkTheme: Themes.dark,
-      home: const SignInScreen(),
+      // theme: Themes.light,
+      // darkTheme: Themes.dark,
+      home: SplashScreen(),
     );
   }
 }
