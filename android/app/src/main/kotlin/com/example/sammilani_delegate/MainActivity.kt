@@ -1,4 +1,4 @@
-package com.example.sammilani_delegate
+package com.tnsmobilesolutions.sammilani_delegate
 
 import io.flutter.embedding.android.FlutterActivity
 

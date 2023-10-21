@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: const Text(
-            "Sammilani Delegate",
+            "Pune Sammilani Delegate",
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: true,
