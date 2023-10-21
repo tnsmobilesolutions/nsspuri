@@ -41,6 +41,11 @@ class _HomePageState extends State<HomePage> {
             },
           ),
         ],
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          tooltip: 'Menu Icon',
+          onPressed: () {},
+        ),
       ),
       body: FutureBuilder(
         future: GetDevoteeAPI().loginDevotee(widget.uid),

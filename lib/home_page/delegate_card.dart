@@ -19,7 +19,7 @@ class DelegateCard extends StatelessWidget {
         child: Card(
           elevation: 0,
           // margin: const EdgeInsets.all(20),
-          color: Color.fromARGB(255, 237, 237, 237).withOpacity(.2),
+          color: const Color.fromARGB(255, 196, 196, 196).withOpacity(.2),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12))),
           child: Padding(
@@ -65,7 +65,8 @@ class DelegateCard extends StatelessWidget {
                           ),
                         ),
                   const Divider(
-                    thickness: 2,
+                    thickness: 1,
+                    color: Color.fromARGB(240, 228, 228, 228),
                   ),
                   const SizedBox(
                     height: 12,
@@ -74,7 +75,7 @@ class DelegateCard extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         backgroundColor: Colors.white,
-                        radius: 42,
+                        radius: 43,
                         child: CircleAvatar(
                           backgroundImage: devotee.profilePhotoUrl != null
                               ? Image.network(
