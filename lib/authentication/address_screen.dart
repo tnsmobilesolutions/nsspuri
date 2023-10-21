@@ -212,20 +212,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () async {
-                    DevoteeModel devoteeAddress = DevoteeModel(
-                        address: AddressModel(
-                            addressLine1: addressLine1Controller.text,
-                            addressLine2: addressLine2Controller.text,
-                            city: cityController.text,
-                            country: countryController.text,
-                            pincode: int.tryParse(postalCodeController.text),
-                            state: stateController.text));
-                    final response = await PutDevoteeAPI()
-                        .updateDevotee(devoteeAddress, widget.devoteeId);
-                    if (response["statusCode"] == 200) {
-                      // Show a circular progress indicator while navigating
-                      // ignore: use_build_context_synchronously
-                      showDialog(
+                    showDialog(
                         context: context,
                         barrierDismissible:
                             false, // Prevent dismissing by tapping outside
@@ -239,6 +226,20 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                       // Navigate to the next screen
                       await Future.delayed(
                           const Duration(seconds: 1)); // Simulating a delay
+                    DevoteeModel devoteeAddress = DevoteeModel(
+                        address: AddressModel(
+                            addressLine1: addressLine1Controller.text,
+                            addressLine2: addressLine2Controller.text,
+                            city: cityController.text,
+                            country: countryController.text,
+                            pincode: int.tryParse(postalCodeController.text),
+                            state: stateController.text));
+                    final response = await PutDevoteeAPI()
+                        .updateDevotee(devoteeAddress, widget.devoteeId);
+                    if (response["statusCode"] == 200) {
+                      // Show a circular progress indicator while navigating
+                      // ignore: use_build_context_synchronously
+                      
                       // ignore: use_build_context_synchronously
                       Navigator.of(context)
                           .pop(); // Close the circular progress indicator

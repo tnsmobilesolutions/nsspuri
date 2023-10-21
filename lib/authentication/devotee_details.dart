@@ -456,6 +456,20 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     BoxDecoration(borderRadius: BorderRadius.circular(90)),
                 child: ElevatedButton(
                   onPressed: () async {
+                     showDialog(
+                          context: context,
+                          barrierDismissible:
+                              false, // Prevent dismissing by tapping outside
+                          builder: (BuildContext context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        );
+
+                        // Navigate to the next screen
+                        await Future.delayed(
+                            const Duration(seconds: 1)); // Simulating a dela
                     try {
                       String? profileURL = previewImage != null
                           ? await uploadImageToFirebaseStorage(
@@ -476,20 +490,20 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           .updateDevotee(newDevotee, widget.devoteeId);
                       if (response["statusCode"] == 200) {
                         // Show a circular progress indicator while navigating
-                        showDialog(
-                          context: context,
-                          barrierDismissible:
-                              false, // Prevent dismissing by tapping outside
-                          builder: (BuildContext context) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        );
+                        // showDialog(
+                        //   context: context,
+                        //   barrierDismissible:
+                        //       false, // Prevent dismissing by tapping outside
+                        //   builder: (BuildContext context) {
+                        //     return Center(
+                        //       child: CircularProgressIndicator(),
+                        //     );
+                        //   },
+                        // );
 
-                        // Navigate to the next screen
-                        await Future.delayed(
-                            Duration(seconds: 1)); // Simulating a delay
+                        // // Navigate to the next screen
+                        // await Future.delayed(
+                        //     Duration(seconds: 1)); // Simulating a delay
                         Navigator.of(context)
                             .pop(); // Close the circular progress indicator
                         // ignore: use_build_context_synchronously
@@ -501,10 +515,14 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           }),
                         );
                       } else {
+                          Navigator.of(context)
+                            .pop(); // Close the circular progress indicator
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('devotee update issue')));
                       }
                     } catch (e) {
+                        Navigator.of(context)
+                            .pop(); // Close the circular progress indicator
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));
                       print(e);
