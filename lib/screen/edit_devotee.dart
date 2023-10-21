@@ -32,6 +32,12 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   final mobileController = TextEditingController();
   final sanghaController = TextEditingController();
   TextEditingController dateinput = TextEditingController();
+  final addressLine1Controller = TextEditingController();
+  final addressLine2Controller = TextEditingController();
+  final cityController = TextEditingController();
+  final stateController = TextEditingController();
+  final countryController = TextEditingController();
+  final postalCodeController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String? bloodGroupController;
 
@@ -103,6 +109,13 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     dateinput.text = widget.devotee.dob ?? "";
     bloodGroupController = widget.devotee.bloodGroup ?? bloodGroupController;
     profileURL = widget.devotee.profilePhotoUrl ?? "";
+    addressLine1Controller.text = widget.devotee.address?.addressLine1 ?? "";
+    addressLine2Controller.text = widget.devotee.address?.addressLine2 ?? "";
+    cityController.text = widget.devotee.address?.city ?? "";
+    stateController.text = widget.devotee.address?.state ?? "";
+    postalCodeController.text =
+        widget.devotee.address?.pincode.toString() ?? "";
+    countryController.text = widget.devotee.address?.country ?? "";
   }
 
   Row addRadioButton(int btnValue, String title) {
@@ -445,7 +458,151 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 },
               ),
               const SizedBox(
-                height: 40,
+                height: 20,
+              ),
+              TextFormField(
+                controller: addressLine1Controller,
+                onSaved: (newValue) => addressLine1Controller,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter address line 1';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "Address line 1",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: addressLine2Controller,
+                onSaved: (newValue) => addressLine2Controller,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter address line 2';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "Address line 2",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: cityController,
+                onSaved: (newValue) => cityController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter city name';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "City name",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: stateController,
+                onSaved: (newValue) => stateController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter state name';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "State name",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: countryController,
+                onSaved: (newValue) => addressLine1Controller,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter country name';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "Country name",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: postalCodeController,
+                onSaved: (newValue) => postalCodeController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter postal code';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: "Postal code",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -481,7 +638,13 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           dob: dateinput.text,
                           mobileNumber: mobileController.text,
                           updatedAt: DateTime.now().toString(),
-                          address: AddressModel());
+                          address: AddressModel(
+                              addressLine2: addressLine2Controller.text,
+                              addressLine1: addressLine1Controller.text,
+                              country: countryController.text,
+                              pincode: int.tryParse(postalCodeController.text),
+                              city: cityController.text,
+                              state: stateController.text));
 
                       final response = await PutDevoteeAPI().updateDevotee(
                           updateDevotee, widget.devotee.devoteeId.toString());
