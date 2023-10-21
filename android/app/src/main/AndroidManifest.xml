@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="sammilani_delegate"
+        android:label="NSS Puri"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
