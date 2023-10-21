@@ -318,7 +318,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(
                             1900), //DateTime.now() - not to allow to choose before today.
-                        lastDate: DateTime(2040));
+                        lastDate: DateTime.now());
 
                     if (pickedDate != null) {
                       print(

@@ -249,7 +249,6 @@ class _SignupScreenState extends State<SignupScreen> {
                             // ignore: use_build_context_synchronously
                             Navigator.of(context)
                                 .pop(); // Close the circular progress indicator
-
                             // ignore: use_build_context_synchronously
                             Navigator.push(
                               context,
