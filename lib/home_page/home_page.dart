@@ -14,28 +14,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int selectedPageIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/white-texture.jpeg"),
-          fit: BoxFit.cover,
-        ),
-      ),
+    return WillPopScope(
+      onWillPop: () async => false,
       child: Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          iconTheme: IconThemeData(color: Colors.deepOrange),
+          backgroundColor: Colors.transparent,
           elevation: 0,
-          flexibleSpace: const Image(
-            image: AssetImage('assets/images/white-texture.jpeg'),
-            fit: BoxFit.cover,
-          ),
           title: const Text(
-            "Home",
+            "Sammilani Delegate",
             style: TextStyle(color: Colors.black),
           ),
+          centerTitle: true,
           actions: [
             IconButton(
               icon: const Icon(Icons.logout, color: Colors.deepOrange),
@@ -55,18 +50,13 @@ class _HomePageState extends State<HomePage> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else {
-              return Center(
-                  child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/white-texture.jpeg"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: DelegateCard(devotee: snapshot.data["data"]),
-              ));
+              if (snapshot.data["statusCode"] == 200) {
+                return Center(child: DelegateCard(devoteeData: snapshot.data));
+              } else {
+                return const Center(
+                  child: Text("404 Error"),
+                );
+              }
             }
           },
         ),

@@ -6,14 +6,14 @@ class AddressModel {
   String? city;
   String? state;
   String? country;
-  int? pincode;
+  int? postalCode;
   AddressModel({
     this.addressLine1,
     this.addressLine2,
     this.city,
     this.state,
     this.country,
-    this.pincode,
+    this.postalCode,
   });
 
   AddressModel copyWith({
@@ -22,7 +22,7 @@ class AddressModel {
     String? city,
     String? state,
     String? country,
-    int? pincode,
+    int? postalCode,
   }) {
     return AddressModel(
       addressLine1: addressLine1 ?? this.addressLine1,
@@ -30,7 +30,7 @@ class AddressModel {
       city: city ?? this.city,
       state: state ?? this.state,
       country: country ?? this.country,
-      pincode: pincode ?? this.pincode,
+      postalCode: postalCode ?? this.postalCode,
     );
   }
 
@@ -52,8 +52,8 @@ class AddressModel {
     if(country != null){
       result.addAll({'country': country});
     }
-    if(pincode != null){
-      result.addAll({'pincode': pincode});
+    if(postalCode != null){
+      result.addAll({'postalCode': postalCode});
     }
   
     return result;
@@ -66,7 +66,7 @@ class AddressModel {
       city: map['city'],
       state: map['state'],
       country: map['country'],
-      pincode: map['pincode']?.toInt(),
+      postalCode: map['postalCode']?.toInt(),
     );
   }
 
@@ -76,7 +76,7 @@ class AddressModel {
 
   @override
   String toString() {
-    return 'AddressModel(addressLine1: $addressLine1, addressLine2: $addressLine2, city: $city, state: $state, country: $country, pincode: $pincode)';
+    return 'AddressModel(addressLine1: $addressLine1, addressLine2: $addressLine2, city: $city, state: $state, country: $country, postalCode: $postalCode)';
   }
 
   @override
@@ -89,7 +89,7 @@ class AddressModel {
       other.city == city &&
       other.state == state &&
       other.country == country &&
-      other.pincode == pincode;
+      other.postalCode == postalCode;
   }
 
   @override
@@ -99,6 +99,6 @@ class AddressModel {
       city.hashCode ^
       state.hashCode ^
       country.hashCode ^
-      pincode.hashCode;
+      postalCode.hashCode;
   }
 }

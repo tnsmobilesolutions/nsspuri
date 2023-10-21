@@ -24,27 +24,20 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        title: const Text(
-          "Address Details",
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.transparent,
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/white-texture.jpeg"),
-              fit: BoxFit.cover,
-            ),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          title: const Text(
+            "Address Details",
+            style: TextStyle(color: Colors.black),
           ),
+          backgroundColor: Colors.transparent,
+        ),
+        body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Column(
@@ -53,7 +46,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 80,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 250),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                   child: TextButton(
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
@@ -219,37 +212,35 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                 ),
                 Container(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 18,
+                  height: 50,
                   child: ElevatedButton(
                     onPressed: () async {
+                      showDialog(
+                        context: context,
+                        barrierDismissible:
+                            false, // Prevent dismissing by tapping outside
+                        builder: (BuildContext context) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      );
+
+                      // Navigate to the next screen
+                      await Future.delayed(
+                          const Duration(seconds: 1)); // Simulating a delay
                       DevoteeModel devoteeAddress = DevoteeModel(
                           address: AddressModel(
                               addressLine1: addressLine1Controller.text,
                               addressLine2: addressLine2Controller.text,
                               city: cityController.text,
                               country: countryController.text,
-                              pincode: int.tryParse(postalCodeController.text),
+                              postalCode:
+                                  int.tryParse(postalCodeController.text),
                               state: stateController.text));
                       final response = await PutDevoteeAPI()
                           .updateDevotee(devoteeAddress, widget.devoteeId);
                       if (response["statusCode"] == 200) {
-                        // Show a circular progress indicator while navigating
-                        // ignore: use_build_context_synchronously
-                        showDialog(
-                          context: context,
-                          barrierDismissible:
-                              false, // Prevent dismissing by tapping outside
-                          builder: (BuildContext context) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        );
-
-                        // Navigate to the next screen
-                        await Future.delayed(
-                            const Duration(seconds: 1)); // Simulating a delay
-                        // ignore: use_build_context_synchronously
                         Navigator.of(context)
                             .pop(); // Close the circular progress indicator
                         // ignore: use_build_context_synchronously
@@ -258,6 +249,12 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                             return HomePage(uid: widget.uid);
                           },
                         ));
+                      } else {
+                        Navigator.of(context)
+                            .pop(); // Close the circular progress indicator
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Address update failed')));
                       }
                     },
 
