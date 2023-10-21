@@ -213,19 +213,19 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                 child: ElevatedButton(
                   onPressed: () async {
                     showDialog(
-                        context: context,
-                        barrierDismissible:
-                            false, // Prevent dismissing by tapping outside
-                        builder: (BuildContext context) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                      );
+                      context: context,
+                      barrierDismissible:
+                          false, // Prevent dismissing by tapping outside
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
 
-                      // Navigate to the next screen
-                      await Future.delayed(
-                          const Duration(seconds: 1)); // Simulating a delay
+                    // Navigate to the next screen
+                    await Future.delayed(
+                        const Duration(seconds: 1)); // Simulating a delay
                     DevoteeModel devoteeAddress = DevoteeModel(
                         address: AddressModel(
                             addressLine1: addressLine1Controller.text,
@@ -237,10 +237,6 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     final response = await PutDevoteeAPI()
                         .updateDevotee(devoteeAddress, widget.devoteeId);
                     if (response["statusCode"] == 200) {
-                      // Show a circular progress indicator while navigating
-                      // ignore: use_build_context_synchronously
-                      
-                      // ignore: use_build_context_synchronously
                       Navigator.of(context)
                           .pop(); // Close the circular progress indicator
                       // ignore: use_build_context_synchronously
@@ -249,6 +245,11 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                           return HomePage(uid: widget.uid);
                         },
                       ));
+                    } else {
+                      Navigator.of(context)
+                          .pop(); // Close the circular progress indicator
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Address update failed')));
                     }
                   },
 
