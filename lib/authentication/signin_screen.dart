@@ -182,7 +182,7 @@ class _SignInScreenState extends State<SignInScreen> {
           textAlign: TextAlign.right,
         ),
         onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ResetPassword())),
+            MaterialPageRoute(builder: (context) => const ResetPasswordScreen())),
       ),
     );
   }

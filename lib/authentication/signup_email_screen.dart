@@ -69,17 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: " Enter your email",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: const InputDecoration(labelText: "Email"),
                 style: const TextStyle(fontSize: 20.0, color: Colors.black),
 
                 // hintText: 'Name',
@@ -101,14 +91,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 focusNode: textFieldFocusNode,
                 decoration: InputDecoration(
                   labelText: " Enter your password",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-
+                 
                   fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
+                 
                   floatingLabelBehavior: FloatingLabelBehavior
                       .never, //Hides label on focus or if filled
 
@@ -149,14 +134,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 obscureText: _obscured2,
                 decoration: InputDecoration(
                   labelText: " Confirm password",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
+                
 
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
+                  
+                 
                   floatingLabelBehavior: FloatingLabelBehavior
                       .never, //Hides label on focus or if filled
 
