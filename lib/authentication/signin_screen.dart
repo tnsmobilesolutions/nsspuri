@@ -37,13 +37,57 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                  ReusableTextField("Enter UserName", Icons.person_outline, false,
-                      _emailTextController),
+                TextFormField(
+                controller: _emailTextController,
+                onSaved: (newValue) => _emailTextController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a valid Email';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                      labelText: "Enter Email",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
+
+                // hintText: 'Name',
+              ),
                   const SizedBox(
                     height: 20,
                   ),
-                  ReusableTextField("Enter Password", Icons.lock_outline, true,
-                      _passwordTextController),
+                  TextFormField(
+                controller: _passwordTextController,
+                onSaved: (newValue) => _passwordTextController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter Password';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                      labelText: "Enter Password",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
+
+                // hintText: 'Name',
+              ),
                   const SizedBox(
                     height: 21,
                   ),
@@ -112,13 +156,6 @@ class _SignInScreenState extends State<SignInScreen> {
                               SnackBar(content: Text(e.toString())));
                         }
                       },
-                      child: const Text(
-                        "Sign In",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.resolveWith((states) {
@@ -131,6 +168,13 @@ class _SignInScreenState extends State<SignInScreen> {
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(90)))),
+                      child: const Text(
+                        "Sign In",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
                     ),
                   ),
                   forgetPassword(context),

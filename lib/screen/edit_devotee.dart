@@ -204,7 +204,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(labelText: "Name"),
+              decoration: InputDecoration(
+                      labelText: "Name",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
             const SizedBox(
               height: 12,
@@ -224,10 +235,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(
-
-                  // hintText: 'Enter Your Mobile Number',
-                  labelText: 'Mobile Number'),
+              decoration: InputDecoration(
+                      labelText: "Mobile Number",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
             const SizedBox(
               height: 20,
@@ -296,7 +315,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               child: TextField(
                 style: const TextStyle(color: Colors.black),
                 controller: dateinput, //editing controller of this TextField
-                decoration: const InputDecoration(labelText: "Date Of Birth"),
+                decoration: InputDecoration(
+                      labelText: "Date Of Birth",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
                 readOnly:
                     true, //set it true, so that user will not able to edit text
                 onTap: () async {
@@ -380,7 +410,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               debounceDuration: const Duration(milliseconds: 400),
               textFieldConfiguration: TextFieldConfiguration(
                 controller: sanghaController,
-                decoration: const InputDecoration(labelText: "Sangha name"),
+                decoration: InputDecoration(
+                      labelText: "Sangha Name",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
               ),
               suggestionsCallback: (value) {
                 return SanghaList.getSuggestions(value);
@@ -423,7 +464,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(labelText: "Adress Line 1"),
+              decoration: InputDecoration(
+                      labelText: "Address line 1",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
             const SizedBox(
               height: 20,
@@ -437,7 +489,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(labelText: "Adress Line 2"),
+              decoration: InputDecoration(
+                      labelText: "Address line 2",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
             const SizedBox(
               height: 20,
@@ -451,7 +514,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(labelText: "City name"),
+              decoration: InputDecoration(
+                      labelText: "City Name",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
             const SizedBox(
               height: 20,
@@ -465,7 +539,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(labelText: "State name"),
+               decoration: InputDecoration(
+                      labelText: "State Name",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
             const SizedBox(
               height: 20,
@@ -479,7 +564,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(labelText: "Country name"),
+               decoration: InputDecoration(
+                      labelText: "Country Name",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
             const SizedBox(
               height: 20,
@@ -493,7 +589,18 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(labelText: "PIN Code"),
+              decoration: InputDecoration(
+                      labelText: "PIN Code",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
             const SizedBox(
               height: 20,

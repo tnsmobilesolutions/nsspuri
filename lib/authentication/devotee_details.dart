@@ -186,7 +186,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(labelText: "Name"),
+              decoration: InputDecoration(
+                      labelText: "Name",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
                   const SizedBox(
                     height: 12,
@@ -205,10 +216,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(
-
-                  // hintText: 'Enter Your Mobile Number',
-                  labelText: 'Mobile Number'),
+              decoration: InputDecoration(
+                      labelText: "Mobile Number",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
             ),
                   const SizedBox(
                     height: 20,
@@ -226,6 +245,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         Expanded(
                           flex: 1,
                           child: RadioListTile(
+                            
                             fillColor:
                                 MaterialStateProperty.all(Colors.deepOrange),
                             value: 0,
@@ -278,12 +298,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       style: const TextStyle(color: Colors.black),
                       controller:
                           dateinput, //editing controller of this TextField
-                      decoration: const InputDecoration(
-                          labelStyle: TextStyle(color: Colors.black),
-                         //icon of text field
-                          labelText:
-                              "Enter Date Of Birth" //label text of field
-                          ),
+                      decoration: InputDecoration(
+                      labelText: "Date Of Birth",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
                       readOnly:
                           true, //set it true, so that user will not able to edit text
                       onTap: () async {
@@ -351,6 +377,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     height: 20,
                   ),
                     TypeAheadFormField(
+                      
               noItemsFoundBuilder: (context) => const SizedBox(
                 height: 70,
                 child: Center(
@@ -359,7 +386,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               ),
               suggestionsBoxDecoration: const SuggestionsBoxDecoration(
                   color: Colors.white,
-                  elevation: 5,
+                  elevation: 10,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10),
@@ -367,7 +394,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               debounceDuration: const Duration(milliseconds: 400),
               textFieldConfiguration: TextFieldConfiguration(
                 controller: sanghaController,
-                decoration: const InputDecoration(labelText: "Sangha name"),
+                 decoration: InputDecoration(
+                      labelText: "Sangha Name",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
               ),
               suggestionsCallback: (value) {
                 return SanghaList.getSuggestions(value);
@@ -384,7 +422,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         padding: const EdgeInsets.all(6.0),
                         child: Text(
                           suggestion,
-                          maxLines: 2,
+                          maxLines: 1,
                           style: const TextStyle(color: Colors.black),
                         ),
                       ),

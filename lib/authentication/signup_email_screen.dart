@@ -69,8 +69,18 @@ class _SignupScreenState extends State<SignupScreen> {
                   }
                   return null;
                 },
-                decoration: const InputDecoration(labelText: "Email"),
-                style: const TextStyle(fontSize: 20.0, color: Colors.black),
+                decoration: InputDecoration(
+                      labelText: "Email",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
 
                 // hintText: 'Name',
               ),
@@ -89,19 +99,21 @@ class _SignupScreenState extends State<SignupScreen> {
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: _obscured1,
                 focusNode: textFieldFocusNode,
-                decoration: InputDecoration(
-                  labelText: " Enter your password",
-                 
-                  fillColor: Colors.grey.withOpacity(0.3),
-                 
-                  floatingLabelBehavior: FloatingLabelBehavior
-                      .never, //Hides label on focus or if filled
+               
 
-                  // Needed for adding a fill color
 
-                  isDense: true, // Reduces height a bit
-
-                  suffixIcon: Padding(
+                 decoration: InputDecoration(
+                      labelText: "Password",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                               suffixIcon: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                     child: GestureDetector(
                       onTap: _toggleObscured1,
@@ -113,8 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                   ),
-                ),
-                style: const TextStyle(fontSize: 20.0, color: Colors.black),
+                    ),
               ),
               const SizedBox(
                 height: 22,
@@ -132,20 +143,19 @@ class _SignupScreenState extends State<SignupScreen> {
                 },
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: _obscured2,
-                decoration: InputDecoration(
-                  labelText: " Confirm password",
-                
-
-                  
-                 
-                  floatingLabelBehavior: FloatingLabelBehavior
-                      .never, //Hides label on focus or if filled
-
-                  // Needed for adding a fill color
-
-                  isDense: true, // Reduces height a bit
-
-                  suffixIcon: Padding(
+               
+                  decoration: InputDecoration(
+                      labelText: "Confirm Password",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                              suffixIcon: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                     child: GestureDetector(
                       onTap: _toggleObscured2,
@@ -157,7 +167,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                   ),
-                ),
+                    ),
                 style: const TextStyle(fontSize: 20.0, color: Colors.black),
               ),
               const SizedBox(

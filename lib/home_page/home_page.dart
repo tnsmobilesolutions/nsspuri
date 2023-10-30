@@ -14,13 +14,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DateTime sammilaniDate = DateTime(2024, 2, 23);
   int selectedPageIndex = 0;
   @override
   Widget build(BuildContext context) {
+    Duration timeUntilSammilani = sammilaniDate.difference(DateTime.now());
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        extendBodyBehindAppBar: true,
+        extendBodyBehindAppBar: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           iconTheme: IconThemeData(color: Colors.deepOrange),
@@ -44,21 +46,49 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        body: FutureBuilder(
-          future: GetDevoteeAPI().loginDevotee(widget.uid),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              if (snapshot.data["statusCode"] == 200) {
-                return Center(child: DelegateCard(devoteeData: snapshot.data));
-              } else {
-                return const Center(
-                  child: Text("404 Error"),
-                );
-              }
-            }
-          },
+        body: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              elevation: 10,
+              color: Colors.amber,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  '${timeUntilSammilani.inDays} days to go for Sammilani',
+                  style: const TextStyle(
+                      fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            FutureBuilder(
+              future: GetDevoteeAPI().loginDevotee(widget.uid),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  if (snapshot.data["statusCode"] == 200) {
+                    return Center(
+                        child: DelegateCard(devoteeData: snapshot.data));
+                  } else {
+                    return const Center(
+                      child: Text("404 Error"),
+                    );
+                  }
+                }
+              },
+            ),
+          ],
         ),
       ),
     );
