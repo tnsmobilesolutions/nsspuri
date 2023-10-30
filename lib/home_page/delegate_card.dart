@@ -19,7 +19,9 @@ class DelegateCard extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            const SizedBox(height: 100),
+            SizedBox(
+              height: 20,
+            ),
             const Text(
                 'Thank you for sharing your data. Please contact following members to make the payment and get your advanced Sammilani Delegate for Pune.'),
             Row(children: [
