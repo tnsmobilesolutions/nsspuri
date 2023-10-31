@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/firebase/exception_handler.dart';
 
-
 class ResetPasswordScreen extends StatefulWidget {
   static const String id = 'reset_password';
   const ResetPasswordScreen({Key? key}) : super(key: key);
@@ -37,6 +36,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+       backgroundColor: const Color.fromARGB(255, 227, 227, 227),
       body: Container(
         width: size.width,
         height: size.height,
@@ -58,7 +58,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   "Forgot Password",
                   style: TextStyle(
                     fontSize: 35,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w300,
                     color: Colors.black,
                   ),
                 ),
@@ -76,7 +76,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.black,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -92,9 +92,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     },
                     autofocus: false,
                     style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                  ),
+                      fontSize: 15,
+                      fontWeight: FontWeight.w300,
+                    ),
                     decoration: const InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -103,7 +103,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               BorderRadius.all(Radius.circular(30.0))),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                       
                           width: .5,
                         ),
                         borderRadius: BorderRadius.all(
@@ -113,8 +112,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide( width: 1.0),
+                        borderSide: BorderSide(width: 1.0),
                         borderRadius: BorderRadius.all(
                           Radius.circular(
                             30.0,
@@ -122,14 +120,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         ),
                       ),
 
-                   
                       // fillColor: kPrimaryColor,
                       filled: true,
                       errorStyle: TextStyle(fontSize: 15),
                       hintText: 'email address',
                       hintStyle: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                   ),
@@ -141,32 +138,31 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   child: Material(
                     elevation: 0,
                     borderRadius: BorderRadius.circular(32),
-                  
                     child: MaterialButton(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20.0))),
                       color: Colors.deepOrange,
-                   
                       onPressed: () async {
                         if (_key.currentState!.validate()) {
                           final _status = await resetPassword(
                               email: _emailController.text.trim());
                           if (_status == AuthStatus.successful) {
-                                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Reset Password link sent to Email'),
-    ));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content:
+                                  Text('Reset Password link sent to Email'),
+                            ));
                             //your logic
-                          } 
+                          }
                         }
                       },
                       minWidth: double.infinity,
                       child: const Text(
                         'Recover Password ',
                         style: TextStyle(
-                         
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w300,
                             fontSize: 16,
-                            color: Colors.white
-                            ),
+                            color: Colors.white),
                       ),
                     ),
                   ),

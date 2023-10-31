@@ -44,13 +44,13 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
     margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
     child: ElevatedButton(
-      onPressed: () async{
+      onPressed: () async {
         onTap();
       },
       child: Text(
         title,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+            color: Colors.white, fontWeight: FontWeight.w300, fontSize: 16),
       ),
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {

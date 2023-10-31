@@ -23,8 +23,9 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-       onWillPop: () async => false,
+      onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 227, 227, 227),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -37,16 +38,16 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                TextFormField(
-                controller: _emailTextController,
-                onSaved: (newValue) => _emailTextController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a valid Email';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
+                  TextFormField(
+                    controller: _emailTextController,
+                    onSaved: (newValue) => _emailTextController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a valid Email';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
                       labelText: "Enter Email",
                       labelStyle:
                           TextStyle(color: Colors.grey.withOpacity(0.9)),
@@ -59,21 +60,21 @@ class _SignInScreenState extends State<SignInScreen> {
                               width: 0, style: BorderStyle.none)),
                     ),
 
-                // hintText: 'Name',
-              ),
+                    // hintText: 'Name',
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
-                controller: _passwordTextController,
-                onSaved: (newValue) => _passwordTextController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter Password';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
+                    controller: _passwordTextController,
+                    onSaved: (newValue) => _passwordTextController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Password';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
                       labelText: "Enter Password",
                       labelStyle:
                           TextStyle(color: Colors.grey.withOpacity(0.9)),
@@ -86,8 +87,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               width: 0, style: BorderStyle.none)),
                     ),
 
-                // hintText: 'Name',
-              ),
+                    // hintText: 'Name',
+                  ),
                   const SizedBox(
                     height: 21,
                   ),
@@ -109,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             );
                           },
                         );
-    
+
                         // Navigate to the next screen
                         await Future.delayed(
                             const Duration(seconds: 1)); // Simulating a delay
@@ -131,7 +132,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return HomePage(uid: devotee.uid.toString());
+                                    return HomePage(
+                                        uid: devotee.uid.toString());
                                   },
                                 ),
                               );
@@ -139,7 +141,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               Navigator.of(context)
                                   .pop(); // Close the circular progress indicator
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Signin failed')));
+                                  const SnackBar(
+                                      content: Text('Signin failed')));
                             }
                           } else {
                             Navigator.of(context)
@@ -167,12 +170,13 @@ class _SignInScreenState extends State<SignInScreen> {
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(90)))),
+                                      borderRadius:
+                                          BorderRadius.circular(90)))),
                       child: const Text(
                         "Sign In",
                         style: TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w300,
                             fontSize: 16),
                       ),
                     ),
@@ -225,8 +229,10 @@ class _SignInScreenState extends State<SignInScreen> {
           style: TextStyle(color: Colors.black),
           textAlign: TextAlign.right,
         ),
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ResetPasswordScreen())),
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const ResetPasswordScreen())),
       ),
     );
   }
