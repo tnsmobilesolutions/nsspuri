@@ -3,10 +3,17 @@ import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/home_page/delegate_card.dart';
+import 'package:sammilani_delegate/home_page/relative_delegate.dart';
+import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/screen/edit_devotee.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
-  HomePage({super.key, required this.uid});
+  HomePage({
+    super.key,
+    required this.uid,
+  });
   String uid;
 
   @override
@@ -22,12 +29,13 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 227, 227, 227),
         extendBodyBehindAppBar: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          iconTheme: IconThemeData(color: Colors.deepOrange),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.deepOrange),
+          backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+          elevation: .5,
           title: const Text(
             "Pune Sammilani Delegate",
             style: TextStyle(color: Colors.black),
@@ -46,49 +54,142 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 10,
-              color: Colors.amber,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  '${timeUntilSammilani.inDays} days to go for Sammilani',
-                  style: const TextStyle(
-                      fontSize: 30, fontWeight: FontWeight.bold),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        elevation: 1,
+                        color: Colors.white,
+                        child: InkWell(
+                          onTap: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.all(23),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Thank you for sharing your data. Please contact the following person for online payment for delegate.',
+                                  style: TextStyle(
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    const Text('Suresh Bhai'),
+                                    TextButton(
+                                        onPressed: () => launchUrl(
+                                            Uri.parse("tel://9502688244")),
+                                        child: const Text("9502688244")),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 146,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        elevation: 1,
+                        color: Colors.white,
+                        child: InkWell(
+                          onTap: () {},
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Text(
+                                    '${timeUntilSammilani.inDays} ',
+                                    style: const TextStyle(
+                                        fontSize: 44,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ),
+                                const Text('days to go')
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            FutureBuilder(
-              future: GetDevoteeAPI().loginDevotee(widget.uid),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  if (snapshot.data["statusCode"] == 200) {
-                    return Center(
-                        child: DelegateCard(devoteeData: snapshot.data));
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 146,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    elevation: 1,
+                    color: Colors.white,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return EditDevoteeDetailsPage(
+                              devotee: DevoteeModel()
+                            );
+                          },
+                        ));
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Get your relatives delegate',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w300),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              FutureBuilder(
+                future: GetDevoteeAPI().loginDevotee(widget.uid),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
                   } else {
-                    return const Center(
-                      child: Text("404 Error"),
-                    );
+                    if (snapshot.data["statusCode"] == 200) {
+                      return Column(
+                        children: [
+                          DelegateCard(devoteeData: snapshot.data),
+                        ],
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          Text("404 Error"),
+                        ],
+                      );
+                    }
                   }
-                }
-              },
-            ),
-          ],
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

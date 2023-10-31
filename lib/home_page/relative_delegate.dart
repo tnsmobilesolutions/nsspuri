@@ -3,8 +3,8 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 
 // ignore: must_be_immutable
-class DelegateCard extends StatelessWidget {
-  DelegateCard({super.key, required this.devoteeData});
+class RelativeDelegate extends StatelessWidget {
+  RelativeDelegate({super.key, required this.devoteeData});
   Map<String, dynamic> devoteeData;
 
   @override
@@ -119,8 +119,7 @@ class DelegateCard extends StatelessWidget {
                                   overflow: TextOverflow
                                       .visible, // Define overflow behavior if the text doesn't fit
                                 )
-                              : const Text(
-                                  "Sanga : Please Update your Sangha"),
+                              : const Text("Sanga : Please Update your Sangha"),
                           const SizedBox(
                             height: 10,
                           ),

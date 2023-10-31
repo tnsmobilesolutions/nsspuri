@@ -54,7 +54,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 "Signup",
                 style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w300,
                     color: Colors.black),
               ),
               const SizedBox(
@@ -70,22 +70,21 @@ class _SignupScreenState extends State<SignupScreen> {
                   return null;
                 },
                 decoration: InputDecoration(
-                      labelText: "Email",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                  labelText: "Email",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
 
                 // hintText: 'Name',
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               TextFormField(
                 controller: passwordController,
@@ -99,21 +98,17 @@ class _SignupScreenState extends State<SignupScreen> {
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: _obscured1,
                 focusNode: textFieldFocusNode,
-               
-
-
-                 decoration: InputDecoration(
-                      labelText: "Password",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                               suffixIcon: Padding(
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                  suffixIcon: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                     child: GestureDetector(
                       onTap: _toggleObscured1,
@@ -121,11 +116,11 @@ class _SignupScreenState extends State<SignupScreen> {
                         _obscured1
                             ? Icons.visibility_off_rounded
                             : Icons.visibility_rounded,
-                        size: 24,
+                        size: 20,
                       ),
                     ),
                   ),
-                    ),
+                ),
               ),
               const SizedBox(
                 height: 22,
@@ -143,19 +138,17 @@ class _SignupScreenState extends State<SignupScreen> {
                 },
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: _obscured2,
-               
-                  decoration: InputDecoration(
-                      labelText: "Confirm Password",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                              suffixIcon: Padding(
+                decoration: InputDecoration(
+                  labelText: "Confirm Password",
+                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  fillColor: Colors.grey.withOpacity(0.3),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                  suffixIcon: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                     child: GestureDetector(
                       onTap: _toggleObscured2,
@@ -163,12 +156,11 @@ class _SignupScreenState extends State<SignupScreen> {
                         _obscured2
                             ? Icons.visibility_off_rounded
                             : Icons.visibility_rounded,
-                        size: 24,
+                        size: 20,
                       ),
                     ),
                   ),
-                    ),
-                style: const TextStyle(fontSize: 20.0, color: Colors.black),
+                ),
               ),
               const SizedBox(
                 height: 21,
@@ -277,7 +269,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     "Next",
                     style: TextStyle(
                       color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w300,
                       fontSize: 16,
                     ),
                   ),
