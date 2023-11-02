@@ -42,6 +42,15 @@ class _SignupScreenState extends State<SignupScreen> {
     });
   }
 
+  final _form = GlobalKey<FormState>();
+  bool _isValid = false;
+
+  void _saveForm() {
+    setState(() {
+      _isValid = _form.currentState!.validate();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,28 +69,39 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 30,
               ),
-              TextFormField(
-                controller: emailController,
-                onSaved: (newValue) => emailController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a valid Email';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: "Email",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+              Form(
+                key: _form,
+                child: TextFormField(
+                  controller: emailController,
+                  onSaved: (newValue) => emailController,
+                  validator: (value) {
+                    // Check if this field is empty
+                    if (value == null || value.isEmpty) {
+                      return 'This field is required';
+                    }
 
-                // hintText: 'Name',
+                    // using regular expression
+                    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                      return "Please enter a valid email address";
+                    }
+
+                    // the email is valid
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
+                    filled: true,
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    fillColor: Colors.grey.withOpacity(0.3),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
+                  ),
+
+                  // hintText: 'Name',
+                ),
               ),
               const SizedBox(
                 height: 30,
@@ -259,6 +279,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           // Handle the case where uid is null
                         }
                       }
+                      
                     } catch (e) {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));

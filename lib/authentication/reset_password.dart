@@ -30,13 +30,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             (e) => _status = AuthExceptionHandler.handleAuthException(e));
 
     return _status;
+    
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-       backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+      backgroundColor: const Color.fromARGB(255, 227, 227, 227),
       body: Container(
         width: size.width,
         height: size.height,
@@ -95,39 +96,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       fontSize: 15,
                       fontWeight: FontWeight.w300,
                     ),
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(30.0))),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: .5,
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            30.0,
-                          ),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.0),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            30.0,
-                          ),
-                        ),
-                      ),
-
-                      // fillColor: kPrimaryColor,
+                    decoration: InputDecoration(
+                      labelText: "Enter Email",
+                      labelStyle:
+                          TextStyle(color: Colors.grey.withOpacity(0.9)),
                       filled: true,
-                      errorStyle: TextStyle(fontSize: 15),
-                      hintText: 'email address',
-                      hintStyle: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w300,
-                      ),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      fillColor: Colors.grey.withOpacity(0.3),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
                     ),
                   ),
                 ),
