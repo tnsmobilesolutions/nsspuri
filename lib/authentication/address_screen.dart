@@ -3,6 +3,7 @@ import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class AddressDetailsScreen extends StatefulWidget {
@@ -33,9 +34,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
           elevation: 0,
           title: const Text(
             "Address Details",
-            style: TextStyle(color: Colors.black),
           ),
-          backgroundColor: Colors.transparent,
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -58,7 +57,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                       ));
                     },
                     child: const Text(
-                      'Skip >',
+                      'Skip',
                       style: TextStyle(fontSize: 16, color: Colors.deepOrange),
                     ),
                   ),
@@ -75,11 +74,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     },
                     decoration: InputDecoration(
                       labelText: "Address line 1",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
                       filled: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                           borderSide: const BorderSide(
@@ -101,10 +97,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   },
                   decoration: InputDecoration(
                     labelText: "Address line 2",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                     filled: true,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: const BorderSide(
@@ -125,10 +119,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   },
                   decoration: InputDecoration(
                     labelText: "City name",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                     filled: true,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: const BorderSide(
@@ -149,10 +141,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   },
                   decoration: InputDecoration(
                     labelText: "State name",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                     filled: true,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: const BorderSide(
@@ -173,10 +163,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   },
                   decoration: InputDecoration(
                     labelText: "Country name",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                     filled: true,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: const BorderSide(
@@ -197,10 +185,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   },
                   decoration: InputDecoration(
                     labelText: "Postal code",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                     filled: true,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: const BorderSide(
@@ -262,9 +248,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                         backgroundColor:
                             MaterialStateProperty.resolveWith((states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.deepOrange;
+                            return ButtonColor;
                           }
-                          return Colors.deepOrange;
+                          return ButtonColor;
                         }),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -272,7 +258,6 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                                     borderRadius: BorderRadius.circular(60)))),
                     child: const Text(
                       'Signup',
-                      style: TextStyle(fontSize: 22),
                     ),
 
                     //Row

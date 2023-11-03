@@ -174,10 +174,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                           BorderRadius.circular(90)))),
                       child: const Text(
                         "Sign In",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 16),
                       ),
                     ),
                   ),

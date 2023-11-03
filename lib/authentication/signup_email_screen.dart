@@ -90,10 +90,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   },
                   decoration: InputDecoration(
                     labelText: "Email",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                     filled: true,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         borderSide: const BorderSide(
@@ -120,10 +118,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 focusNode: textFieldFocusNode,
                 decoration: InputDecoration(
                   labelText: "Password",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide:
@@ -160,10 +156,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 obscureText: _obscured2,
                 decoration: InputDecoration(
                   labelText: "Confirm Password",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide:
@@ -279,7 +273,6 @@ class _SignupScreenState extends State<SignupScreen> {
                           // Handle the case where uid is null
                         }
                       }
-                      
                     } catch (e) {
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));
@@ -288,11 +281,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   },
                   child: const Text(
                     "Next",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 16,
-                    ),
                   ),
                 ),
               ),
