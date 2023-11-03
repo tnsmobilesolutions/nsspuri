@@ -188,7 +188,7 @@ class _SignInScreenState extends State<SignInScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text("Don't have account?",
-            style: TextStyle(color: Colors.black)),
+            style: TextStyle(color: TextThemeColor)),
         SizedBox(
           width: 80,
           child: TextButton(
@@ -201,7 +201,7 @@ class _SignInScreenState extends State<SignInScreen> {
             },
             child: const Text(
               'Sign Up',
-              style: TextStyle(color: Colors.deepOrange),
+              style: TextStyle(color: ButtonColor),
             ),
           ),
         )
@@ -217,7 +217,7 @@ class _SignInScreenState extends State<SignInScreen> {
       child: TextButton(
         child: const Text(
           "Forgot Password?",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: TextThemeColor),
           textAlign: TextAlign.right,
         ),
         onPressed: () => Navigator.push(
