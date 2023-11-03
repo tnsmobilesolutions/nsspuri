@@ -32,9 +32,6 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: const Text(
-            "Address Details",
-          ),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -58,7 +55,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     },
                     child: const Text(
                       'Skip',
-                      style: TextStyle(fontSize: 16, color: Colors.deepOrange),
+                      style: TextStyle(fontSize: 16, color: ButtonColor),
                     ),
                   ),
                 ),

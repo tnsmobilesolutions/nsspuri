@@ -35,7 +35,7 @@ class _SignInScreenState extends State<SignInScreen> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  LogoWidget("assets/images/nsslogo.png"),
+                  logoWidget("assets/images/nsslogo.png"),
                   const SizedBox(
                     height: 30,
                   ),

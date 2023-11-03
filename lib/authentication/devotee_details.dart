@@ -137,7 +137,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+        backgroundColor: ScaffoldBackgroundColor,
         body: SafeArea(
             child: Padding(
           padding: const EdgeInsets.all(15),
