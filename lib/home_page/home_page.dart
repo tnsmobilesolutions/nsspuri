@@ -6,6 +6,7 @@ import 'package:sammilani_delegate/home_page/delegate_card.dart';
 import 'package:sammilani_delegate/home_page/relative_delegate.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
@@ -29,21 +30,23 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 227, 227, 227),
         extendBodyBehindAppBar: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          iconTheme: const IconThemeData(color: Colors.deepOrange),
-          backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+          iconTheme: const IconThemeData(color: IconButtonColor),
+          backgroundColor: AppBarColor,
           elevation: .5,
-          title: const Text(
+          title: Text(
             "Pune Sammilani Delegate",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+                fontSize: 22,
+                color: TextThemeColor,
+                fontWeight: FontWeight.normal),
           ),
           centerTitle: true,
           actions: [
             IconButton(
-              icon: const Icon(Icons.logout, color: Colors.deepOrange),
+              icon: const Icon(Icons.logout, color: IconButtonColor),
               onPressed: () {
                 FirebaseAuthentication().signOut();
                 Navigator.push(
@@ -70,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 1,
-                        color: Colors.white,
+                        color: CardColor,
                         child: InkWell(
                           onTap: () {},
                           child: Padding(
@@ -105,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 1,
-                        color: Colors.white,
+                        color: CardColor,
                         child: InkWell(
                           onTap: () {},
                           child: Center(
@@ -138,14 +141,13 @@ class _HomePageState extends State<HomePage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     elevation: 1,
-                    color: Colors.white,
+                    color: CardColor,
                     child: InkWell(
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
                             return EditDevoteeDetailsPage(
-                              devotee: DevoteeModel()
-                            );
+                                devotee: DevoteeModel());
                           },
                         ));
                       },
@@ -156,8 +158,6 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               'Get your relatives delegate',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w300),
                             ),
                           ],
                         ),

@@ -7,6 +7,7 @@ import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'reset_password.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -25,7 +26,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+        backgroundColor: ScaffoldBackgroundColor,
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -49,11 +50,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                     decoration: InputDecoration(
                       labelText: "Enter Email",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
                       filled: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                           borderSide: const BorderSide(
@@ -76,11 +74,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                     decoration: InputDecoration(
                       labelText: "Enter Password",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
                       filled: true,
                       floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                           borderSide: const BorderSide(
@@ -150,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text(
-                                        'User does not exist. Please sign up.')));
+                                        'Please Enter a Valid Email and Password.')));
                           }
                         } catch (e) {
                           Navigator.of(context)
@@ -163,9 +158,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           backgroundColor:
                               MaterialStateProperty.resolveWith((states) {
                             if (states.contains(MaterialState.pressed)) {
-                              return Colors.deepOrange;
+                              return IconButtonColor;
                             }
-                            return Colors.deepOrange;
+                            return IconButtonColor;
                           }),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -174,10 +169,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                           BorderRadius.circular(90)))),
                       child: const Text(
                         "Sign In",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 16),
                       ),
                     ),
                   ),
@@ -197,7 +188,7 @@ class _SignInScreenState extends State<SignInScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text("Don't have account?",
-            style: TextStyle(color: Colors.black)),
+            style: TextStyle(color: TextThemeColor)),
         SizedBox(
           width: 80,
           child: TextButton(
@@ -210,7 +201,7 @@ class _SignInScreenState extends State<SignInScreen> {
             },
             child: const Text(
               'Sign Up',
-              style: TextStyle(color: Colors.deepOrange),
+              style: TextStyle(color: ButtonColor),
             ),
           ),
         )
@@ -226,7 +217,7 @@ class _SignInScreenState extends State<SignInScreen> {
       child: TextButton(
         child: const Text(
           "Forgot Password?",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: TextThemeColor),
           textAlign: TextAlign.right,
         ),
         onPressed: () => Navigator.push(

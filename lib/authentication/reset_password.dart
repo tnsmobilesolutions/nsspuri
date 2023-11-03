@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/firebase/exception_handler.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   static const String id = 'reset_password';
@@ -36,11 +37,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-       backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+      backgroundColor: const Color.fromARGB(255, 227, 227, 227),
       body: Container(
         width: size.width,
         height: size.height,
-        color: Colors.white,
+        color: CardColor,
         child: Padding(
           padding: const EdgeInsets.only(
               left: 16.0, right: 16.0, top: 50.0, bottom: 25.0),
@@ -54,22 +55,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   child: const Icon(Icons.close),
                 ),
                 const SizedBox(height: 70),
-                const Text(
-                  "Forgot Password",
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Please enter your email address to recover your password.',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
-                  ),
-                ),
+                Text("Forgot Password",
+                    style: Theme.of(context).textTheme.headlineLarge),
+                const SizedBox(height: 16),
+                Text(
+                    'Please enter your email address to recover your password.',
+                    style: Theme.of(context).textTheme.bodySmall),
                 const SizedBox(height: 40),
                 const Text(
                   'Email address',
@@ -91,43 +82,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       return null;
                     },
                     autofocus: false,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300,
-                    ),
-                    decoration: const InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(30.0))),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: .5,
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            30.0,
-                          ),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.0),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            30.0,
-                          ),
-                        ),
-                      ),
-
-                      // fillColor: kPrimaryColor,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    decoration: InputDecoration(
+                      labelText: "Enter Email",
                       filled: true,
-                      errorStyle: TextStyle(fontSize: 15),
-                      hintText: 'email address',
-                      hintStyle: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w300,
-                      ),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
                     ),
                   ),
                 ),
@@ -139,30 +102,38 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     elevation: 0,
                     borderRadius: BorderRadius.circular(32),
                     child: MaterialButton(
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.all(Radius.circular(20.0))),
-                      color: Colors.deepOrange,
+                      color: ButtonColor,
                       onPressed: () async {
-                        if (_key.currentState!.validate()) {
-                          final _status = await resetPassword(
-                              email: _emailController.text.trim());
-                          if (_status == AuthStatus.successful) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text('Reset Password link sent to Email'),
-                            ));
-                            //your logic
+                        try {
+                          if (_key.currentState!.validate()) {
+                            final _status = await resetPassword(
+                                email: _emailController.text.trim());
+
+                            if (_emailController != RegExp(r'\S+@\S+\.\S+')) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Invalid Email ')));
+                            }
+                            if (_status == AuthStatus.successful) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content:
+                                    Text('Reset Password link sent to Email'),
+                              ));
+                              //your logic
+                            }
                           }
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(e.toString())));
+                          print(e);
                         }
                       },
                       minWidth: double.infinity,
                       child: const Text(
                         'Recover Password ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 16,
-                            color: Colors.white),
                       ),
                     ),
                   ),

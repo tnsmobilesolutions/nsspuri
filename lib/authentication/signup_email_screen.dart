@@ -3,6 +3,7 @@ import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 import 'package:uuid/uuid.dart';
 
@@ -42,6 +43,15 @@ class _SignupScreenState extends State<SignupScreen> {
     });
   }
 
+  final _form = GlobalKey<FormState>();
+  bool _isValid = false;
+
+  void _saveForm() {
+    setState(() {
+      _isValid = _form.currentState!.validate();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,28 +70,37 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(
                 height: 30,
               ),
-              TextFormField(
-                controller: emailController,
-                onSaved: (newValue) => emailController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a valid Email';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: "Email",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+              Form(
+                key: _form,
+                child: TextFormField(
+                  controller: emailController,
+                  onSaved: (newValue) => emailController,
+                  validator: (value) {
+                    // Check if this field is empty
+                    if (value == null || value.isEmpty) {
+                      return 'This field is required';
+                    }
 
-                // hintText: 'Name',
+                    // using regular expression
+                    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                      return "Please enter a valid email address";
+                    }
+
+                    // the email is valid
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    filled: true,
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
+                  ),
+
+                  // hintText: 'Name',
+                ),
               ),
               const SizedBox(
                 height: 30,
@@ -100,10 +119,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 focusNode: textFieldFocusNode,
                 decoration: InputDecoration(
                   labelText: "Password",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide:
@@ -117,6 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ? Icons.visibility_off_rounded
                             : Icons.visibility_rounded,
                         size: 20,
+                        color: IconButtonColor,
                       ),
                     ),
                   ),
@@ -140,10 +158,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 obscureText: _obscured2,
                 decoration: InputDecoration(
                   labelText: "Confirm Password",
-                  labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
-                  fillColor: Colors.grey.withOpacity(0.3),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0),
                       borderSide:
@@ -156,6 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         _obscured2
                             ? Icons.visibility_off_rounded
                             : Icons.visibility_rounded,
+                        color: IconButtonColor,
                         size: 20,
                       ),
                     ),
@@ -176,9 +193,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     backgroundColor:
                         MaterialStateProperty.resolveWith((states) {
                       if (states.contains(MaterialState.pressed)) {
-                        return Colors.deepOrange;
+                        return ButtonColor;
                       }
-                      return Colors.deepOrange;
+                      return ButtonColor;
                     }),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
@@ -189,9 +206,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: () async {
                     try {
                       if (passwordController.text !=
-                          confirmPasswordController.text) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Password does not match')));
+                              confirmPasswordController.text ||
+                          emailController != RegExp(r'\S+@\S+\.\S+')) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Invalid Email or Password')));
                       } else {
                         showDialog(
                           context: context,
@@ -267,11 +285,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   },
                   child: const Text(
                     "Next",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 16,
-                    ),
                   ),
                 ),
               ),

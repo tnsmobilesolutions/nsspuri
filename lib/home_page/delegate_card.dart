@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class DelegateCard extends StatelessWidget {
@@ -25,7 +26,7 @@ class DelegateCard extends StatelessWidget {
             Card(
               elevation: 0,
               // margin: const EdgeInsets.all(20),
-              color: Colors.white,
+              color: CardColor,
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12))),
               child: SingleChildScrollView(
@@ -42,10 +43,6 @@ class DelegateCard extends StatelessWidget {
                                 ),
                                 const Text(
                                   'ଜୟଗୁରୁ',
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.black),
                                 ),
                                 SizedBox(
                                   width: MediaQuery.of(context).size.width / 6,
@@ -61,26 +58,23 @@ class DelegateCard extends StatelessWidget {
                                     },
                                     icon: const Icon(
                                       Icons.edit,
-                                      color: Colors.deepOrange,
+                                      color: IconButtonColor,
                                     ))
                               ])
                         : const Center(
                             child: Text(
                               'ଜୟଗୁରୁ',
-                              style:
-                                  TextStyle(fontSize: 24, color: Colors.black),
                             ),
                           ),
                     const Divider(
                       thickness: 1,
-                      color: Color.fromARGB(240, 228, 228, 228),
+                      color: DividerColor,
                     ),
                     const SizedBox(
                       height: 4,
                     ),
                     Center(
                       child: CircleAvatar(
-                        backgroundColor: Colors.white,
                         radius: 35,
                         child: CircleAvatar(
                           backgroundImage: devotee.profilePhotoUrl != null
@@ -101,9 +95,6 @@ class DelegateCard extends StatelessWidget {
                           devotee.name != null
                               ? Text(
                                   "Name       :   ${devotee.name}",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300),
                                 )
                               : const Text("Name : Please Update your Name"),
                           const SizedBox(
@@ -112,24 +103,18 @@ class DelegateCard extends StatelessWidget {
                           devotee.sangha != null
                               ? Text(
                                   "Sangha    :    ${devotee.sangha}",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300),
+
                                   softWrap: true, // Enable text wrapping
                                   overflow: TextOverflow
                                       .visible, // Define overflow behavior if the text doesn't fit
                                 )
-                              : const Text(
-                                  "Sanga : Please Update your Sangha"),
+                              : const Text("Sanga : Please Update your Sangha"),
                           const SizedBox(
                             height: 10,
                           ),
                           devotee.mobileNumber != null
                               ? Text(
                                   "Mobile     :    ${devotee.mobileNumber}",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300),
                                 )
                               : const Text(
                                   "Mobile : Please Update your Mobile Number"),
@@ -139,9 +124,6 @@ class DelegateCard extends StatelessWidget {
                           devotee.gender != null
                               ? Text(
                                   "Gender    :    ${devotee.gender}",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300),
                                 )
                               : const Text(
                                   "Gender : Please Update your Gender"),
@@ -151,9 +133,6 @@ class DelegateCard extends StatelessWidget {
                           devotee.dob != null
                               ? Text(
                                   "DOB         :    ${devotee.dob}",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300),
                                 )
                               : const Text(
                                   "DOB : Please Update your Date of birth"),
@@ -163,9 +142,6 @@ class DelegateCard extends StatelessWidget {
                           devotee.bloodGroup != null
                               ? Text(
                                   "Blood Gr :    ${devotee.bloodGroup}",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300),
                                 )
                               : const Text(
                                   "Bloodgroup : Please Update your Bloodgroup"),
