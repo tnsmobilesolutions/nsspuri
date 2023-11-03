@@ -11,6 +11,7 @@ import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: depend_on_referenced_packages
 
@@ -48,7 +49,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   String? profileImage;
   XFile? previewImage;
   List<String> bloodGrouplist = <String>[
-    
     'A+',
     'A-',
     'B+',
@@ -58,8 +58,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     'AB+',
     'AB-',
     "Don't know",
-
-
   ];
 
   get districtList => null;
@@ -162,14 +160,12 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
           child: Padding(
         padding: const EdgeInsets.all(15),
         child: SingleChildScrollView(
-          child:
-              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             CupertinoButton(
               onPressed: () {
                 showPhotoOptions();
               },
               child: CircleAvatar(
-                backgroundColor: const Color(0xFFfa6e0f),
                 backgroundImage:
                     previewImage != null && previewImage!.path.isNotEmpty
                         ? Image.file(
@@ -181,11 +177,11 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 child: const Align(
                   alignment: Alignment.bottomRight,
                   child: CircleAvatar(
-                    backgroundColor: Colors.white,
+                    backgroundColor: CircleAvatarClor,
                     radius: 20.0,
                     child: Icon(
                       Icons.camera_alt,
-                      size: 25.0,
+                      size: 18.0,
                     ),
                   ),
                 ),
@@ -205,17 +201,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 return null;
               },
               decoration: InputDecoration(
-                      labelText: "Name",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                labelText: "Name",
+                filled: true,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none)),
+              ),
             ),
             const SizedBox(
               height: 12,
@@ -236,17 +229,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 return null;
               },
               decoration: InputDecoration(
-                      labelText: "Mobile Number",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                labelText: "Mobile Number",
+                filled: true,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none)),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -255,8 +245,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                const Text('Gender',
-                    style: TextStyle(fontSize: 18, color: Colors.black)),
+                const Text(
+                  'Gender',
+                ),
                 Column(
                   children: <Widget>[
                     Row(
@@ -264,19 +255,17 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         Expanded(
                           flex: 1,
                           child: RadioListTile(
-                            fillColor:
-                                MaterialStateProperty.all(Colors.deepOrange),
                             value: 0,
                             groupValue: genderController,
-                            title: const Text("Male",
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.black)),
+                            title: const Text(
+                              "Male",
+                            ),
                             onChanged: (newValue) => setState(
                                 () => genderController = newValue ?? 0),
-                            activeColor: Colors.deepOrange,
+                            activeColor: RadioButtonColor,
                             // Set the unselected color to blue
                             selectedTileColor:
-                                Colors.deepOrange, // Set the selected color
+                                RadioButtonColor, // Set the selected color
                             selected: false,
                           ),
                         ),
@@ -285,20 +274,19 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           child: RadioListTile(
                             value: 1,
                             groupValue: genderController,
-                            fillColor:
-                                MaterialStateProperty.all(Colors.deepOrange),
-                            title: const Text("Female",
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.black)),
+
+                            title: const Text(
+                              "Female",
+                            ),
                             onChanged: (newValue) {
                               setState(() {
                                 genderController = newValue ?? 0;
                               });
                             },
-                            activeColor: Colors.deepOrange,
+                            activeColor: RadioButtonColor,
                             // Set the unselected color to blue
                             selectedTileColor:
-                                Colors.deepOrange, // Set the selected color
+                                RadioButtonColor, // Set the selected color
                             selected: false,
                           ),
                         ),
@@ -313,26 +301,22 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             ),
             GestureDetector(
               child: TextField(
-                style: const TextStyle(color: Colors.black),
                 controller: dateinput, //editing controller of this TextField
                 decoration: InputDecoration(
-                      labelText: "Date Of Birth",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                  labelText: "Date Of Birth",
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
                 readOnly:
                     true, //set it true, so that user will not able to edit text
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
-                      initialEntryMode: DatePickerEntryMode
-                          .calendarOnly, // Hide edit button
+                      initialEntryMode:
+                          DatePickerEntryMode.calendarOnly, // Hide edit button
                       fieldHintText: 'dd-MM-yyyy',
                       context: context,
                       initialDate: DateTime.now(),
@@ -370,7 +354,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     value: bloodGroupController,
 
                     elevation: 16,
-                    hint: const Text('Select BloodGroup'),
+                    decoration: InputDecoration(
+                      labelText: "Blood Group",
+                      filled: true,
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none)),
+                    ),
                     // style: const TextStyle(color: Colors.deepPurple),
 
                     onChanged: (String? value) {
@@ -401,7 +393,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 ),
               ),
               suggestionsBoxDecoration: const SuggestionsBoxDecoration(
-                  color: Colors.white,
+                  color: SuggestionBoxColor,
                   elevation: 5,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(10),
@@ -411,17 +403,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               textFieldConfiguration: TextFieldConfiguration(
                 controller: sanghaController,
                 decoration: InputDecoration(
-                      labelText: "Sangha Name",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                  labelText: "Sangha Name",
+                  filled: true,
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none)),
+                ),
               ),
               suggestionsCallback: (value) {
                 return SanghaList.getSuggestions(value);
@@ -438,8 +427,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         padding: const EdgeInsets.all(6.0),
                         child: Text(
                           suggestion,
-                          maxLines: 2,
-                          style: const TextStyle(color: Colors.black),
+                          maxLines: 6,
                         ),
                       ),
                     )
@@ -465,17 +453,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 return null;
               },
               decoration: InputDecoration(
-                      labelText: "Address line 1",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                labelText: "Address line 1",
+                filled: true,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none)),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -490,17 +475,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 return null;
               },
               decoration: InputDecoration(
-                      labelText: "Address line 2",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                labelText: "Address line 2",
+                filled: true,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none)),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -515,17 +497,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 return null;
               },
               decoration: InputDecoration(
-                      labelText: "City Name",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                labelText: "City Name",
+                filled: true,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none)),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -539,18 +518,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-               decoration: InputDecoration(
-                      labelText: "State Name",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+              decoration: InputDecoration(
+                labelText: "State Name",
+                filled: true,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none)),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -564,18 +540,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-               decoration: InputDecoration(
-                      labelText: "Country Name",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+              decoration: InputDecoration(
+                labelText: "Country Name",
+                filled: true,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none)),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -590,17 +563,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 return null;
               },
               decoration: InputDecoration(
-                      labelText: "PIN Code",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                labelText: "PIN Code",
+                filled: true,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none)),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -674,9 +644,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                       Navigator.of(context)
                           .pop(); // Close the circular progress indicator
                       // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('devotee update issue')));
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('devotee update issue')));
                     }
                   } catch (e) {
                     Navigator.of(context)
@@ -691,16 +660,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     backgroundColor:
                         MaterialStateProperty.resolveWith((states) {
                       if (states.contains(MaterialState.pressed)) {
-                        return Colors.deepOrange;
+                        return ButtonColor;
                       }
-                      return Colors.deepOrange;
+                      return ButtonColor;
                     }),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(90)))),
                 child: const Text(
-                  'Next >',
-                  style: TextStyle(fontSize: 18),
+                  'Next',
                 ),
 
                 //Row

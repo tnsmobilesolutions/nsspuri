@@ -3,6 +3,7 @@ import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 import 'package:uuid/uuid.dart';
 
@@ -133,6 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ? Icons.visibility_off_rounded
                             : Icons.visibility_rounded,
                         size: 20,
+                        color: IconButtonColor,
                       ),
                     ),
                   ),
@@ -170,6 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         _obscured2
                             ? Icons.visibility_off_rounded
                             : Icons.visibility_rounded,
+                        color: IconButtonColor,
                         size: 20,
                       ),
                     ),
@@ -190,9 +193,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     backgroundColor:
                         MaterialStateProperty.resolveWith((states) {
                       if (states.contains(MaterialState.pressed)) {
-                        return Colors.deepOrange;
+                        return ButtonColor;
                       }
-                      return Colors.deepOrange;
+                      return ButtonColor;
                     }),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(

@@ -24,16 +24,17 @@ class AppTheme {
         toolbarTextStyle: base.textTheme
             .copyWith(
               titleLarge: const TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 28.0,
-                fontWeight: FontWeight.bold,
+                fontFamily: 'Poppins',
+                fontSize: 24.0,
+                fontWeight: FontWeight.normal,
+                color: TextThemeColor
               ),
             )
             .bodyMedium,
         titleTextStyle: base.textTheme
             .copyWith(
               titleLarge: const TextStyle(
-                fontFamily: 'OpenSans',
+                fontFamily: 'Poppins',
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
               ),

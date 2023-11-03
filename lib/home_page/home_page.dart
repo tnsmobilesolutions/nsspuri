@@ -30,15 +30,18 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: ScaffoldBackgroundColor,
         extendBodyBehindAppBar: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           iconTheme: const IconThemeData(color: IconButtonColor),
           backgroundColor: AppBarColor,
           elevation: .5,
-          title: const Text(
+          title: Text(
             "Pune Sammilani Delegate",
+            style: TextStyle(
+                fontSize: 22,
+                color: TextThemeColor,
+                fontWeight: FontWeight.normal),
           ),
           centerTitle: true,
           actions: [

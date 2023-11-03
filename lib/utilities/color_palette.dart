@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 // ignore: constant_identifier_names
 const AccentColor = Colors.deepOrange;
 const ScaffoldBackgroundColor = Color.fromARGB(255, 243, 243, 243);
-const AppBarColor = Colors.grey;
+const AppBarColor = Color.fromARGB(255, 243, 243, 243);
 const TextThemeColor = Colors.black87;
 const IconButtonColor = Colors.deepOrange;
 const ButtonTextStyleColor = Colors.white;
 const CardColor = Colors.white;
-const DividerColor = Colors.transparent;
+const DividerColor = Color.fromARGB(255, 235, 235, 235);
 const ButtonColor = Colors.deepOrange;
 const RadioButtonColor = Colors.deepOrange;
 const SuggestionBoxColor = Colors.white;
+const CircleAvatarClor = Colors.white;
 
 //Dark Theme Colors
 const DarkThemeBlack = Colors.black;
