@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-
-
 const Headline6Style = TextStyle(
   fontSize: 28.0,
   fontWeight: FontWeight.bold,
@@ -15,14 +13,12 @@ const Headline5TextStyle = TextStyle(
 );
 
 const Headline4TextStyle = TextStyle(
-  fontSize: 90.0,
+  fontSize: 30.0,
   fontWeight: FontWeight.bold,
 );
 
-const Headline3TextStyle = TextStyle(
-  fontSize: 22.0,
-  fontWeight: FontWeight.bold,
-);
+const Headline3TextStyle =
+    TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold, color: Colors.black);
 
 const BodyText1Style = TextStyle(
   fontSize: 20.0,

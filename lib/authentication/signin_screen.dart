@@ -145,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text(
-                                        'User does not exist. Please sign up.')));
+                                        'Please Enter a Valid Email and Password.')));
                           }
                         } catch (e) {
                           Navigator.of(context)

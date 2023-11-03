@@ -206,9 +206,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: () async {
                     try {
                       if (passwordController.text !=
-                          confirmPasswordController.text) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Password does not match')));
+                              confirmPasswordController.text ||
+                          emailController != RegExp(r'\S+@\S+\.\S+')) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Invalid Email or Password')));
                       } else {
                         showDialog(
                           context: context,

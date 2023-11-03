@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:sammilani_delegate/firebase/firebase_options.dart';
 import 'package:sammilani_delegate/screen/splash_screen.dart';
-import 'package:sammilani_delegate/utilities/app_theme_dark.dart';
 import 'package:sammilani_delegate/utilities/app_theme_light.dart';
 
 Future<void> main() async {
@@ -15,7 +14,6 @@ Future<void> main() async {
 }
 
 final ThemeData _delegateTheme = AppTheme.buildDelegateTheme();
-final ThemeData _delegateThemeDark = AppThemeDark.buildDelegateTheme();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,7 +25,6 @@ class MyApp extends StatelessWidget {
       // theme: Themes.light,
       // darkTheme: Themes.dark,
       theme: _delegateTheme,
-   
       home: SplashScreen(),
     );
   }

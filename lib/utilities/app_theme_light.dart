@@ -27,7 +27,6 @@ class AppTheme {
                 fontFamily: 'Poppins',
                 fontSize: 24.0,
                 fontWeight: FontWeight.normal,
-                color: TextThemeColor
               ),
             )
             .bodyMedium,
@@ -41,6 +40,7 @@ class AppTheme {
             )
             .titleLarge,
       ),
+      
 
       //Override for the default Card theme
       cardTheme: base.cardTheme.copyWith(
