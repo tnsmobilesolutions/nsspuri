@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
           iconTheme: const IconThemeData(color: IconButtonColor),
           backgroundColor: AppBarColor,
           elevation: .5,
-          title: Text(
+          title: const Text(
             "Pune Sammilani Delegate",
             style: TextStyle(
                 fontSize: 22,
@@ -77,13 +77,14 @@ class _HomePageState extends State<HomePage> {
                         child: InkWell(
                           onTap: () {},
                           child: Padding(
-                            padding: const EdgeInsets.all(23),
+                            padding: const EdgeInsets.all(14),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
                                   'Thank you for sharing your data. Please contact the following person for online payment for delegate.',
                                   style: TextStyle(
+                                    fontSize: 16,
                                     overflow: TextOverflow.clip,
                                   ),
                                 ),
@@ -179,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       );
                     } else {
-                      return Column(
+                      return const Column(
                         children: [
                           Text("404 Error"),
                         ],

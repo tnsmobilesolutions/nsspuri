@@ -206,10 +206,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: () async {
                     try {
                       if (passwordController.text !=
-                              confirmPasswordController.text ||
-                          emailController != RegExp(r'\S+@\S+\.\S+')) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Invalid Email or Password')));
+                          confirmPasswordController.text) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Invalid Email or Password')));
                       } else {
                         showDialog(
                           context: context,
@@ -266,14 +266,14 @@ class _SignupScreenState extends State<SignupScreen> {
                             Navigator.of(context)
                                 .pop(); // Close the circular progress indicator
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Signup failed')));
+                                const SnackBar(content: Text('Signup failed')));
                             // Handle the case where the response status code is not 200
                           }
                         } else {
                           Navigator.of(context)
                               .pop(); // Close the circular progress indicator
                           ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Signup failed')));
+                              const SnackBar(content: Text('Signup failed')));
                           // Handle the case where uid is null
                         }
                       }

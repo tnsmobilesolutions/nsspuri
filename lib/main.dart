@@ -13,7 +13,7 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-final ThemeData _delegateTheme = AppTheme.buildDelegateTheme();
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // theme: Themes.light,
       // darkTheme: Themes.dark,
-      theme: _delegateTheme,
+      theme:appTheme,
       home: SplashScreen(),
     );
   }

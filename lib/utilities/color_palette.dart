@@ -17,20 +17,4 @@ const RadioButtonColor = Colors.deepOrange;
 const SuggestionBoxColor = Colors.white;
 const CircleAvatarClor = Colors.white;
 
-//Dark Theme Colors
-const DarkThemeBlack = Colors.black;
-const DarkThemeWhite = Colors.white;
 
-const DarkPrimaryBlue = Color(0xFF404EFB);
-const DarkPrimaryBlueLight = Color(0xff7886FC);
-
-const DarkSecondaryGrey = Color(0xff8f9596);
-const DarkSecondaryGreyLight = Color(0xffc3c9c9);
-
-const DarkOnPrimaryWhite = Colors.white;
-const DarkOnSecondaryBlack = Colors.black;
-
-const DarkScaffoldBackgroundBlack = Color(0xff303639);
-
-const DarkGradientEndColor = Color(0xff303639);
-const DarkGradientBeginColor = Colors.white38;
