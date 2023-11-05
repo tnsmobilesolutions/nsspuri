@@ -36,12 +36,9 @@ class _HomePageState extends State<HomePage> {
           iconTheme: const IconThemeData(color: IconButtonColor),
           backgroundColor: AppBarColor,
           elevation: .5,
-          title: const Text(
+          title: Text(
             "Pune Sammilani Delegate",
-            style: TextStyle(
-                fontSize: 22,
-                color: TextThemeColor,
-                fontWeight: FontWeight.normal),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           centerTitle: true,
           actions: [

@@ -28,11 +28,17 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: ScaffoldBackgroundColor,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          centerTitle: true,
-          elevation: 0,
-        ),
+            automaticallyImplyLeading: false,
+            backgroundColor: ScaffoldBackgroundColor,
+            centerTitle: true,
+            elevation: .4,
+            title: Text(
+              'Address details',
+              style: Theme.of(context).textTheme.titleMedium,
+            )),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(12),

@@ -21,6 +21,20 @@ class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
+
+  bool _obscured1 = true;
+  final textFieldFocusNode = FocusNode();
+
+  void _toggleObscured1() {
+    setState(() {
+      _obscured1 = !_obscured1;
+      if (textFieldFocusNode.hasPrimaryFocus)
+        return; // If focus is on text field, dont unfocus
+      textFieldFocusNode.canRequestFocus =
+          false; // Prevents focus if tap on eye
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -64,6 +78,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 20,
                   ),
                   TextFormField(
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: _obscured1,
+                    focusNode: textFieldFocusNode,
+
                     controller: _passwordTextController,
                     onSaved: (newValue) => _passwordTextController,
                     validator: (value) {
@@ -80,6 +98,19 @@ class _SignInScreenState extends State<SignInScreen> {
                           borderRadius: BorderRadius.circular(30.0),
                           borderSide: const BorderSide(
                               width: 0, style: BorderStyle.none)),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                        child: GestureDetector(
+                          onTap: _toggleObscured1,
+                          child: Icon(
+                            _obscured1
+                                ? Icons.visibility_off_rounded
+                                : Icons.visibility_rounded,
+                            size: 20,
+                            color: IconButtonColor,
+                          ),
+                        ),
+                      ),
                     ),
 
                     // hintText: 'Name',
@@ -192,6 +223,7 @@ class _SignInScreenState extends State<SignInScreen> {
         SizedBox(
           width: 80,
           child: TextButton(
+            style: Theme.of(context).textButtonTheme.style,
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
@@ -201,7 +233,6 @@ class _SignInScreenState extends State<SignInScreen> {
             },
             child: const Text(
               'Sign Up',
-              style: TextStyle(color: ButtonColor),
             ),
           ),
         )
@@ -210,21 +241,14 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget forgetPassword(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 35,
-      alignment: Alignment.bottomRight,
-      child: TextButton(
-        child: const Text(
-          "Forgot Password?",
-          style: TextStyle(color: TextThemeColor),
-          textAlign: TextAlign.right,
-        ),
-        onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const ResetPasswordScreen())),
+    return TextButton(
+      style: Theme.of(context).textButtonTheme.style,
+      child: const Text(
+        "Forgot Password?",
+        textAlign: TextAlign.right,
       ),
+      onPressed: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ResetPasswordScreen())),
     );
   }
 }
