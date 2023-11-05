@@ -132,8 +132,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         }
                       },
                       minWidth: double.infinity,
-                      child: const Text(
+                      child: Text(
                         'Recover Password ',
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
                   ),

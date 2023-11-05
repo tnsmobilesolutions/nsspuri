@@ -38,10 +38,7 @@ class _HomePageState extends State<HomePage> {
           elevation: .5,
           title: Text(
             "Pune Sammilani Delegate",
-            style: TextStyle(
-                fontSize: 22,
-                color: TextThemeColor,
-                fontWeight: FontWeight.normal),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           centerTitle: true,
           actions: [
@@ -77,13 +74,14 @@ class _HomePageState extends State<HomePage> {
                         child: InkWell(
                           onTap: () {},
                           child: Padding(
-                            padding: const EdgeInsets.all(23),
+                            padding: const EdgeInsets.all(14),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
                                   'Thank you for sharing your data. Please contact the following person for online payment for delegate.',
                                   style: TextStyle(
+                                    fontSize: 16,
                                     overflow: TextOverflow.clip,
                                   ),
                                 ),
@@ -179,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       );
                     } else {
-                      return Column(
+                      return const Column(
                         children: [
                           Text("404 Error"),
                         ],

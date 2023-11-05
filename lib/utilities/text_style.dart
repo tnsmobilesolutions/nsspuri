@@ -17,8 +17,8 @@ const Headline4TextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-const Headline3TextStyle =
-    TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold, color: Colors.black);
+const Headline3TextStyle = TextStyle(
+    fontSize: 14.0, fontWeight: FontWeight.normal, color: Colors.black);
 
 const BodyText1Style = TextStyle(
   fontSize: 20.0,

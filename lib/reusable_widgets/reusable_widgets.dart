@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Image LogoWidget(String imageName) {
+Image logoWidget(String imageName) {
   return Image.asset(
     imageName,
     fit: BoxFit.fitWidth,
@@ -11,7 +11,7 @@ Image LogoWidget(String imageName) {
   );
 }
 
-TextField ReusableTextField(String text, IconData icon, bool isPasswordType,
+TextField reusableTextField(String text, IconData icon, bool isPasswordType,
     TextEditingController controller) {
   return TextField(
     controller: controller,
