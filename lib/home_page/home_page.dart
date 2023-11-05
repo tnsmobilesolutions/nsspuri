@@ -13,10 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 class HomePage extends StatefulWidget {
   HomePage({
     super.key,
-    required this.uid,
   });
-  String uid;
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -165,15 +162,16 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FutureBuilder(
-                future: GetDevoteeAPI().loginDevotee(widget.uid),
+                future: GetDevoteeAPI().devoteeWithRelatives(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
                     if (snapshot.data["statusCode"] == 200) {
+                      print(snapshot.data);
                       return Column(
                         children: [
-                          DelegateCard(devoteeData: snapshot.data),
+                          RelativeDelegate(devoteeData: snapshot.data),
                         ],
                       );
                     } else {

@@ -7,10 +7,8 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class AddressDetailsScreen extends StatefulWidget {
-  AddressDetailsScreen({super.key, required this.uid, required this.devoteeId});
-  String uid;
+  AddressDetailsScreen({super.key,required this.devoteeId});
   String devoteeId;
-
   @override
   State<AddressDetailsScreen> createState() => _AddressDetailsScreenState();
 }
@@ -54,7 +52,6 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return HomePage(
-                            uid: widget.uid,
                           );
                         },
                       ));
@@ -235,7 +232,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                         // ignore: use_build_context_synchronously
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return HomePage(uid: widget.uid);
+                            return HomePage();
                           },
                         ));
                       } else {

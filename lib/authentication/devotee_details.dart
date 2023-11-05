@@ -16,9 +16,8 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class DevoteeDetailsPage extends StatefulWidget {
-  DevoteeDetailsPage({Key? key, required this.uid, required this.devoteeId})
+  DevoteeDetailsPage({Key? key, required this.devoteeId})
       : super(key: key);
-  String uid;
   String devoteeId;
   get currentUser => null;
 
@@ -492,7 +491,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           context,
                           MaterialPageRoute(builder: (context) {
                             return AddressDetailsScreen(
-                                uid: widget.uid, devoteeId: widget.devoteeId);
+                                devoteeId: widget.devoteeId);
                           }),
                         );
                       } else {

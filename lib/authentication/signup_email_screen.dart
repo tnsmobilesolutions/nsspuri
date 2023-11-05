@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
@@ -8,8 +9,8 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:uuid/uuid.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
-
+  SignupScreen({Key? key, required this.title}) : super(key: key);
+  String title;
   @override
   _SignupScreenState createState() => _SignupScreenState();
 }
@@ -243,8 +244,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           );
 
                           final response =
-                              await PostDevoteeAPI().addDevotee(newDevotee);
-
+                              await PostDevoteeAPI().signupDevotee(newDevotee);
+                          await GetDevoteeAPI().loginDevotee(uid);
                           if (response["statusCode"] == 200) {
                             // Show a circular progress indicator while navigating
                             // ignore: use_build_context_synchronously
@@ -257,7 +258,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                 builder: (context) {
                                   return DevoteeDetailsPage(
                                     devoteeId: devoteeId,
-                                    uid: uid,
                                   );
                                 },
                               ),

@@ -638,7 +638,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                HomePage(uid: widget.devotee.uid.toString()),
+                                HomePage(),
                           ));
                     } else {
                       Navigator.of(context)
