@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
@@ -77,7 +75,7 @@ class RelativeDelegate extends StatelessWidget {
                                   Navigator.push(context, MaterialPageRoute(
                                     builder: (context) {
                                       return EditDevoteeDetailsPage(
-                                          devotee: devoteedata);
+                                          title: "edit", devotee: devoteedata);
                                     },
                                   ));
                                 },

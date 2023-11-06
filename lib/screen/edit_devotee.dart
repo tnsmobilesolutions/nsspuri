@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
@@ -17,11 +18,10 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class EditDevoteeDetailsPage extends StatefulWidget {
-  EditDevoteeDetailsPage({
-    Key? key,
-    required this.devotee,
-  }) : super(key: key);
+  EditDevoteeDetailsPage({Key? key, required this.devotee, required this.title})
+      : super(key: key);
   DevoteeModel devotee;
+  String title;
   get currentUser => null;
 
   @override
@@ -616,9 +616,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                             postalCode: int.tryParse(postalCodeController.text),
                             city: cityController.text,
                             state: stateController.text));
+                    Map<String, dynamic> response;
+                    if (widget.title == "edit") {
+                      response = await PutDevoteeAPI().updateDevotee(
+                          updateDevotee, widget.devotee.devoteeId.toString());
+                    } else {
+                      response = await PostDevoteeAPI()
+                          .addRelativeDevotee(updateDevotee);
+                    }
 
-                    final response = await PutDevoteeAPI().updateDevotee(
-                        updateDevotee, widget.devotee.devoteeId.toString());
                     if (response["statusCode"] == 200) {
                       // Show a circular progress indicator while navigating
                       // ignore: use_build_context_synchronously
@@ -637,8 +643,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                HomePage(),
+                            builder: (context) => HomePage(),
                           ));
                     } else {
                       Navigator.of(context)

@@ -8,10 +8,12 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 import 'package:uuid/uuid.dart';
 
+// ignore: must_be_immutable
 class SignupScreen extends StatefulWidget {
   SignupScreen({Key? key, required this.title}) : super(key: key);
   String title;
   @override
+  // ignore: library_private_types_in_public_api
   _SignupScreenState createState() => _SignupScreenState();
 }
 

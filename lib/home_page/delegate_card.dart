@@ -52,6 +52,7 @@ class DelegateCard extends StatelessWidget {
                                       Navigator.push(context, MaterialPageRoute(
                                         builder: (context) {
                                           return EditDevoteeDetailsPage(
+                                            title: "edit",
                                               devotee: devotee);
                                         },
                                       ));
