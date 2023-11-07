@@ -12,21 +12,54 @@ final ThemeData appTheme = ThemeData(
         headlineSmall: TextStyle(),
         bodyLarge: TextStyle(),
         bodySmall: TextStyle(),
+
+
         // use for textformField
-        displaySmall: TextStyle(),
+        displaySmall: TextStyle(
+          fontSize: 14,
+          color: TextFormFieldColor,
+          fontWeight: FontWeight.w500,
+        ),
+
+
+
         // use for cards
         displayMedium: TextStyle(
             fontSize: 14, color: TextThemeColor, fontWeight: FontWeight.bold),
+
+
+
+
         displayLarge: TextStyle(),
+
+
+
+
+
         // use for button text
         titleSmall: TextStyle(
             fontSize: 14,
             color: ButtonTextStyleColor,
             fontWeight: FontWeight.bold),
+
+
+
+
+
         // use for appBar
         titleMedium: TextStyle(
             fontSize: 20, color: AppbarTextColor, fontWeight: FontWeight.bold),
+
+
+
+
+
         titleLarge: TextStyle()),
+
+
+
+
+
     textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
       foregroundColor:
@@ -38,5 +71,8 @@ final ThemeData appTheme = ThemeData(
         TextStyle(fontSize: 16), // Text style
       ),
     ))
+
+
+    
     // Define other theme properties here
     );

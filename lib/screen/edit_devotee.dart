@@ -13,6 +13,7 @@ import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:sammilani_delegate/utilities/utility.dart';
 
 // ignore: depend_on_referenced_packages
 
@@ -190,7 +191,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             const SizedBox(height: 10),
             TextFormField(
               controller: nameController,
-              onSaved: (newValue) => nameController,
+                onChanged: (newValue) {
+                  // Apply camel case conversion and update the text
+                  String camelCaseText = Utility.convertToCamelCase(newValue);
+                  nameController.value = TextEditingValue(
+                    text: camelCaseText,
+                    selection:
+                        TextSelection.collapsed(offset: camelCaseText.length),
+                  );
+                },
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
               ],

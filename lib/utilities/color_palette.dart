@@ -9,6 +9,7 @@ const ScaffoldBackgroundColor = Color.fromARGB(255, 243, 243, 243);
 const AppBarColor = Color(0xff0064B4);
 const AppbarTextColor = Colors.white;
 const TextThemeColor = Colors.black87;
+const TextFormFieldColor = Colors.grey;
 const IconButtonColor = Colors.deepOrange;
 const ButtonTextStyleColor = Colors.white;
 const CardColor = Colors.white;

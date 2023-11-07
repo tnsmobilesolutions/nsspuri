@@ -11,13 +11,14 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:sammilani_delegate/utilities/utility.dart';
+import 'package:sammilani_delegate/utilities/utility.dart';
 
 // ignore: depend_on_referenced_packages
 
 // ignore: must_be_immutable
 class DevoteeDetailsPage extends StatefulWidget {
-  DevoteeDetailsPage({Key? key, required this.devoteeId})
-      : super(key: key);
+  DevoteeDetailsPage({Key? key, required this.devoteeId}) : super(key: key);
   String devoteeId;
   get currentUser => null;
 
@@ -175,7 +176,15 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               const SizedBox(height: 10),
               TextFormField(
                 controller: nameController,
-                onSaved: (newValue) => nameController,
+                onChanged: (newValue) {
+                  // Apply camel case conversion and update the text
+                  String camelCaseText = Utility.convertToCamelCase(newValue);
+                  nameController.value = TextEditingValue(
+                    text: camelCaseText,
+                    selection:
+                        TextSelection.collapsed(offset: camelCaseText.length),
+                  );
+                },
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
                 ],
@@ -190,9 +199,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide:
+                        const BorderSide(width: 0, style: BorderStyle.none),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -522,7 +532,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               borderRadius: BorderRadius.circular(90)))),
                   child: const Text(
                     'Next',
-                
                   ),
 
                   //Row

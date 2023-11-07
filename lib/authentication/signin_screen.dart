@@ -6,6 +6,8 @@ import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
+import 'package:sammilani_delegate/reusable_widgets/nss_textformfield.dart';
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'reset_password.dart';
@@ -34,7 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
           false; // Prevents focus if tap on eye
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -62,20 +64,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
-                      labelText: "Enter Email",
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                 
 
-                    // hintText: 'Name',
-                  ),
-                  const SizedBox(
-                    height: 20,
                   ),
                   TextFormField(
                     keyboardType: TextInputType.visiblePassword,
