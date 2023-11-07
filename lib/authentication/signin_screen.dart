@@ -158,8 +158,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return HomePage(
-                                        uid: devotee.uid.toString());
+                                    return HomePage();
                                   },
                                 ),
                               );
@@ -227,7 +226,7 @@ class _SignInScreenState extends State<SignInScreen> {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
-                  return const SignupScreen();
+                  return  SignupScreen(title: "signup",);
                 },
               ));
             },

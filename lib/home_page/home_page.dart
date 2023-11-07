@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
-import 'package:sammilani_delegate/home_page/delegate_card.dart';
 import 'package:sammilani_delegate/home_page/relative_delegate.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
@@ -13,10 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 class HomePage extends StatefulWidget {
   HomePage({
     super.key,
-    required this.uid,
   });
-  String uid;
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -145,6 +141,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
                             return EditDevoteeDetailsPage(
+                              title: "addrelatives",
                                 devotee: DevoteeModel());
                           },
                         ));
@@ -165,15 +162,16 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               FutureBuilder(
-                future: GetDevoteeAPI().loginDevotee(widget.uid),
+                future: GetDevoteeAPI().devoteeWithRelatives(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
                     if (snapshot.data["statusCode"] == 200) {
+                      print(snapshot.data);
                       return Column(
                         children: [
-                          DelegateCard(devoteeData: snapshot.data),
+                          RelativeDelegate(devoteeData: snapshot.data),
                         ],
                       );
                     } else {
