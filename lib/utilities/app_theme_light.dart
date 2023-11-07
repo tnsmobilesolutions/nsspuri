@@ -25,7 +25,7 @@ final ThemeData appTheme = ThemeData(
             fontWeight: FontWeight.bold),
         // use for appBar
         titleMedium: TextStyle(
-            fontSize: 20, color: TextThemeColor, fontWeight: FontWeight.w300),
+            fontSize: 20, color: AppbarTextColor, fontWeight: FontWeight.bold),
         titleLarge: TextStyle()),
     textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(

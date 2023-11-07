@@ -28,13 +28,37 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         extendBodyBehindAppBar: false,
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return EditDevoteeDetailsPage(
+                        title: "add relatives", devotee: DevoteeModel());
+                  },
+                ));
+              },
+              icon: const Icon(Icons.add)),
           automaticallyImplyLeading: false,
           iconTheme: const IconThemeData(color: IconButtonColor),
           backgroundColor: AppBarColor,
           elevation: .5,
-          title: Text(
-            "Pune Sammilani Delegate",
-            style: Theme.of(context).textTheme.titleMedium,
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Pune Sammilani Delegate",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Text(
+                '${timeUntilSammilani.inDays} ',
+                style:
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.w300),
+              ),
+              const Text(
+                'days to go',
+                style: TextStyle(fontSize: 8),
+              )
+            ],
           ),
           centerTitle: true,
           actions: [
@@ -69,55 +93,27 @@ class _HomePageState extends State<HomePage> {
                         color: CardColor,
                         child: InkWell(
                           onTap: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.all(14),
+                          child: const Padding(
+                            padding: EdgeInsets.all(14),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Thank you for sharing your data. Please contact the following person for online payment for delegate.',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    overflow: TextOverflow.clip,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    const Text('Suresh Bhai'),
-                                    TextButton(
-                                        onPressed: () => launchUrl(
-                                            Uri.parse("tel://9502688244")),
-                                        child: const Text("9502688244")),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 146,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 1,
-                        color: CardColor,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Center(
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Text(
-                                    '${timeUntilSammilani.inDays} ',
-                                    style: const TextStyle(
-                                        fontSize: 44,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                                ),
-                                const Text('days to go')
+                                // const Text(
+                                //   'Thank you for sharing your data. Please contact the following person for online payment for delegate.',
+                                //   style: TextStyle(
+                                //     fontSize: 16,
+                                //     overflow: TextOverflow.clip,
+                                //   ),
+                                // ),
+                                // Row(
+                                //   children: [
+                                //     const Text('Suresh Bhai'),
+                                //     TextButton(
+                                //         onPressed: () => launchUrl(
+                                //             Uri.parse("tel://9502688244")),
+                                //         child: const Text("9502688244")),
+                                //   ],
+                                // )
                               ],
                             ),
                           ),
@@ -125,40 +121,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 146,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    elevation: 1,
-                    color: CardColor,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return EditDevoteeDetailsPage(
-                              title: "addrelatives",
-                                devotee: DevoteeModel());
-                          },
-                        ));
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Get your relatives delegate',
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
                 ),
               ),
               FutureBuilder(

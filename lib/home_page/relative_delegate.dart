@@ -15,166 +15,299 @@ class RelativeDelegate extends StatelessWidget {
     }
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            // const Text(
-            //   'ଜୟଗୁରୁ',
-            //   style: TextStyle(
-            //       fontSize: 24,
-            //       fontWeight: FontWeight.w300,
-            //       color: Colors.black),
-            // ),
-            // const Divider(
-            //   thickness: 1,
-            //   color: Color.fromARGB(240, 228, 228, 228),
-            // ),
-            ListView.builder(
-              itemCount: devotees.length,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                DevoteeModel devoteedata =
-                    DevoteeModel.fromMap(devotees[index]);
-                // DevoteeModel singledevotee =
-                //     DevoteeModel.fromMap(devotees[index]);
-                return Card(
-                  elevation: 0,
-                  // margin: const EdgeInsets.all(20),
-                  color: Colors.white,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 4,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Center(
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 35,
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      devoteedata.profilePhotoUrl != null
-                                          ? Image.network(
-                                              devoteedata.profilePhotoUrl
-                                                  .toString(),
-                                              fit: BoxFit.cover,
-                                            ).image
-                                          : null,
-                                  radius: 40,
-                                ),
+        padding: const EdgeInsets.all(12),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height / 1.5,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 5,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(
+                      width: 1,
+                      color: Color.fromARGB(255, 217, 217, 217),
+                    ),
+                    borderRadius: BorderRadius.circular(30), //<-- SEE HERE
+                  ),
+                  color: const Color.fromARGB(255, 240, 240, 240),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      ListView.builder(
+                        itemCount: devotees.length,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          DevoteeModel devoteedata =
+                              DevoteeModel.fromMap(devotees[index]);
+                          // DevoteeModel singledevotee =
+                          //     DevoteeModel.fromMap(devotees[index]);
+                          return SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(0.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30.0),
+                                        topRight: Radius.circular(30.0),
+                                      ),
+                                    ),
+                                    width: 400,
+                                    height: 80,
+
+                                    // Background color of the container
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            width: 2,
+                                          ),
+                                          Image.asset(
+                                            'assets/images/nsslogo.png',
+                                            scale: 25,
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                            width: 5,
+                                          ),
+                                          // Replace with your image path
+
+                                          const Padding(
+                                            padding: EdgeInsets.all(1),
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  'JAYAGURU',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors
+                                                        .white, // Text color
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Text(
+                                                  'Nilachala Saraswat Sangha, Puri',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors
+                                                        .white, // Text color
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 6,
+                                                ),
+                                                Text(
+                                                  '73RD UTKAL PRADESHIKA SAMMILANI',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14,
+                                                    color: Colors
+                                                        .white, // Text color
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 6,
+                                                ),
+                                                Text(
+                                                  'Pune-2023',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors
+                                                        .white, // Text color
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 50,
+                                      ),
+                                      const Text(
+                                        'IDENTITY CARD',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                              builder: (context) {
+                                                return EditDevoteeDetailsPage(
+                                                    title: "edit",
+                                                    devotee: devoteedata);
+                                              },
+                                            ));
+                                          },
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            color: Colors.deepOrange,
+                                          )),
+                                    ],
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      height: 150,
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.blue,
+                                          width: 2,
+                                        ),
+                                        shape: BoxShape
+                                            .rectangle, // This makes the container circular
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(devoteedata
+                                              .profilePhotoUrl
+                                              .toString()),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      devoteedata.name != null
+                                          ? Text(
+                                              "${devoteedata.name}",
+                                              style: const TextStyle(
+                                                  fontSize: 32,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          : const Text(
+                                              "Name : Please Update your Name"),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        devoteedata.sangha != null
+                                            ? Text(
+                                                "Sangha    :    ${devoteedata.sangha}",
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                                softWrap:
+                                                    true, // Enable text wrapping
+                                                overflow: TextOverflow
+                                                    .visible, // Define overflow behavior if the text doesn't fit
+                                              )
+                                            : const Text(
+                                                "Sanga : Please Update your Sangha"),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        devoteedata.mobileNumber != null
+                                            ? Text(
+                                                "Mobile     :    ${devoteedata.mobileNumber}",
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              )
+                                            : const Text(
+                                                "Mobile : Please Update your Mobile Number"),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        devoteedata.gender != null
+                                            ? Text(
+                                                "Gender    :    ${devoteedata.gender}",
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              )
+                                            : const Text(
+                                                "Gender : Please Update your Gender"),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        devoteedata.dob != null
+                                            ? Text(
+                                                "DOB         :    ${devoteedata.dob}",
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              )
+                                            : const Text(
+                                                "DOB : Please Update your Date of birth"),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        // devoteedata.bloodGroup != null
+                                        //     ? Text(
+                                        //         "Blood Gr :    ${devoteedata.bloodGroup}",
+                                        //         style: const TextStyle(
+                                        //             fontSize: 18,
+                                        //             fontWeight:
+                                        //                 FontWeight.w300),
+                                        //       )
+                                        //     : const Text(
+                                        //         "Bloodgroup : Please Update your Bloodgroup"),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  )
+                                ],
                               ),
                             ),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return EditDevoteeDetailsPage(
-                                          title: "edit", devotee: devoteedata);
-                                    },
-                                  ));
-                                },
-                                icon: const Icon(
-                                  Icons.edit,
-                                  color: Colors.deepOrange,
-                                ))
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              devoteedata.name != null
-                                  ? Text(
-                                      "Name       :   ${devoteedata.name}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w300),
-                                    )
-                                  : const Text(
-                                      "Name : Please Update your Name"),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              devoteedata.sangha != null
-                                  ? Text(
-                                      "Sangha    :    ${devoteedata.sangha}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w300),
-                                      softWrap: true, // Enable text wrapping
-                                      overflow: TextOverflow
-                                          .visible, // Define overflow behavior if the text doesn't fit
-                                    )
-                                  : const Text(
-                                      "Sanga : Please Update your Sangha"),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              devoteedata.mobileNumber != null
-                                  ? Text(
-                                      "Mobile     :    ${devoteedata.mobileNumber}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w300),
-                                    )
-                                  : const Text(
-                                      "Mobile : Please Update your Mobile Number"),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              devoteedata.gender != null
-                                  ? Text(
-                                      "Gender    :    ${devoteedata.gender}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w300),
-                                    )
-                                  : const Text(
-                                      "Gender : Please Update your Gender"),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              devoteedata.dob != null
-                                  ? Text(
-                                      "DOB         :    ${devoteedata.dob}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w300),
-                                    )
-                                  : const Text(
-                                      "DOB : Please Update your Date of birth"),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              devoteedata.bloodGroup != null
-                                  ? Text(
-                                      "Blood Gr :    ${devoteedata.bloodGroup}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w300),
-                                    )
-                                  : const Text(
-                                      "Bloodgroup : Please Update your Bloodgroup"),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        )
-                      ],
-                    ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                );
-              },
+                ),
+              ),
             ),
-          ],
+          ),
         ),
       ),
     );
