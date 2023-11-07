@@ -3,11 +3,12 @@ import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class AddressDetailsScreen extends StatefulWidget {
-  AddressDetailsScreen({super.key,required this.devoteeId});
+  AddressDetailsScreen({super.key, required this.devoteeId});
   String devoteeId;
   @override
   State<AddressDetailsScreen> createState() => _AddressDetailsScreenState();
@@ -30,7 +31,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: ScaffoldBackgroundColor,
+            backgroundColor: AppBarColor,
             centerTitle: true,
             elevation: .4,
             title: Text(
@@ -51,8 +52,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return HomePage(
-                          );
+                          return HomePage();
                         },
                       ));
                     },
@@ -72,15 +72,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
-                      labelText: "Address line 1",
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                    decoration: CommonStyle.textFieldStyle(
+                        labelTextStr: "Address Line 1",
+                        hintTextStr: "Enter Adddress Line 1"),
                   ),
                 ),
                 const SizedBox(
@@ -95,15 +89,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "Address line 2",
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "Address Line 2",
+                      hintTextStr: "Enter Address Line 2"),
                 ),
                 const SizedBox(
                   height: 20,
@@ -117,15 +105,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "City name",
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "City Name",
+                      hintTextStr: "Enter City Name"),
                 ),
                 const SizedBox(
                   height: 20,
@@ -139,15 +121,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "State name",
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "State Name",
+                      hintTextStr: "Enter State Name"),
                 ),
                 const SizedBox(
                   height: 20,
@@ -161,15 +137,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "Country name",
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "Country Name",
+                      hintTextStr: "Enter Country Name"),
                 ),
                 const SizedBox(
                   height: 20,
@@ -183,15 +153,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "Postal code",
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "PIN Code", hintTextStr: "Enter PIN Code"),
                 ),
                 const SizedBox(
                   height: 20,

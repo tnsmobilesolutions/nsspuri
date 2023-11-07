@@ -9,6 +9,7 @@ import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/authentication/address_screen.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:sammilani_delegate/utilities/utility.dart';
@@ -175,6 +176,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               ),
               const SizedBox(height: 10),
               TextFormField(
+                style: Theme.of(context).textTheme.displaySmall,
                 controller: nameController,
                 onChanged: (newValue) {
                   // Apply camel case conversion and update the text
@@ -194,21 +196,14 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: "Name",
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none),
-                  ),
-                ),
+                decoration: CommonStyle.textFieldStyle(
+                    labelTextStr: "Name", hintTextStr: "Enter Name"),
               ),
               const SizedBox(
                 height: 12,
               ),
               TextFormField(
+                style: Theme.of(context).textTheme.displaySmall,
                 keyboardType: TextInputType.phone,
                 controller: mobileController,
                 onSaved: (newValue) => mobileController,
@@ -222,15 +217,9 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(
-                  labelText: "Mobile Number",
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: CommonStyle.textFieldStyle(
+                    labelTextStr: "Mobile Number",
+                    hintTextStr: "Enter Mobile Number"),
               ),
               const SizedBox(
                 height: 20,
@@ -295,16 +284,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               ),
               GestureDetector(
                 child: TextField(
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: dateinput, //editing controller of this TextField
-                  decoration: InputDecoration(
-                    labelText: "Date Of Birth",
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "Date Of Birth",
+                      hintTextStr: "Enter Email"),
                   readOnly:
                       true, //set it true, so that user will not able to edit text
                   onTap: () async {
@@ -345,18 +329,13 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField(
+                      style: Theme.of(context).textTheme.displaySmall,
                       value: bloodGroupController,
 
                       elevation: 16,
-                      decoration: InputDecoration(
-                        labelText: "Blood Group",
-                        filled: true,
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            borderSide: const BorderSide(
-                                width: 0, style: BorderStyle.none)),
-                      ),
+                      decoration: CommonStyle.textFieldStyle(
+                          labelTextStr: "Blood Group",
+                          hintTextStr: "Enter Blood Group"),
 
                       // style: const TextStyle(color: Colors.deepPurple),
 
@@ -396,16 +375,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     )),
                 debounceDuration: const Duration(milliseconds: 400),
                 textFieldConfiguration: TextFieldConfiguration(
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: sanghaController,
-                  decoration: InputDecoration(
-                    labelText: "Sangha Name",
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "Sangha Name",
+                      hintTextStr: "Enter Sangha Name"),
                 ),
                 suggestionsCallback: (value) {
                   return SanghaList.getSuggestions(value);

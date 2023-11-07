@@ -4,6 +4,7 @@ import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 import 'package:uuid/uuid.dart';
@@ -76,6 +77,7 @@ class _SignupScreenState extends State<SignupScreen> {
               Form(
                 key: _form,
                 child: TextFormField(
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: emailController,
                   onSaved: (newValue) => emailController,
                   validator: (value) {
@@ -92,15 +94,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     // the email is valid
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "Email", hintTextStr: "Enter Email"),
 
                   // hintText: 'Name',
                 ),
@@ -109,6 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 30,
               ),
               TextFormField(
+                style: Theme.of(context).textTheme.displaySmall,
                 controller: passwordController,
                 onSaved: (newValue) => passwordController,
                 validator: (value) {
@@ -147,6 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 22,
               ),
               TextFormField(
+                style: Theme.of(context).textTheme.displaySmall,
                 controller: confirmPasswordController,
                 onSaved: (newValue) => confirmPasswordController,
                 validator: (value) {

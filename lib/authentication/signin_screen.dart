@@ -36,7 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
           false; // Prevents focus if tap on eye
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -56,6 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 30,
                   ),
                   TextFormField(
+                     style: Theme.of(context).textTheme.displaySmall,
                     controller: _emailTextController,
                     onSaved: (newValue) => _emailTextController,
                     validator: (value) {
@@ -64,10 +65,14 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                       return null;
                     },
-                 
-
+                    decoration: CommonStyle.textFieldStyle(
+                        labelTextStr: "Email", hintTextStr: "Enter Email"),
+                  ),
+                  SizedBox(
+                    height: 12,
                   ),
                   TextFormField(
+                     style: Theme.of(context).textTheme.displaySmall,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: _obscured1,
                     focusNode: textFieldFocusNode,
@@ -80,28 +85,31 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
-                      labelText: "Enter Password",
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                        child: GestureDetector(
-                          onTap: _toggleObscured1,
-                          child: Icon(
-                            _obscured1
-                                ? Icons.visibility_off_rounded
-                                : Icons.visibility_rounded,
-                            size: 20,
-                            color: IconButtonColor,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // decoration: InputDecoration(
+                    //   labelText: "Enter Password",
+                    //   filled: true,
+                    //   floatingLabelBehavior: FloatingLabelBehavior.never,
+                    //   border: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(30.0),
+                    //       borderSide: const BorderSide(
+                    //           width: 0, style: BorderStyle.none)),
+                    //   suffixIcon: Padding(
+                    //     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                    //     child: GestureDetector(
+                    //       onTap: _toggleObscured1,
+                    //       child: Icon(
+                    //         _obscured1
+                    //             ? Icons.visibility_off_rounded
+                    //             : Icons.visibility_rounded,
+                    //         size: 20,
+                    //         color: IconButtonColor,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    decoration: CommonStyle.textFieldStyle(
+                        labelTextStr: "Password",
+                        hintTextStr: "Enter Password"),
 
                     // hintText: 'Name',
                   ),
@@ -216,7 +224,9 @@ class _SignInScreenState extends State<SignInScreen> {
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
-                  return  SignupScreen(title: "signup",);
+                  return SignupScreen(
+                    title: "signup",
+                  );
                 },
               ));
             },

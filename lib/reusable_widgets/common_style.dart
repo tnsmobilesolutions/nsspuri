@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CommonStyle {
-  static InputDecoration textFieldStyle(Set<Object> set, 
+  static InputDecoration textFieldStyle(
       {String labelTextStr = "", String hintTextStr = ""}) {
     return InputDecoration(
       contentPadding: const EdgeInsets.all(12),
       labelText: labelTextStr,
+      labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
       hintText: hintTextStr,
+      hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
       filled: true,
+      fillColor: const Color.fromARGB(255, 190, 190, 190).withOpacity(0.3),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(40.0),
         borderSide: const BorderSide(width: 0, style: BorderStyle.none),
       ),
     );

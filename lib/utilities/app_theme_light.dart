@@ -5,14 +5,13 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 final ThemeData appTheme = ThemeData(
     primaryColor: Colors.deepOrange, // Set your primary color
-    hintColor: Colors.grey, // Set your accent color
+    hintColor: const Color.fromARGB(255, 27, 27, 27), // Set your accent color
     textTheme: const TextTheme(
 
         // Define your text styles here
         headlineSmall: TextStyle(),
         bodyLarge: TextStyle(),
         bodySmall: TextStyle(),
-
 
         // use for textformField
         displaySmall: TextStyle(
@@ -21,20 +20,10 @@ final ThemeData appTheme = ThemeData(
           fontWeight: FontWeight.w500,
         ),
 
-
-
         // use for cards
         displayMedium: TextStyle(
             fontSize: 14, color: TextThemeColor, fontWeight: FontWeight.bold),
-
-
-
-
         displayLarge: TextStyle(),
-
-
-
-
 
         // use for button text
         titleSmall: TextStyle(
@@ -42,24 +31,10 @@ final ThemeData appTheme = ThemeData(
             color: ButtonTextStyleColor,
             fontWeight: FontWeight.bold),
 
-
-
-
-
         // use for appBar
         titleMedium: TextStyle(
             fontSize: 20, color: AppbarTextColor, fontWeight: FontWeight.bold),
-
-
-
-
-
         titleLarge: TextStyle()),
-
-
-
-
-
     textButtonTheme: TextButtonThemeData(
         style: ButtonStyle(
       foregroundColor:
@@ -72,7 +47,5 @@ final ThemeData appTheme = ThemeData(
       ),
     ))
 
-
-    
     // Define other theme properties here
     );
