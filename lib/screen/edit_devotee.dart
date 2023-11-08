@@ -14,7 +14,7 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
-import 'package:sammilani_delegate/utilities/utility.dart';
+
 
 // ignore: depend_on_referenced_packages
 
@@ -151,7 +151,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   Future<String?> uploadImageToFirebaseStorage(XFile image, String name) async {
     // print('**************${getImageName(image)}**************');
     Reference storage =
-        FirebaseStorage.instance.ref('${name}/${getImageName(image)}');
+        FirebaseStorage.instance.ref('$name/${getImageName(image)}');
     await storage.putFile(File(image.path));
     return await storage.getDownloadURL();
   }
@@ -449,6 +449,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
               controller: addressLine2Controller,
+              textCapitalization: TextCapitalization.words,
               onSaved: (newValue) => addressLine2Controller,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -466,6 +467,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
               controller: cityController,
+              textCapitalization: TextCapitalization.words,
               onSaved: (newValue) => cityController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -482,6 +484,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
               controller: stateController,
+              textCapitalization: TextCapitalization.words,
               onSaved: (newValue) => stateController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -497,6 +500,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             ),
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
+              textCapitalization: TextCapitalization.words,
               controller: countryController,
               onSaved: (newValue) => addressLine1Controller,
               validator: (value) {
@@ -513,6 +517,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               height: 20,
             ),
             TextFormField(
+              keyboardType: TextInputType.phone,
               style: Theme.of(context).textTheme.displaySmall,
               controller: postalCodeController,
               onSaved: (newValue) => postalCodeController,
