@@ -309,7 +309,7 @@ class RelativeDelegate extends StatelessWidget {
                                   ),
                                   Container(
                                     decoration: const BoxDecoration(
-                                      color: Colors.blue,
+                                      color: ContainerCardColor,
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(30.0),
                                         bottomRight: Radius.circular(30.0),
@@ -320,7 +320,7 @@ class RelativeDelegate extends StatelessWidget {
                                     child: const Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
-                                        'Parichalak:',
+                                        'PARICHALAK:',
                                         style: TextStyle(
                                             color: ButtonTextStyleColor,
                                             fontWeight: FontWeight.bold),

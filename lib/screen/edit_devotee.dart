@@ -14,7 +14,7 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
-import 'package:sammilani_delegate/utilities/utility.dart';
+
 
 // ignore: depend_on_referenced_packages
 
@@ -151,7 +151,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   Future<String?> uploadImageToFirebaseStorage(XFile image, String name) async {
     // print('**************${getImageName(image)}**************');
     Reference storage =
-        FirebaseStorage.instance.ref('${name}/${getImageName(image)}');
+        FirebaseStorage.instance.ref('$name/${getImageName(image)}');
     await storage.putFile(File(image.path));
     return await storage.getDownloadURL();
   }
