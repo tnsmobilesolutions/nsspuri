@@ -17,7 +17,7 @@ final ThemeData appTheme = ThemeData(
         displaySmall: TextStyle(
           fontSize: 14,
           color: TextFormFieldColor,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.normal,
         ),
 
         // use for cards

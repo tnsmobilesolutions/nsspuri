@@ -86,7 +86,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     selectImage(ImageSource.gallery);
                   },
                   leading: const Icon(Icons.photo_album),
-                  title: const Text("Select from Gallery"),
+                  title: Text(
+                    "Select from Gallery",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -94,7 +97,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     selectImage(ImageSource.camera);
                   },
                   leading: const Icon(Icons.camera_alt),
-                  title: const Text("Take a photo"),
+                  title: Text(
+                    "Take a photo",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                 ),
               ],
             ),
@@ -193,15 +199,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
               controller: nameController,
-              onChanged: (newValue) {
-                // Apply camel case conversion and update the text
-                String camelCaseText = Utility.convertToCamelCase(newValue);
-                nameController.value = TextEditingValue(
-                  text: camelCaseText,
-                  selection:
-                      TextSelection.collapsed(offset: camelCaseText.length),
-                );
-              },
+              textCapitalization: TextCapitalization.words,
+              onSaved: (newValue) => addressLine1Controller,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
               ],
@@ -432,6 +431,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
               controller: addressLine1Controller,
+              textCapitalization: TextCapitalization.words,
               onSaved: (newValue) => addressLine1Controller,
               validator: (value) {
                 if (value == null || value.isEmpty) {

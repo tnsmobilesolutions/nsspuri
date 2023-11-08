@@ -118,6 +118,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 focusNode: textFieldFocusNode,
                 decoration: InputDecoration(
                   labelText: "Password",
+                  labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                  hintText: 'Enter Password',
+                  hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   border: OutlineInputBorder(
@@ -157,7 +160,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: _obscured2,
                 decoration: InputDecoration(
-                  labelText: "Confirm Password",
+                  labelText: " Confirm Password",
+                  labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                  hintText: 'Confirm Password',
+                  hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
                   filled: true,
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   border: OutlineInputBorder(
