@@ -64,6 +64,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                 ),
                 SingleChildScrollView(
                   child: TextFormField(
+                    style: Theme.of(context).textTheme.displaySmall,
+                    textCapitalization: TextCapitalization.words,
                     controller: addressLine1Controller,
                     onSaved: (newValue) => addressLine1Controller,
                     validator: (value) {
@@ -81,6 +83,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                     textCapitalization: TextCapitalization.words,
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: addressLine2Controller,
                   onSaved: (newValue) => addressLine2Controller,
                   validator: (value) {
@@ -97,6 +101,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                     textCapitalization: TextCapitalization.words,
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: cityController,
                   onSaved: (newValue) => cityController,
                   validator: (value) {
@@ -113,6 +119,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                     textCapitalization: TextCapitalization.words,
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: stateController,
                   onSaved: (newValue) => stateController,
                   validator: (value) {
@@ -129,6 +137,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                     textCapitalization: TextCapitalization.words,
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: countryController,
                   onSaved: (newValue) => addressLine1Controller,
                   validator: (value) {
@@ -145,6 +155,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: postalCodeController,
                   onSaved: (newValue) => postalCodeController,
                   validator: (value) {

@@ -40,11 +40,11 @@ class RelativeDelegate extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Card(
-                  elevation: 1,
+                  elevation: 2,
                   shape: RoundedRectangleBorder(
                     side: const BorderSide(
-                      width: 1,
-                      color: Color.fromARGB(255, 217, 217, 217),
+                      width: .5,
+                      color: Color.fromARGB(255, 228, 224, 249),
                     ),
                     borderRadius: BorderRadius.circular(30), //<-- SEE HERE
                   ),
@@ -92,7 +92,7 @@ class RelativeDelegate extends StatelessWidget {
                                             'assets/images/nsslogo.png',
                                             scale: 25,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                             width: 5,
                                           ),
@@ -153,33 +153,50 @@ class RelativeDelegate extends StatelessWidget {
                                     ),
                                   ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      SizedBox(
-                                        width: 50,
-                                      ),
-                                      const Text(
-                                        'IDENTITY CARD',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18),
-                                      ),
                                       IconButton(
-                                          onPressed: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
                                               builder: (context) {
                                                 return EditDevoteeDetailsPage(
-                                                    title: "edit",
-                                                    devotee: devoteedata);
+                                                  title: "edit",
+                                                  devotee: devoteedata,
+                                                );
                                               },
-                                            ));
-                                          },
-                                          icon: const Icon(
-                                            Icons.edit,
-                                            color: Colors.deepOrange,
-                                          )),
+                                            ),
+                                          );
+                                        },
+                                        alignment: Alignment.centerRight,
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          size: 20,
+                                          color: Colors.deepOrange,
+                                        ),
+                                      ),
                                     ],
+                                  ),
+                                  const SizedBox(
+                                    height: 0,
+                                  ),
+                                  const Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          'IDENTITY CARD',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
                                   ),
                                   Center(
                                     child: Container(
@@ -187,8 +204,8 @@ class RelativeDelegate extends StatelessWidget {
                                       width: 120,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                          color:
-                                              Color.fromARGB(255, 92, 32, 183),
+                                          color: const Color.fromARGB(
+                                              255, 92, 32, 183),
                                           width: 1,
                                         ),
                                         shape: BoxShape
@@ -202,7 +219,7 @@ class RelativeDelegate extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Row(
@@ -213,12 +230,15 @@ class RelativeDelegate extends StatelessWidget {
                                               "${devoteedata.name}",
                                               style: const TextStyle(
                                                   color: Colors.deepOrange,
-                                                  fontSize: 32,
-                                                  fontWeight: FontWeight.bold),
+                                                  fontSize: 28,
+                                                  fontWeight: FontWeight.w600),
                                             )
                                           : const Text(
                                               "Name : Please Update your Name"),
                                     ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -234,58 +254,52 @@ class RelativeDelegate extends StatelessWidget {
                                               "Name : Please Update your Sangha"),
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.all(12),
+                                    padding: const EdgeInsets.all(6),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
                                         devoteedata.mobileNumber != null
                                             ? Text(
                                                 "Mobile     :    ${devoteedata.mobileNumber}",
                                                 style: const TextStyle(
-                                                    fontSize: 20,
+                                                    fontSize: 18,
                                                     fontWeight:
                                                         FontWeight.bold),
                                               )
                                             : const Text(
                                                 "Mobile : Please Update your Mobile Number"),
                                         const SizedBox(
-                                          height: 10,
+                                          height: 8,
                                         ),
                                         devoteedata.gender != null
                                             ? Text(
                                                 "Gender    :    ${devoteedata.gender}",
                                                 style: const TextStyle(
-                                                    fontSize: 20,
+                                                    fontSize: 18,
                                                     fontWeight:
                                                         FontWeight.bold),
                                               )
                                             : const Text(
                                                 "Gender : Please Update your Gender"),
                                         const SizedBox(
-                                          height: 10,
+                                          height: 8,
                                         ),
                                         devoteedata.dob != null
                                             ? Text(
                                                 "DOB         :    ${devoteedata.dob}",
                                                 style: const TextStyle(
-                                                    fontSize: 20,
+                                                    fontSize: 18,
                                                     fontWeight:
                                                         FontWeight.bold),
                                               )
                                             : const Text(
                                                 "DOB : Please Update your Date of birth"),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
+
                                         // devoteedata.bloodGroup != null
                                         //     ? Text(
                                         //         "Blood Gr :    ${devoteedata.bloodGroup}",
@@ -299,9 +313,31 @@ class RelativeDelegate extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  )
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(30.0),
+                                        bottomRight: Radius.circular(30.0),
+                                      ),
+                                    ),
+                                    width: 400,
+                                    height: 34,
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        'Parichalak:',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+
+                                    // Background color of the container
+                                  ),
                                 ],
                               ),
                             ),

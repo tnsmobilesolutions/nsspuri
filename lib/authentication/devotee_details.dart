@@ -77,7 +77,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     selectImage(ImageSource.gallery);
                   },
                   leading: const Icon(Icons.photo_album),
-                  title: const Text("Select from Gallery"),
+                  title: Text(
+                    "Select from Gallery",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                 ),
                 ListTile(
                   onTap: () {
@@ -85,7 +88,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     selectImage(ImageSource.camera);
                   },
                   leading: const Icon(Icons.camera_alt),
-                  title: const Text("Take a photo"),
+                  title: Text(
+                    "Take a photo",
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                 ),
               ],
             ),
@@ -176,17 +182,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
               ),
               const SizedBox(height: 10),
               TextFormField(
+                textCapitalization: TextCapitalization.words,
                 style: Theme.of(context).textTheme.displaySmall,
                 controller: nameController,
-                onChanged: (newValue) {
-                  // Apply camel case conversion and update the text
-                  String camelCaseText = Utility.convertToCamelCase(newValue);
-                  nameController.value = TextEditingValue(
-                    text: camelCaseText,
-                    selection:
-                        TextSelection.collapsed(offset: camelCaseText.length),
-                  );
-                },
+                onSaved: (newValue) => nameController,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
                 ],
@@ -200,7 +199,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     labelTextStr: "Name", hintTextStr: "Enter Name"),
               ),
               const SizedBox(
-                height: 12,
+                height: 20,
               ),
               TextFormField(
                 style: Theme.of(context).textTheme.displaySmall,
@@ -240,8 +239,9 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                             child: RadioListTile(
                               value: 0,
                               groupValue: genderController,
-                              title: const Text(
+                              title: Text(
                                 "Male",
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               onChanged: (newValue) => setState(
                                   () => genderController = newValue ?? 0),
@@ -258,8 +258,9 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               value: 1,
                               groupValue: genderController,
 
-                              title: const Text(
+                              title: Text(
                                 "Female",
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               onChanged: (newValue) {
                                 setState(() {
