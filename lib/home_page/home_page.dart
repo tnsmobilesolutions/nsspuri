@@ -50,14 +50,10 @@ class _HomePageState extends State<HomePage> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(
-                '${timeUntilSammilani.inDays} ',
+                '${timeUntilSammilani.inDays} days to go',
                 style:
-                    const TextStyle(fontSize: 22, fontWeight: FontWeight.w300),
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
               ),
-              const Text(
-                'days to go',
-                style: TextStyle(fontSize: 8),
-              )
             ],
           ),
           centerTitle: true,

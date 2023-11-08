@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/firebase/exception_handler.dart';
+import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -73,6 +74,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 const SizedBox(height: 10),
                 Container(
                   child: TextFormField(
+                     style: Theme.of(context).textTheme.displaySmall,
                     obscureText: false,
                     controller: _emailController,
                     validator: (value) {
@@ -82,16 +84,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       return null;
                     },
                     autofocus: false,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    decoration: InputDecoration(
-                      labelText: "Enter Email",
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                    
+                  decoration: CommonStyle.textFieldStyle(
+                        labelTextStr: "Email", hintTextStr: "Enter Email"),
                   ),
                 ),
                 const SizedBox(height: 16),

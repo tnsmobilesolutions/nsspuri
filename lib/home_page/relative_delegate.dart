@@ -31,16 +31,16 @@ class RelativeDelegate extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 5,
+                    spreadRadius: 3,
                     blurRadius: 5,
                     offset: const Offset(0, 3), // changes position of shadow
                   ),
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(12.0),
                 child: Card(
-                  elevation: 5,
+                  elevation: 1,
                   shape: RoundedRectangleBorder(
                     side: const BorderSide(
                       width: 1,
@@ -187,8 +187,9 @@ class RelativeDelegate extends StatelessWidget {
                                       width: 120,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                          color: Colors.blue,
-                                          width: 2,
+                                          color:
+                                              Color.fromARGB(255, 92, 32, 183),
+                                          width: 1,
                                         ),
                                         shape: BoxShape
                                             .rectangle, // This makes the container circular
@@ -201,6 +202,9 @@ class RelativeDelegate extends StatelessWidget {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -208,11 +212,26 @@ class RelativeDelegate extends StatelessWidget {
                                           ? Text(
                                               "${devoteedata.name}",
                                               style: const TextStyle(
+                                                  color: Colors.deepOrange,
                                                   fontSize: 32,
                                                   fontWeight: FontWeight.bold),
                                             )
                                           : const Text(
                                               "Name : Please Update your Name"),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      devoteedata.sangha != null
+                                          ? Text(
+                                              "${devoteedata.sangha}",
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          : const Text(
+                                              "Name : Please Update your Sangha"),
                                     ],
                                   ),
                                   Padding(
@@ -224,20 +243,7 @@ class RelativeDelegate extends StatelessWidget {
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        devoteedata.sangha != null
-                                            ? Text(
-                                                "Sangha    :    ${devoteedata.sangha}",
-                                                style: const TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                                softWrap:
-                                                    true, // Enable text wrapping
-                                                overflow: TextOverflow
-                                                    .visible, // Define overflow behavior if the text doesn't fit
-                                              )
-                                            : const Text(
-                                                "Sanga : Please Update your Sangha"),
+
                                         const SizedBox(
                                           height: 10,
                                         ),
@@ -245,9 +251,9 @@ class RelativeDelegate extends StatelessWidget {
                                             ? Text(
                                                 "Mobile     :    ${devoteedata.mobileNumber}",
                                                 style: const TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 20,
                                                     fontWeight:
-                                                        FontWeight.w300),
+                                                        FontWeight.bold),
                                               )
                                             : const Text(
                                                 "Mobile : Please Update your Mobile Number"),
@@ -258,9 +264,9 @@ class RelativeDelegate extends StatelessWidget {
                                             ? Text(
                                                 "Gender    :    ${devoteedata.gender}",
                                                 style: const TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 20,
                                                     fontWeight:
-                                                        FontWeight.w300),
+                                                        FontWeight.bold),
                                               )
                                             : const Text(
                                                 "Gender : Please Update your Gender"),
@@ -271,9 +277,9 @@ class RelativeDelegate extends StatelessWidget {
                                             ? Text(
                                                 "DOB         :    ${devoteedata.dob}",
                                                 style: const TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 20,
                                                     fontWeight:
-                                                        FontWeight.w300),
+                                                        FontWeight.bold),
                                               )
                                             : const Text(
                                                 "DOB : Please Update your Date of birth"),

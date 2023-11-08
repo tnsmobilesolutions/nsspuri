@@ -11,8 +11,10 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:sammilani_delegate/utilities/utility.dart';
 
 // ignore: depend_on_referenced_packages
 
@@ -189,8 +191,17 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             ),
             const SizedBox(height: 10),
             TextFormField(
+              style: Theme.of(context).textTheme.displaySmall,
               controller: nameController,
-              onSaved: (newValue) => nameController,
+              onChanged: (newValue) {
+                // Apply camel case conversion and update the text
+                String camelCaseText = Utility.convertToCamelCase(newValue);
+                nameController.value = TextEditingValue(
+                  text: camelCaseText,
+                  selection:
+                      TextSelection.collapsed(offset: camelCaseText.length),
+                );
+              },
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
               ],
@@ -200,21 +211,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: InputDecoration(
-                labelText: "Name",
-                filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none)),
-              ),
+              decoration: CommonStyle.textFieldStyle(
+                  labelTextStr: "Name", hintTextStr: "Enter Name"),
             ),
             const SizedBox(
               height: 12,
             ),
             const SizedBox(height: 10),
             TextFormField(
+              style: Theme.of(context).textTheme.displaySmall,
               keyboardType: TextInputType.phone,
               controller: mobileController,
               onSaved: (newValue) => mobileController,
@@ -228,15 +233,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: InputDecoration(
-                labelText: "Mobile Number",
-                filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none)),
-              ),
+              decoration: CommonStyle.textFieldStyle(
+                  labelTextStr: "Mobile Number",
+                  hintTextStr: "Enter Mobile Number"),
             ),
             const SizedBox(
               height: 20,
@@ -257,8 +256,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           child: RadioListTile(
                             value: 0,
                             groupValue: genderController,
-                            title: const Text(
+                            title: Text(
                               "Male",
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             onChanged: (newValue) => setState(
                                 () => genderController = newValue ?? 0),
@@ -275,8 +275,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                             value: 1,
                             groupValue: genderController,
 
-                            title: const Text(
+                            title: Text(
                               "Female",
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             onChanged: (newValue) {
                               setState(() {
@@ -301,16 +302,11 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             ),
             GestureDetector(
               child: TextField(
+                style: Theme.of(context).textTheme.displaySmall,
                 controller: dateinput, //editing controller of this TextField
-                decoration: InputDecoration(
-                  labelText: "Date Of Birth",
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: CommonStyle.textFieldStyle(
+                    labelTextStr: "Date Of Birth",
+                    hintTextStr: "Enter Date Of Birth"),
                 readOnly:
                     true, //set it true, so that user will not able to edit text
                 onTap: () async {
@@ -351,18 +347,13 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               children: [
                 Expanded(
                   child: DropdownButtonFormField(
+                    style: Theme.of(context).textTheme.displaySmall,
                     value: bloodGroupController,
 
                     elevation: 16,
-                    decoration: InputDecoration(
-                      labelText: "Blood Group",
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                    decoration: CommonStyle.textFieldStyle(
+                        labelTextStr: "Blood Group",
+                        hintTextStr: "Enter Blood Group"),
                     // style: const TextStyle(color: Colors.deepPurple),
 
                     onChanged: (String? value) {
@@ -401,16 +392,11 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   )),
               debounceDuration: const Duration(milliseconds: 400),
               textFieldConfiguration: TextFieldConfiguration(
+                style: Theme.of(context).textTheme.displaySmall,
                 controller: sanghaController,
-                decoration: InputDecoration(
-                  labelText: "Sangha Name",
-                  filled: true,
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none)),
-                ),
+                decoration: CommonStyle.textFieldStyle(
+                    labelTextStr: "Sangha Name",
+                    hintTextStr: "Enter Sangha Name"),
               ),
               suggestionsCallback: (value) {
                 return SanghaList.getSuggestions(value);
@@ -444,6 +430,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               height: 20,
             ),
             TextFormField(
+              style: Theme.of(context).textTheme.displaySmall,
               controller: addressLine1Controller,
               onSaved: (newValue) => addressLine1Controller,
               validator: (value) {
@@ -452,20 +439,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: InputDecoration(
-                labelText: "Address line 1",
-                filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none)),
-              ),
+              decoration: CommonStyle.textFieldStyle(
+                  labelTextStr: "Address Line 1",
+                  hintTextStr: "Enter Address Line 1"),
             ),
             const SizedBox(
               height: 20,
             ),
             TextFormField(
+              style: Theme.of(context).textTheme.displaySmall,
               controller: addressLine2Controller,
               onSaved: (newValue) => addressLine2Controller,
               validator: (value) {
@@ -474,20 +456,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: InputDecoration(
-                labelText: "Address line 2",
-                filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none)),
-              ),
+              decoration: CommonStyle.textFieldStyle(
+                  labelTextStr: "Address Line 2",
+                  hintTextStr: "Enter Address Line 2"),
             ),
             const SizedBox(
               height: 20,
             ),
             TextFormField(
+              style: Theme.of(context).textTheme.displaySmall,
               controller: cityController,
               onSaved: (newValue) => cityController,
               validator: (value) {
@@ -496,20 +473,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: InputDecoration(
-                labelText: "City Name",
-                filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none)),
-              ),
+              decoration: CommonStyle.textFieldStyle(
+                  labelTextStr: "City", hintTextStr: "Enter City Name"),
             ),
             const SizedBox(
               height: 20,
             ),
             TextFormField(
+              style: Theme.of(context).textTheme.displaySmall,
               controller: stateController,
               onSaved: (newValue) => stateController,
               validator: (value) {
@@ -518,20 +489,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: InputDecoration(
-                labelText: "State Name",
-                filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none)),
-              ),
+              decoration: CommonStyle.textFieldStyle(
+                  labelTextStr: "State Name", hintTextStr: "Enter State Name"),
             ),
             const SizedBox(
               height: 20,
             ),
             TextFormField(
+              style: Theme.of(context).textTheme.displaySmall,
               controller: countryController,
               onSaved: (newValue) => addressLine1Controller,
               validator: (value) {
@@ -540,20 +505,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: InputDecoration(
-                labelText: "Country Name",
-                filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none)),
-              ),
+              decoration: CommonStyle.textFieldStyle(
+                  labelTextStr: "Country Name",
+                  hintTextStr: "Enter Country Name"),
             ),
             const SizedBox(
               height: 20,
             ),
             TextFormField(
+              style: Theme.of(context).textTheme.displaySmall,
               controller: postalCodeController,
               onSaved: (newValue) => postalCodeController,
               validator: (value) {
@@ -562,15 +522,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 }
                 return null;
               },
-              decoration: InputDecoration(
-                labelText: "PIN Code",
-                filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide:
-                        const BorderSide(width: 0, style: BorderStyle.none)),
-              ),
+              decoration: CommonStyle.textFieldStyle(
+                  labelTextStr: "PIN Code", hintTextStr: "Enter PIN Code"),
             ),
             const SizedBox(
               height: 20,
