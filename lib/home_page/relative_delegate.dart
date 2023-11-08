@@ -322,7 +322,7 @@ class RelativeDelegate extends StatelessWidget {
                                       child: Text(
                                         'Parichalak:',
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color: ButtonTextStyleColor,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
