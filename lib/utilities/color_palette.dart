@@ -18,3 +18,6 @@ const ButtonColor = Colors.deepOrange;
 const RadioButtonColor = Colors.deepOrange;
 const SuggestionBoxColor = Colors.white;
 const CircleAvatarClor = Colors.white;
+const ContainerColor = Colors.white;
+final ContainerBoxShadowColor = Colors.grey.withOpacity(0.2);
+const ContainerCardColor = Colors.blue;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class RelativeDelegate extends StatelessWidget {
@@ -22,7 +23,7 @@ class RelativeDelegate extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: ContainerColor,
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25),
@@ -30,7 +31,7 @@ class RelativeDelegate extends StatelessWidget {
                     bottomRight: Radius.circular(25)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: ContainerBoxShadowColor,
                     spreadRadius: 3,
                     blurRadius: 5,
                     offset: const Offset(0, 3), // changes position of shadow
@@ -40,15 +41,8 @@ class RelativeDelegate extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(
-                      width: .5,
-                      color: Color.fromARGB(255, 228, 224, 249),
-                    ),
-                    borderRadius: BorderRadius.circular(30), //<-- SEE HERE
-                  ),
-                  color: const Color.fromARGB(255, 240, 240, 240),
+                  elevation: Theme.of(context).cardTheme.elevation,
+                  shape: Theme.of(context).cardTheme.shape,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -69,7 +63,7 @@ class RelativeDelegate extends StatelessWidget {
                                 children: [
                                   Container(
                                     decoration: const BoxDecoration(
-                                      color: Colors.blue,
+                                      color: ContainerCardColor,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(30.0),
                                         topRight: Radius.circular(30.0),
@@ -170,11 +164,8 @@ class RelativeDelegate extends StatelessWidget {
                                           );
                                         },
                                         alignment: Alignment.centerRight,
-                                        icon: const Icon(
-                                          Icons.edit,
-                                          size: 20,
-                                          color: Colors.deepOrange,
-                                        ),
+                                        icon: const Icon(Icons.edit,
+                                            size: 20, color: IconButtonColor),
                                       ),
                                     ],
                                   ),

@@ -449,6 +449,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
               controller: addressLine2Controller,
+              textCapitalization: TextCapitalization.words,
               onSaved: (newValue) => addressLine2Controller,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -466,6 +467,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
               controller: cityController,
+              textCapitalization: TextCapitalization.words,
               onSaved: (newValue) => cityController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -482,6 +484,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
               controller: stateController,
+              textCapitalization: TextCapitalization.words,
               onSaved: (newValue) => stateController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -497,6 +500,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             ),
             TextFormField(
               style: Theme.of(context).textTheme.displaySmall,
+              textCapitalization: TextCapitalization.words,
               controller: countryController,
               onSaved: (newValue) => addressLine1Controller,
               validator: (value) {
@@ -513,6 +517,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               height: 20,
             ),
             TextFormField(
+              keyboardType: TextInputType.phone,
               style: Theme.of(context).textTheme.displaySmall,
               controller: postalCodeController,
               onSaved: (newValue) => postalCodeController,
