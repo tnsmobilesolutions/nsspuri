@@ -9,8 +9,7 @@ final ThemeData appTheme = ThemeData(
   textTheme: const TextTheme(
     // Define your text styles here
     headlineSmall: TextStyle(),
-    bodyLarge: TextStyle(
-        ),
+    bodyLarge: TextStyle(),
     bodySmall: TextStyle(),
 
     // use for textformField
@@ -49,17 +48,6 @@ final ThemeData appTheme = ThemeData(
     ),
   ),
 
-  cardTheme: CardTheme(
-    elevation: 2,
-    shape: RoundedRectangleBorder(
-      side: const BorderSide(
-        width: .5,
-        color: Color.fromARGB(255, 228, 224, 249),
-      ),
-      borderRadius: BorderRadius.circular(30), //<-- SEE HERE
-    ),
-    color: const Color.fromARGB(255, 240, 240, 240),
-  ),
-
+ 
   // Define other theme properties here
 );

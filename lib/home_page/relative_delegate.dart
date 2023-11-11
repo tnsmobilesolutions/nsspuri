@@ -25,10 +25,10 @@ class RelativeDelegate extends StatelessWidget {
               decoration: BoxDecoration(
                 color: ContainerColor,
                 borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
-                    bottomLeft: Radius.circular(25),
-                    bottomRight: Radius.circular(25)),
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30)),
                 boxShadow: [
                   BoxShadow(
                     color: ContainerBoxShadowColor,
@@ -42,7 +42,8 @@ class RelativeDelegate extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: Card(
                   elevation: Theme.of(context).cardTheme.elevation,
-                  shape: Theme.of(context).cardTheme.shape,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -132,12 +133,14 @@ class RelativeDelegate extends StatelessWidget {
                                                   height: 6,
                                                 ),
                                                 Text(
-                                                  'Pune-2023',
+                                                  'PUNE-2024',
                                                   style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors
-                                                        .white, // Text color
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14,
+                                                      color: Colors
+                                                          .deepOrange // Text color
+                                                      ),
                                                 ),
                                               ],
                                             ),
@@ -146,45 +149,45 @@ class RelativeDelegate extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) {
-                                                return EditDevoteeDetailsPage(
-                                                  title: "edit",
-                                                  devotee: devoteedata,
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        },
-                                        alignment: Alignment.centerRight,
-                                        icon: const Icon(Icons.edit,
-                                            size: 20, color: IconButtonColor),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 0,
-                                  ),
-                                  const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                        child: Text(
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 32),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        SizedBox(
+                                          width: 34,
+                                        ),
+                                        Text(
                                           'IDENTITY CARD',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return EditDevoteeDetailsPage(
+                                                    title: "edit",
+                                                    devotee: devoteedata,
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                          alignment: Alignment.centerRight,
+                                          icon: const Icon(Icons.edit,
+                                              size: 20, color: IconButtonColor),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 0,
                                   ),
                                   const SizedBox(
                                     height: 8,
@@ -195,8 +198,8 @@ class RelativeDelegate extends StatelessWidget {
                                       width: 120,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                          color: const Color.fromARGB(
-                                              255, 92, 32, 183),
+                                          color: Color.fromARGB(
+                                              255, 212, 212, 212),
                                           width: 1,
                                         ),
                                         shape: BoxShape
@@ -316,11 +319,12 @@ class RelativeDelegate extends StatelessWidget {
                                       ),
                                     ),
                                     width: 400,
-                                    height: 34,
+                                    height: 52,
                                     child: const Padding(
-                                      padding: EdgeInsets.all(10),
+                                      padding:
+                                          EdgeInsets.only(top: 18, left: 20),
                                       child: Text(
-                                        'PARICHALAK:',
+                                        'PARICHALAK :',
                                         style: TextStyle(
                                             color: ButtonTextStyleColor,
                                             fontWeight: FontWeight.bold),

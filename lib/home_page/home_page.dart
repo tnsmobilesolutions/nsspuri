@@ -6,7 +6,7 @@ import 'package:sammilani_delegate/home_page/relative_delegate.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
@@ -77,45 +77,16 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Flexible(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 1,
-                        color: CardColor,
-                        child: InkWell(
-                          onTap: () {},
-                          child: const Padding(
-                            padding: EdgeInsets.all(14),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // const Text(
-                                //   'Thank you for sharing your data. Please contact the following person for online payment for delegate.',
-                                //   style: TextStyle(
-                                //     fontSize: 16,
-                                //     overflow: TextOverflow.clip,
-                                //   ),
-                                // ),
-                                // Row(
-                                //   children: [
-                                //     const Text('Suresh Bhai'),
-                                //     TextButton(
-                                //         onPressed: () => launchUrl(
-                                //             Uri.parse("tel://9502688244")),
-                                //         child: const Text("9502688244")),
-                                //   ],
-                                // )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                        child: Text(
+                      'Pune Sammilani - 23, 24 & 25 February 2024',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )),
                   ],
                 ),
               ),
