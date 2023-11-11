@@ -21,7 +21,7 @@ import 'package:sammilani_delegate/utilities/utility.dart';
 class DevoteeDetailsPage extends StatefulWidget {
   DevoteeDetailsPage({Key? key, required this.devoteeId}) : super(key: key);
   String devoteeId;
-  get currentUser => null;
+  // get currentUser => null;
 
   @override
   State<DevoteeDetailsPage> createState() => _DevoteeDetailsPageState();
