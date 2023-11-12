@@ -7,6 +7,21 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 class RelativeDelegate extends StatelessWidget {
   RelativeDelegate({super.key, required this.devoteeData});
   Map<String, dynamic> devoteeData;
+  String _toCamelCase(String input) {
+    if (input.isEmpty) {
+      return input;
+    }
+
+    final words = input.split(' ');
+    final camelCaseWords = words.map((word) {
+      if (word.isEmpty) {
+        return '';
+      }
+      return word[0].toUpperCase() + word.substring(1).toLowerCase();
+    });
+
+    return camelCaseWords.join(' ');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -167,10 +182,10 @@ class RelativeDelegate extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 34,
                                     ),
-                                    Text(
+                                    const Text(
                                       'IDENTITY CARD',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -199,29 +214,69 @@ class RelativeDelegate extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(
-                                height: 0,
-                              ),
-                              const SizedBox(
                                 height: 8,
                               ),
                               Center(
-                                child: Container(
-                                  height: 150,
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color.fromARGB(255, 212, 212, 212),
-                                      width: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          width: 73,
+                                          height: 60,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.rectangle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.fill,
+                                              image: AssetImage(
+                                                  'assets/images/blood.png'),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 28,
+                                          left: 25,
+                                          child: Center(
+                                            child: devoteedata.bloodGroup !=
+                                                    null
+                                                ? Text(
+                                                    "${devoteedata.bloodGroup}",
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )
+                                                : const Text(
+                                                    "Bloodgroup : Please Update your Bloodgroup"),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    shape: BoxShape
-                                        .rectangle, // This makes the container circular
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(devoteedata
-                                          .profilePhotoUrl
-                                          .toString()),
+                                    const SizedBox(
+                                      width: 12,
                                     ),
-                                  ),
+                                    Container(
+                                      height: 150,
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: const Color.fromARGB(
+                                              255, 212, 212, 212),
+                                          width: 1,
+                                        ),
+                                        shape: BoxShape
+                                            .rectangle, // This makes the container circular
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(devoteedata
+                                              .profilePhotoUrl
+                                              .toString()),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(
@@ -243,6 +298,9 @@ class RelativeDelegate extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(
+                                height: 10,
+                              ),
+                              const SizedBox(
                                 height: 5,
                               ),
                               Row(
@@ -259,7 +317,7 @@ class RelativeDelegate extends StatelessWidget {
                                           "Name : Please Update your Sangha"),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Padding(
@@ -314,7 +372,7 @@ class RelativeDelegate extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 16,
                               ),
                               Container(

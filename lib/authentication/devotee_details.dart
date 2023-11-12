@@ -12,8 +12,7 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
-import 'package:sammilani_delegate/utilities/utility.dart';
-import 'package:sammilani_delegate/utilities/utility.dart';
+
 
 // ignore: depend_on_referenced_packages
 
