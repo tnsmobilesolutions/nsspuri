@@ -637,8 +637,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(90)))),
-                child: const Text(
-                  'Next',
+                child: Text(
+                  widget.title == 'edit' ? "update" : "Add your Relative",
                 ),
 
                 //Row
