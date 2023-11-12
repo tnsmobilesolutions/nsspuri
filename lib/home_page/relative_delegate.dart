@@ -7,6 +7,21 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 class RelativeDelegate extends StatelessWidget {
   RelativeDelegate({super.key, required this.devoteeData});
   Map<String, dynamic> devoteeData;
+  String _toCamelCase(String input) {
+    if (input == null || input.isEmpty) {
+      return input;
+    }
+
+    final words = input.split(' ');
+    final camelCaseWords = words.map((word) {
+      if (word.isEmpty) {
+        return '';
+      }
+      return word[0].toUpperCase() + word.substring(1).toLowerCase();
+    });
+
+    return camelCaseWords.join(' ');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,17 +168,20 @@ class RelativeDelegate extends StatelessWidget {
                                     padding: const EdgeInsets.only(left: 32),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        SizedBox(
-                                          width: 34,
+                                        const SizedBox(
+                                          width: 43,
                                         ),
-                                        Text(
+                                        const Text(
                                           'IDENTITY CARD',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
                                           ),
+                                        ),
+                                        const SizedBox(
+                                          height: 6,
                                         ),
                                         IconButton(
                                           onPressed: () {
@@ -186,31 +204,72 @@ class RelativeDelegate extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 0,
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
                                   Center(
-                                    child: Container(
-                                      height: 150,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Color.fromARGB(
-                                              255, 212, 212, 212),
-                                          width: 1,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Container(
+                                              width: 73,
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.rectangle,
+                                                image: DecorationImage(
+                                                  fit: BoxFit.fill,
+                                                  image: AssetImage(
+                                                      'assets/images/blood.png'),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 28,
+                                              left: 25,
+                                              child: Center(
+                                                child: devoteedata.bloodGroup !=
+                                                        null
+                                                    ? Text(
+                                                        "${devoteedata.bloodGroup}",
+                                                        style: const TextStyle(
+                                                            fontSize: 18,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      )
+                                                    : const Text(
+                                                        "Bloodgroup : Please Update your Bloodgroup"),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        shape: BoxShape
-                                            .rectangle, // This makes the container circular
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(devoteedata
-                                              .profilePhotoUrl
-                                              .toString()),
+                                        SizedBox(
+                                          width: 12,
                                         ),
-                                      ),
+                                        Container(
+                                          height: 150,
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: const Color.fromARGB(
+                                                  255, 212, 212, 212),
+                                              width: 1,
+                                            ),
+                                            shape: BoxShape
+                                                .rectangle, // This makes the container circular
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(devoteedata
+                                                  .profilePhotoUrl
+                                                  .toString()),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 80,
+                                        )
+                                      ],
                                     ),
                                   ),
                                   const SizedBox(
@@ -221,11 +280,12 @@ class RelativeDelegate extends StatelessWidget {
                                     children: [
                                       devoteedata.name != null
                                           ? Text(
-                                              "${devoteedata.name}",
+                                              "${_toCamelCase(devoteedata.name.toString())}",
                                               style: const TextStyle(
-                                                  color: Colors.deepOrange,
-                                                  fontSize: 28,
-                                                  fontWeight: FontWeight.w600),
+                                                color: Colors.deepOrange,
+                                                fontSize: 28,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             )
                                           : const Text(
                                               "Name : Please Update your Name"),
@@ -239,16 +299,16 @@ class RelativeDelegate extends StatelessWidget {
                                     children: [
                                       devoteedata.sangha != null
                                           ? Text(
-                                              "${devoteedata.sangha}",
+                                              "${_toCamelCase(devoteedata.sangha.toString())}",
                                               style: const TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 24,
                                                   fontWeight: FontWeight.bold),
                                             )
                                           : const Text(
                                               "Name : Please Update your Sangha"),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Padding(
@@ -272,7 +332,7 @@ class RelativeDelegate extends StatelessWidget {
                                         ),
                                         devoteedata.gender != null
                                             ? Text(
-                                                "Gender    :    ${devoteedata.gender}",
+                                                "Gender    :    ${_toCamelCase(devoteedata.gender.toString())}",
                                                 style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
@@ -293,22 +353,11 @@ class RelativeDelegate extends StatelessWidget {
                                               )
                                             : const Text(
                                                 "DOB : Please Update your Date of birth"),
-
-                                        // devoteedata.bloodGroup != null
-                                        //     ? Text(
-                                        //         "Blood Gr :    ${devoteedata.bloodGroup}",
-                                        //         style: const TextStyle(
-                                        //             fontSize: 18,
-                                        //             fontWeight:
-                                        //                 FontWeight.w300),
-                                        //       )
-                                        //     : const Text(
-                                        //         "Bloodgroup : Please Update your Bloodgroup"),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 16,
+                                  const SizedBox(
+                                    height: 25,
                                   ),
                                   Container(
                                     decoration: const BoxDecoration(
@@ -319,7 +368,7 @@ class RelativeDelegate extends StatelessWidget {
                                       ),
                                     ),
                                     width: 400,
-                                    height: 52,
+                                    height: 45,
                                     child: const Padding(
                                       padding:
                                           EdgeInsets.only(top: 18, left: 20),
