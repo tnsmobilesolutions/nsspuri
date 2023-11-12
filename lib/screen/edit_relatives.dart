@@ -15,21 +15,22 @@ import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
+
 // ignore: depend_on_referenced_packages
 
 // ignore: must_be_immutable
-class EditDevoteeDetailsPage extends StatefulWidget {
-  EditDevoteeDetailsPage({Key? key, required this.devotee, required this.title})
+class EditRelativesPage extends StatefulWidget {
+  EditRelativesPage({Key? key, required this.devotee, required this.title})
       : super(key: key);
   DevoteeModel devotee;
   String title;
-  get currentUser => null;
+
 
   @override
-  State<EditDevoteeDetailsPage> createState() => _EditDevoteeDetailsPageState();
+  State<EditRelativesPage> createState() => _EditRelativesPageState();
 }
 
-class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
+class _EditRelativesPageState extends State<EditRelativesPage> {
   final nameController = TextEditingController();
   final mobileController = TextEditingController();
   final sanghaController = TextEditingController();
@@ -519,7 +520,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               keyboardType: TextInputType.phone,
               style: Theme.of(context).textTheme.displaySmall,
               controller: postalCodeController,
-              onSaved: (newValue) => postalCodeController.text = newValue!,
+              onSaved: (newValue) => postalCodeController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter postal code';
@@ -630,7 +631,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(90)))),
                 child: const Text(
-                  'Next',
+                  'Add',
                 ),
 
                 //Row

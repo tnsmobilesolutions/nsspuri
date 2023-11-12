@@ -153,17 +153,20 @@ class RelativeDelegate extends StatelessWidget {
                                     padding: const EdgeInsets.only(left: 32),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        SizedBox(
-                                          width: 34,
+                                        const SizedBox(
+                                          width: 43,
                                         ),
-                                        Text(
+                                        const Text(
                                           'IDENTITY CARD',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
                                           ),
+                                        ),
+                                        const SizedBox(
+                                          height: 6,
                                         ),
                                         IconButton(
                                           onPressed: () {
@@ -186,31 +189,72 @@ class RelativeDelegate extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 0,
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
                                   Center(
-                                    child: Container(
-                                      height: 150,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Color.fromARGB(
-                                              255, 212, 212, 212),
-                                          width: 1,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Container(
+                                              width: 65,
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.rectangle,
+                                                image: DecorationImage(
+                                                  fit: BoxFit.fill,
+                                                  image: AssetImage(
+                                                      'assets/images/blood.png'),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 28,
+                                              left: 25,
+                                              child: Center(
+                                                child: devoteedata.bloodGroup !=
+                                                        null
+                                                    ? Text(
+                                                        "${devoteedata.bloodGroup}",
+                                                        style: const TextStyle(
+                                                            fontSize: 18,
+                                                            color: Colors.white,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      )
+                                                    : const Text(
+                                                        "Bloodgroup : Please Update your Bloodgroup"),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        shape: BoxShape
-                                            .rectangle, // This makes the container circular
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(devoteedata
-                                              .profilePhotoUrl
-                                              .toString()),
+                                        SizedBox(
+                                          width: 12,
                                         ),
-                                      ),
+                                        Container(
+                                          height: 150,
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: const Color.fromARGB(
+                                                  255, 212, 212, 212),
+                                              width: 1,
+                                            ),
+                                            shape: BoxShape
+                                                .rectangle, // This makes the container circular
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(devoteedata
+                                                  .profilePhotoUrl
+                                                  .toString()),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 80,
+                                        )
+                                      ],
                                     ),
                                   ),
                                   const SizedBox(
@@ -241,14 +285,14 @@ class RelativeDelegate extends StatelessWidget {
                                           ? Text(
                                               "${devoteedata.sangha}",
                                               style: const TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 24,
                                                   fontWeight: FontWeight.bold),
                                             )
                                           : const Text(
                                               "Name : Please Update your Sangha"),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Padding(
@@ -293,22 +337,11 @@ class RelativeDelegate extends StatelessWidget {
                                               )
                                             : const Text(
                                                 "DOB : Please Update your Date of birth"),
-
-                                        // devoteedata.bloodGroup != null
-                                        //     ? Text(
-                                        //         "Blood Gr :    ${devoteedata.bloodGroup}",
-                                        //         style: const TextStyle(
-                                        //             fontSize: 18,
-                                        //             fontWeight:
-                                        //                 FontWeight.w300),
-                                        //       )
-                                        //     : const Text(
-                                        //         "Bloodgroup : Please Update your Bloodgroup"),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 16,
+                                  const SizedBox(
+                                    height: 25,
                                   ),
                                   Container(
                                     decoration: const BoxDecoration(
@@ -319,7 +352,7 @@ class RelativeDelegate extends StatelessWidget {
                                       ),
                                     ),
                                     width: 400,
-                                    height: 52,
+                                    height: 45,
                                     child: const Padding(
                                       padding:
                                           EdgeInsets.only(top: 18, left: 20),
