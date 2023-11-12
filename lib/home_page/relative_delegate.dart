@@ -7,6 +7,21 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 class RelativeDelegate extends StatelessWidget {
   RelativeDelegate({super.key, required this.devoteeData});
   Map<String, dynamic> devoteeData;
+  String _toCamelCase(String input) {
+    if (input == null || input.isEmpty) {
+      return input;
+    }
+
+    final words = input.split(' ');
+    final camelCaseWords = words.map((word) {
+      if (word.isEmpty) {
+        return '';
+      }
+      return word[0].toUpperCase() + word.substring(1).toLowerCase();
+    });
+
+    return camelCaseWords.join(' ');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +212,7 @@ class RelativeDelegate extends StatelessWidget {
                                         Stack(
                                           children: [
                                             Container(
-                                              width: 65,
+                                              width: 73,
                                               height: 60,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.rectangle,
@@ -265,11 +280,12 @@ class RelativeDelegate extends StatelessWidget {
                                     children: [
                                       devoteedata.name != null
                                           ? Text(
-                                              "${devoteedata.name}",
+                                              "${_toCamelCase(devoteedata.name.toString())}",
                                               style: const TextStyle(
-                                                  color: Colors.deepOrange,
-                                                  fontSize: 28,
-                                                  fontWeight: FontWeight.w600),
+                                                color: Colors.deepOrange,
+                                                fontSize: 28,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             )
                                           : const Text(
                                               "Name : Please Update your Name"),
@@ -283,7 +299,7 @@ class RelativeDelegate extends StatelessWidget {
                                     children: [
                                       devoteedata.sangha != null
                                           ? Text(
-                                              "${devoteedata.sangha}",
+                                              "${_toCamelCase(devoteedata.sangha.toString())}",
                                               style: const TextStyle(
                                                   fontSize: 24,
                                                   fontWeight: FontWeight.bold),
@@ -316,7 +332,7 @@ class RelativeDelegate extends StatelessWidget {
                                         ),
                                         devoteedata.gender != null
                                             ? Text(
-                                                "Gender    :    ${devoteedata.gender}",
+                                                "Gender    :    ${_toCamelCase(devoteedata.gender.toString())}",
                                                 style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight:
