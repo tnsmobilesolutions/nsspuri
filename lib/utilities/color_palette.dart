@@ -1,9 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
-
-// Light Theme Colors
-// ignore: constant_identifier_names
 const AccentColor = Colors.deepOrange;
 const ScaffoldBackgroundColor = Color.fromARGB(255, 243, 243, 243);
 const AppBarColor = Color(0xff0064B4);

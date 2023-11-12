@@ -7,7 +7,6 @@ import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
-import 'package:sammilani_delegate/reusable_widgets/nss_textformfield.dart';
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'reset_password.dart';

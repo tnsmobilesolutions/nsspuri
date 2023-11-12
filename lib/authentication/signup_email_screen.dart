@@ -48,11 +48,11 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   final _form = GlobalKey<FormState>();
-  bool _isValid = false;
+  bool isValid = false;
 
   void _saveForm() {
     setState(() {
-      _isValid = _form.currentState!.validate();
+      isValid = _form.currentState!.validate();
     });
   }
 
