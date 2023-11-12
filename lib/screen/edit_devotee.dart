@@ -14,7 +14,7 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
-
+import 'package:uuid/uuid.dart';
 
 // ignore: depend_on_referenced_packages
 
@@ -43,6 +43,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   final postalCodeController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String? bloodGroupController;
+  String? devoteeId;
 
   List gender = ["Male", "Female"];
   int genderController = 0;
@@ -113,19 +114,24 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   @override
   void initState() {
     super.initState();
-    nameController.text = widget.devotee.name ?? "";
-    mobileController.text = widget.devotee.mobileNumber ?? "";
-    sanghaController.text = widget.devotee.sangha ?? "";
-    dateinput.text = widget.devotee.dob ?? "";
-    bloodGroupController = widget.devotee.bloodGroup ?? bloodGroupController;
-    profileURL = widget.devotee.profilePhotoUrl ?? "";
-    addressLine1Controller.text = widget.devotee.address?.addressLine1 ?? "";
-    addressLine2Controller.text = widget.devotee.address?.addressLine2 ?? "";
-    cityController.text = widget.devotee.address?.city ?? "";
-    stateController.text = widget.devotee.address?.state ?? "";
-    postalCodeController.text =
-        widget.devotee.address?.postalCode.toString() ?? "";
-    countryController.text = widget.devotee.address?.country ?? "";
+    if (widget.title == "edit") {
+      devoteeId == widget.devotee.devoteeId;
+      nameController.text = widget.devotee.name ?? "";
+      mobileController.text = widget.devotee.mobileNumber ?? "";
+      sanghaController.text = widget.devotee.sangha ?? "";
+      dateinput.text = widget.devotee.dob ?? "";
+      bloodGroupController = widget.devotee.bloodGroup ?? bloodGroupController;
+      profileURL = widget.devotee.profilePhotoUrl ?? "";
+      addressLine1Controller.text = widget.devotee.address?.addressLine1 ?? "";
+      addressLine2Controller.text = widget.devotee.address?.addressLine2 ?? "";
+      cityController.text = widget.devotee.address?.city ?? "";
+      stateController.text = widget.devotee.address?.state ?? "";
+      postalCodeController.text =
+          widget.devotee.address?.postalCode.toString() ?? "";
+      countryController.text = widget.devotee.address?.country ?? "";
+    } else {
+      devoteeId = const Uuid().v1();
+    }
   }
 
   Row addRadioButton(int btnValue, String title) {
@@ -559,6 +565,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                             previewImage as XFile, nameController.text)
                         : null;
                     DevoteeModel updateDevotee = DevoteeModel(
+                        devoteeId: devoteeId,
                         bloodGroup: bloodGroupController,
                         name: nameController.text,
                         gender: gender[genderController],
