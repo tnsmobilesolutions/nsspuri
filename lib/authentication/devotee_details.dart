@@ -12,8 +12,7 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
-import 'package:sammilani_delegate/utilities/utility.dart';
-import 'package:sammilani_delegate/utilities/utility.dart';
+
 
 // ignore: depend_on_referenced_packages
 
@@ -289,7 +288,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   controller: dateinput, //editing controller of this TextField
                   decoration: CommonStyle.textFieldStyle(
                       labelTextStr: "Date Of Birth",
-                      hintTextStr: "Enter Email"),
+                      hintTextStr: "Select your Date of birth"),
                   readOnly:
                       true, //set it true, so that user will not able to edit text
                   onTap: () async {
