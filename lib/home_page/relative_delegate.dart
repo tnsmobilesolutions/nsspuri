@@ -99,7 +99,7 @@ class RelativeDelegate extends StatelessWidget {
                                   ),
                                 ),
                                 width: 400,
-                                height: 80,
+                                height: 90,
 
                                 // Background color of the container
                                 child: Padding(
