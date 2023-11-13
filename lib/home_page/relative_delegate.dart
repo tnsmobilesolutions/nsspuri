@@ -170,9 +170,9 @@ class RelativeDelegate extends StatelessWidget {
                                               'PUNE-2024',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
-                                                  color: Colors
-                                                      .deepOrange // Text color
+                                                  fontSize: 18,
+                                                  color:
+                                                      Colors.white // Text color
                                                   ),
                                             ),
                                           ],
@@ -334,7 +334,7 @@ class RelativeDelegate extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(
-                                height: 5,
+                                height: 15,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(6),
@@ -400,7 +400,7 @@ class RelativeDelegate extends StatelessWidget {
                                   ),
                                 ),
                                 width: 400,
-                                height: 45,
+                                height: 35,
                                 child: const Padding(
                                   padding: EdgeInsets.only(top: 0, left: 0),
                                 ),
