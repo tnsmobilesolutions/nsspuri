@@ -29,6 +29,14 @@ class RelativeDelegate extends StatelessWidget {
     if (devotees.isEmpty) {
       return const Center(child: Text("No data"));
     }
+    // print(
+    //     "************* ${devoteeData['bloodGroup'] ?? 'No blood group available'}");
+
+    // devoteedata['bloodGroup'] != null &&
+    //         devoteedata['bloodGroup'] != "Don't know"
+    //     ? const Stack()
+    //     : Container();
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -39,11 +47,7 @@ class RelativeDelegate extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: ContainerColor,
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30)),
+                borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
                     color: ContainerBoxShadowColor,
@@ -80,13 +84,18 @@ class RelativeDelegate extends StatelessWidget {
                     );
                     // DevoteeModel singledevotee =
                     //     DevoteeModel.fromMap(devotees[index]);
-                    return SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Card(
-                          elevation: Theme.of(context).cardTheme.elevation,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30)),
+                    return Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(30)),
+                            border: Border.all(
+                                width: .5,
+                                color:
+                                    const Color.fromARGB(255, 230, 230, 230))),
+                        height: MediaQuery.of(context).size.height / 1.6,
+                        child: SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -115,10 +124,7 @@ class RelativeDelegate extends StatelessWidget {
                                         'assets/images/nsslogo.png',
                                         scale: 25,
                                       ),
-                                      const SizedBox(
-                                        height: 10,
-                                        width: 5,
-                                      ),
+
                                       // Replace with your image path
 
                                       const Padding(
@@ -180,7 +186,7 @@ class RelativeDelegate extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 32),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     const SizedBox(
                                       width: 34,
@@ -191,6 +197,9 @@ class RelativeDelegate extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
                                       ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
                                     ),
                                     IconButton(
                                       onPressed: () {
@@ -213,46 +222,47 @@ class RelativeDelegate extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const SizedBox(
-                                height: 8,
-                              ),
                               Center(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Stack(
-                                      children: [
-                                        Container(
-                                          width: 73,
-                                          height: 60,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.rectangle,
-                                            image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image: AssetImage(
-                                                  'assets/images/blood.png'),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          top: 28,
-                                          left: 25,
-                                          child: Center(
-                                            child: devoteedata.bloodGroup !=
-                                                    null
-                                                ? Text(
-                                                    "${devoteedata.bloodGroup}",
-                                                    style: const TextStyle(
-                                                        fontSize: 18,
+                                    Container(
+                                      child: devoteedata.bloodGroup ==
+                                              "Don't know"
+                                          ? Container()
+                                          : Stack(
+                                              children: [
+                                                Container(
+                                                  width: 75,
+                                                  height: 60,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.rectangle,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.fill,
+                                                      image: AssetImage(
+                                                          'assets/images/blood.png'),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  top: 28,
+                                                  left: 25,
+                                                  child: Center(
+                                                    child: Text(
+                                                      "${devoteedata.bloodGroup}",
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
                                                         color: Colors.white,
                                                         fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                : const Text(
-                                                    "Bloodgroup : Please Update your Bloodgroup"),
-                                          ),
-                                        ),
-                                      ],
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                      // Return an empty Container if the condition is false
                                     ),
                                     const SizedBox(
                                       width: 12,
@@ -276,6 +286,9 @@ class RelativeDelegate extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+                                    const SizedBox(
+                                      width: 78,
+                                    )
                                   ],
                                 ),
                               ),
@@ -287,7 +300,7 @@ class RelativeDelegate extends StatelessWidget {
                                 children: [
                                   devoteedata.name != null
                                       ? Text(
-                                          "${devoteedata.name}",
+                                          "${_toCamelCase(devoteedata.name.toString())}",
                                           style: const TextStyle(
                                               color: Colors.deepOrange,
                                               fontSize: 28,
@@ -297,20 +310,14 @@ class RelativeDelegate extends StatelessWidget {
                                           "Name : Please Update your Name"),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   devoteedata.sangha != null
                                       ? Text(
-                                          "${devoteedata.sangha}",
+                                          "${_toCamelCase(devoteedata.sangha.toString())}",
                                           style: const TextStyle(
-                                              fontSize: 18,
+                                              fontSize: 24,
                                               fontWeight: FontWeight.bold),
                                         )
                                       : const Text(
@@ -339,7 +346,7 @@ class RelativeDelegate extends StatelessWidget {
                                     ),
                                     devoteedata.gender != null
                                         ? Text(
-                                            "Gender    :    ${devoteedata.gender}",
+                                            "Gender    :    ${_toCamelCase(devoteedata.gender.toString())}",
                                             style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold),
@@ -373,7 +380,7 @@ class RelativeDelegate extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(
-                                height: 16,
+                                height: 22,
                               ),
                               Container(
                                 decoration: const BoxDecoration(
@@ -384,15 +391,9 @@ class RelativeDelegate extends StatelessWidget {
                                   ),
                                 ),
                                 width: 400,
-                                height: 52,
+                                height: 50,
                                 child: const Padding(
-                                  padding: EdgeInsets.only(top: 18, left: 20),
-                                  child: Text(
-                                    'PARICHALAK :',
-                                    style: TextStyle(
-                                        color: ButtonTextStyleColor,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  padding: EdgeInsets.only(top: 0, left: 0),
                                 ),
 
                                 // Background color of the container

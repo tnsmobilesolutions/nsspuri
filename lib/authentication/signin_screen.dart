@@ -55,7 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 30,
                   ),
                   TextFormField(
-                     style: Theme.of(context).textTheme.displaySmall,
+                    style: Theme.of(context).textTheme.displaySmall,
                     controller: _emailTextController,
                     onSaved: (newValue) => _emailTextController,
                     validator: (value) {
@@ -71,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 12,
                   ),
                   TextFormField(
-                     style: Theme.of(context).textTheme.displaySmall,
+                    style: Theme.of(context).textTheme.displaySmall,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: _obscured1,
                     focusNode: textFieldFocusNode,
@@ -216,22 +216,19 @@ class _SignInScreenState extends State<SignInScreen> {
       children: [
         const Text("Don't have account?",
             style: TextStyle(color: TextThemeColor)),
-        SizedBox(
-          width: 80,
-          child: TextButton(
-            style: Theme.of(context).textButtonTheme.style,
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return SignupScreen(
-                    title: "signup",
-                  );
-                },
-              ));
-            },
-            child: const Text(
-              'Sign Up',
-            ),
+        TextButton(
+          style: Theme.of(context).textButtonTheme.style,
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return SignupScreen(
+                  title: "signup",
+                );
+              },
+            ));
+          },
+          child: const Text(
+            'Sign Up',
           ),
         )
       ],
