@@ -418,7 +418,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         padding: const EdgeInsets.all(6.0),
                         child: Text(
                           suggestion,
-                          maxLines: 6,
+                          maxLines: 10,
                         ),
                       ),
                     )
@@ -638,7 +638,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(90)))),
                 child: Text(
-                  widget.title == 'edit' ? "update" : "Add your Relative",
+                  widget.title == 'edit' ? "Update" : "Add your Relative",
                 ),
 
                 //Row
