@@ -189,7 +189,7 @@ class RelativeDelegate extends StatelessWidget {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     const SizedBox(
-                                      width: 34,
+                                      width: 50,
                                     ),
                                     const Text(
                                       'IDENTITY CARD',
@@ -229,7 +229,13 @@ class RelativeDelegate extends StatelessWidget {
                                     Container(
                                       child: devoteedata.bloodGroup ==
                                               "Don't know"
-                                          ? Container()
+                                          ? Container(
+                                              width: 75,
+                                              height: 60,
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.rectangle,
+                                              ),
+                                            )
                                           : Stack(
                                               children: [
                                                 Container(
@@ -309,6 +315,9 @@ class RelativeDelegate extends StatelessWidget {
                                       : const Text(
                                           "Name : Please Update your Name"),
                                 ],
+                              ),
+                              SizedBox(
+                                height: 5,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -391,7 +400,7 @@ class RelativeDelegate extends StatelessWidget {
                                   ),
                                 ),
                                 width: 400,
-                                height: 50,
+                                height: 45,
                                 child: const Padding(
                                   padding: EdgeInsets.only(top: 0, left: 0),
                                 ),
