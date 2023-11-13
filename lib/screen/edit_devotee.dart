@@ -34,7 +34,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   final nameController = TextEditingController();
   final mobileController = TextEditingController();
   final sanghaController = TextEditingController();
-  TextEditingController dateinput = TextEditingController();
+  TextEditingController dateInputController = TextEditingController();
   final addressLine1Controller = TextEditingController();
   final addressLine2Controller = TextEditingController();
   final cityController = TextEditingController();
@@ -44,6 +44,22 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   final formKey = GlobalKey<FormState>();
   String? bloodGroupController;
   String? devoteeId;
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        String formattedDate = DateFormat('dd MMM yyyy').format(selectedDate);
+        dateInputController.text = formattedDate;
+      });
+  }
 
   List gender = ["Male", "Female"];
   int genderController = 0;
@@ -119,7 +135,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       nameController.text = widget.devotee.name ?? "";
       mobileController.text = widget.devotee.mobileNumber ?? "";
       sanghaController.text = widget.devotee.sangha ?? "";
-      dateinput.text = widget.devotee.dob ?? "";
+      dateInputController.text = widget.devotee.dob ?? "";
       bloodGroupController = widget.devotee.bloodGroup ?? bloodGroupController;
       profileURL = widget.devotee.profilePhotoUrl ?? "";
       addressLine1Controller.text = widget.devotee.address?.addressLine1 ?? "";
@@ -308,40 +324,42 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             GestureDetector(
               child: TextField(
                 style: Theme.of(context).textTheme.displaySmall,
-                controller: dateinput, //editing controller of this TextField
+                controller:
+                    dateInputController, //editing controller of this TextField
                 decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "Date Of Birth",
                     hintTextStr: "Enter Date Of Birth"),
                 readOnly:
                     true, //set it true, so that user will not able to edit text
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      initialEntryMode:
-                          DatePickerEntryMode.calendarOnly, // Hide edit button
-                      fieldHintText: 'dd-MM-yyyy',
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(
-                          1900), //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime.now());
+                onTap: () => _selectDate(context),
+                // async {
+                //   DateTime? pickedDate = await showDatePicker(
+                //       initialEntryMode:
+                //           DatePickerEntryMode.calendarOnly, // Hide edit button
+                //       fieldHintText: 'dd-MM-yyyy',
+                //       context: context,
+                //       initialDate: DateTime.now(),
+                //       firstDate: DateTime(
+                //           1900), //DateTime.now() - not to allow to choose before today.
+                //       lastDate: DateTime.now());
 
-                  if (pickedDate != null) {
-                    print(
-                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                    String formattedDate =
-                        DateFormat('dd-MM-yyyy').format(pickedDate);
-                    print(
-                        formattedDate); //formatted date output using intl package =>  2021-03-16
-                    //you can implement different kind of Date Format here according to your requirement
+                //   if (pickedDate != null) {
+                //     print(
+                //         pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                //     String formattedDate =
+                //         DateFormat('dd-MM-yyyy').format(pickedDate);
+                //     print(
+                //         formattedDate); //formatted date output using intl package =>  2021-03-16
+                //     //you can implement different kind of Date Format here according to your requirement
 
-                    setState(() {
-                      dateinput.text =
-                          formattedDate; //set output date to TextField value.
-                    });
-                  } else {
-                    print("Date is not selected");
-                  }
-                },
+                //     setState(() {
+                //       dateinput.text =
+                //           formattedDate; //set output date to TextField value.
+                //     });
+                //   } else {
+                //     print("Date is not selected");
+                //   }
+                // },
               ),
             ),
             const SizedBox(
@@ -571,7 +589,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         gender: gender[genderController],
                         profilePhotoUrl: profileURL,
                         sangha: sanghaController.text,
-                        dob: dateinput.text,
+                        dob: dateInputController.text,
                         mobileNumber: mobileController.text,
                         updatedAt: DateTime.now().toString(),
                         address: AddressModel(
