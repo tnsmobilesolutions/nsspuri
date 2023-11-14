@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "29623966317",
-    "project_id": "nsspuridelegate",
-    "storage_bucket": "nsspuridelegate.appspot.com"
+    "project_number": "222780364320",
+    "project_id": "nsspuridelegate-dev",
+    "storage_bucket": "nsspuridelegate-dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:29623966317:android:b7a0038aadff4e4d667d64",
+        "mobilesdk_app_id": "1:222780364320:android:385b53ba14d50b94ac0e45",
         "android_client_info": {
-          "package_name": "com.tnsmobilesolutions.sammilani_delegate"
+          "package_name": "com.tnsmobilesolutions.nssdeleget"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAj1S-MDZQIHnkt9sCDX5rhHaJEYrdk7qI"
+          "current_key": "AIzaSyDBMTztA2EEdh4BQbqwLTYoojKYNcFUt0I"
         }
       ],
       "services": {
