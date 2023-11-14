@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:222780364320:android:385b53ba14d50b94ac0e45",
+        "mobilesdk_app_id": "1:222780364320:android:5b3d060f341bf1abac0e45",
         "android_client_info": {
-          "package_name": "com.tnsmobilesolutions.nssdeleget"
+          "package_name": "com.tnsmobilesolutions.nssdelegate_dev"
         }
       },
       "oauth_client": [],
