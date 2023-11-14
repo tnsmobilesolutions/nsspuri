@@ -26,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         extendBodyBehindAppBar: false,
         appBar: AppBar(
           leading: IconButton(
@@ -81,16 +82,9 @@ class _HomePageState extends State<HomePage> {
                 // ),
                 const Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                          child: Text(
-                        'Pune Sammilani - 23, 24 & 25 February 2024',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      )),
-                    ],
+                  child: Text(
+                    'Pune Sammilani - 23, 24 & 25 February 2024',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
                 FutureBuilder(
@@ -101,11 +95,7 @@ class _HomePageState extends State<HomePage> {
                     } else {
                       if (snapshot.data["statusCode"] == 200) {
                         print(snapshot.data);
-                        return Column(
-                          children: [
-                            RelativeDelegate(devoteeData: snapshot.data),
-                          ],
-                        );
+                        return RelativeDelegate(devoteeData: snapshot.data);
                       } else {
                         return const Column(
                           children: [
