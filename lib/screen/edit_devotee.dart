@@ -186,6 +186,13 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppBarColor,
+        title: widget.title == 'edit'
+            ? const Text('Edit Delegate')
+            : const Text('Add Relative Delegate'),
+        centerTitle: true,
+      ),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(15),
@@ -265,13 +272,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                const Text(
-                  'Gender',
-                ),
                 Column(
                   children: <Widget>[
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
+                        Text(
+                          'Gender',
+                        ),
                         Expanded(
                           flex: 1,
                           child: RadioListTile(
