@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: ScaffoldBackgroundColor,
         extendBodyBehindAppBar: false,
         appBar: AppBar(
           leading: IconButton(
@@ -51,9 +51,9 @@ class _HomePageState extends State<HomePage> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(
-                '${timeUntilSammilani.inDays} days to go',
+                '${timeUntilSammilani.inDays} days to go (23 Feb 2024)',
                 style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -74,39 +74,35 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Pune Sammilani - 23, 24 & 25 February 2024',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ),
-                FutureBuilder(
-                  future: GetDevoteeAPI().devoteeWithRelatives(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else {
-                      if (snapshot.data["statusCode"] == 200) {
-                        print(snapshot.data);
-                        return RelativeDelegate(devoteeData: snapshot.data);
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+
+                  FutureBuilder(
+                    future: GetDevoteeAPI().devoteeWithRelatives(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
                       } else {
-                        return const Column(
-                          children: [
-                            Text("404 Error"),
-                          ],
-                        );
+                        if (snapshot.data["statusCode"] == 200) {
+                          print(snapshot.data);
+                          return RelativeDelegate(devoteeData: snapshot.data);
+                        } else {
+                          return const Column(
+                            children: [
+                              Text("404 Error"),
+                            ],
+                          );
+                        }
                       }
-                    }
-                  },
-                ),
-              ],
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
