@@ -55,11 +55,11 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.only(top: 40, left: 12, right: 12),
         child: SizedBox(
           height: 550,
           child: Container(
-            color: Colors.white,
+            color: Color.fromARGB(255, 242, 247, 254),
             child: PageIndicatorContainer(
                 length: devotees.length,
                 align: IndicatorAlign.bottom,
@@ -91,7 +91,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                       boxShadow: [
                         BoxShadow(
                           color: ContainerBoxShadowColor,
-                          spreadRadius: 3,
+                          spreadRadius: 4,
                           blurRadius: 5,
                           offset: const Offset(0, 3),
                         ),
@@ -100,7 +100,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                     // DevoteeModel singledevotee =
                     //     DevoteeModel.fromMap(devotees[index]);
                     return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
                           decoration: const BoxDecoration(
@@ -133,7 +132,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                 // Replace with your image path
 
                                 const Padding(
-                                  padding: EdgeInsets.all(1),
+                                  padding: EdgeInsets.only(top: 7),
                                   child: Column(
                                     children: [
                                       Text(
@@ -183,213 +182,213 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 32),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        Container(
+                          height: 415,
+                          width: 400,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          child: Column(
                             children: [
-                              const SizedBox(
-                                width: 50,
-                              ),
-                              const Text(
-                                'IDENTITY CARD',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) {
-                                        return EditDevoteeDetailsPage(
-                                          title: "edit",
-                                          devotee: devoteedata,
+                              Center(
+                                child: Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 122,
+                                    ),
+                                    const Text(
+                                      'IDENTITY CARD',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 60,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return EditDevoteeDetailsPage(
+                                                title: "edit",
+                                                devotee: devoteedata,
+                                              );
+                                            },
+                                          ),
                                         );
                                       },
+                                      icon: const Icon(Icons.edit,
+                                          size: 20, color: IconButtonColor),
                                     ),
-                                  );
-                                },
-                                alignment: Alignment.centerRight,
-                                icon: const Icon(Icons.edit,
-                                    size: 20, color: IconButtonColor),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
-                        Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                child: devoteedata.bloodGroup == "Don't know"
-                                    ? Container(
-                                        width: 75,
-                                        height: 60,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.rectangle,
-                                        ),
-                                      )
-                                    : Stack(
-                                        children: [
-                                          Container(
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: devoteedata.bloodGroup ==
+                                            "Don't know"
+                                        ? Container(
                                             width: 75,
                                             height: 60,
                                             decoration: const BoxDecoration(
                                               shape: BoxShape.rectangle,
-                                              image: DecorationImage(
-                                                fit: BoxFit.fill,
-                                                image: AssetImage(
-                                                    'assets/images/blood.png'),
-                                              ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            top: 7,
-                                            left: 0,
-                                            child: SizedBox(
-                                              width: 75,
-                                              height: 60,
-                                              child: Center(
-                                                child: Text(
-                                                  "${devoteedata.bloodGroup}",
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Color.fromARGB(
-                                                        255, 255, 255, 255),
-                                                    fontWeight: FontWeight.bold,
+                                          )
+                                        : Stack(
+                                            children: [
+                                              Container(
+                                                width: 75,
+                                                height: 60,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.rectangle,
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.fill,
+                                                    image: AssetImage(
+                                                        'assets/images/blood.png'),
                                                   ),
                                                 ),
                                               ),
-                                            ),
+                                              Positioned(
+                                                top: 7,
+                                                left: 0,
+                                                child: SizedBox(
+                                                  width: 75,
+                                                  height: 60,
+                                                  child: Center(
+                                                    child: Text(
+                                                      "${devoteedata.bloodGroup}",
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Color.fromARGB(
+                                                            255, 255, 255, 255),
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                    // Return an empty Container if the condition is false
+                                  ),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  Container(
+                                    height: 150,
+                                    width: 120,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: const Color.fromARGB(
+                                            255, 212, 212, 212),
+                                        width: 1,
                                       ),
-                                // Return an empty Container if the condition is false
+                                      shape: BoxShape
+                                          .rectangle, // This makes the container circular
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(devoteedata
+                                            .profilePhotoUrl
+                                            .toString()),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 78,
+                                  ),
+                                ],
                               ),
                               const SizedBox(
-                                width: 12,
+                                height: 10,
                               ),
-                              Container(
-                                height: 150,
-                                width: 120,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: const Color.fromARGB(
-                                        255, 212, 212, 212),
-                                    width: 1,
-                                  ),
-                                  shape: BoxShape
-                                      .rectangle, // This makes the container circular
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        devoteedata.profilePhotoUrl.toString()),
-                                  ),
+                              Center(
+                                child: devoteedata.name != null
+                                    ? Text(
+                                        _toCamelCase(
+                                            devoteedata.name.toString()),
+                                        style: const TextStyle(
+                                            color: Colors.deepOrange,
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    : const Text(
+                                        "Name : Please Update your Name"),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Center(
+                                child: devoteedata.sangha != null
+                                    ? Text(
+                                        _toCamelCase(
+                                            devoteedata.sangha.toString()),
+                                        style: const TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    : const Text(
+                                        "Name : Please Update your Sangha"),
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Center(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    devoteedata.mobileNumber != null
+                                        ? Text(
+                                            "Mobile     :    ${devoteedata.mobileNumber}",
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        : const Text(
+                                            "Mobile : Please Update your Mobile Number"),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    devoteedata.gender != null
+                                        ? Text(
+                                            "Gender    :    ${_toCamelCase(devoteedata.gender.toString())}",
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        : const Text(
+                                            "Gender : Please Update your Gender"),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    devoteedata.dob != null
+                                        ? Text(
+                                            "DOB         :    ${devoteedata.dob}",
+                                            style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        : const Text(
+                                            "DOB : Please Update your Date of birth"),
+
+                                    // devoteedata.bloodGroup != null
+                                    //     ? Text(
+                                    //         "Blood Gr :    ${devoteedata.bloodGroup}",
+                                    //         style: const TextStyle(
+                                    //             fontSize: 18,
+                                    //             fontWeight:
+                                    //                 FontWeight.w300),
+                                    //       )
+                                    //     : const Text(
+                                    //         "Bloodgroup : Please Update your Bloodgroup"),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(
-                                width: 78,
-                              )
                             ],
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            devoteedata.name != null
-                                ? Text(
-                                    _toCamelCase(devoteedata.name.toString()),
-                                    style: const TextStyle(
-                                        color: Colors.deepOrange,
-                                        fontSize: 28,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                : const Text("Name : Please Update your Name"),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            devoteedata.sangha != null
-                                ? Text(
-                                    _toCamelCase(devoteedata.sangha.toString()),
-                                    style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                : const Text(
-                                    "Name : Please Update your Sangha"),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              devoteedata.mobileNumber != null
-                                  ? Text(
-                                      "Mobile     :    ${devoteedata.mobileNumber}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  : const Text(
-                                      "Mobile : Please Update your Mobile Number"),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              devoteedata.gender != null
-                                  ? Text(
-                                      "Gender    :    ${_toCamelCase(devoteedata.gender.toString())}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  : const Text(
-                                      "Gender : Please Update your Gender"),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              devoteedata.dob != null
-                                  ? Text(
-                                      "DOB         :    ${devoteedata.dob}",
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  : const Text(
-                                      "DOB : Please Update your Date of birth"),
-
-                              // devoteedata.bloodGroup != null
-                              //     ? Text(
-                              //         "Blood Gr :    ${devoteedata.bloodGroup}",
-                              //         style: const TextStyle(
-                              //             fontSize: 18,
-                              //             fontWeight:
-                              //                 FontWeight.w300),
-                              //       )
-                              //     : const Text(
-                              //         "Bloodgroup : Please Update your Bloodgroup"),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 22,
                         ),
                         Container(
                           decoration: const BoxDecoration(
@@ -404,7 +403,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                           child: const Padding(
                             padding: EdgeInsets.only(top: 8, left: 15),
                             child: Text(
-                              "PARICHALAK",
+                              "PARICHALAK :",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.normal),
