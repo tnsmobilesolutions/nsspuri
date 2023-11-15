@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 const AccentColor = Colors.deepOrange;
-const ScaffoldBackgroundColor = Color.fromARGB(255, 243, 243, 243);
+const ScaffoldBackgroundColor = Color.fromARGB(255, 242, 247, 254);
 const AppBarColor = Color(0xff0064B4);
 const AppbarTextColor = Colors.white;
 const TextThemeColor = Colors.black87;

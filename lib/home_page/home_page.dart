@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 242, 247, 254),
+        backgroundColor: ScaffoldBackgroundColor,
         extendBodyBehindAppBar: false,
         appBar: AppBar(
           leading: IconButton(

@@ -186,6 +186,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ScaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: AppBarColor,
         title: widget.title == 'edit'
