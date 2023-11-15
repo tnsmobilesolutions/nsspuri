@@ -1,5 +1,4 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/firebase/firebase_options.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: appTheme,
       home: RemoteConfigHelper().getShowMandatoryUpgradePrompt
-          ? const UpdateDialouge()
+          ? UpdateDialouge()
           : const SplashScreen(),
     );
   }
