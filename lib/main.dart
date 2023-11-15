@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/firebase/firebase_options.dart';
-
+import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:sammilani_delegate/screen/splash_screen.dart';
+import 'package:sammilani_delegate/screen/update_dialouge.dart';
 import 'package:sammilani_delegate/utilities/app_theme_light.dart';
 
 Future<void> main() async {
@@ -10,6 +12,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await fetchRemoteConfigData();
   runApp(const MyApp());
 }
 
@@ -20,10 +23,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // theme: Themes.light,
-      // darkTheme: Themes.dark,
       theme: appTheme,
-      home: SplashScreen(),
+      home: RemoteConfigHelper().getShowMandatoryUpgradePrompt
+          ? const UpdateDialouge()
+          : const SplashScreen(),
     );
   }
 }
