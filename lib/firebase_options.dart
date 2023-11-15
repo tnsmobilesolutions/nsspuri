@@ -17,13 +17,19 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -46,30 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-      apiKey: "AIzaSyA1tSAISbgSLqVdLRvfLh-9bB58DgYg1lI",
-      authDomain: "nsspuridelegate-dev.firebaseapp.com",
-      projectId: "nsspuridelegate-dev",
-      storageBucket: "nsspuridelegate-dev.appspot.com",
-      messagingSenderId: "222780364320",
-      appId: "1:222780364320:web:de84ea401fff9310ac0e45",
-      measurementId: "G-V1HVLL1401");
-
   static const FirebaseOptions android = FirebaseOptions(
-      apiKey: "AIzaSyDBMTztA2EEdh4BQbqwLTYoojKYNcFUt0I",
-      authDomain: "nsspuridelegate-dev.firebaseapp.com",
-      projectId: "nsspuridelegate-dev",
-      storageBucket: "nsspuridelegate-dev.appspot.com",
-      messagingSenderId: "222780364320",
-      appId: "1:222780364320:web:de84ea401fff9310ac0e45",
-      measurementId: "G-V1HVLL1401");
-
-  static const FirebaseOptions ios = FirebaseOptions(
-      apiKey: "AIzaSyA1tSAISbgSLqVdLRvfLh-9bB58DgYg1lI",
-      authDomain: "nsspuridelegate-dev.firebaseapp.com",
-      projectId: "nsspuridelegate-dev",
-      storageBucket: "nsspuridelegate-dev.appspot.com",
-      messagingSenderId: "222780364320",
-      appId: "1:222780364320:web:de84ea401fff9310ac0e45",
-      measurementId: "G-V1HVLL1401");
+    apiKey: 'AIzaSyDBMTztA2EEdh4BQbqwLTYoojKYNcFUt0I',
+    appId: '1:222780364320:android:5b3d060f341bf1abac0e45',
+    messagingSenderId: '222780364320',
+    projectId: 'nsspuridelegate-dev',
+    storageBucket: 'nsspuridelegate-dev.appspot.com',
+  );
 }

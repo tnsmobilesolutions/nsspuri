@@ -30,7 +30,7 @@ if (flutterVersionName == null) {
    }
 
 android {
-    namespace "com.tnsmobilesolutions.nssdelegate_dev"
+    namespace "com.tnsmobilesolutions.sammilani_delegate"
     compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
@@ -80,7 +80,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:32.3.1')
+    implementation platform('com.google.firebase:firebase-bom:32.5.0')
     // implementation 'com.google.firebase:firebase-core'
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
 
