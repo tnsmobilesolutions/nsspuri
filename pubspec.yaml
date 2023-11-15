@@ -49,6 +49,7 @@ dependencies:
   shared_preferences: ^2.2.2
   firebase_remote_config: ^4.3.4
   page_indicator: ^0.4.1
+  package_info: ^2.0.2
 
 dev_dependencies:
   flutter_test:
