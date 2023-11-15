@@ -26,7 +26,10 @@ class UpdateDialouge extends StatelessWidget {
           Text(versionNumber),
         ],
       ),
-      content: Text(updateText),
+      content: Text(
+        updateText,
+        style: TextStyle(color: Colors.black),
+      ),
       actions: <Widget>[
         Center(
           child: TextButton(

@@ -24,36 +24,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isAppNeedUpdate = false;
-
-  getVersionNumber() async {
-    String remoteVersion = RemoteConfigHelper().getVersionNumber;
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String appVersion = packageInfo.version;
-    print('Version: $appVersion, remoteVersion: $remoteVersion');
-    if (appVersion == remoteVersion) {
-      isAppNeedUpdate = false;
-    } else if (appVersion.compareTo(remoteVersion) < 0) {
-      isAppNeedUpdate = true;
-    } else {
-      isAppNeedUpdate = false;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getVersionNumber();
-  }
-
   @override
   Widget build(BuildContext context) {
-    print("isAppNeedUpdate : $isAppNeedUpdate");
+    bool upgradePrompt = RemoteConfigHelper().getShowMandatoryUpgradePrompt;
+    bool upgradeVersionAvailable =
+        RemoteConfigHelper().getupdateRequiredByVersionnumber;
+
+    print(
+        "upgradePrompt --- $upgradePrompt, ----- upgradeVersionAvailable --- $upgradeVersionAvailable ");
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,
-      home: (RemoteConfigHelper().getShowMandatoryUpgradePrompt &&
-              isAppNeedUpdate)
+      home: (upgradePrompt && upgradeVersionAvailable)
           ? UpdateDialouge()
           : const SplashScreen(),
     );

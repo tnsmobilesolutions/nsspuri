@@ -1,4 +1,5 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:package_info/package_info.dart';
 
 // class FirebaseRemoteConfigService {
 //   FirebaseRemoteConfigService._()
@@ -22,6 +23,16 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 class RemoteConfigHelper {
   static final RemoteConfigHelper _networkHelper =
       RemoteConfigHelper._internal();
+  //
+  bool updateRequiredByVersionnumber = false;
+  bool get getupdateRequiredByVersionnumber {
+    return updateRequiredByVersionnumber;
+  }
+
+  set setupdateRequiredByVersionnumber(bool versionCheck) {
+    updateRequiredByVersionnumber = versionCheck;
+  }
+
   //
   bool shouldShowMandatoryUpgradePrompt = false;
   bool get getShowMandatoryUpgradePrompt {
@@ -72,6 +83,17 @@ fetchRemoteConfigData() async {
         remoteConfig.getString('mandatoryUpgradeText');
     RemoteConfigHelper().setVersionNumber =
         remoteConfig.getString('versionNumber');
+    String remoteVersion = remoteConfig.getString('versionNumber');
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String appVersion = packageInfo.version;
+    print('Version: $appVersion, remoteVersion: $remoteVersion');
+    if (appVersion == remoteVersion) {
+      RemoteConfigHelper().setupdateRequiredByVersionnumber = false;
+    } else if (appVersion.compareTo(remoteVersion) < 0) {
+      RemoteConfigHelper().setupdateRequiredByVersionnumber = true;
+    } else {
+      RemoteConfigHelper().setupdateRequiredByVersionnumber = false;
+    }
   } catch (e) {
     print('remote config error : $e');
   }
