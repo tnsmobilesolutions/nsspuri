@@ -192,7 +192,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                 child: Row(
                                   children: [
                                     const SizedBox(
-                                      width: 122,
+                                      width: 124,
                                     ),
                                     const Text(
                                       'IDENTITY CARD',
@@ -334,7 +334,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         "Name : Please Update your Sangha"),
                               ),
                               const SizedBox(
-                                height: 15,
+                                height: 25,
                               ),
                               Center(
                                 child: Column(
