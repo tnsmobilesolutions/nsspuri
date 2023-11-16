@@ -36,7 +36,7 @@ class UpdateDialouge extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: const BoxDecoration(
-                color: Colors.blue,
+                color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16.0),
                   topRight: Radius.circular(16.0),
@@ -46,9 +46,9 @@ class UpdateDialouge extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Update Available',
+                    'Update Required',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -57,12 +57,16 @@ class UpdateDialouge extends StatelessWidget {
                   Text(
                     'Version: $versionNumber',
                     style: const TextStyle(
-                      color: Colors.white70,
+                      color: Colors.black,
                       fontSize: 14,
                     ),
                   ),
                 ],
               ),
+            ),
+            const Divider(
+              color: Colors.black,
+              height: 3,
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -71,30 +75,24 @@ class UpdateDialouge extends StatelessWidget {
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: TextButton(
-                    onPressed: _launchUrl,
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    child: const Text(
-                      'Update',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+            TextButton(
+              onPressed: _launchUrl,
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.white,
+                padding: const EdgeInsets.all(16.0),
+              ),
+              child: const Text(
+                'Update',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
+              ),
             ),
           ],
         ),
