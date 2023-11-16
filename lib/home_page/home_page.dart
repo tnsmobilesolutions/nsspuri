@@ -78,6 +78,11 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                      height: 100,
+                      width: 400,
+                      child: Card(
+                          child: Center(child: Text('Account Information')))),
                   // const SizedBox(
                   //   height: 20,
                   // ),
