@@ -38,11 +38,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 227, 227, 227),
+      backgroundColor: ScaffoldBackgroundColor,
       body: Container(
         width: size.width,
         height: size.height,
-        color: CardColor,
+        color: ScaffoldBackgroundColor,
         child: Padding(
           padding: const EdgeInsets.only(
               left: 16.0, right: 16.0, top: 50.0, bottom: 25.0),
@@ -74,7 +74,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 const SizedBox(height: 10),
                 Container(
                   child: TextFormField(
-                     style: Theme.of(context).textTheme.displaySmall,
+                    style: Theme.of(context).textTheme.displaySmall,
                     obscureText: false,
                     controller: _emailController,
                     validator: (value) {
@@ -84,8 +84,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       return null;
                     },
                     autofocus: false,
-                    
-                  decoration: CommonStyle.textFieldStyle(
+                    decoration: CommonStyle.textFieldStyle(
                         labelTextStr: "Email", hintTextStr: "Enter Email"),
                   ),
                 ),
@@ -107,10 +106,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             final _status = await resetPassword(
                                 email: _emailController.text.trim());
 
-                            if (_emailController != RegExp(r'\S+@\S+\.\S+')) {
+                            if (!RegExp(r'\S+@\S+\.\S+')
+                                .hasMatch(_emailController.text.trim())) {
+                              // Show a SnackBar with an error message if the email is not valid.
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Invalid Email ')));
+                                  SnackBar(content: Text('Invalid Username')));
                             }
+
                             if (_status == AuthStatus.successful) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
