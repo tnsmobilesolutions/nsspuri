@@ -60,18 +60,18 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
           height: 550,
           child: Container(
             decoration: BoxDecoration(
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Color.fromARGB(255, 196, 196, 196),
                     spreadRadius: 12,
                     blurRadius: 12,
-                    offset: const Offset(0, 3),
+                    offset: Offset(0, 3),
                   ),
                 ],
                 border: Border.all(
-                    width: 10, color: Color.fromARGB(255, 233, 233, 233)),
+                    width: 10, color: const Color.fromARGB(255, 233, 233, 233)),
                 color: AppBarColor,
-                borderRadius: BorderRadius.all(Radius.circular(35))),
+                borderRadius: const BorderRadius.all(Radius.circular(35))),
             child: PageIndicatorContainer(
               length: devotees.length,
               align: IndicatorAlign.bottom,
@@ -136,7 +136,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                 'assets/images/nsslogo.png',
                                 scale: 25,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 12,
                               ),
 
@@ -196,14 +196,14 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                       Container(
                         height: 380,
                         width: 400,
-                        color: Color.fromARGB(255, 255, 255, 255),
+                        color: const Color.fromARGB(255, 255, 255, 255),
                         child: Column(
                           children: [
                             Center(
                               child: Row(
                                 children: [
                                   const SizedBox(
-                                    width: 110,
+                                    width: 115,
                                   ),
                                   const Text(
                                     'IDENTITY CARD',
@@ -402,15 +402,17 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                       Container(
                         height: 50,
                         width: 400,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 'PARICHALAK :',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
