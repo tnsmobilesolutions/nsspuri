@@ -76,13 +76,24 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                      height: 100,
+                  const SizedBox(
+                      height: 120,
                       width: 400,
                       child: Card(
-                          child: Center(child: Text('Account Information')))),
+                          child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('Account Information'),
+                            Divider(
+                              thickness: .5,
+                            )
+                          ],
+                        ),
+                      ))),
                   // const SizedBox(
                   //   height: 20,
                   // ),
