@@ -53,6 +53,15 @@ class RemoteConfigHelper {
     mandatoryUpgradeText = upgradeText;
   }
 
+  String accountInfo = "";
+  String get getAccountInfo {
+    return accountInfo;
+  }
+
+  set setAccountInfo(String acctInfo) {
+    accountInfo = acctInfo;
+  }
+
   //
   String versionNumber = "";
   String get getVersionNumber {
@@ -81,6 +90,7 @@ fetchRemoteConfigData() async {
         remoteConfig.getBool('shouldShowMandatoryUpgradePrompt');
     RemoteConfigHelper().setUpgradeText =
         remoteConfig.getString('mandatoryUpgradeText');
+    RemoteConfigHelper().setAccountInfo = remoteConfig.getString('accountInfo');
     RemoteConfigHelper().setVersionNumber =
         remoteConfig.getString('versionNumber');
     String remoteVersion = remoteConfig.getString('versionNumber');
