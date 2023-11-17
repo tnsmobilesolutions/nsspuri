@@ -600,7 +600,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         sangha: sanghaController.text,
                         dob: dateInputController.text,
                         mobileNumber: mobileController.text,
-                        updatedAt: DateTime.now().toString(),
+                        updatedOn: DateTime.now().toString(),
                         address: AddressModel(
                             addressLine2: addressLine2Controller.text,
                             addressLine1: addressLine1Controller.text,

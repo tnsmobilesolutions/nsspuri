@@ -244,8 +244,8 @@ class _SignupScreenState extends State<SignupScreen> {
                           DevoteeModel newDevotee = DevoteeModel(
                             emailId: emailController.text,
                             uid: uid,
-                            createdAt: DateTime.now().toString(),
-                            updatedAt: DateTime.now().toString(),
+                            createdOn: DateTime.now().toString(),
+                            updatedOn: DateTime.now().toString(),
                             devoteeId: devoteeId,
                           );
 
