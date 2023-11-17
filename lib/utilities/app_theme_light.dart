@@ -10,6 +10,9 @@ final ThemeData appTheme = ThemeData(
     // Define your text styles here
     headlineSmall: TextStyle(),
     bodyLarge: TextStyle(),
+    bodyMedium: TextStyle(
+      fontSize: 16,
+    ),
     bodySmall: TextStyle(),
 
     // use for textformField
@@ -32,7 +35,8 @@ final ThemeData appTheme = ThemeData(
     titleMedium: TextStyle(
         fontSize: 20, color: AppbarTextColor, fontWeight: FontWeight.bold),
 
-    titleLarge: TextStyle(),
+    titleLarge: TextStyle(
+        fontSize: 22, color: AppbarTextColor, fontWeight: FontWeight.bold),
   ),
 
   textButtonTheme: TextButtonThemeData(
@@ -48,6 +52,5 @@ final ThemeData appTheme = ThemeData(
     ),
   ),
 
- 
   // Define other theme properties here
 );

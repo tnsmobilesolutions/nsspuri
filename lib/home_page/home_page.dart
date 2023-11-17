@@ -49,11 +49,11 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Pune Sammilani Delegate",
-                style: Theme.of(context).textTheme.titleMedium,
+                "Pune Sammilani",
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
-                '${timeUntilSammilani.inDays} days to go (23 Feb 2024)',
+                '${timeUntilSammilani.inDays} days to go (23, 24, 25 Feb 2024)',
                 style:
                     const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
@@ -84,9 +84,10 @@ class _HomePageState extends State<HomePage> {
                     child: SizedBox(
                         child: Card(
                             child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(12.0),
                       child: Center(
-                          child: Text(RemoteConfigHelper().getAccountInfo)),
+                          child: Text(RemoteConfigHelper().getAccountInfo,
+                              style: Theme.of(context).textTheme.bodyMedium)),
                     ))),
                   ),
                   // const SizedBox(

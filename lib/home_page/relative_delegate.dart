@@ -1,5 +1,7 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:sammilani_delegate/enums/devotee_status.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
@@ -62,10 +64,9 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
             decoration: BoxDecoration(
                 boxShadow: const [
                   BoxShadow(
-                    color: Color.fromARGB(255, 196, 196, 196),
-                    spreadRadius: 12,
-                    blurRadius: 12,
-                    offset: Offset(0, 3),
+                    color: Color.fromARGB(255, 194, 202, 218),
+                    spreadRadius: 8,
+                    blurRadius: 8,
                   ),
                 ],
                 border: Border.all(
@@ -203,10 +204,10 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                               child: Row(
                                 children: [
                                   const SizedBox(
-                                    width: 115,
+                                    width: 111,
                                   ),
                                   const Text(
-                                    'IDENTITY CARD',
+                                    'DELEGATE CARD',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
@@ -264,21 +265,28 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             Positioned(
                                               top: 7,
                                               left: 0,
-                                              child: SizedBox(
-                                                width: 75,
-                                                height: 60,
-                                                child: Center(
-                                                  child: Text(
-                                                    "${devoteedata.bloodGroup}",
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Color.fromARGB(
-                                                          255, 255, 255, 255),
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                    width: 75,
+                                                    height: 60,
+                                                    child: Center(
+                                                      child: Text(
+                                                        "${devoteedata.bloodGroup}",
+                                                        style: const TextStyle(
+                                                          fontSize: 14,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
                                             ),
                                           ],
@@ -288,24 +296,65 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                 const SizedBox(
                                   width: 12,
                                 ),
-                                Container(
-                                  height: 150,
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: const Color.fromARGB(
-                                          255, 212, 212, 212),
-                                      width: 1,
+                                Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Positioned(
+                                      child: Container(
+                                        height: 150,
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: const Color.fromARGB(
+                                                255, 212, 212, 212),
+                                            width: 1,
+                                          ),
+                                          shape: BoxShape
+                                              .rectangle, // This makes the container circular
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(devoteedata
+                                                .profilePhotoUrl
+                                                .toString()),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    shape: BoxShape
-                                        .rectangle, // This makes the container circular
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(devoteedata
-                                          .profilePhotoUrl
-                                          .toString()),
-                                    ),
-                                  ),
+                                    if (devoteedata.status !=
+                                        DevoteeStatus.dataSubmitted.name)
+                                      Positioned(
+                                        top: 50,
+                                        left: 105,
+                                        child: Transform.rotate(
+                                          angle: 12,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Color.fromARGB(
+                                                          255, 44, 7, 209),
+                                                      width: 4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(4)),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: const Text(
+                                                  'PAID',
+                                                  style: TextStyle(
+                                                    fontSize: 40.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 44, 7, 209),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 ),
                                 const SizedBox(
                                   width: 78,

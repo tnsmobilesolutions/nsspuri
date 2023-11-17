@@ -51,6 +51,7 @@ dependencies:
   page_indicator: ^0.4.1
   package_info: ^2.0.2
   neumorphic_button: ^0.0.1+2
+  dotted_border: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
