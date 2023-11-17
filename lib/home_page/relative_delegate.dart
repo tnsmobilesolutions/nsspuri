@@ -55,7 +55,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
 
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 40, left: 12, right: 12),
+        padding: const EdgeInsets.only(top: 20, left: 12, right: 12),
         child: SizedBox(
           height: 550,
           child: Container(
@@ -158,7 +158,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       height: 3,
                                     ),
                                     Text(
-                                      'Nilachala Saraswat Sangha, Puri',
+                                      'Nilachala Saraswata Sangha, Puri',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.white, // Text color

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
+import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 
 import 'package:sammilani_delegate/home_page/relative_delegate.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   DateTime sammilaniDate = DateTime(2024, 2, 23);
   int selectedPageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     Duration timeUntilSammilani = sammilaniDate.difference(DateTime.now());
@@ -76,24 +78,17 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const SizedBox(
-                      height: 120,
-                      width: 400,
-                      child: Card(
-                          child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text('Account Information'),
-                            Divider(
-                              thickness: .5,
-                            )
-                          ],
-                        ),
-                      ))),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: SizedBox(
+                        child: Card(
+                            child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                          child: Text(RemoteConfigHelper().getAccountInfo)),
+                    ))),
+                  ),
                   // const SizedBox(
                   //   height: 20,
                   // ),
@@ -105,7 +100,6 @@ class _HomePageState extends State<HomePage> {
                         return const Center(child: CircularProgressIndicator());
                       } else {
                         if (snapshot.data["statusCode"] == 200) {
-                          print(snapshot.data);
                           return RelativeDelegate(devoteeData: snapshot.data);
                         } else {
                           return const Column(
