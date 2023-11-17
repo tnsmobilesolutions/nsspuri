@@ -172,7 +172,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       '73RD UTKAL PRADESHIKA SAMMILANI',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 14,
+                                        fontSize: 12.5,
                                         color: Colors.white, // Text color
                                       ),
                                     ),
@@ -213,9 +213,9 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       fontSize: 18,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 50,
-                                  ),
+                                  // const SizedBox(
+                                  //   width: 50,
+                                  // ),
                                   IconButton(
                                     onPressed: () {
                                       Navigator.push(
