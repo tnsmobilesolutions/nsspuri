@@ -206,7 +206,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                     width: 115,
                                   ),
                                   const Text(
-                                    'IDENTITY CARD',
+                                    'DELEGATE CARD',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
