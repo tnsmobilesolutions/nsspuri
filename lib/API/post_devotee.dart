@@ -7,7 +7,6 @@ class PostDevoteeAPI extends DioFuctionAPI {
   Future<Map<String, dynamic>> signupDevotee(DevoteeModel devotee) async {
     // Dio dio = Dio();
     var encodedata = jsonEncode(devotee.toMap());
-    print(encodedata);
     try {
       final response = await signupAPI("devotee", encodedata);
       print("devotee Encooded Data - $encodedata");
