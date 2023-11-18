@@ -441,6 +441,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         sangha: sanghaController.text,
                         dob: dateInputController.text,
                         mobileNumber: mobileController.text,
+                        status: "dataSubmitted",
                       );
 
                       final response = await PutDevoteeAPI().updateDevotee(
