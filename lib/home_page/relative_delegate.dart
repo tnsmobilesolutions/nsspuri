@@ -203,35 +203,44 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             Center(
                               child: Row(
                                 children: [
-                                  const SizedBox(
-                                    width: 111,
+                                  const Expanded(
+                                    flex: 1,
+                                    child: Text(''),
                                   ),
-                                  const Text(
-                                    'DELEGATE CARD',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
+                                  const Expanded(
+                                    flex: 4,
+                                    child: Center(
+                                      child: Text(
+                                        'DELEGATE CARD',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   // const SizedBox(
                                   //   width: 50,
                                   // ),
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return EditDevoteeDetailsPage(
-                                              title: "edit",
-                                              devotee: devoteedata,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.edit,
-                                        size: 20, color: IconButtonColor),
+                                  Expanded(
+                                    flex: 1,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return EditDevoteeDetailsPage(
+                                                title: "edit",
+                                                devotee: devoteedata,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(Icons.edit,
+                                          size: 20, color: IconButtonColor),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -332,15 +341,15 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color: Color.fromARGB(
-                                                          255, 44, 7, 209),
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255, 44, 7, 209),
                                                       width: 4),
                                                   borderRadius:
                                                       BorderRadius.circular(4)),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(4.0),
-                                                child: const Text(
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(4.0),
+                                                child: Text(
                                                   'PAID',
                                                   style: TextStyle(
                                                     fontSize: 40.0,
