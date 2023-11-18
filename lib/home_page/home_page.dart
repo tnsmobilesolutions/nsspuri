@@ -8,6 +8,8 @@ import 'package:sammilani_delegate/home_page/relative_delegate.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
@@ -116,6 +118,15 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print("tel:+91${RemoteConfigHelper().helpContactNo}");
+            launchUrlString(
+              "tel:+91${RemoteConfigHelper().helpContactNo}",
+            );
+          },
+          child: Icon(Icons.help_center),
         ),
       ),
     );
