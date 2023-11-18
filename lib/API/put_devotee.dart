@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:sammilani_delegate/API/dio_fuction.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 
@@ -13,8 +12,7 @@ class PutDevoteeAPI extends DioFuctionAPI {
       print("devotee Encooded Data - $encodedata");
       return response;
     } catch (e) {
-      print("Post Error....");
-      print(e);
+      print("Post Error....${e}");
       return {"statusCode": 500, "error": e};
     }
   }
