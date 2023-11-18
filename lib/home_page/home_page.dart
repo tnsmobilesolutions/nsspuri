@@ -8,7 +8,6 @@ import 'package:sammilani_delegate/home_page/relative_delegate.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 // ignore: must_be_immutable
@@ -119,15 +118,18 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-            backgroundColor: Colors.deepOrange,
-            elevation: 8,
-            onPressed: () {
-              launchUrlString(
-                "tel:+91${RemoteConfigHelper().helpContactNo}",
-              );
-            },
-            child: Text('Help!')),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 10, 20),
+          child: FloatingActionButton(
+              backgroundColor: Colors.deepOrange,
+              elevation: 8,
+              onPressed: () {
+                launchUrlString(
+                  "tel:+91${RemoteConfigHelper().helpContactNo}",
+                );
+              },
+              child: Text('Help!')),
+        ),
       ),
     );
   }
