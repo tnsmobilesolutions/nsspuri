@@ -120,14 +120,14 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print("tel:+91${RemoteConfigHelper().helpContactNo}");
-            launchUrlString(
-              "tel:+91${RemoteConfigHelper().helpContactNo}",
-            );
-          },
-          child: Icon(Icons.help_center),
-        ),
+            backgroundColor: Colors.deepOrange,
+            elevation: 8,
+            onPressed: () {
+              launchUrlString(
+                "tel:+91${RemoteConfigHelper().helpContactNo}",
+              );
+            },
+            child: Text('Help!')),
       ),
     );
   }
