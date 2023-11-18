@@ -6,7 +6,9 @@ import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'reset_password.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -20,11 +22,26 @@ class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
+
+  bool _obscured1 = true;
+  final textFieldFocusNode = FocusNode();
+
+  void _toggleObscured1() {
+    setState(() {
+      _obscured1 = !_obscured1;
+      if (textFieldFocusNode.hasPrimaryFocus)
+        return; // If focus is on text field, dont unfocus
+      textFieldFocusNode.canRequestFocus =
+          false; // Prevents focus if tap on eye
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-       onWillPop: () async => false,
+      onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: ScaffoldBackgroundColor,
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.fromLTRB(
@@ -33,17 +50,68 @@ class _SignInScreenState extends State<SignInScreen> {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  LogoWidget("assets/images/nsslogo.png"),
+                  logoWidget("assets/images/nsslogo.png"),
                   const SizedBox(
                     height: 30,
                   ),
-                  ReusableTextField("Enter UserName", Icons.person_outline, false,
-                      _emailTextController),
-                  const SizedBox(
-                    height: 20,
+                  TextFormField(
+                    style: Theme.of(context).textTheme.displaySmall,
+                    controller: _emailTextController,
+                    onSaved: (newValue) => _emailTextController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a valid Email';
+                      }
+                      return null;
+                    },
+                    decoration: CommonStyle.textFieldStyle(
+                        labelTextStr: "Email", hintTextStr: "Enter Email"),
                   ),
-                  ReusableTextField("Enter Password", Icons.lock_outline, true,
-                      _passwordTextController),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  TextFormField(
+                    style: Theme.of(context).textTheme.displaySmall,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: _obscured1,
+                    focusNode: textFieldFocusNode,
+
+                    controller: _passwordTextController,
+                    onSaved: (newValue) => _passwordTextController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Password';
+                      }
+                      return null;
+                    },
+                    // decoration: InputDecoration(
+                    //   labelText: "Enter Password",
+                    //   filled: true,
+                    //   floatingLabelBehavior: FloatingLabelBehavior.never,
+                    //   border: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(30.0),
+                    //       borderSide: const BorderSide(
+                    //           width: 0, style: BorderStyle.none)),
+                    //   suffixIcon: Padding(
+                    //     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                    //     child: GestureDetector(
+                    //       onTap: _toggleObscured1,
+                    //       child: Icon(
+                    //         _obscured1
+                    //             ? Icons.visibility_off_rounded
+                    //             : Icons.visibility_rounded,
+                    //         size: 20,
+                    //         color: IconButtonColor,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    decoration: CommonStyle.textFieldStyle(
+                        labelTextStr: "Password",
+                        hintTextStr: "Enter Password"),
+
+                    // hintText: 'Name',
+                  ),
                   const SizedBox(
                     height: 21,
                   ),
@@ -65,7 +133,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             );
                           },
                         );
-    
+
                         // Navigate to the next screen
                         await Future.delayed(
                             const Duration(seconds: 1)); // Simulating a delay
@@ -87,7 +155,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return HomePage(uid: devotee.uid.toString());
+                                    return HomePage();
                                   },
                                 ),
                               );
@@ -95,7 +163,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               Navigator.of(context)
                                   .pop(); // Close the circular progress indicator
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Signin failed')));
+                                  const SnackBar(
+                                      content: Text('Signin failed')));
                             }
                           } else {
                             Navigator.of(context)
@@ -103,7 +172,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text(
-                                        'User does not exist. Please sign up.')));
+                                        'Please Enter a Valid Email and Password.')));
                           }
                         } catch (e) {
                           Navigator.of(context)
@@ -112,25 +181,22 @@ class _SignInScreenState extends State<SignInScreen> {
                               SnackBar(content: Text(e.toString())));
                         }
                       },
-                      child: const Text(
-                        "Sign In",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.resolveWith((states) {
                             if (states.contains(MaterialState.pressed)) {
-                              return Colors.deepOrange;
+                              return IconButtonColor;
                             }
-                            return Colors.deepOrange;
+                            return IconButtonColor;
                           }),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(90)))),
+                                      borderRadius:
+                                          BorderRadius.circular(90)))),
+                      child: const Text(
+                        "Sign In",
+                      ),
                     ),
                   ),
                   forgetPassword(context),
@@ -149,21 +215,20 @@ class _SignInScreenState extends State<SignInScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text("Don't have account?",
-            style: TextStyle(color: Colors.black)),
-        SizedBox(
-          width: 80,
-          child: TextButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return const SignupScreen();
-                },
-              ));
-            },
-            child: const Text(
-              'Sign Up',
-              style: TextStyle(color: Colors.deepOrange),
-            ),
+            style: TextStyle(color: TextThemeColor)),
+        TextButton(
+          style: Theme.of(context).textButtonTheme.style,
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return SignupScreen(
+                  title: "signup",
+                );
+              },
+            ));
+          },
+          child: const Text(
+            'Sign Up',
           ),
         )
       ],
@@ -171,19 +236,14 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget forgetPassword(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 35,
-      alignment: Alignment.bottomRight,
-      child: TextButton(
-        child: const Text(
-          "Forgot Password?",
-          style: TextStyle(color: Colors.black),
-          textAlign: TextAlign.right,
-        ),
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ResetPassword())),
+    return TextButton(
+      style: Theme.of(context).textButtonTheme.style,
+      child: const Text(
+        "Forgot Password?",
+        textAlign: TextAlign.right,
       ),
+      onPressed: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ResetPasswordScreen())),
     );
   }
 }

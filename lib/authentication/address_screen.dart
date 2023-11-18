@@ -3,13 +3,13 @@ import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class AddressDetailsScreen extends StatefulWidget {
-  AddressDetailsScreen({super.key, required this.uid, required this.devoteeId});
-  String uid;
+  AddressDetailsScreen({super.key, required this.devoteeId});
   String devoteeId;
-
   @override
   State<AddressDetailsScreen> createState() => _AddressDetailsScreenState();
 }
@@ -27,16 +27,17 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: ScaffoldBackgroundColor,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          centerTitle: true,
-          elevation: 0,
-          title: const Text(
-            "Address Details",
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Colors.transparent,
-        ),
+            automaticallyImplyLeading: false,
+            backgroundColor: AppBarColor,
+            centerTitle: true,
+            elevation: .4,
+            title: Text(
+              'Address details',
+              style: Theme.of(context).textTheme.titleMedium,
+            )),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(12),
@@ -51,20 +52,20 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return HomePage(
-                            uid: widget.uid,
-                          );
+                          return HomePage();
                         },
                       ));
                     },
                     child: const Text(
-                      'Skip >',
-                      style: TextStyle(fontSize: 16, color: Colors.deepOrange),
+                      'Skip',
+                      style: TextStyle(fontSize: 16, color: ButtonColor),
                     ),
                   ),
                 ),
                 SingleChildScrollView(
                   child: TextFormField(
+                    style: Theme.of(context).textTheme.displaySmall,
+                    textCapitalization: TextCapitalization.words,
                     controller: addressLine1Controller,
                     onSaved: (newValue) => addressLine1Controller,
                     validator: (value) {
@@ -73,24 +74,17 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
-                      labelText: "Address line 1",
-                      labelStyle:
-                          TextStyle(color: Colors.grey.withOpacity(0.9)),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.grey.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                    ),
+                    decoration: CommonStyle.textFieldStyle(
+                        labelTextStr: "Address Line 1",
+                        hintTextStr: "Enter Adddress Line 1"),
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
+                     textCapitalization: TextCapitalization.words,
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: addressLine2Controller,
                   onSaved: (newValue) => addressLine2Controller,
                   validator: (value) {
@@ -99,22 +93,16 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "Address line 2",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "Address Line 2",
+                      hintTextStr: "Enter Address Line 2"),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
+                     textCapitalization: TextCapitalization.words,
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: cityController,
                   onSaved: (newValue) => cityController,
                   validator: (value) {
@@ -123,22 +111,16 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "City name",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "City Name",
+                      hintTextStr: "Enter City Name"),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
+                     textCapitalization: TextCapitalization.words,
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: stateController,
                   onSaved: (newValue) => stateController,
                   validator: (value) {
@@ -147,22 +129,16 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "State name",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "State Name",
+                      hintTextStr: "Enter State Name"),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
+                     textCapitalization: TextCapitalization.words,
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: countryController,
                   onSaved: (newValue) => addressLine1Controller,
                   validator: (value) {
@@ -171,22 +147,15 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "Country name",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "Country Name",
+                      hintTextStr: "Enter Country Name"),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
+                  style: Theme.of(context).textTheme.displaySmall,
                   controller: postalCodeController,
                   onSaved: (newValue) => postalCodeController,
                   validator: (value) {
@@ -195,17 +164,8 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                     }
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "Postal code",
-                    labelStyle: TextStyle(color: Colors.grey.withOpacity(0.9)),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    fillColor: Colors.grey.withOpacity(0.3),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                  ),
+                  decoration: CommonStyle.textFieldStyle(
+                      labelTextStr: "PIN Code", hintTextStr: "Enter PIN Code"),
                 ),
                 const SizedBox(
                   height: 20,
@@ -246,7 +206,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                         // ignore: use_build_context_synchronously
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return HomePage(uid: widget.uid);
+                            return HomePage();
                           },
                         ));
                       } else {
@@ -262,9 +222,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                         backgroundColor:
                             MaterialStateProperty.resolveWith((states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.deepOrange;
+                            return ButtonColor;
                           }
-                          return Colors.deepOrange;
+                          return ButtonColor;
                         }),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -272,7 +232,6 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                                     borderRadius: BorderRadius.circular(60)))),
                     child: const Text(
                       'Signup',
-                      style: TextStyle(fontSize: 22),
                     ),
 
                     //Row
