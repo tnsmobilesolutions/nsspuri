@@ -244,8 +244,6 @@ class _SignupScreenState extends State<SignupScreen> {
                           DevoteeModel newDevotee = DevoteeModel(
                             emailId: emailController.text,
                             uid: uid,
-                            createdOn: DateTime.now().toString(),
-                            updatedOn: DateTime.now().toString(),
                             devoteeId: devoteeId,
                           );
 
@@ -263,7 +261,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               MaterialPageRoute(
                                 builder: (context) {
                                   return DevoteeDetailsPage(
-                                    devoteeId: devoteeId,
+                                    devotee: newDevotee,
                                   );
                                 },
                               ),

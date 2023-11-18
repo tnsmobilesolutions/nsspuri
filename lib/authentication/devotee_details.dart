@@ -17,8 +17,9 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class DevoteeDetailsPage extends StatefulWidget {
-  DevoteeDetailsPage({Key? key, required this.devoteeId}) : super(key: key);
-  String devoteeId;
+  DevoteeDetailsPage({Key? key, required this.devotee}) : super(key: key);
+
+  DevoteeModel devotee;
   // get currentUser => null;
 
   @override
@@ -26,9 +27,9 @@ class DevoteeDetailsPage extends StatefulWidget {
 }
 
 class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
-  final nameController = TextEditingController();
-  final mobileController = TextEditingController();
-  final sanghaController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
+  TextEditingController sanghaController = TextEditingController();
   TextEditingController dateInputController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String name = "";
@@ -39,8 +40,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -199,7 +200,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 textCapitalization: TextCapitalization.words,
                 style: Theme.of(context).textTheme.displaySmall,
                 controller: nameController,
-                onSaved: (newValue) => nameController,
+                onSaved: (newValue) => nameController.text,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
                 ],
@@ -219,7 +220,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 style: Theme.of(context).textTheme.displaySmall,
                 keyboardType: TextInputType.phone,
                 controller: mobileController,
-                onSaved: (newValue) => mobileController,
+                onSaved: (newValue) => mobileController.text,
                 validator: (value) {
                   RegExp regex = RegExp(r'^.{10}$');
                   if (value!.isEmpty) {
@@ -308,34 +309,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   readOnly:
                       true, //set it true, so that user will not able to edit text
                   onTap: () => _selectDate(context),
-                  //  async {
-                  //   DateTime? pickedDate = await showDatePicker(
-                  //       initialEntryMode: DatePickerEntryMode
-                  //           .calendarOnly, // Hide edit button
-
-                  //       context: context,
-                  //       initialDate: DateTime.now(),
-                  //       firstDate: DateTime(
-                  //           1900), //DateTime.now() - not to allow to choose before today.
-                  //       lastDate: DateTime.now());
-
-                  //   if (pickedDate != null) {
-                  //     print(
-                  //         pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                  //     String formattedDate =
-                  //         DateFormat('dd-MM-yyyy').format(pickedDate);
-                  //     print(
-                  //         formattedDate); //formatted date output using intl package =>  2021-03-16
-                  //     //you can implement different kind of Date Format here according to your requirement
-
-                  //     setState(() {
-                  //       dateinput.text =
-                  //           formattedDate; //set output date to TextField value.
-                  //     });
-                  //   } else {
-                  //     print("Date is not selected");
-                  //   }
-                  // },
                 ),
               ),
               const SizedBox(
@@ -457,6 +430,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               previewImage as XFile, nameController.text)
                           : null;
                       DevoteeModel newDevotee = DevoteeModel(
+                        devoteeId: widget.devotee.devoteeId,
+                        uid: widget.devotee.uid,
+                        emailId: widget.devotee.emailId,
+                        createdById: widget.devotee.devoteeId,
                         bloodGroup: bloodGroupController,
                         name: nameController.text,
                         gender: gender[genderController],
@@ -464,35 +441,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         sangha: sanghaController.text,
                         dob: dateInputController.text,
                         mobileNumber: mobileController.text,
-                        updatedOn: DateTime.now().toString(),
                       );
 
-                      final response = await PutDevoteeAPI()
-                          .updateDevotee(newDevotee, widget.devoteeId);
+                      final response = await PutDevoteeAPI().updateDevotee(
+                          newDevotee, widget.devotee.devoteeId.toString());
                       if (response["statusCode"] == 200) {
-                        // Show a circular progress indicator while navigating
-                        // showDialog(
-                        //   context: context,
-                        //   barrierDismissible:
-                        //       false, // Prevent dismissing by tapping outside
-                        //   builder: (BuildContext context) {
-                        //     return Center(
-                        //       child: CircularProgressIndicator(),
-                        //     );
-                        //   },
-                        // );
-
-                        // // Navigate to the next screen
-                        // await Future.delayed(
-                        //     Duration(seconds: 1)); // Simulating a delay
                         Navigator.of(context)
                             .pop(); // Close the circular progress indicator
                         // ignore: use_build_context_synchronously
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            return AddressDetailsScreen(
-                                devoteeId: widget.devoteeId);
+                            return AddressDetailsScreen(devotee: newDevotee);
                           }),
                         );
                       } else {
