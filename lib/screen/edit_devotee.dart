@@ -93,7 +93,11 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Upload Profile Picture"),
+            title: const Text(
+              "Upload Profile Picture",
+              style: TextStyle(
+                  color: Color.fromARGB(255, 135, 135, 135), fontSize: 16),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -142,7 +146,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       cityController.text = widget.devotee.address?.city ?? "";
       stateController.text = widget.devotee.address?.state ?? "";
       postalCodeController.text =
-      widget.devotee.address?.postalCode.toString() ?? "";
+          widget.devotee.address?.postalCode.toString() ?? "";
       countryController.text = widget.devotee.address?.country ?? "";
     }
   }

@@ -95,8 +95,18 @@ class _SignupScreenState extends State<SignupScreen> {
                     // the email is valid
                     return null;
                   },
-                  decoration: CommonStyle.textFieldStyle(
-                      labelTextStr: "Email", hintTextStr: "Enter Email"),
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                    hintText: 'Enter Email',
+                    hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                    filled: true,
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: const BorderSide(
+                            width: 0, style: BorderStyle.none)),
+                  ),
 
                   // hintText: 'Name',
                 ),
