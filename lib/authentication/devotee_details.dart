@@ -82,7 +82,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Upload Profile Picture"),
+            title: Text(
+              "Upload Profile Picture",
+              style: TextStyle(
+                  color: Color.fromARGB(255, 135, 135, 135), fontSize: 16),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
