@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/address_model.dart';
@@ -8,8 +9,8 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 // ignore: must_be_immutable
 class AddressDetailsScreen extends StatefulWidget {
-  AddressDetailsScreen({super.key, required this.devoteeId});
-  String devoteeId;
+  AddressDetailsScreen({super.key, required this.devotee});
+  DevoteeModel devotee;
   @override
   State<AddressDetailsScreen> createState() => _AddressDetailsScreenState();
 }
@@ -49,7 +50,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                   child: TextButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      await GetDevoteeAPI()
+                          .loginDevotee(widget.devotee.uid.toString());
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return HomePage();
@@ -83,7 +86,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
-                     textCapitalization: TextCapitalization.words,
+                  textCapitalization: TextCapitalization.words,
                   style: Theme.of(context).textTheme.displaySmall,
                   controller: addressLine2Controller,
                   onSaved: (newValue) => addressLine2Controller,
@@ -101,7 +104,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
-                     textCapitalization: TextCapitalization.words,
+                  textCapitalization: TextCapitalization.words,
                   style: Theme.of(context).textTheme.displaySmall,
                   controller: cityController,
                   onSaved: (newValue) => cityController,
@@ -119,7 +122,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
-                     textCapitalization: TextCapitalization.words,
+                  textCapitalization: TextCapitalization.words,
                   style: Theme.of(context).textTheme.displaySmall,
                   controller: stateController,
                   onSaved: (newValue) => stateController,
@@ -137,7 +140,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
-                     textCapitalization: TextCapitalization.words,
+                  textCapitalization: TextCapitalization.words,
                   style: Theme.of(context).textTheme.displaySmall,
                   controller: countryController,
                   onSaved: (newValue) => addressLine1Controller,
@@ -155,6 +158,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   style: Theme.of(context).textTheme.displaySmall,
                   controller: postalCodeController,
                   onSaved: (newValue) => postalCodeController,
@@ -190,6 +194,19 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                       await Future.delayed(
                           const Duration(seconds: 1)); // Simulating a delay
                       DevoteeModel devoteeAddress = DevoteeModel(
+                          devoteeId: widget.devotee.devoteeId,
+                          uid: widget.devotee.uid,
+                          emailId: widget.devotee.emailId,
+                          createdById: widget.devotee.devoteeId,
+                          bloodGroup: widget.devotee.bloodGroup,
+                          name: widget.devotee.name,
+                          gender: widget.devotee.gender,
+                          profilePhotoUrl: widget.devotee.profilePhotoUrl,
+                          sangha: widget.devotee.sangha,
+                          dob: widget.devotee.dob,
+                          mobileNumber: widget.devotee.mobileNumber,
+                          status: "dataSubmitted",
+                          isAdmin: false,
                           address: AddressModel(
                               addressLine1: addressLine1Controller.text,
                               addressLine2: addressLine2Controller.text,
@@ -198,9 +215,11 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                               postalCode:
                                   int.tryParse(postalCodeController.text),
                               state: stateController.text));
-                      final response = await PutDevoteeAPI()
-                          .updateDevotee(devoteeAddress, widget.devoteeId);
+                      final response = await PutDevoteeAPI().updateDevotee(
+                          devoteeAddress, widget.devotee.devoteeId.toString());
                       if (response["statusCode"] == 200) {
+                        await GetDevoteeAPI()
+                            .loginDevotee(widget.devotee.uid.toString());
                         Navigator.of(context)
                             .pop(); // Close the circular progress indicator
                         // ignore: use_build_context_synchronously

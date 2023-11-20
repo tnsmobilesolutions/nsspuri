@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:sammilani_delegate/enums/devotee_status.dart';
@@ -47,13 +46,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     if (devotees.isEmpty) {
       return const Center(child: Text("No data"));
     }
-    // print(
-    //     "************* ${devoteeData['bloodGroup'] ?? 'No blood group available'}");
-
-    // devoteedata['bloodGroup'] != null &&
-    //         devoteedata['bloodGroup'] != "Don't know"
-    //     ? const Stack()
-    //     : Container();
 
     return Center(
       child: Padding(
