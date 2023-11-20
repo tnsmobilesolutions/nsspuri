@@ -50,8 +50,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
     );
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -131,7 +131,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   void initState() {
     super.initState();
     if (widget.title == "edit") {
-      devoteeId == widget.devotee.devoteeId;
       nameController.text = widget.devotee.name ?? "";
       mobileController.text = widget.devotee.mobileNumber ?? "";
       sanghaController.text = widget.devotee.sangha ?? "";
@@ -143,10 +142,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       cityController.text = widget.devotee.address?.city ?? "";
       stateController.text = widget.devotee.address?.state ?? "";
       postalCodeController.text =
-          widget.devotee.address?.postalCode.toString() ?? "";
+      widget.devotee.address?.postalCode.toString() ?? "";
       countryController.text = widget.devotee.address?.country ?? "";
-    } else {
-      devoteeId = const Uuid().v1();
     }
   }
 
@@ -587,12 +584,20 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   await Future.delayed(
                       const Duration(seconds: 1)); // Simulating a delay
                   try {
-                    profileURL = previewImage != null
+                    String? profileURL = previewImage != null
                         ? await uploadImageToFirebaseStorage(
                             previewImage as XFile, nameController.text)
-                        : null;
+                        : widget.devotee.profilePhotoUrl;
+
+                    print("devoteeee -- ${widget.devotee}");
                     DevoteeModel updateDevotee = DevoteeModel(
-                        devoteeId: devoteeId,
+                        devoteeId: widget.title == "edit"
+                            ? widget.devotee.devoteeId
+                            : Uuid().v1(),
+                        createdById: widget.title == "edit"
+                            ? widget.devotee.devoteeId
+                            : Uuid().v1(),
+                        emailId: widget.devotee.emailId,
                         bloodGroup: bloodGroupController,
                         name: nameController.text,
                         gender: gender[genderController],
@@ -600,6 +605,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         sangha: sanghaController.text,
                         dob: dateInputController.text,
                         mobileNumber: mobileController.text,
+                        isAdmin: widget.devotee.isAdmin ?? false,
+                        createdOn: widget.devotee.createdOn,
+                        status: widget.devotee.status ?? "dataSubmitted",
+                        uid: widget.devotee.uid ?? "",
                         updatedOn: DateTime.now().toString(),
                         address: AddressModel(
                             addressLine2: addressLine2Controller.text,
