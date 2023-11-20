@@ -88,7 +88,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     }
 
                     // using regular expression
-                    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                    if (!RegExp(
+                            r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
+                            r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
+                            r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
+                            r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
+                            r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
+                            r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
+                            r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])')
+                        .hasMatch(value)) {
                       return "Please enter a valid email address";
                     }
 
@@ -226,7 +234,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           confirmPasswordController.text) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text('Invalid Email or Password')));
+                                content: Text("Password doesn't match")));
                       } else {
                         showDialog(
                           context: context,
@@ -276,18 +284,20 @@ class _SignupScreenState extends State<SignupScreen> {
                                 },
                               ),
                             );
-                          } else {
-                            Navigator.of(context)
-                                .pop(); // Close the circular progress indicator
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Signup failed')));
-                            // Handle the case where the response status code is not 200
                           }
+                          //  else {
+                          //   Navigator.of(context)
+                          //       .pop(); // Close the circular progress indicator
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //       const SnackBar(content: Text('Signup failed')));
+                          //   // Handle the case where the response status code is not 200
+                          // }
                         } else {
                           Navigator.of(context)
                               .pop(); // Close the circular progress indicator
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Signup failed')));
+                              const SnackBar(
+                                  content: Text('Please enter a valid Email')));
                           // Handle the case where uid is null
                         }
                       }
