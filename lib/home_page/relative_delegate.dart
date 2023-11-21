@@ -4,7 +4,7 @@ import 'package:sammilani_delegate/enums/devotee_status.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
-// import 'package:syncfusion_flutter_barcodes/barcodes.dart';
+
 
 // ignore: must_be_immutable
 class RelativeDelegate extends StatefulWidget {
@@ -396,74 +396,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             const SizedBox(
                               height: 25,
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(left: 15),
-                            //   child: IntrinsicHeight(
-                            //     child: Row(
-                            //       children: [
-                            //         Expanded(
-                            //           child: Column(
-                            //             crossAxisAlignment:
-                            //                 CrossAxisAlignment.start,
-                            //             children: [
-                            //               devoteedata.mobileNumber != null
-                            //                   ? Text(
-                            //                       "Mobile  :   ${devoteedata.mobileNumber}",
-                            //                       style: const TextStyle(
-                            //                           fontSize: 16,
-                            //                           fontWeight:
-                            //                               FontWeight.bold),
-                            //                     )
-                            //                   : const Text(
-                            //                       "Mobile : Please Update your Mobile Number"),
-                            //               const SizedBox(
-                            //                 height: 8,
-                            //               ),
-                            //               devoteedata.gender != null
-                            //                   ? Text(
-                            //                       "Gender :   ${_toCamelCase(devoteedata.gender.toString())}",
-                            //                       style: const TextStyle(
-                            //                           fontSize: 16,
-                            //                           fontWeight:
-                            //                               FontWeight.bold),
-                            //                     )
-                            //                   : const Text(
-                            //                       "Gender : Please Update your Gender"),
-                            //               const SizedBox(
-                            //                 height: 8,
-                            //               ),
-                            //               devoteedata.dob != null
-                            //                   ? Text(
-                            //                       "DOB      :   ${devoteedata.dob}",
-                            //                       style: const TextStyle(
-                            //                           fontSize: 16,
-                            //                           fontWeight:
-                            //                               FontWeight.bold),
-                            //                     )
-                            //                   : const Text(
-                            //                       "DOB : Please Update your Date of birth"),
-                            //             ],
-                            //           ),
-                            //         ),
-                            //         const VerticalDivider(
-                            //           thickness: 1,
-                            //           color: Color.fromARGB(255, 198, 197, 197),
-                            //         ),
-                            //         Container(
-                            //           height: 85,
-                            //           width: 150,
-                            //           child: Center(
-                            //             child: SfBarcodeGenerator(
-                            //               value: '1234',
-                            //               symbology: QRCode(),
-                            //               showValue: false,
-                            //             ),
-                            //           ),
-                            //         )
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
+                          
                           ],
                         ),
                       ),

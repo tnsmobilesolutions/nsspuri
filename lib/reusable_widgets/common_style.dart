@@ -6,8 +6,7 @@ class CommonStyle {
     return InputDecoration(
       contentPadding: const EdgeInsets.all(12),
       labelText: labelTextStr,
-      // labelStyle: TextStyle(
-      //     fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w400),
+       labelStyle: TextStyle(fontSize: 16, color: Colors.grey),
       hintText: hintTextStr,
       hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
       filled: true,
