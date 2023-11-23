@@ -5,6 +5,7 @@ import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
+
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/reusable_widgets/reusable_widgets.dart';
@@ -62,56 +63,85 @@ class _SignInScreenState extends State<SignInScreen> {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a valid Email';
                       }
+                      if (!RegExp(
+                              r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
+                              r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
+                              r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
+                              r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
+                              r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
+                              r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
+                              r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])')
+                          .hasMatch(value)) {
+                        return "Please enter a valid email address";
+                      }
                       return null;
                     },
                     decoration: CommonStyle.textFieldStyle(
-                        labelTextStr: "Email", hintTextStr: "Enter Email"),
+                      labelTextStr: "Email",
+                      hintTextStr: "Enter Email",
+                    ),
                   ),
                   SizedBox(
                     height: 12,
                   ),
                   TextFormField(
-                    style: Theme.of(context).textTheme.displaySmall,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: _obscured1,
-                    focusNode: textFieldFocusNode,
+                      style: Theme.of(context).textTheme.displaySmall,
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: _obscured1,
+                      focusNode: textFieldFocusNode,
+                      controller: _passwordTextController,
+                      onSaved: (newValue) => _passwordTextController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Password';
+                        }
+                        return null;
+                      },
+                      // decoration: InputDecoration(
+                      //   labelText: "Enter Password",
+                      //   filled: true,
+                      //   floatingLabelBehavior: FloatingLabelBehavior.never,
+                      //   border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(30.0),
+                      //       borderSide: const BorderSide(
+                      //           width: 0, style: BorderStyle.none)),
 
-                    controller: _passwordTextController,
-                    onSaved: (newValue) => _passwordTextController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter Password';
-                      }
-                      return null;
-                    },
-                    // decoration: InputDecoration(
-                    //   labelText: "Enter Password",
-                    //   filled: true,
-                    //   floatingLabelBehavior: FloatingLabelBehavior.never,
-                    //   border: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(30.0),
-                    //       borderSide: const BorderSide(
-                    //           width: 0, style: BorderStyle.none)),
-                    //   suffixIcon: Padding(
-                    //     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                    //     child: GestureDetector(
-                    //       onTap: _toggleObscured1,
-                    //       child: Icon(
-                    //         _obscured1
-                    //             ? Icons.visibility_off_rounded
-                    //             : Icons.visibility_rounded,
-                    //         size: 20,
-                    //         color: IconButtonColor,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    decoration: CommonStyle.textFieldStyle(
-                        labelTextStr: "Password",
-                        hintTextStr: "Enter Password"),
+                      // ),
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(12),
+                        labelText: "Password",
+                        labelStyle: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w400),
+                        hintText: "Password",
+                        hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 190, 190, 190)
+                            .withOpacity(0.3),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                          borderSide: const BorderSide(
+                              width: 0, style: BorderStyle.none),
+                        ),
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          child: GestureDetector(
+                            onTap: _toggleObscured1,
+                            child: Icon(
+                              _obscured1
+                                  ? Icons.visibility_off_rounded
+                                  : Icons.visibility_rounded,
+                              size: 20,
+                              color: IconButtonColor,
+                            ),
+                          ),
+                        ),
+                      )
 
-                    // hintText: 'Name',
-                  ),
+                      // hintText: 'Name',
+                      ),
                   const SizedBox(
                     height: 21,
                   ),
@@ -172,7 +202,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text(
-                                        'Please Enter a Valid Email and Password.')));
+                                        'Please check your Email and Password.')));
                           }
                         } catch (e) {
                           Navigator.of(context)
@@ -210,7 +240,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Row signUpOption() {
+  signUpOption() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -235,7 +265,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget forgetPassword(BuildContext context) {
+  forgetPassword(BuildContext context) {
     return TextButton(
       style: Theme.of(context).textButtonTheme.style,
       child: const Text(

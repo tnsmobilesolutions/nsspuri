@@ -21,6 +21,7 @@ class DevoteeModel {
   String? updatedOn;
   String? status;
   String? createdById;
+
   AddressModel? address;
   DevoteeModel({
     this.devoteeId,

@@ -4,6 +4,7 @@ import 'package:sammilani_delegate/enums/devotee_status.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 // ignore: must_be_immutable
 class RelativeDelegate extends StatefulWidget {
@@ -84,112 +85,92 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                 ) {
                   DevoteeModel devoteedata =
                       DevoteeModel.fromMap(devotees[index]);
-                  BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: ContainerBoxShadowColor,
-                        spreadRadius: 4,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  );
+
                   // DevoteeModel singledevotee =
                   //     DevoteeModel.fromMap(devotees[index]);
                   return Column(
                     children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: AppBarColor,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: AppBarColor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0),
+                            ),
                           ),
-                        ),
-                        width: 400,
-                        height: 100,
-
-                        // Background color of the container
-                        child: Padding(
-                          padding: const EdgeInsets.all(4),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              Image.asset(
-                                'assets/images/nsslogo.png',
-                                scale: 25,
-                              ),
-                              const SizedBox(
-                                width: 12,
-                              ),
-
-                              // Replace with your image path
-
-                              const Padding(
-                                padding: EdgeInsets.only(top: 7),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'JAYAGURU',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white, // Text color
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 3,
-                                    ),
-                                    Text(
-                                      'Nilachala Saraswata Sangha, Puri',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.white, // Text color
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 6,
-                                    ),
-                                    Text(
-                                      '73RD UTKAL PRADESHIKA SAMMILANI',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12.5,
-                                        color: Colors.white, // Text color
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 6,
-                                    ),
-                                    Text(
-                                      'PUNE-2024',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                          color: Colors.white // Text color
-                                          ),
-                                    ),
-                                  ],
+                          width: 400,
+                          height: 100,
+                          child: Center(
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  child: Image.asset(
+                                    'assets/images/nsslogo.png',
+                                    scale: 30,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                const Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'JAYAGURU',
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white, // Text color
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 1,
+                                      ),
+                                      Text(
+                                        'Nilachala Saraswata Sangha, Puri',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white, // Text color
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                        '73RD UTKAL PRADESHIKA BHAKTA SAMMILANI',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Colors.white, // Text color
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                        'PUNE-2024',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: Colors.white // Text color
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+
+                          // Background color of the container
                         ),
                       ),
                       Container(
                         height: 380,
                         width: 400,
-                        color: const Color.fromARGB(255, 255, 255, 255),
+                        decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 255, 255, 255)),
                         child: Column(
                           children: [
                             Center(
@@ -238,37 +219,39 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                               ),
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  child: devoteedata.bloodGroup == "Don't know"
-                                      ? Container(
-                                          width: 75,
-                                          height: 60,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.rectangle,
-                                          ),
-                                        )
-                                      : Stack(
-                                          children: [
-                                            Container(
-                                              width: 75,
-                                              height: 60,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.rectangle,
-                                                image: DecorationImage(
-                                                  fit: BoxFit.fill,
-                                                  image: AssetImage(
-                                                      'assets/images/blood.png'),
-                                                ),
-                                              ),
+                                Expanded(
+                                  child: Container(
+                                    child: devoteedata.bloodGroup ==
+                                            "Don't know"
+                                        ? Container(
+                                            width: 75,
+                                            height: 60,
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.rectangle,
                                             ),
-                                            Positioned(
-                                              top: 7,
-                                              left: 0,
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(
+                                          )
+                                        : Expanded(
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  width: 75,
+                                                  height: 60,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.rectangle,
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.fill,
+                                                      image: AssetImage(
+                                                          'assets/images/blood.png'),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  top: 7,
+                                                  left: 0,
+                                                  child: SizedBox(
                                                     width: 75,
                                                     height: 60,
                                                     child: Center(
@@ -287,78 +270,82 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                       ),
                                                     ),
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                  // Return an empty Container if the condition is false
-                                ),
-                                const SizedBox(
-                                  width: 12,
-                                ),
-                                Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Positioned(
-                                      child: Container(
-                                        height: 150,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: const Color.fromARGB(
-                                                255, 212, 212, 212),
-                                            width: 1,
                                           ),
-                                          shape: BoxShape
-                                              .rectangle, // This makes the container circular
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(devoteedata
-                                                .profilePhotoUrl
-                                                .toString()),
+                                    // Return an empty Container if the condition is false
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      Positioned(
+                                        child: Container(
+                                          height: 150,
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: const Color.fromARGB(
+                                                  255, 212, 212, 212),
+                                              width: 1,
+                                            ),
+                                            shape: BoxShape
+                                                .rectangle, // This makes the container circular
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(devoteedata
+                                                  .profilePhotoUrl
+                                                  .toString()),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    if (devoteedata.status !=
-                                        DevoteeStatus.dataSubmitted.name)
-                                      Positioned(
-                                        top: 50,
-                                        left: 105,
-                                        child: Transform.rotate(
-                                          angle: 12,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color:
-                                                          const Color.fromARGB(
+                                      if (devoteedata.status !=
+                                          DevoteeStatus.dataSubmitted.name)
+                                        Expanded(
+                                          flex: 4,
+                                          child: Positioned(
+                                            top: 50,
+                                            left: 105,
+                                            child: Transform.rotate(
+                                              angle: 12,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: const Color
+                                                              .fromARGB(
                                                               255, 44, 7, 209),
-                                                      width: 4),
-                                                  borderRadius:
-                                                      BorderRadius.circular(4)),
-                                              child: const Padding(
-                                                padding: EdgeInsets.all(4.0),
-                                                child: Text(
-                                                  'PAID',
-                                                  style: TextStyle(
-                                                    fontSize: 40.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Color.fromARGB(
-                                                        255, 44, 7, 209),
+                                                          width: 4),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4)),
+                                                  child: const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(4.0),
+                                                    child: Text(
+                                                      'PAID',
+                                                      style: TextStyle(
+                                                        fontSize: 40.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Color.fromARGB(
+                                                            255, 44, 7, 209),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  width: 78,
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -393,57 +380,78 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       "Name : Please Update your Sangha"),
                             ),
                             const SizedBox(
-                              height: 25,
+                              height: 20,
                             ),
-                            Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  devoteedata.mobileNumber != null
-                                      ? Text(
-                                          "Mobile     :    ${devoteedata.mobileNumber}",
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : const Text(
-                                          "Mobile : Please Update your Mobile Number"),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  devoteedata.gender != null
-                                      ? Text(
-                                          "Gender    :    ${_toCamelCase(devoteedata.gender.toString())}",
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : const Text(
-                                          "Gender : Please Update your Gender"),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  devoteedata.dob != null
-                                      ? Text(
-                                          "DOB         :    ${devoteedata.dob}",
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : const Text(
-                                          "DOB : Please Update your Date of birth"),
-
-                                  // devoteedata.bloodGroup != null
-                                  //     ? Text(
-                                  //         "Blood Gr :    ${devoteedata.bloodGroup}",
-                                  //         style: const TextStyle(
-                                  //             fontSize: 18,
-                                  //             fontWeight:
-                                  //                 FontWeight.w300),
-                                  //       )
-                                  //     : const Text(
-                                  //         "Bloodgroup : Please Update your Bloodgroup"),
-                                ],
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: IntrinsicHeight(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          devoteedata.mobileNumber != null
+                                              ? Text(
+                                                  "Mobile  :   ${devoteedata.mobileNumber}",
+                                                  style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              : const Text(
+                                                  "Mobile : Please Update your Mobile Number"),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          devoteedata.gender != null
+                                              ? Text(
+                                                  "Gender :   ${_toCamelCase(devoteedata.gender.toString())}",
+                                                  style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              : const Text(
+                                                  "Gender : Please Update your Gender"),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          devoteedata.dob != null
+                                              ? Text(
+                                                  "DOB      :   ${devoteedata.dob}",
+                                                  style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              : const Text(
+                                                  "DOB : Please Update your Date of birth"),
+                                        ],
+                                      ),
+                                    ),
+                                    const VerticalDivider(
+                                      thickness: 1,
+                                      color: Color.fromARGB(255, 198, 197, 197),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        height: 90,
+                                        width: 150,
+                                        child: Center(
+                                          child: SfBarcodeGenerator(
+                                            value: '1234',
+                                            symbology: QRCode(),
+                                            showValue: false,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ],

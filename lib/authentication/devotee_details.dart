@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/authentication/address_screen.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -82,7 +83,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Upload Profile Picture"),
+            title: Text(
+              "Upload Profile Picture",
+              style: TextStyle(
+                  color: Color.fromARGB(255, 135, 135, 135), fontSize: 16),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -371,7 +376,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       labelTextStr: "Sangha Name",
                       hintTextStr: "Enter Sangha Name"),
                 ),
-                suggestionsCallback: (value) {
+               suggestionsCallback: (value) {
                   return SanghaList.getSuggestions(value);
                 },
                 itemBuilder: (context, String suggestion) {

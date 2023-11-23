@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
+
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
@@ -93,7 +95,11 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text("Upload Profile Picture"),
+            title: const Text(
+              "Upload Profile Picture",
+              style: TextStyle(
+                  color: Color.fromARGB(255, 135, 135, 135), fontSize: 16),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -142,7 +148,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       cityController.text = widget.devotee.address?.city ?? "";
       stateController.text = widget.devotee.address?.state ?? "";
       postalCodeController.text =
-      widget.devotee.address?.postalCode.toString() ?? "";
+          widget.devotee.address?.postalCode.toString() ?? "";
       countryController.text = widget.devotee.address?.country ?? "";
     }
   }
@@ -227,10 +233,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               style: Theme.of(context).textTheme.displaySmall,
               controller: nameController,
               textCapitalization: TextCapitalization.words,
-              onSaved: (newValue) => addressLine1Controller,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
-              ],
+              onSaved: (newValue) => nameController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter name';

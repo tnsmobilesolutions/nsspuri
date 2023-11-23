@@ -52,6 +52,9 @@ dependencies:
   package_info: ^2.0.2
   neumorphic_button: ^0.0.1+2
   dotted_border: ^2.0.0+1
+  flutter_inappwebview: ^5.8.0
+  qr_bar_code_scanner_dialog: ^0.0.5
+  syncfusion_flutter_barcodes: ^23.2.4
 
 dev_dependencies:
   flutter_test:
