@@ -352,33 +352,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             const SizedBox(
                               height: 10,
                             ),
-                            Center(
-                              child: devoteedata.name != null
-                                  ? Text(
-                                      _toCamelCase(devoteedata.name.toString()),
-                                      style: const TextStyle(
-                                          color: Colors.deepOrange,
-                                          fontSize: 28,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  : const Text(
-                                      "Name : Please Update your Name"),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Center(
-                              child: devoteedata.sangha != null
-                                  ? Text(
-                                      _toCamelCase(
-                                          devoteedata.sangha.toString()),
-                                      style: const TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  : const Text(
-                                      "Name : Please Update your Sangha"),
-                            ),
                             const SizedBox(
                               height: 20,
                             ),
@@ -390,12 +363,42 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                     Expanded(
                                       flex: 1,
                                       child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          devoteedata.name != null
+                                              ? Text(
+                                                  _toCamelCase(devoteedata.name
+                                                      .toString()),
+                                                  style: const TextStyle(
+                                                      color: Colors.deepOrange,
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                )
+                                              : const Text(
+                                                  "Name : Please Update your Name"),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          devoteedata.sangha != null
+                                              ? Text(
+                                                  "Sangha  :   ${devoteedata.sangha}",
+                                                  style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              : const Text(
+                                                  "Name : Please Update your Sangha"),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
                                           devoteedata.mobileNumber != null
                                               ? Text(
-                                                  "Mobile  :   ${devoteedata.mobileNumber}",
+                                                  "Mobile   :   ${devoteedata.mobileNumber}",
                                                   style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
@@ -408,7 +411,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           ),
                                           devoteedata.gender != null
                                               ? Text(
-                                                  "Gender :   ${_toCamelCase(devoteedata.gender.toString())}",
+                                                  "Gender  :   ${_toCamelCase(devoteedata.gender.toString())}",
                                                   style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
@@ -421,7 +424,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           ),
                                           devoteedata.dob != null
                                               ? Text(
-                                                  "DOB      :   ${devoteedata.dob}",
+                                                  "DOB       :   ${devoteedata.dob}",
                                                   style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:
@@ -439,7 +442,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                     Expanded(
                                       flex: 1,
                                       child: Container(
-                                        height: 90,
+                                        height: 125,
                                         width: 150,
                                         child: Center(
                                           child: SfBarcodeGenerator(
