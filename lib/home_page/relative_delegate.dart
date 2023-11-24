@@ -352,81 +352,66 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             const SizedBox(
                               height: 10,
                             ),
-                            const SizedBox(
-                              height: 20,
-                            ),
+                            devoteedata.name != null
+                                ? Text(
+                                    _toCamelCase(devoteedata.name.toString()),
+                                    style: const TextStyle(
+                                        color: Colors.deepOrange,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                : const Text("Name : Please Update your Name"),
                             Padding(
-                              padding: const EdgeInsets.only(left: 15),
+                              padding: const EdgeInsets.all(8),
                               child: IntrinsicHeight(
                                 child: Row(
                                   children: [
                                     Expanded(
-                                      flex: 1,
+                                      flex: 3,
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          devoteedata.name != null
-                                              ? Text(
-                                                  _toCamelCase(devoteedata.name
-                                                      .toString()),
-                                                  style: const TextStyle(
-                                                      color: Colors.deepOrange,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                )
-                                              : const Text(
-                                                  "Name : Please Update your Name"),
                                           const SizedBox(
                                             height: 8,
                                           ),
                                           devoteedata.sangha != null
                                               ? Text(
-                                                  "Sangha  :   ${devoteedata.sangha}",
+                                                  "Sangha :  ${devoteedata.sangha}",
                                                   style: const TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
                                               : const Text(
                                                   "Name : Please Update your Sangha"),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
                                           devoteedata.mobileNumber != null
                                               ? Text(
-                                                  "Mobile   :   ${devoteedata.mobileNumber}",
+                                                  "Mobile  :  ${devoteedata.mobileNumber}",
                                                   style: const TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
                                               : const Text(
                                                   "Mobile : Please Update your Mobile Number"),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
                                           devoteedata.gender != null
                                               ? Text(
-                                                  "Gender  :   ${_toCamelCase(devoteedata.gender.toString())}",
+                                                  "Gender :  ${_toCamelCase(devoteedata.gender.toString())}",
                                                   style: const TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
                                               : const Text(
                                                   "Gender : Please Update your Gender"),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
                                           devoteedata.dob != null
                                               ? Text(
-                                                  "DOB       :   ${devoteedata.dob}",
+                                                  "DOB      :  ${devoteedata.dob}",
                                                   style: const TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
@@ -440,10 +425,10 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       color: Color.fromARGB(255, 198, 197, 197),
                                     ),
                                     Expanded(
-                                      flex: 1,
+                                      flex: 3,
                                       child: Container(
-                                        height: 125,
-                                        width: 150,
+                                        height: 130,
+                                        width: 160,
                                         child: Center(
                                           child: SfBarcodeGenerator(
                                             value: '1234',

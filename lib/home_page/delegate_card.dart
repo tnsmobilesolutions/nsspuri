@@ -16,14 +16,14 @@ class DelegateCard extends StatefulWidget {
   State<DelegateCard> createState() => _DelegateCardState();
 }
 
-  DateTime sammilaniDate = DateTime(2024, 2, 23);
-  int _currentIndex = 0;
+DateTime sammilaniDate = DateTime(2024, 2, 23);
+int _currentIndex = 0;
 
 class _DelegateCardState extends State<DelegateCard> {
   @override
   Widget build(BuildContext context) {
-     Duration timeUntilSammilani = sammilaniDate.difference(DateTime.now());
-    return  Scaffold(
+    Duration timeUntilSammilani = sammilaniDate.difference(DateTime.now());
+    return Scaffold(
         backgroundColor: ScaffoldBackgroundColor,
         extendBodyBehindAppBar: false,
         appBar: AppBar(
@@ -125,7 +125,7 @@ class _DelegateCardState extends State<DelegateCard> {
           ),
         ),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 10, 20),
+          padding: const EdgeInsets.fromLTRB(0, 0, 10, 5),
           child: FloatingActionButton(
             backgroundColor: Colors.deepOrange,
             elevation: 8,
@@ -134,6 +134,6 @@ class _DelegateCardState extends State<DelegateCard> {
             },
             child: Text('Help!'),
           ),
-    ));
+        ));
   }
 }
