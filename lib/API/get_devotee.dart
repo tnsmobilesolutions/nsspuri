@@ -59,7 +59,7 @@ class GetDevoteeAPI extends DioFuctionAPI {
   Future<Map<String, dynamic>?> devoteeWithRelatives() async {
     try {
       final response = await getAPI("devotee/relatives");
-      print(response);
+
       return {"statusCode": 200, "data": response["data"]["singleDevotee"]};
     } catch (e) {
       print(e);
@@ -67,5 +67,27 @@ class GetDevoteeAPI extends DioFuctionAPI {
     }
   }
 
+  Future<Map<String, dynamic>?> fetchAllSangha() async {
+    try {
+      final response = await getAPI("sangha");
+      print('888888$response');
+      return {"statusCode": 200, "data": response["data"]["allSangha"]};
+    } catch (e) {
+      print(e);
+      return {"statusCode": 500, "data": null};
+    }
+  }
 
+  Future<List<SanghaModel>?> getAllSangha() async {
+    List<SanghaModel>? sanghas = [];
+    // WRITE THE CODE HERE TO FETCH ALL SANGHA AND RETURN THE LIST
+    Map<String, dynamic>? sanghaMap = await fetchAllSangha();
+    SanghaModel sm;
+    for (var sangha in sanghaMap?['data']) {
+      sm = SanghaModel.fromMap(sangha);
+      sanghas.add(sm);
+    }
+    print('$sanghas');
+    return sanghas;
+  }
 }

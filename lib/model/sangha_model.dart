@@ -68,7 +68,7 @@ class SanghaModel {
 
   factory SanghaModel.fromMap(Map<String, dynamic> map) {
     return SanghaModel(
-      sanghaId: map['sanghaId'] != null ? map['sanghaId'] as int : null,
+      sanghaId: map['sanghaId'] != null ? int.parse(map['sanghaId']) : null,
       sanghaName:
           map['sanghaName'] != null ? map['sanghaName'] as String : null,
       jillaSanghaName: map['jillaSanghaName'] != null
