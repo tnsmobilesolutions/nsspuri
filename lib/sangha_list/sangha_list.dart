@@ -188,9 +188,9 @@ class SanghaList {
     'Nigeria Pathachakra',
   ];
 
-  static List<String> getSuggestions(String query) {
+  static List<String> getSuggestions(String query, List<String>? allSangha) {
     List<String> matches = [];
-    matches.addAll(sangha);
+    matches.addAll(allSangha ?? []);
     matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
     return matches;
   }

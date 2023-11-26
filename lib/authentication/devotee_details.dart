@@ -376,8 +376,12 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       labelTextStr: "Sangha Name",
                       hintTextStr: "Enter Sangha Name"),
                 ),
-               suggestionsCallback: (value) {
-                  return SanghaList.getSuggestions(value);
+                suggestionsCallback: (value) async {
+                  final sanghaList = await GetDevoteeAPI().getAllSangha();
+                  final sanghaNames =
+                      sanghaList?.map((e) => e.sanghaName ?? '');
+                  return SanghaList.getSuggestions(
+                      value, sanghaNames?.toList());
                 },
                 itemBuilder: (context, String suggestion) {
                   return Row(

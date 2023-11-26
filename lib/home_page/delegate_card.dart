@@ -84,11 +84,11 @@ class _DelegateCardState extends State<DelegateCard> {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: SizedBox(
                       child: Card(
                         child: Padding(
-                          padding: EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.all(12.0),
                           child: Center(
                             child: Text(
                               RemoteConfigHelper().getAccountInfo,
@@ -132,7 +132,7 @@ class _DelegateCardState extends State<DelegateCard> {
             onPressed: () {
               launchUrlString("tel:+91${RemoteConfigHelper().helpContactNo}");
             },
-            child: Text('Help!'),
+            child: const Text('Help!'),
           ),
         ));
   }

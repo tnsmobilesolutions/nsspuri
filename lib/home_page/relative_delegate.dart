@@ -365,6 +365,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                               padding: const EdgeInsets.all(8),
                               child: IntrinsicHeight(
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Expanded(
                                       flex: 3,
@@ -381,7 +382,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                               ? Text(
                                                   "Sangha :  ${devoteedata.sangha}",
                                                   style: const TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
@@ -391,7 +392,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                               ? Text(
                                                   "Mobile  :  ${devoteedata.mobileNumber}",
                                                   style: const TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
@@ -401,7 +402,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                               ? Text(
                                                   "Gender :  ${_toCamelCase(devoteedata.gender.toString())}",
                                                   style: const TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
@@ -411,7 +412,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                               ? Text(
                                                   "DOB      :  ${devoteedata.dob}",
                                                   style: const TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
@@ -428,7 +429,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       flex: 3,
                                       child: Container(
                                         height: 130,
-                                        width: 160,
                                         child: Center(
                                           child: SfBarcodeGenerator(
                                             value: '1234',
