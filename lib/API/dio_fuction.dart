@@ -21,7 +21,7 @@ abstract class DioFuctionAPI {
           headers: {'Authorization': 'Bearer $jwttoken'},
         ),
       );
-      print('++++++:   ${response.toString()}');
+    
 
       if (response.statusCode == 200) {
         return {"statusCode": 200, "data": response.data};

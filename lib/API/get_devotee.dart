@@ -87,7 +87,30 @@ class GetDevoteeAPI extends DioFuctionAPI {
       sm = SanghaModel.fromMap(sangha);
       sanghas.add(sm);
     }
-    print('$sanghas');
+
     return sanghas;
   }
+
+  // Future<List<SanghaModel>?> getAllSangha() async {
+  //   try {
+  //     final response = await getAPI("sangha");
+  //     print('888888$response');
+
+  //     if (response["statusCode"] == 200) {
+  //       List<SanghaModel> sanghas = [];
+
+  //       for (var sangha in response["data"]["allSangha"]) {
+  //         SanghaModel sm = SanghaModel.fromMap(sangha);
+  //         sanghas.add(sm);
+  //       }
+
+  //       return sanghas;
+  //     } else {
+  //       return null; // Or handle the error in a way that suits your needs
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //     return null; // Or handle the error in a way that suits your needs
+  //   }
+  // }
 }

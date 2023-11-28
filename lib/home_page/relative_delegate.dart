@@ -386,8 +386,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
-                                              : const Text(
-                                                  "Name : Please Update your Sangha"),
+                                              : const Text(""),
                                           devoteedata.mobileNumber != null
                                               ? Text(
                                                   "Mobile  :  ${devoteedata.mobileNumber}",
