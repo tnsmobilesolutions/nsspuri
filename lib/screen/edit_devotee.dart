@@ -659,7 +659,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                               ? widget.devotee.devoteeId
                               : const Uuid().v1(),
                           createdById: widget.title == "edit"
-                              ? widget.devotee.devoteeId
+                              ? widget.devotee.createdById
                               : const Uuid().v1(),
                           emailId: widget.devotee.emailId,
                           bloodGroup: bloodGroupController,
