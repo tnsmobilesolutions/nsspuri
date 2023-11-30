@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sammilani_delegate/home_page/delegate_card.dart';
 import 'package:sammilani_delegate/home_page/know_more.dart';
-import 'package:sammilani_delegate/home_page/qrcode_scanner.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner.dart/qrcode_scanner.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner.dart/scan_success_screen.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,16 +15,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
+  String? code;
 
   final List<Widget> _pages = [
     DelegateCard(), // Remove const here
     const KnowMore(),
-    const QrCodeScanner(),
+    ScanSuccess()
   ];
 
   @override
   Widget build(BuildContext context) {
-    
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -38,7 +41,7 @@ class _HomePageState extends State<HomePage> {
               _currentIndex = index;
             });
           },
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.card_membership),
               label: 'Delegate',
