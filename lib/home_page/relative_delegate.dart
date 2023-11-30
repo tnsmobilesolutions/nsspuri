@@ -223,7 +223,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                               ),
                             ),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
                                   child: Container(
@@ -383,75 +382,68 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.all(8),
-                                child: IntrinsicHeight(
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 3,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const SizedBox(
-                                              height: 8,
-                                            ),
-                                            devoteedata.mobileNumber != null
-                                                ? Text(
-                                                    "Mobile  :  ${devoteedata.mobileNumber}",
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                : const Text(
-                                                    "Mobile : Please Update your Mobile Number"),
-                                            devoteedata.gender != null
-                                                ? Text(
-                                                    "Gender :  ${_toCamelCase(devoteedata.gender.toString())}",
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                : const Text(
-                                                    "Gender : Please Update your Gender"),
-                                            devoteedata.dob != null
-                                                ? Text(
-                                                    "DOB      :  ${devoteedata.dob}",
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                : const Text(
-                                                    "DOB : Please Update your Date of birth"),
-                                          ],
-                                        ),
-                                      ),
-                                      const VerticalDivider(
-                                        thickness: 1,
-                                        color:
-                                            Color.fromARGB(255, 198, 197, 197),
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: Container(
-                                          height: 120,
-                                          child: Center(
-                                            child: SfBarcodeGenerator(
-                                              value: '1234',
-                                              symbology: QRCode(),
-                                              showValue: false,
-                                            ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(
+                                            height: 8,
                                           ),
+                                          devoteedata.mobileNumber != null
+                                              ? Text(
+                                                  "Mobile  :  ${devoteedata.mobileNumber}",
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              : const Text(
+                                                  "Mobile : Please Update your Mobile Number"),
+                                          devoteedata.gender != null
+                                              ? Text(
+                                                  "Gender :  ${_toCamelCase(devoteedata.gender.toString())}",
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              : const Text(
+                                                  "Gender : Please Update your Gender"),
+                                          devoteedata.dob != null
+                                              ? Text(
+                                                  "DOB      :  ${devoteedata.dob}",
+                                                  style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                              : const Text(
+                                                  "DOB : Please Update your Date of birth"),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        child: SfBarcodeGenerator(
+                                          value: '1234',
+                                          symbology: QRCode(),
+                                          showValue: false,
                                         ),
-                                      )
-                                    ],
-                                  ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
