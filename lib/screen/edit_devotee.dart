@@ -424,12 +424,13 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   ),
                 ),
                 suggestionsBoxDecoration: const SuggestionsBoxDecoration(
-                    color: SuggestionBoxColor,
-                    elevation: 5,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    )),
+                  color: SuggestionBoxColor,
+                  elevation: 5,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
                 debounceDuration: const Duration(milliseconds: 400),
                 textFieldConfiguration: TextFieldConfiguration(
                   style: Theme.of(context).textTheme.displaySmall,
@@ -440,9 +441,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 ),
                 validator: (value) {
                   if ((value ?? '').isNotEmpty &&
-                      sanghaSuggestions
-                              ?.indexWhere((element) => element == value) ==
-                          -1) {
+                      ((sanghaSuggestions?.length ?? 0) > 0 &&
+                          sanghaSuggestions
+                                  ?.indexWhere((element) => element == value) ==
+                              -1)) {
                     return 'Please choose a sangha from the list';
                   }
                   return null;

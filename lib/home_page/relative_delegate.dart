@@ -103,63 +103,67 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                           width: 400,
                           height: 100,
                           child: Center(
-                            child: Stack(
-                              children: [
-                                Positioned(
-                                  child: Image.asset(
-                                    'assets/images/nsslogo.png',
-                                    scale: 30,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    child: Image.asset(
+                                      'assets/images/nsslogo.png',
+                                      scale: 30,
+                                    ),
                                   ),
-                                ),
-                                const Expanded(
-                                  flex: 1,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'JAYAGURU',
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white, // Text color
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 1,
-                                      ),
-                                      Text(
-                                        'Nilachala Saraswata Sangha, Puri',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.white, // Text color
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 2,
-                                      ),
-                                      Text(
-                                        '73RD UTKAL PRADESHIKA BHAKTA SAMMILANI',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                          color: Colors.white, // Text color
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 2,
-                                      ),
-                                      Text(
-                                        'PUNE-2024',
-                                        style: TextStyle(
+                                  const Expanded(
+                                    flex: 1,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'JAYAGURU',
+                                          style: TextStyle(
+                                            fontSize: 17,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                            color: Colors.white // Text color
-                                            ),
-                                      ),
-                                    ],
+                                            color: Colors.white, // Text color
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 1,
+                                        ),
+                                        Text(
+                                          'Nilachala Saraswata Sangha, Puri',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.white, // Text color
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text(
+                                          '73RD UTKAL PRADESHIKA BHAKTA SAMMILANI',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                            color: Colors.white, // Text color
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text(
+                                          'PUNE-2024',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color: Colors.white // Text color
+                                              ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
 
@@ -219,12 +223,12 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                               ),
                             ),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
                                   child: Container(
                                     child: devoteedata.bloodGroup ==
-                                            "Don't know"
+                                                "Don't know" ||
+                                            devoteedata.bloodGroup == null
                                         ? Container(
                                             width: 75,
                                             height: 60,
@@ -352,20 +356,36 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             const SizedBox(
                               height: 10,
                             ),
-                            devoteedata.name != null
-                                ? Text(
-                                    _toCamelCase(devoteedata.name.toString()),
-                                    style: const TextStyle(
-                                        color: Colors.deepOrange,
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                : const Text("Name : Please Update your Name"),
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: IntrinsicHeight(
+                            Column(
+                              children: [
+                                devoteedata.name != null
+                                    ? Text(
+                                        _toCamelCase(
+                                            devoteedata.name.toString()),
+                                        style: const TextStyle(
+                                            color: Colors.deepOrange,
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    : const Text(
+                                        "Name : Please Update your Name"),
+                                devoteedata.sangha != null
+                                    ? Text(
+                                        "${devoteedata.sangha}",
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    : const Text(""),
+                              ],
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Expanded(
                                       flex: 3,
@@ -378,20 +398,11 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           const SizedBox(
                                             height: 8,
                                           ),
-                                          devoteedata.sangha != null
-                                              ? Text(
-                                                  "Sangha :  ${devoteedata.sangha}",
-                                                  style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )
-                                              : const Text(""),
                                           devoteedata.mobileNumber != null
                                               ? Text(
                                                   "Mobile  :  ${devoteedata.mobileNumber}",
                                                   style: const TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
@@ -401,7 +412,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                               ? Text(
                                                   "Gender :  ${_toCamelCase(devoteedata.gender.toString())}",
                                                   style: const TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
@@ -411,7 +422,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                               ? Text(
                                                   "DOB      :  ${devoteedata.dob}",
                                                   style: const TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )
@@ -420,20 +431,15 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         ],
                                       ),
                                     ),
-                                    const VerticalDivider(
-                                      thickness: 1,
-                                      color: Color.fromARGB(255, 198, 197, 197),
-                                    ),
                                     Expanded(
                                       flex: 3,
-                                      child: Container(
-                                        height: 130,
-                                        child: Center(
-                                          child: SfBarcodeGenerator(
-                                            value: '1234',
-                                            symbology: QRCode(),
-                                            showValue: false,
-                                          ),
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 30),
+                                        child: SfBarcodeGenerator(
+                                          value: '1234',
+                                          symbology: QRCode(),
+                                          showValue: false,
                                         ),
                                       ),
                                     )
