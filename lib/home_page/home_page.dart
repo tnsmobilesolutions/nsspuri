@@ -19,9 +19,9 @@ class _HomePageState extends State<HomePage> {
   String? code;
 
   final List<Widget> _pages = [
-    DelegateCard(), // Remove const here
+    const DelegateCard(), // Remove const here
     const KnowMore(),
-    ScanSuccess()
+    const ScanSuccess()
   ];
 
   @override
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
         body: _pages[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.deepOrange,
-          backgroundColor: Color.fromARGB(255, 236, 236, 236),
+          backgroundColor: const Color.fromARGB(255, 236, 236, 236),
           currentIndex: _currentIndex,
           onTap: (index) {
             setState(() {
@@ -51,7 +51,18 @@ class _HomePageState extends State<HomePage> {
               label: 'Know More',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.qr_code_scanner),
+              icon: GestureDetector(
+                  onTap: () {
+                    _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+                      context: context,
+                      onCode: (code) {
+                        setState(() {
+                          this.code = code;
+                        });
+                      },
+                    );
+                  },
+                  child: Icon(Icons.qr_code_scanner)),
               label: 'Scan',
             ),
           ],

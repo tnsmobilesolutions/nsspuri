@@ -38,12 +38,12 @@ class _ScanFailedScreenState extends State<ScanFailedScreen> {
                         radius: 60,
                       ),
                       Positioned(
-                        left: 25,
+                        left: 20,
                         top: 20,
                         child: Icon(
-                          Icons.cancel,
+                          Icons.close,
                           size: 80,
-                            color: Color.fromARGB(255, 241, 66, 64),
+                          color: Color.fromARGB(255, 241, 66, 64),
                         ),
                       ),
                     ],
@@ -58,25 +58,46 @@ class _ScanFailedScreenState extends State<ScanFailedScreen> {
                   style: TextStyle(fontSize: 35, color: Colors.white),
                 )),
                 const SizedBox(
-                  height: 120,
+                  height: 141,
                 ),
-                Divider(
-                  thickness: 2,
-                  color: Colors.white.withOpacity(.5),
-                ),
-                TextButton(
-                  style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                   Color.fromARGB(255, 241, 66, 64),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(0)),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Colors.green;
+                        }
+                        return ButtonColor;
+                      }),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0),
+                        ),
+                      ),
                     ),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                    // Within the `FirstRoute` widget
+                    onPressed: () {
+                      _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+                        context: context,
+                        onCode: (code) {
+                          setState(() {
+                            this.code = code;
+                          });
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'DONE',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ],
