@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:sammilani_delegate/model/sangha_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String baseUrl = "https://api.nsspuri.org/";
+String baseUrl = "https://staging-api.nsspuri.org/";
 
 abstract class DioFuctionAPI {
   final dio = Dio();
