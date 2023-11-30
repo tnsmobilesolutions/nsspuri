@@ -22,6 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   final textFieldFocusNode = FocusNode();
   bool _obscured1 = true;
@@ -69,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 30,
               ),
               Form(
-                key: _form,
+                key: _formKey,
                 child: TextFormField(
                   style: Theme.of(context).textTheme.displaySmall,
                   controller: emailController,
@@ -222,6 +223,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                   onPressed: () async {
+                    if (!_formKey.currentState!.validate()) {
+                      return;
+                    }
                     try {
                       if (passwordController.text !=
                           confirmPasswordController.text) {

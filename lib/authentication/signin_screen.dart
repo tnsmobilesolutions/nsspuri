@@ -20,9 +20,9 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordTextController = TextEditingController();
   final TextEditingController _emailTextController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   bool _obscured1 = true;
   final textFieldFocusNode = FocusNode();
@@ -61,7 +61,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     onSaved: (newValue) => _emailTextController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a valid Email';
+                        return 'Please enter  Email';
                       }
                       if (!RegExp(
                               r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
@@ -153,6 +153,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         BoxDecoration(borderRadius: BorderRadius.circular(90)),
                     child: ElevatedButton(
                       onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
                         showDialog(
                           context: context,
                           barrierDismissible:

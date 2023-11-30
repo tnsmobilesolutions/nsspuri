@@ -224,7 +224,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                 Expanded(
                                   child: Container(
                                     child: devoteedata.bloodGroup ==
-                                            "Don't know"
+                                                "Don't know" ||
+                                            devoteedata.bloodGroup == null
                                         ? Container(
                                             width: 75,
                                             height: 60,
