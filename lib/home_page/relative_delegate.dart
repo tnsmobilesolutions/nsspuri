@@ -437,7 +437,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         padding:
                                             const EdgeInsets.only(left: 30),
                                         child: SfBarcodeGenerator(
-                                          value: '1234',
+                                          value: devoteedata.devoteeCode
+                                              .toString(),
                                           symbology: QRCode(),
                                           showValue: false,
                                         ),

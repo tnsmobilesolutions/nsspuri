@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
-import 'package:sammilani_delegate/home_page/home_page.dart';
-import 'package:sammilani_delegate/home_page/qr_scanner.dart/scan_failed.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class ScanSuccess extends StatefulWidget {
@@ -51,7 +49,7 @@ class _ScanSuccessState extends State<ScanSuccess> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 const Center(

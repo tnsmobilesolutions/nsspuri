@@ -1,10 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:sammilani_delegate/API/dio_fuction.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/model/sangha_model.dart';
-import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
-import 'package:http/http.dart' as http;
 
 class GetDevoteeAPI extends DioFuctionAPI {
   String baseUrl = "https://api.nsspuri.org/";

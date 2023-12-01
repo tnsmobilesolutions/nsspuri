@@ -30,7 +30,6 @@ Future<void> main() async {
       await serviceWorkerController
           .setServiceWorkerClient(AndroidServiceWorkerClient(
         shouldInterceptRequest: (request) async {
-          print(request);
           return null;
         },
       ));
@@ -53,10 +52,6 @@ class _MyAppState extends State<MyApp> {
     bool upgradePrompt = RemoteConfigHelper().getShowMandatoryUpgradePrompt;
     bool upgradeVersionAvailable =
         RemoteConfigHelper().getupdateRequiredByVersionnumber;
-
-    print(
-        "upgradePrompt --- $upgradePrompt, ----- upgradeVersionAvailable --- $upgradeVersionAvailable ");
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: appTheme,

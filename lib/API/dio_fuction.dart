@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,7 +22,6 @@ abstract class DioFuctionAPI {
           headers: {'Authorization': 'Bearer $jwttoken'},
         ),
       );
-    
 
       if (response.statusCode == 200) {
         return {"statusCode": 200, "data": response.data};
@@ -149,26 +150,25 @@ abstract class DioFuctionAPI {
         options: Options(headers: {'Authorization': 'Bearer $jwttoken'}),
       );
 
+      print("response : $response");
+
       if (response.statusCode == 200) {
         return {"statusCode": response.statusCode, "data": response.data};
       } else {
-        return {
-          "statusCode": response.statusCode,
-          "error": "Error in Post API"
-        };
+        return {"statusCode": response.statusCode, "error": "Error in put API"};
       }
     } catch (e) {
       if (e is DioException) {
         if (e.response != null) {
-          print("error message : ${e.response!.data["message"]}");
+          print("error message : ${e.response!.data["error"]}");
           return {
             "statusCode": 500,
-            "error": [e.response!.data["message"], false]
+            "error": [e.response!.data["error"], false]
           };
         } else {
           return {
             "statusCode": 500,
-            "error": [e.response!.data["message"], false]
+            "error": [e.response!.data["error"], false]
           };
           // return ['Dio error: ${e.message}', false];
         }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
+import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/home_page/delegate_card.dart';
 import 'package:sammilani_delegate/home_page/know_more.dart';
-import 'package:sammilani_delegate/home_page/qr_scanner.dart/qrcode_scanner.dart';
-import 'package:sammilani_delegate/home_page/qr_scanner.dart/scan_success_screen.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/qrcode_scanner.dart';
+import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,14 +15,41 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   String? code;
+  DevoteeModel? currentDevotee;
 
-  final List<Widget> _pages = [
-    const DelegateCard(), // Remove const here
-    const KnowMore(),
-    const ScanSuccess()
-  ];
+  List<Widget> _pages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getDevotee();
+  }
+
+  getDevotee() async {
+    final devoteeData = await GetDevoteeAPI().currentDevotee();
+    print("devotee data: $devoteeData");
+    if (devoteeData != null && devoteeData.containsKey("data")
+        // &&
+        // devoteeData["data"] != null
+        ) {
+      setState(() {
+        currentDevotee = devoteeData["data"];
+        initializePages();
+      });
+    } else {}
+  }
+
+  void initializePages() {
+    setState(() {
+      _pages = [
+        const DelegateCard(),
+        const KnowMore(),
+        if (currentDevotee?.isAllowedToScanPrasad == true)
+          const QrScannerScreen(),
+      ];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,29 +69,19 @@ class _HomePageState extends State<HomePage> {
             });
           },
           items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.card_membership),
               label: 'Delegate',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.more),
               label: 'Know More',
             ),
-            BottomNavigationBarItem(
-              icon: GestureDetector(
-                  onTap: () {
-                    _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
-                      context: context,
-                      onCode: (code) {
-                        setState(() {
-                          this.code = code;
-                        });
-                      },
-                    );
-                  },
-                  child: Icon(Icons.qr_code_scanner)),
-              label: 'Scan',
-            ),
+            if (currentDevotee?.isAllowedToScanPrasad == true)
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.qr_code_scanner),
+                label: 'Scan',
+              ),
           ],
         ),
       ),
