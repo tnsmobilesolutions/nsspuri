@@ -26,11 +26,11 @@ class GetDevoteeAPI extends DioFuctionAPI {
       final response = await getAPI("devotee/currentUser");
       print(response);
       DevoteeModel devotee =
-          DevoteeModel.fromMap(response["data"]["singleDevotee"]);
+          DevoteeModel.fromMap(response["data"]["singleDevotee"][0]);
       return {"statusCode": 200, "data": devotee};
     } catch (e) {
-      print(e);
-      return {"statusCode": 500, "data": null};
+      print("i am in current$e");
+      return {"statusCode": 500, "data": DevoteeModel()};
     }
   }
 
