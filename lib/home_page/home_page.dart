@@ -35,24 +35,30 @@ class _HomePageState extends State<HomePage> {
         ) {
       setState(() {
         currentDevotee = devoteeData["data"];
-        initializePages();
+        //initializePages();
       });
     } else {}
   }
 
-  void initializePages() {
-    setState(() {
-      _pages = [
-        const DelegateCard(),
-        const KnowMore(),
-        if (currentDevotee?.isAllowedToScanPrasad == true)
-          const QrScannerScreen(),
-      ];
-    });
-  }
+  // void initializePages() {
+  //   setState(() {
+  //     _pages = [
+  //       const DelegateCard(),
+  //       const KnowMore(),
+  //       if (currentDevotee?.isAllowedToScanPrasad == true)
+  //         const QrScannerScreen(),
+  //     ];
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    _pages = [
+      const DelegateCard(),
+      const KnowMore(),
+      if (currentDevotee?.isAllowedToScanPrasad == true)
+        const QrScannerScreen(),
+    ];
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
