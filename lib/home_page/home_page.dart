@@ -35,21 +35,9 @@ class _HomePageState extends State<HomePage> {
         ) {
       setState(() {
         currentDevotee = devoteeData["data"];
-        //initializePages();
       });
     } else {}
   }
-
-  // void initializePages() {
-  //   setState(() {
-  //     _pages = [
-  //       const DelegateCard(),
-  //       const KnowMore(),
-  //       if (currentDevotee?.isAllowedToScanPrasad == true)
-  //         const QrScannerScreen(),
-  //     ];
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
