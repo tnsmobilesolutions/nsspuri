@@ -155,21 +155,21 @@ abstract class DioFuctionAPI {
       if (response.statusCode == 200) {
         return {"statusCode": response.statusCode, "data": response.data};
       } else {
-        return {"statusCode": response.statusCode, "error": "Error in put API"};
+        return {
+          "statusCode": response.statusCode,
+          "error": "Error in put API - ${response.data}"
+        };
       }
     } catch (e) {
       if (e is DioException) {
         if (e.response != null) {
-          print("error message : ${e.response!.data["error"]}");
+          print("error : ${e.response!.data["error"]}");
           return {
             "statusCode": 500,
             "error": [e.response!.data["error"], false]
           };
         } else {
-          return {
-            "statusCode": 500,
-            "error": [e.response!.data["error"], false]
-          };
+          return {"statusCode": 500, "error": e.response!.data["error"]};
           // return ['Dio error: ${e.message}', false];
         }
       } else {

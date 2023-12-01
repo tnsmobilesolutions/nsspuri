@@ -27,7 +27,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
       context: context,
       onCode: (code) async {
         Map<String, dynamic> response =
-            await PutDevoteeAPI().updatePrasad(code ?? "");
+            await PutDevoteeAPI().updatePrasad(code.toString());
         //print("response : $response");
         //   if (response["statusCode"] == 200) {
         //     print("response : $response");
