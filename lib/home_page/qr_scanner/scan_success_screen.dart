@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/qrcode_scanner.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class ScanSuccess extends StatefulWidget {
-  const ScanSuccess({super.key});
-
+  ScanSuccess({super.key, this.successMessage});
+  String? successMessage;
   @override
   State<ScanSuccess> createState() => _ScanSuccessState();
 }
@@ -52,10 +53,13 @@ class _ScanSuccessState extends State<ScanSuccess> {
                 const SizedBox(
                   height: 40,
                 ),
-                const Center(
-                    child: Text(
-                  'Success!',
-                  style: TextStyle(fontSize: 35, color: Colors.white),
+                Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Text(
+                    widget.successMessage.toString(),
+                    style: const TextStyle(fontSize: 35, color: Colors.white),
+                  ),
                 )),
                 const SizedBox(
                   height: 141,
@@ -82,14 +86,7 @@ class _ScanSuccessState extends State<ScanSuccess> {
                     ),
                     // Within the `FirstRoute` widget
                     onPressed: () {
-                      _qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
-                        context: context,
-                        onCode: (code) {
-                          setState(() {
-                            this.code = code;
-                          });
-                        },
-                      );
+                      Navigator.pop(context);
                     },
                     child: const Text(
                       'DONE',

@@ -666,6 +666,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           emailId: widget.devotee.emailId,
                           bloodGroup: bloodGroupController,
                           name: nameController.text,
+                          devoteeCode: widget.title == "edit"
+                              ? widget.devotee.devoteeCode
+                              : 0,
                           gender: gender[genderController],
                           profilePhotoUrl: profileURL,
                           sangha: sanghaController.text,

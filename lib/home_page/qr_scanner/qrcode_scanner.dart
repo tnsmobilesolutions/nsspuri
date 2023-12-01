@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/scan_failed.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/scan_success_screen.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class QrScannerScreen extends StatefulWidget {
@@ -28,46 +30,22 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
       onCode: (code) async {
         Map<String, dynamic> response =
             await PutDevoteeAPI().updatePrasad(code.toString());
-        //print("response : $response");
-        //   if (response["statusCode"] == 200) {
-        //     print("response : $response");
-        //     setState(() {
-        //       this.code = code;
-        //     });
-        //     if (context.mounted) {
-        //       showDialog(
-        //         context: context,
-        //         builder: (context) {
-        //           return const AlertDialog(
-        //             title: Text(
-        //               "Success",
-        //               style: TextStyle(
-        //                 color: Colors.green,
-        //                 fontSize: 15,
-        //               ),
-        //             ),
-        //           );
-        //         },
-        //       );
-        //     }
-        //   } else {
-        //     if (context.mounted) {
-        //       showDialog(
-        //         context: context,
-        //         builder: (context) {
-        //           return const AlertDialog(
-        //             title: Text(
-        //               "Something went wrong !",
-        //               style: TextStyle(
-        //                 color: Colors.red,
-        //                 fontSize: 15,
-        //               ),
-        //             ),
-        //           );
-        //         },
-        //       );
-        //     }
-        //   }
+        if (response["statusCode"] == 200) {
+          setState(() {
+            this.code = code;
+          });
+          if (context.mounted) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ScanSuccess(successMessage: response["data"]["error"]);
+            }));
+          }
+        } else {
+          if (context.mounted) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ScanFailedScreen(errorMessage: response["error"][0]);
+            }));
+          }
+        }
       },
     );
   }
@@ -80,20 +58,9 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
         title: const Text('QR Scanner'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (code != null)
-              Text(
-                'Scanned Code: $code',
-                style: const TextStyle(fontSize: 18),
-              )
-            else
-              ElevatedButton(
-                onPressed: _openQrScannerDialog,
-                child: const Text('Scan QR Code'),
-              ),
-          ],
+        child: ElevatedButton(
+          onPressed: _openQrScannerDialog,
+          child: const Text('Scan QR Code'),
         ),
       ),
     );
