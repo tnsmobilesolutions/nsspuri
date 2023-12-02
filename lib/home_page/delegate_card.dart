@@ -3,6 +3,7 @@ import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
+import 'package:sammilani_delegate/home_page/card_flip.dart';
 import 'package:sammilani_delegate/home_page/relative_delegate.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
@@ -119,6 +120,7 @@ class _DelegateCardState extends State<DelegateCard> {
                       }
                     },
                   ),
+                  CardFlip()
                 ],
               ),
             ),
