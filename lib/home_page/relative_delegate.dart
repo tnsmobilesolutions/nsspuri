@@ -485,6 +485,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/screen/edit_devotee.dart';
+import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 // ignore: must_be_immutable
@@ -658,18 +660,49 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             color: Color.fromARGB(255, 255, 255, 255)),
                         child: Column(
                           children: [
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            const Center(
-                              child: Text(
-                                'DELEGATE CARD',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
+                         Row(
+                                children: [
+                                  const Expanded(
+                                    flex: 1,
+                                    child: Text(''),
+                                  ),
+                                  const Expanded(
+                                    flex: 4,
+                                    child: Center(
+                                      child: Text(
+                                        'DELEGATE CARD',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  // const SizedBox(
+                                  //   width: 50,
+                                  // ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return EditDevoteeDetailsPage(
+                                                title: "edit",
+                                                devotee: devoteedata,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(Icons.edit,
+                                          size: 20, color: IconButtonColor),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
                             const SizedBox(
                               height: 8,
                             ),
@@ -827,27 +860,12 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                         width: 400,
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'PARICHALAKA:',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(
-                                width: 60,
-                              ),
-                              Text(
-                                'SAMPADAKA:',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                          child: Text(
+                            'SAMPADAKA:',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       )
