@@ -257,10 +257,13 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (uid != null) {
                               String devoteeId = const Uuid().v1();
                               DevoteeModel newDevotee = DevoteeModel(
-                                emailId: emailController.text,
-                                uid: uid,
-                                devoteeId: devoteeId,
-                              );
+                                  emailId: emailController.text,
+                                  uid: uid,
+                                  devoteeId: devoteeId,
+                                  createdById: devoteeId,
+                                  isAdmin: false,
+                                  isAllowedToScanPrasad: false,
+                                  status: "dataSubmitted");
 
                               final response = await PostDevoteeAPI()
                                   .signupDevotee(newDevotee);
