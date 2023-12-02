@@ -886,6 +886,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                         ),
                       ),
                       Container(
+                        color: getColorByDevotee(devoteedata),
                         height: 50,
                         width: 400,
                         child: const Padding(
