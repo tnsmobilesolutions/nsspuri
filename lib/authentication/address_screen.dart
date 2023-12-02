@@ -196,6 +196,11 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                           const Duration(seconds: 1)); // Simulating a delay
                       DevoteeModel devoteeAddress = DevoteeModel(
                           devoteeId: widget.devotee.devoteeId,
+                          devoteeCode: widget.devotee.devoteeCode,
+                          isAdmin: widget.devotee.isAdmin,
+                          isAllowedToScanPrasad:
+                              widget.devotee.isAllowedToScanPrasad,
+                          updatedOn: widget.devotee.updatedOn,
                           uid: widget.devotee.uid,
                           emailId: widget.devotee.emailId,
                           createdById: widget.devotee.devoteeId,
@@ -207,7 +212,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                           dob: widget.devotee.dob,
                           mobileNumber: widget.devotee.mobileNumber,
                           status: "dataSubmitted",
-                          isAdmin: false,
+                   
                           address: AddressModel(
                               addressLine1: addressLine1Controller.text,
                               addressLine2: addressLine2Controller.text,

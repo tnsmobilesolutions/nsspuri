@@ -463,6 +463,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                                 : null;
                             DevoteeModel newDevotee = DevoteeModel(
                               devoteeId: widget.devotee.devoteeId,
+                              devoteeCode: widget.devotee.devoteeCode,
+                              isAdmin: widget.devotee.isAdmin,
+                              isAllowedToScanPrasad: widget.devotee.isAllowedToScanPrasad,
+                              updatedOn: widget.devotee.updatedOn,
                               uid: widget.devotee.uid,
                               emailId: widget.devotee.emailId,
                               createdById: widget.devotee.devoteeId,

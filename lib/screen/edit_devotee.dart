@@ -670,12 +670,14 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           devoteeCode: widget.title == "edit"
                               ? widget.devotee.devoteeCode
                               : 0,
+                          isAdmin: widget.devotee.isAdmin ?? false,
+                          isAllowedToScanPrasad:
+                              widget.devotee.isAllowedToScanPrasad ?? false,
                           gender: gender[genderController],
                           profilePhotoUrl: profileURL,
                           sangha: sanghaController.text,
                           dob: dateInputController.text,
                           mobileNumber: mobileController.text,
-                          isAdmin: widget.devotee.isAdmin ?? false,
                           createdOn: widget.devotee.createdOn,
                           status: widget.devotee.status ?? "dataSubmitted",
                           uid: widget.devotee.uid ?? "",
