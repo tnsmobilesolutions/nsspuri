@@ -54,7 +54,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
       });
   }
 
-  List gender = ["Male", "Female"];
+  List gender = ["Bhai", "Maa"];
   int genderController = 0;
 
   String? profileImage;

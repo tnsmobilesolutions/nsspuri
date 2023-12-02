@@ -67,7 +67,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     }
   }
 
-  List gender = ["Male", "Female"];
+  List gender = ["Bhai", "Maa"];
   int genderController = 0;
   String? profileURL;
 
