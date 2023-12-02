@@ -515,9 +515,10 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     } else if (devotee.isOrganizer == true) {
       return Colors.red;
     } else if (devotee.isSpeciallyAbled == true ||
-        calculateAge(DateTime.parse(devotee.dob.toString())) >= 60) {
+        calculateAge(DateTime.parse(devotee.dob ?? "2000-01-01")) >= 60) {
       return Colors.purple;
-    } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 18) {
+    } else if (calculateAge(DateTime.parse(devotee.dob ?? "2000-01-01")) <=
+        18) {
       return Colors.green;
     } else if (devotee.gender == "Male") {
       return Colors.blue;
@@ -846,8 +847,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                             FontWeight.w600,
                                                       ),
                                                     )
-                                                  : const Text(
-                                                      "Name : Please Update your Name"),
+                                                  : const Text("Name : Name"),
                                               const SizedBox(
                                                 height: 8,
                                               ),
