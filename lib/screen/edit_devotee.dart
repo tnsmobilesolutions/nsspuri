@@ -58,12 +58,13 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-    if (picked != null && picked != selectedDate)
+    if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
-        String formattedDate = DateFormat('dd MMM yyyy').format(selectedDate);
+        String formattedDate = DateFormat('y-MM-DD').format(selectedDate);
         dateInputController.text = formattedDate;
       });
+    }
   }
 
   List gender = ["Male", "Female"];
