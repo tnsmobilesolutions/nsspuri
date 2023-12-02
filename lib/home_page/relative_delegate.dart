@@ -492,6 +492,7 @@ import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 // ignore: must_be_immutable
 class RelativeDelegate extends StatefulWidget {
   RelativeDelegate({super.key, required this.devoteeData});
+
   Map<String, dynamic> devoteeData;
 
   @override
@@ -501,6 +502,41 @@ class RelativeDelegate extends StatefulWidget {
 class _RelativeDelegateState extends State<RelativeDelegate> {
   late PageController controller;
   GlobalKey<PageContainerState> key = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    controller = PageController();
+  }
+
+  Color getColorByDevotee(DevoteeModel devotee) {
+    if (devotee.isGuest == true) {
+      return Colors.yellow;
+    } else if (devotee.isOrganizer == true) {
+      return Colors.red;
+    } else if (devotee.isSpeciallyAbled == true ||
+        calculateAge(DateTime.parse(devotee.dob.toString())) >= 60) {
+      return Colors.purple;
+    } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 18) {
+      return Colors.green;
+    } else if (devotee.gender == "Male") {
+      return Colors.blue;
+    } else if (devotee.gender == "Female") {
+      return Colors.pink;
+    } else {
+      return Colors.blue;
+    }
+  }
+
+  int calculateAge(DateTime dob) {
+    DateTime now = DateTime.now();
+    int age = now.year - dob.year;
+    if (now.month < dob.month ||
+        (now.month == dob.month && now.day < dob.day)) {
+      age--;
+    }
+    return age;
+  }
 
   String _toCamelCase(String input) {
     if (input.isEmpty) {
@@ -516,12 +552,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     });
 
     return camelCaseWords.join(' ');
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller = PageController();
   }
 
   @override
@@ -576,9 +606,9 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                       Expanded(
                         flex: 1,
                         child: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.only(
+                          decoration: BoxDecoration(
+                            color: getColorByDevotee(devoteedata),
+                            borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(30.0),
                               topRight: Radius.circular(30.0),
                             ),
@@ -660,49 +690,49 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             color: Color.fromARGB(255, 255, 255, 255)),
                         child: Column(
                           children: [
-                         Row(
-                                children: [
-                                  const Expanded(
-                                    flex: 1,
-                                    child: Text(''),
-                                  ),
-                                  const Expanded(
-                                    flex: 4,
-                                    child: Center(
-                                      child: Text(
-                                        'DELEGATE CARD',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
+                            Row(
+                              children: [
+                                const Expanded(
+                                  flex: 1,
+                                  child: Text(''),
+                                ),
+                                const Expanded(
+                                  flex: 4,
+                                  child: Center(
+                                    child: Text(
+                                      'DELEGATE CARD',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ),
-                                  // const SizedBox(
-                                  //   width: 50,
-                                  // ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return EditDevoteeDetailsPage(
-                                                title: "edit",
-                                                devotee: devoteedata,
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(Icons.edit,
-                                          size: 20, color: IconButtonColor),
-                                    ),
+                                ),
+                                // const SizedBox(
+                                //   width: 50,
+                                // ),
+                                Expanded(
+                                  flex: 1,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) {
+                                            return EditDevoteeDetailsPage(
+                                              title: "edit",
+                                              devotee: devoteedata,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(Icons.edit,
+                                        size: 20, color: IconButtonColor),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
                             const SizedBox(
                               height: 8,
                             ),
