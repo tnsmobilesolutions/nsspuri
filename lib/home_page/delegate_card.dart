@@ -120,7 +120,6 @@ class _DelegateCardState extends State<DelegateCard> {
                       }
                     },
                   ),
-                  CardFlip()
                 ],
               ),
             ),
