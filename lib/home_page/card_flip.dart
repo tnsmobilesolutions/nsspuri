@@ -60,7 +60,7 @@ class _CardFlipState extends State<CardFlip> {
                 ],
                 border: Border.all(
                     width: 10, color: const Color.fromARGB(255, 233, 233, 233)),
-                color: Colors.yellow,
+                color: Colors.red,
                 borderRadius: const BorderRadius.all(Radius.circular(35))),
             child: PageView.builder(
               controller: PageController(),
@@ -78,7 +78,7 @@ class _CardFlipState extends State<CardFlip> {
                       flex: 1,
                       child: Container(
                         decoration: const BoxDecoration(
-                          color: Colors.yellow,
+                          color: Colors.red,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30.0),
                             topRight: Radius.circular(30.0),
@@ -94,7 +94,7 @@ class _CardFlipState extends State<CardFlip> {
                               'ବିଧି ନିଷେଧ',
                               style: TextStyle(
                                   fontSize: 22,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -107,7 +107,7 @@ class _CardFlipState extends State<CardFlip> {
                       height: 410,
                       width: 400,
                       decoration: const BoxDecoration(
-                        color: Colors.yellow,
+                        color: Colors.red,
                       ),
                       // ignore: prefer_const_constructors
                       child: Padding(
@@ -117,7 +117,7 @@ class _CardFlipState extends State<CardFlip> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Divider(
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,18 +125,18 @@ class _CardFlipState extends State<CardFlip> {
                                 Text(
                                   '୧.',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.normal,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'ସମ୍ମିଳନୀରେ ସର୍ବଦା ଶୁଦ୍ଧପୂତ ଓ ପବିତ୍ର ଭାବରେ ଚଳିବେ | କେହି ମାଦକ ଦ୍ରବ୍ୟ ସେବନ କରିବେ ନାହିଁ |',
+                                    'ସମ୍ମିଳନୀରେ ସର୍ବଦା ଶୁଦ୍ଧପୂତ ଓ ପବିତ୍ର ଭାବରେ ଚଳିବେ| କେହି ମାଦକ ଦ୍ରବ୍ୟ ସେବନ କରିବେ ନାହିଁ|',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -148,18 +148,18 @@ class _CardFlipState extends State<CardFlip> {
                                 Text(
                                   '୨.',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.normal,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'ସମ୍ମିଳନୀ ପରିସର ମଧ୍ୟରେ ପରନିନ୍ଦା, ପରଚର୍ଚ୍ଚା ଓ ଅବାନ୍ତର ଆଲୋଚନା କରିବେ ନିଷିଦ୍ଧ |',
+                                    'ସମ୍ମିଳନୀ ପରିସର ମଧ୍ୟରେ ପରନିନ୍ଦା, ପରଚର୍ଚ୍ଚା ଓ ଅବାନ୍ତର ଆଲୋଚନା କରିବେ ନିଷିଦ୍ଧ|',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -171,18 +171,18 @@ class _CardFlipState extends State<CardFlip> {
                                 Text(
                                   '୩.',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.normal,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'ମାତୃଜାତିର ସମ୍ମାନରେ ବାଧା ପ୍ରଦାନ କରିବେ ନାହିଁ |',
+                                    'ମାତୃଜାତିର ସମ୍ମାନରେ ବାଧା ପ୍ରଦାନ କରିବେ ନାହିଁ|',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -194,18 +194,18 @@ class _CardFlipState extends State<CardFlip> {
                                 Text(
                                   '૪.',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.normal,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'କୌଣସି ଆଦର୍ଶ ହାନୀକାର କାର୍ଯ୍ୟ ଦେଖିଲେ ବା ଶୁଣିଲେ ସମ୍ମିଳନୀ କାର୍ଯ୍ୟାଳୟରେ ଜଣାଇବେ |',
+                                    'କୌଣସି ଆଦର୍ଶ ହାନୀକାର କାର୍ଯ୍ୟ ଦେଖିଲେ ବା ଶୁଣିଲେ ସମ୍ମିଳନୀ କାର୍ଯ୍ୟାଳୟରେ ଜଣାଇବେ|',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -217,18 +217,18 @@ class _CardFlipState extends State<CardFlip> {
                                 Text(
                                   '୫.',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.normal,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'ସୁନାଗହଣା ଆଦି ମୂଲ୍ୟବାନ ଦ୍ରବ୍ୟ ସାଙ୍ଗରେ ଆଣିବେ ନାହଁ |',
+                                    'ସୁନାଗହଣା ଆଦି ମୂଲ୍ୟବାନ ଦ୍ରବ୍ୟ ସାଙ୍ଗରେ ଆଣିବେ ନାହଁ|',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -240,18 +240,18 @@ class _CardFlipState extends State<CardFlip> {
                                 Text(
                                   '୬.',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 22,
                                     fontWeight: FontWeight.normal,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 Expanded(
                                   child: Text(
                                     'କ୍ୟାମ୍ପରେ ଟେପ ରେକର୍ଡର ବ୍ୟବହାର ନିଷିଦ୍ଧ|',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.normal,
-                                      color: Colors.black,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -262,7 +262,7 @@ class _CardFlipState extends State<CardFlip> {
                       ),
                     ),
                     Divider(
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                     Container(
                       height: 50,
@@ -270,7 +270,7 @@ class _CardFlipState extends State<CardFlip> {
                       child: Center(
                           child: Text(
                         'ହଜିଯାଇଥିଲେ ଯୋଗାଯୋଗ କରନ୍ତୁ 7738261091',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       )),
                     )
                   ],
