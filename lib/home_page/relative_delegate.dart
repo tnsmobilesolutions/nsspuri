@@ -872,7 +872,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       Expanded(
                                         flex: 4,
                                         child: SfBarcodeGenerator(
-                                          value: '1234',
+                                          value: devoteedata.devoteeCode
+                                              .toString(),
                                           symbology: QRCode(),
                                           showValue: false,
                                         ),
