@@ -9,6 +9,7 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_flip_card/flutter_flip_card.dart';
 
 class DelegateCard extends StatefulWidget {
   const DelegateCard({super.key});
@@ -21,6 +22,8 @@ DateTime sammilaniDate = DateTime(2024, 2, 23);
 int _currentIndex = 0;
 
 class _DelegateCardState extends State<DelegateCard> {
+  final con = FlipCardController();
+
   @override
   Widget build(BuildContext context) {
     Duration timeUntilSammilani = sammilaniDate.difference(DateTime.now());
@@ -100,24 +103,42 @@ class _DelegateCardState extends State<DelegateCard> {
                       ),
                     ),
                   ),
-                  FutureBuilder(
-                    future: GetDevoteeAPI().devoteeWithRelatives(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        if (snapshot.data["statusCode"] == 200) {
-                          return RelativeDelegate(devoteeData: snapshot.data);
-                        } else {
-                          return const Column(
-                            children: [
-                              Text("404 Error"),
-                            ],
+                  FlipCard(
+                    rotateSide: RotateSide.right,
+                    onTapFlipping: true,
+                    axis: FlipAxis.vertical,
+                    controller: con,
+                    frontWidget: FutureBuilder(
+                      future: GetDevoteeAPI().devoteeWithRelatives(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
+                        } else {
+                          if (snapshot.data["statusCode"] == 200) {
+                            return RelativeDelegate(devoteeData: snapshot.data);
+                          } else {
+                            return const Column(
+                              children: [
+                                Text("404 Error"),
+                              ],
+                            );
+                          }
                         }
-                      }
+                      },
+                    ),
+                    backWidget: CardFlip(),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    child: const Text('Flip Right'),
+                    onPressed: () {
+                      // Flip the card programmatically
+                      con.flipcard();
                     },
                   ),
                 ],

@@ -63,8 +63,6 @@ class _CardFlipState extends State<CardFlip> {
                 color: Colors.red,
                 borderRadius: const BorderRadius.all(Radius.circular(35))),
             child: PageView.builder(
-              controller: PageController(),
-
               // shrinkWrap: true,
               itemBuilder: (
                 BuildContext context,
