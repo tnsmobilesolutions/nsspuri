@@ -81,7 +81,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
       return const Center(child: Text("No data"));
     }
     return SizedBox(
-      height: 578,
+      height: MediaQuery.of(context).size.height / 1.2,
       child: PageIndicatorContainer(
         length: devotees.length,
         align: IndicatorAlign.bottom,
