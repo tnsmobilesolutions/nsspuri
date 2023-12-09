@@ -134,13 +134,6 @@ class _DelegateCardState extends State<DelegateCard> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(
-                    child: const Text('Flip Right'),
-                    onPressed: () {
-                      // Flip the card programmatically
-                      con.flipcard();
-                    },
-                  ),
                 ],
               ),
             ),
