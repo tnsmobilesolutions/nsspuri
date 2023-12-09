@@ -39,7 +39,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   String? bloodGroupController;
   DateTime selectedDate = DateTime.now();
   List<String>? sanghaSuggestions = [];
-  bool? value = false;
+  bool? parichayaPatraValue = false;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -447,7 +447,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         children: [
                           //SizedBox
                           const Text(
-                            'Has Parichaya Patra?',
+                            'Parichaya Patra',
                             style: TextStyle(fontSize: 17.0),
                           ), //Text
                           //SizedBox
@@ -456,10 +456,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                             scale: 1.5,
                             child: Checkbox(
                               activeColor: Colors.orange,
-                              value: value,
+                              value: parichayaPatraValue,
                               onChanged: (bool? value) {
                                 setState(() {
-                                  this.value = value;
+                                  this.parichayaPatraValue = value;
                                 });
                               },
                             ),
@@ -501,6 +501,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                                     previewImage as XFile, nameController.text)
                                 : null;
                             DevoteeModel newDevotee = DevoteeModel(
+                              hasParichayaPatra: parichayaPatraValue,
+                              createdOn: widget.devotee.createdOn,
                               devoteeId: widget.devotee.devoteeId,
                               devoteeCode: widget.devotee.devoteeCode,
                               isAdmin: widget.devotee.isAdmin,

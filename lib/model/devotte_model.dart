@@ -115,68 +115,120 @@ class DevoteeModel {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'devoteeId': devoteeId,
-      'devoteeCode': devoteeCode,
-      'name': name,
-      'emailId': emailId,
-      'mobileNumber': mobileNumber,
-      'bloodGroup': bloodGroup,
-      'profilePhotoUrl': profilePhotoUrl,
-      'gender': gender,
-      'sangha': sangha,
-      'uid': uid,
-      'isGuest': isGuest,
-      'isOrganizer': isOrganizer,
-      'isSpeciallyAbled': isSpeciallyAbled,
-      'dob': dob,
-      'isKYDVerified': isKYDVerified,
-      'isAllowedToScanPrasad': isAllowedToScanPrasad,
-      'isApproved': isApproved,
-      'isAdmin': isAdmin,
-      'isGruhasanaApproved': isGruhasanaApproved,
-      'createdOn': createdOn,
-      'updatedOn': updatedOn,
-      'status': status,
-      'createdById': createdById,
-      'hasParichayaPatra': hasParichayaPatra,
-      'address': address?.toMap(),
-    };
+    final result = <String, dynamic>{};
+  
+    if(devoteeId != null){
+      result.addAll({'devoteeId': devoteeId});
+    }
+    if(devoteeCode != null){
+      result.addAll({'devoteeCode': devoteeCode});
+    }
+    if(name != null){
+      result.addAll({'name': name});
+    }
+    if(emailId != null){
+      result.addAll({'emailId': emailId});
+    }
+    if(mobileNumber != null){
+      result.addAll({'mobileNumber': mobileNumber});
+    }
+    if(bloodGroup != null){
+      result.addAll({'bloodGroup': bloodGroup});
+    }
+    if(profilePhotoUrl != null){
+      result.addAll({'profilePhotoUrl': profilePhotoUrl});
+    }
+    if(gender != null){
+      result.addAll({'gender': gender});
+    }
+    if(sangha != null){
+      result.addAll({'sangha': sangha});
+    }
+    if(uid != null){
+      result.addAll({'uid': uid});
+    }
+    if(isGuest != null){
+      result.addAll({'isGuest': isGuest});
+    }
+    if(isOrganizer != null){
+      result.addAll({'isOrganizer': isOrganizer});
+    }
+    if(isSpeciallyAbled != null){
+      result.addAll({'isSpeciallyAbled': isSpeciallyAbled});
+    }
+    if(dob != null){
+      result.addAll({'dob': dob});
+    }
+    if(isKYDVerified != null){
+      result.addAll({'isKYDVerified': isKYDVerified});
+    }
+    if(isAllowedToScanPrasad != null){
+      result.addAll({'isAllowedToScanPrasad': isAllowedToScanPrasad});
+    }
+    if(isApproved != null){
+      result.addAll({'isApproved': isApproved});
+    }
+    if(isAdmin != null){
+      result.addAll({'isAdmin': isAdmin});
+    }
+    if(isGruhasanaApproved != null){
+      result.addAll({'isGruhasanaApproved': isGruhasanaApproved});
+    }
+    if(createdOn != null){
+      result.addAll({'createdOn': createdOn});
+    }
+    if(updatedOn != null){
+      result.addAll({'updatedOn': updatedOn});
+    }
+    if(status != null){
+      result.addAll({'status': status});
+    }
+    if(createdById != null){
+      result.addAll({'createdById': createdById});
+    }
+    if(hasParichayaPatra != null){
+      result.addAll({'hasParichayaPatra': hasParichayaPatra});
+    }
+    if(address != null){
+      result.addAll({'address': address!.toMap()});
+    }
+  
+    return result;
   }
 
   factory DevoteeModel.fromMap(Map<String, dynamic> map) {
     return DevoteeModel(
-      devoteeId: map['devoteeId'] != null ? map['devoteeId'] as String : null,
-      devoteeCode: map['devoteeCode'] != null ? map['devoteeCode'] as int : null,
-      name: map['name'] != null ? map['name'] as String : null,
-      emailId: map['emailId'] != null ? map['emailId'] as String : null,
-      mobileNumber: map['mobileNumber'] != null ? map['mobileNumber'] as String : null,
-      bloodGroup: map['bloodGroup'] != null ? map['bloodGroup'] as String : null,
-      profilePhotoUrl: map['profilePhotoUrl'] != null ? map['profilePhotoUrl'] as String : null,
-      gender: map['gender'] != null ? map['gender'] as String : null,
-      sangha: map['sangha'] != null ? map['sangha'] as String : null,
-      uid: map['uid'] != null ? map['uid'] as String : null,
-      isGuest: map['isGuest'] != null ? map['isGuest'] as bool : null,
-      isOrganizer: map['isOrganizer'] != null ? map['isOrganizer'] as bool : null,
-      isSpeciallyAbled: map['isSpeciallyAbled'] != null ? map['isSpeciallyAbled'] as bool : null,
-      dob: map['dob'] != null ? map['dob'] as String : null,
-      isKYDVerified: map['isKYDVerified'] != null ? map['isKYDVerified'] as bool : null,
-      isAllowedToScanPrasad: map['isAllowedToScanPrasad'] != null ? map['isAllowedToScanPrasad'] as bool : null,
-      isApproved: map['isApproved'] != null ? map['isApproved'] as bool : null,
-      isAdmin: map['isAdmin'] != null ? map['isAdmin'] as bool : null,
-      isGruhasanaApproved: map['isGruhasanaApproved'] != null ? map['isGruhasanaApproved'] as bool : null,
-      createdOn: map['createdOn'] != null ? map['createdOn'] as String : null,
-      updatedOn: map['updatedOn'] != null ? map['updatedOn'] as String : null,
-      status: map['status'] != null ? map['status'] as String : null,
-      createdById: map['createdById'] != null ? map['createdById'] as String : null,
-      hasParichayaPatra: map['hasParichayaPatra'] != null ? map['hasParichayaPatra'] as bool : null,
-      address: map['address'] != null ? AddressModel.fromMap(map['address'] as Map<String,dynamic>) : null,
+      devoteeId: map['devoteeId'],
+      devoteeCode: map['devoteeCode']?.toInt(),
+      name: map['name'],
+      emailId: map['emailId'],
+      mobileNumber: map['mobileNumber'],
+      bloodGroup: map['bloodGroup'],
+      profilePhotoUrl: map['profilePhotoUrl'],
+      gender: map['gender'],
+      sangha: map['sangha'],
+      uid: map['uid'],
+      isGuest: map['isGuest'],
+      isOrganizer: map['isOrganizer'],
+      isSpeciallyAbled: map['isSpeciallyAbled'],
+      dob: map['dob'],
+      isKYDVerified: map['isKYDVerified'],
+      isAllowedToScanPrasad: map['isAllowedToScanPrasad'],
+      isApproved: map['isApproved'],
+      isAdmin: map['isAdmin'],
+      isGruhasanaApproved: map['isGruhasanaApproved'],
+      createdOn: map['createdOn'],
+      updatedOn: map['updatedOn'],
+      status: map['status'],
+      createdById: map['createdById'],
+      hasParichayaPatra: map['hasParichayaPatra'],
+      address: map['address'] != null ? AddressModel.fromMap(map['address']) : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory DevoteeModel.fromJson(String source) => DevoteeModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory DevoteeModel.fromJson(String source) => DevoteeModel.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -184,10 +236,10 @@ class DevoteeModel {
   }
 
   @override
-  bool operator ==(covariant DevoteeModel other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
   
-    return 
+    return other is DevoteeModel &&
       other.devoteeId == devoteeId &&
       other.devoteeCode == devoteeCode &&
       other.name == name &&
