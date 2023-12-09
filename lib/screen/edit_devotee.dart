@@ -169,10 +169,11 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       addressLine1Controller.text = widget.devotee.address?.addressLine1 ?? "";
       addressLine2Controller.text = widget.devotee.address?.addressLine2 ?? "";
       cityController.text = widget.devotee.address?.city ?? "";
-      stateController.text = widget.devotee.address?.state ?? "";
+      stateController.text = widget.devotee.address?.state ?? "Odisha";
       postalCodeController.text =
           widget.devotee.address?.postalCode.toString() ?? "";
-      countryController.text = widget.devotee.address?.country ?? "";
+      countryController.text = widget.devotee.address?.country ?? "India";
+      parichayaPatraValue = widget.devotee.hasParichayaPatra ?? false;
     }
   }
 

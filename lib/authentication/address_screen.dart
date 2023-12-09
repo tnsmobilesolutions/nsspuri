@@ -25,6 +25,13 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
   final postalCodeController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    stateController.text = "Odisha";
+    countryController.text = "India";
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
@@ -213,9 +220,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                           mobileNumber: widget.devotee.mobileNumber,
                           status: widget.devotee.status,
                           createdOn: widget.devotee.createdOn,
-                          
-                   hasParichayaPatra: widget.devotee.hasParichayaPatra,
-
+                          hasParichayaPatra: widget.devotee.hasParichayaPatra,
                           address: AddressModel(
                               addressLine1: addressLine1Controller.text,
                               addressLine2: addressLine2Controller.text,
