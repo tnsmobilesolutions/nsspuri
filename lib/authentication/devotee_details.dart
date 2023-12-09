@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
@@ -75,9 +76,24 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
 
   void selectImage(ImageSource source) async {
     XFile? pickedFile = await ImagePicker().pickImage(source: source);
-    setState(() {
-      previewImage = pickedFile;
-    });
+
+    if (pickedFile != null) {
+      // Crop the picked image
+      XFile? croppedFile = await cropImage(pickedFile);
+
+      // Update the state with the cropped image
+      setState(() {
+        previewImage = croppedFile;
+      });
+    }
+  }
+
+  Future<XFile?> cropImage(XFile pickedFile) async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: pickedFile.path,
+    );
+
+    return croppedFile != null ? XFile(croppedFile.path) : null;
   }
 
   void showPhotoOptions() {
