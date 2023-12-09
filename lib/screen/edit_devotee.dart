@@ -51,7 +51,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   // bool _validate = false;
   // bool _validate1 = false;
   List<String>? sanghaSuggestions = [];
-  bool? value = false;
+  bool? parichayaPatraValue = false;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -63,7 +63,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
-        String formattedDate = DateFormat('yy-MM-DD').format(selectedDate);
+        String formattedDate = DateFormat('y-MM-dd').format(selectedDate);
         dateInputController.text = formattedDate;
       });
     }
@@ -523,10 +523,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                       scale: 1.5,
                       child: Checkbox(
                         activeColor: Colors.orange,
-                        value: value,
+                        value: parichayaPatraValue,
                         onChanged: (bool? value) {
                           setState(() {
-                            this.value = value;
+                            this.parichayaPatraValue = value;
                           });
                         },
                       ),
@@ -731,6 +731,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           status: widget.devotee.status ?? "dataSubmitted",
                           uid: widget.devotee.uid ?? "",
                           updatedOn: DateTime.now().toString(),
+                          hasParichayaPatra: widget.devotee.hasParichayaPatra ??
+                              parichayaPatraValue,
+                          isSpeciallyAbled:
+                              widget.devotee.isSpeciallyAbled ?? false,
                           address: AddressModel(
                               addressLine2: addressLine2Controller.text,
                               addressLine1: addressLine1Controller.text,

@@ -1,7 +1,7 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:sammilani_delegate/home_page/card_flip.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
@@ -19,6 +19,7 @@ class RelativeDelegate extends StatefulWidget {
 
 class _RelativeDelegateState extends State<RelativeDelegate> {
   late PageController controller;
+  final con = FlipCardController();
   GlobalKey<PageContainerState> key = GlobalKey();
 
   @override
@@ -79,307 +80,327 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     if (devotees.isEmpty) {
       return const Center(child: Text("No data"));
     }
-
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 12, right: 12),
-        child: Container(
-          height: 550,
-          decoration: BoxDecoration(
-              boxShadow: const [
-                BoxShadow(
-                  color: Color.fromARGB(255, 194, 202, 218),
-                  spreadRadius: 8,
-                  blurRadius: 8,
-                ),
-              ],
-              border: Border.all(
-                  width: 10, color: const Color.fromARGB(255, 233, 233, 233)),
-              borderRadius: const BorderRadius.all(Radius.circular(35))),
-          child: PageIndicatorContainer(
-            length: devotees.length,
-            align: IndicatorAlign.bottom,
-            indicatorSpace: 10.0,
-            padding: const EdgeInsets.all(10),
-            indicatorColor: Colors.red,
-            indicatorSelectorColor: Colors.red,
-            shape: IndicatorShape.circle(size: 8),
-            child: PageView.builder(
-              itemCount: devotees.length,
-              controller: PageController(),
-
-              // shrinkWrap: true,
-              itemBuilder: (
-                BuildContext context,
-                int index,
-              ) {
-                DevoteeModel devoteedata =
-                    DevoteeModel.fromMap(devotees[index]);
-
-                // DevoteeModel singledevotee =
-                //     DevoteeModel.fromMap(devotees[index]);
-                return Column(
-                  children: [
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              child: Image.asset(
-                                'assets/images/nsslogo.png',
-                                scale: 35,
-                              ),
-                            ),
-                            const Expanded(
-                              flex: 1,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'JAYAGURU',
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white, // Text color
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 1,
-                                  ),
-                                  Text(
-                                    'Nilachala Saraswata Sangha, Puri',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.white, // Text color
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(
-                                    '73RD UTKAL PRADESHIKA BHAKTA SAMMILANI',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: Colors.white, // Text color
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(
-                                    'PUNE-2024',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        color: Colors.white // Text color
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 410,
-                      width: 400,
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 255, 255, 255)),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              const Expanded(
-                                flex: 1,
-                                child: Text(''),
-                              ),
-                              const Expanded(
-                                flex: 4,
-                                child: Center(
-                                  child: Text(
-                                    'DELEGATE CARD',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // const SizedBox(
-                              //   width: 50,
+    return SizedBox(
+      height: 578,
+      child: PageIndicatorContainer(
+        length: devotees.length,
+        align: IndicatorAlign.bottom,
+        indicatorSpace: 10.0,
+        // padding: const EdgeInsets.all(30),
+        indicatorColor: Colors.blueAccent,
+        indicatorSelectorColor: Colors.white,
+        shape: IndicatorShape.circle(size: 8),
+        child: PageView.builder(
+            itemCount: devotees.length,
+            controller: PageController(),
+            itemBuilder: (
+              BuildContext context,
+              int index,
+            ) {
+              DevoteeModel devoteedata = DevoteeModel.fromMap(devotees[index]);
+              return FlipCard(
+                rotateSide: RotateSide.right,
+                onTapFlipping: true,
+                axis: FlipAxis.vertical,
+                controller: con,
+                backWidget: CardFlip(color: getColorByDevotee(devoteedata)),
+                frontWidget: Center(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 12, right: 12),
+                    child: Container(
+                        height: MediaQuery.of(context).size.height / 1.3,
+                        decoration: BoxDecoration(
+                            color: getColorByDevotee(devoteedata),
+                            boxShadow: const [
+                              // BoxShadow(
+                              //   color: getColorByDevotee(devoteedata),
+                              //   spreadRadius: 8,
+                              //   blurRadius: 8,
                               // ),
-                              Expanded(
-                                flex: 1,
-                                child: IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) {
-                                          return EditDevoteeDetailsPage(
-                                            title: "edit",
-                                            devotee: devoteedata,
-                                          );
-                                        },
+                            ],
+                            border: Border.all(
+                                width: 10,
+                                color:
+                                    const Color.fromARGB(255, 233, 233, 233)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(35))),
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                      child: Image.asset(
+                                        'assets/images/nsslogo.png',
+                                        scale: 35,
                                       ),
-                                    );
-                                  },
-                                  icon: const Icon(Icons.edit,
-                                      size: 20, color: IconButtonColor),
+                                    ),
+                                    const Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'JAYAGURU',
+                                          style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white, // Text color
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 1,
+                                        ),
+                                        Text(
+                                          'Nilachala Saraswata Sangha, Puri',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.white, // Text color
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text(
+                                          '73RD UTKAL PRADESHIKA BHAKTA SAMMILANI',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                            color: Colors.white, // Text color
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text(
+                                          'PUNE-2024',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              color: Colors.white // Text color
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Center(
-                            child: Row(
-                              children: [
-                                const SizedBox(
-                                  width: 28,
-                                ),
-                                Container(
-                                  child: devoteedata.bloodGroup ==
-                                              "Don't know" ||
-                                          devoteedata.bloodGroup == null
-                                      ? Container(
-                                          width: 75,
-                                          height: 60,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.rectangle,
-                                          ),
-                                        )
-                                      : Stack(
-                                          children: [
-                                            Container(
-                                              width: 75,
-                                              height: 60,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.rectangle,
-                                                image: DecorationImage(
-                                                  fit: BoxFit.fill,
-                                                  image: AssetImage(
-                                                      'assets/images/blood.png'),
-                                                ),
-                                              ),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 1.8,
+                              width: MediaQuery.of(context).size.width / 1.1,
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 70),
+                                    child: Row(
+                                      children: [
+                                        // Expanded(child: Text('')),
+
+                                        const Expanded(
+                                          child: Text(
+                                            'DELEGATE CARD',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
                                             ),
-                                            Positioned(
-                                              top: 7,
-                                              left: 0,
-                                              child: SizedBox(
-                                                width: 75,
-                                                height: 60,
-                                                child: Center(
-                                                  child: Text(
-                                                    "${devoteedata.bloodGroup}",
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Color.fromARGB(
-                                                          255, 255, 255, 255),
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                          ),
+                                        ),
+                                        // const SizedBox(
+                                        //   width: 50,
+                                        // ),
+                                        IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return EditDevoteeDetailsPage(
+                                                    title: "edit",
+                                                    devotee: devoteedata,
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                          icon: const Icon(Icons.edit,
+                                              size: 20, color: IconButtonColor),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Center(
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(
+                                          width: 28,
+                                        ),
+                                        Container(
+                                          child: devoteedata.bloodGroup ==
+                                                      "Don't know" ||
+                                                  devoteedata.bloodGroup == null
+                                              ? Container(
+                                                  width: 75,
+                                                  height: 60,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.rectangle,
+                                                  ),
+                                                )
+                                              : Stack(
+                                                  children: [
+                                                    Container(
+                                                      width: 75,
+                                                      height: 60,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        shape:
+                                                            BoxShape.rectangle,
+                                                        image: DecorationImage(
+                                                          fit: BoxFit.fill,
+                                                          image: AssetImage(
+                                                              'assets/images/blood.png'),
+                                                        ),
+                                                      ),
                                                     ),
+                                                    Positioned(
+                                                      top: 7,
+                                                      left: 0,
+                                                      child: SizedBox(
+                                                        width: 75,
+                                                        height: 60,
+                                                        child: Center(
+                                                          child: Text(
+                                                            "${devoteedata.bloodGroup}",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 14,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                          // Return an empty Container if the condition is false
+                                        ),
+                                        Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Positioned(
+                                              child: Container(
+                                                height: 170,
+                                                width: 130,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: const Color.fromARGB(
+                                                        255, 212, 212, 212),
+                                                    width: 1,
+                                                  ),
+                                                  shape: BoxShape
+                                                      .rectangle, // This makes the container circular
+                                                  image: DecorationImage(
+                                                    fit: BoxFit.cover,
+                                                    image: NetworkImage(
+                                                        devoteedata
+                                                            .profilePhotoUrl
+                                                            .toString()),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ],
                                         ),
-                                  // Return an empty Container if the condition is false
-                                ),
-                                Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Positioned(
-                                      child: Container(
-                                        height: 170,
-                                        width: 130,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: const Color.fromARGB(
-                                                255, 212, 212, 212),
-                                            width: 1,
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  devoteedata.name != null
+                                      ? Text(
+                                          _toCamelCase(
+                                                  devoteedata.name.toString())
+                                              .toUpperCase(),
+                                          style: const TextStyle(
+                                            color: Colors.deepOrange,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          shape: BoxShape
-                                              .rectangle, // This makes the container circular
-                                          image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(devoteedata
-                                                .profilePhotoUrl
-                                                .toString()),
-                                          ),
+                                        )
+                                      : const Text("Name : Name"),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      devoteedata.sangha != null
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10),
+                                              child: Text(
+                                                "${devoteedata.sangha}",
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            )
+                                          : const Text(""),
+                                      Container(
+                                        padding: const EdgeInsets.all(16.0),
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                4.8,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3,
+                                        child: SfBarcodeGenerator(
+                                          value: devoteedata.devoteeCode
+                                              .toString(),
+                                          symbology: QRCode(),
+                                          showValue: false,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          devoteedata.name != null
-                              ? Text(
-                                  _toCamelCase(devoteedata.name.toString())
-                                      .toUpperCase(),
-                                  style: const TextStyle(
-                                    color: Colors.deepOrange,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                    ],
                                   ),
-                                )
-                              : const Text("Name : Name"),
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Row(
+                                ],
+                              ),
+                            ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                devoteedata.sangha != null
-                                    ? Expanded(
-                                        child: Text(
-                                          "${devoteedata.sangha}",
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      )
-                                    : const Text(""),
-                                Expanded(
-                                  child: Container(
-                                    height: 140,
-                                    width: 100,
-                                    child: SfBarcodeGenerator(
-                                      value: devoteedata.devoteeCode.toString(),
-                                      symbology: QRCode(),
-                                      showValue: false,
-                                    ),
+                                Padding(
+                                  padding: EdgeInsets.all(15.0),
+                                  child: Text(
+                                    'SAMPADAK:',
+                                    style: TextStyle(color: Colors.white),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            'SAMPADAK:',
-                            style: TextStyle(color: Colors.white),
-                          )),
-                    )
-                  ],
-                );
-              },
-            ),
-          ),
-        ),
+                          ],
+                        )),
+                  ),
+                ),
+              );
+            }),
       ),
     );
   }

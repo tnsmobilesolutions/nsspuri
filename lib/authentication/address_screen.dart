@@ -211,8 +211,11 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                           sangha: widget.devotee.sangha,
                           dob: widget.devotee.dob,
                           mobileNumber: widget.devotee.mobileNumber,
-                          status: "dataSubmitted",
-                   
+                          status: widget.devotee.status,
+                          createdOn: widget.devotee.createdOn,
+                          
+                   hasParichayaPatra: widget.devotee.hasParichayaPatra,
+
                           address: AddressModel(
                               addressLine1: addressLine1Controller.text,
                               addressLine2: addressLine2Controller.text,
