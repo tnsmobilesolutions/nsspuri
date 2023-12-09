@@ -39,6 +39,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   String? bloodGroupController;
   DateTime selectedDate = DateTime.now();
   List<String>? sanghaSuggestions = [];
+  bool? value = false;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -270,55 +271,47 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         const Text(
                           'Gender',
                         ),
-                        Column(
+                        Row(
                           children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 1,
-                                  child: RadioListTile(
-                                    value: 0,
-                                    groupValue: genderController,
-                                    title: Text(
-                                      "Male",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
-                                    onChanged: (newValue) => setState(
-                                        () => genderController = newValue ?? 0),
-                                    activeColor: RadioButtonColor,
-                                    // Set the unselected color to blue
-                                    selectedTileColor:
-                                        RadioButtonColor, // Set the selected color
-                                    selected: false,
-                                  ),
+                            Expanded(
+                              flex: 1,
+                              child: RadioListTile(
+                                value: 0,
+                                groupValue: genderController,
+                                title: Text(
+                                  "Male",
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: RadioListTile(
-                                    value: 1,
-                                    groupValue: genderController,
+                                onChanged: (newValue) => setState(
+                                    () => genderController = newValue ?? 0),
+                                activeColor: RadioButtonColor,
+                                // Set the unselected color to blue
+                                selectedTileColor:
+                                    RadioButtonColor, // Set the selected color
+                                selected: false,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: RadioListTile(
+                                value: 1,
+                                groupValue: genderController,
 
-                                    title: Text(
-                                      "Female",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                    ),
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        genderController = newValue ?? 0;
-                                      });
-                                    },
-                                    activeColor: RadioButtonColor,
-                                    // Set the unselected color to blue
-                                    selectedTileColor:
-                                        RadioButtonColor, // Set the selected color
-                                    selected: false,
-                                  ),
+                                title: Text(
+                                  "Female",
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                 ),
-                              ],
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    genderController = newValue ?? 0;
+                                  });
+                                },
+                                activeColor: RadioButtonColor,
+                                // Set the unselected color to blue
+                                selectedTileColor:
+                                    RadioButtonColor, // Set the selected color
+                                selected: false,
+                              ),
                             ),
                           ],
                         ),
@@ -443,6 +436,36 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           sanghaController.text = suggestion;
                         });
                       },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          //SizedBox
+                          const Text(
+                            'Has Parichaya Patra?',
+                            style: TextStyle(fontSize: 17.0),
+                          ), //Text
+                          //SizedBox
+                          /** Checkbox Widget **/
+                          Transform.scale(
+                            scale: 1.5,
+                            child: Checkbox(
+                              activeColor: Colors.orange,
+                              value: value,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  this.value = value;
+                                });
+                              },
+                            ),
+                          ), //Checkbox
+                        ], //<Widget>[]
+                      ),
                     ),
                     const SizedBox(
                       height: 40,
