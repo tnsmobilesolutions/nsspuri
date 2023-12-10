@@ -175,7 +175,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
 
   void initState() {
     dateInputController.text = ""; 
-    
     super.initState();
   }
 

@@ -208,10 +208,14 @@ class _SignInScreenState extends State<SignInScreen> {
                                         'Please check your Email and Password.')));
                           }
                         } catch (e) {
-                          Navigator.of(context)
-                              .pop(); // Close the circular progress indicator
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())));
+                          Navigator.of(context).pop();
+                          if (e.toString().contains("Null")) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("No Devotee Found")));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+                          }
                         }
                       },
                       style: ButtonStyle(

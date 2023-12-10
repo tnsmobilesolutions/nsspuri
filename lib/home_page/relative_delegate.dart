@@ -33,12 +33,20 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
       return Colors.yellow;
     } else if (devotee.isOrganizer == true) {
       return Colors.red;
-    } else if (devotee.isSpeciallyAbled == true ||
-        calculateAge(DateTime.parse(devotee.dob ?? "2000-01-01")) >= 60) {
-      return Colors.purple;
-    } else if (calculateAge(DateTime.parse(devotee.dob ?? "2000-01-01")) <=
-        18) {
-      return Colors.green;
+    } else if (devotee.dob != "" && devotee.dob != null) {
+      if (isValidDateFormat(devotee.dob.toString())) {
+        if (devotee.isSpeciallyAbled == true ||
+            calculateAge(DateTime.parse(devotee.dob.toString())) >= 60) {
+          return Colors.purple;
+        } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <=
+            18) {
+          return Colors.green;
+        } else {
+          return Colors.blue;
+        }
+      } else {
+        return Colors.blue;
+      }
     } else if (devotee.gender == "Male") {
       return Colors.blue;
     } else if (devotee.gender == "Female") {
@@ -46,6 +54,12 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     } else {
       return Colors.blue;
     }
+  }
+
+  bool isValidDateFormat(String date) {
+    // Check if the date is in the format yyyy-mm-dd
+    final RegExp dateFormat = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+    return dateFormat.hasMatch(date);
   }
 
   int calculateAge(DateTime dob) {
