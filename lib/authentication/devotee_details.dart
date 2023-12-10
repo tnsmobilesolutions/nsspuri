@@ -280,7 +280,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                                 value: 0,
                                 groupValue: genderController,
                                 title: Text(
-                                  "Male",
+                                  "Bhai",
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                                 onChanged: (newValue) => setState(
@@ -299,7 +299,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                                 groupValue: genderController,
 
                                 title: Text(
-                                  "Female",
+                                  "Maa",
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                                 onChanged: (newValue) {

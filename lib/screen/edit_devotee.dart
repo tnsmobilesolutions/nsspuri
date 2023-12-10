@@ -175,6 +175,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       countryController.text = widget.devotee.address?.country ?? "India";
       parichayaPatraValue = widget.devotee.hasParichayaPatra ?? false;
     }
+    stateController.text = "Odisha";
+    countryController.text = "India";
   }
 
   Row addRadioButton(int btnValue, String title) {
@@ -316,7 +318,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                               value: 0,
                               groupValue: genderController,
                               title: Text(
-                                "Male",
+                                "Bhai",
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               onChanged: (newValue) => setState(
@@ -335,7 +337,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                               groupValue: genderController,
 
                               title: Text(
-                                "Female",
+                                "Maa",
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               onChanged: (newValue) {
