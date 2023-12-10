@@ -81,7 +81,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
       return const Center(child: Text("No data"));
     }
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.2,
+      height: MediaQuery.of(context).size.height / 1.4,
       child: PageIndicatorContainer(
         length: devotees.length,
         align: IndicatorAlign.bottom,
@@ -109,7 +109,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                     padding:
                         const EdgeInsets.only(top: 20, left: 12, right: 12),
                     child: Container(
-                        height: MediaQuery.of(context).size.height / 1.3,
+                        height: MediaQuery.of(context).size.height / 1.4,
                         decoration: BoxDecoration(
                             color: getColorByDevotee(devoteedata),
                             boxShadow: const [
@@ -167,7 +167,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           '73RD UTKAL PRADESHIKA BHAKTA SAMMILANI',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 12,
+                                            fontSize: 10,
                                             color: Colors.white, // Text color
                                           ),
                                         ),
@@ -178,7 +178,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           'PUNE-2024',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               color: Colors.white // Text color
                                               ),
                                         ),
@@ -189,32 +189,36 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                               ),
                             ),
                             Container(
-                              height: MediaQuery.of(context).size.height / 1.8,
+                              height: MediaQuery.of(context).size.height / 1.9,
                               width: MediaQuery.of(context).size.width / 1.1,
                               decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 255, 255, 255)),
                               child: Column(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 70),
-                                    child: Row(
-                                      children: [
-                                        // Expanded(child: Text('')),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text(''),
+                                      ),
 
-                                        const Expanded(
-                                          child: Text(
-                                            'DELEGATE CARD',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                            ),
+                                      const Expanded(
+                                        flex: 4,
+                                        child: Text(
+                                          'DELEGATE CARD',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
                                           ),
                                         ),
-                                        // const SizedBox(
-                                        //   width: 50,
-                                        // ),
-                                        IconButton(
+                                      ),
+                                      // const SizedBox(
+                                      //   width: 50,
+                                      // ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: IconButton(
                                           onPressed: () {
                                             Navigator.push(
                                               context,
@@ -231,8 +235,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           icon: const Icon(Icons.edit,
                                               size: 20, color: IconButtonColor),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                   const SizedBox(
                                     height: 8,
@@ -351,31 +355,39 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       devoteedata.sangha != null
-                                          ? Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10),
-                                              child: Text(
-                                                "${devoteedata.sangha}",
-                                                style: const TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                          ? Expanded(
+                                              flex: 2,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10),
+                                                child: Text(
+                                                  "${devoteedata.sangha}",
+                                                  style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
                                             )
                                           : const Text(""),
-                                      Container(
-                                        padding: const EdgeInsets.all(16.0),
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                4.8,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                3,
-                                        child: SfBarcodeGenerator(
-                                          value: devoteedata.devoteeCode
-                                              .toString(),
-                                          symbology: QRCode(),
-                                          showValue: false,
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(16.0),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              4.8,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              3,
+                                          child: SfBarcodeGenerator(
+                                            value: devoteedata.devoteeCode
+                                                .toString(),
+                                            symbology: QRCode(),
+                                            showValue: false,
+                                          ),
                                         ),
                                       ),
                                     ],
