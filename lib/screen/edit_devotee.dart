@@ -516,16 +516,16 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     //SizedBox
-                    const Text(
+                    Text(
                       'Has Parichaya Patra?',
-                      style: TextStyle(fontSize: 17.0),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ), //Text
                     //SizedBox
                     /** Checkbox Widget **/
                     Transform.scale(
                       scale: 1.5,
                       child: Checkbox(
-                        activeColor: Colors.orange,
+                        activeColor: Colors.deepOrange,
                         value: parichayaPatraValue,
                         onChanged: (bool? value) {
                           setState(() {

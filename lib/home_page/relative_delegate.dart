@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:sammilani_delegate/enums/devotee_status.dart';
 import 'package:sammilani_delegate/home_page/card_flip.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
@@ -350,6 +351,54 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                           devoteedata
                                                               .profilePhotoUrl
                                                               .toString()),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              // if (devoteedata.status !=
+                                              //     DevoteeStatus
+                                              //         .dataSubmitted.name)
+                                              Positioned(
+                                                top: 50,
+                                                left: 105,
+                                                child: Transform.rotate(
+                                                  angle: 12,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            4.0),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color: const Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      44,
+                                                                      7,
+                                                                      209),
+                                                              width: 4),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(4)),
+                                                      child: const Padding(
+                                                        padding:
+                                                            EdgeInsets
+                                                                .all(4.0),
+                                                        child: Text(
+                                                          'PAID',
+                                                          style: TextStyle(
+                                                            fontSize: 40.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    44,
+                                                                    7,
+                                                                    209),
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
