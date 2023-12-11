@@ -48,7 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
     });
   }
 
-  final _form = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {

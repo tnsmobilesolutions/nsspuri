@@ -355,9 +355,9 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                   ),
                                                 ),
                                               ),
-                                              // if (devoteedata.status !=
-                                              //     DevoteeStatus
-                                              //         .dataSubmitted.name)
+                                              if (devoteedata.status !=
+                                                  DevoteeStatus
+                                                      .dataSubmitted.name)
                                               Positioned(
                                                 top: 50,
                                                 left: 105,
