@@ -174,7 +174,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   }
 
   void initState() {
-    dateInputController.text = ""; 
+    dateInputController.text = "";
     super.initState();
   }
 
@@ -455,7 +455,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           Transform.scale(
                             scale: 1.5,
                             child: Checkbox(
-                              activeColor: Colors.orange,
+                              activeColor: Colors.deepOrange,
                               value: parichayaPatraValue,
                               onChanged: (bool? value) {
                                 setState(() {
@@ -468,7 +468,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
