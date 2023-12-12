@@ -1,9 +1,10 @@
 // ignore_for_file: avoid_print
 
 import 'package:dio/dio.dart';
+import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String baseUrl = "https://staging-api.nsspuri.org/";
+String baseUrl = RemoteConfigHelper().getapiBaseURL;
 // String baseUrl = "http://34.136.15.208:4400/";
 
 abstract class DioFuctionAPI {

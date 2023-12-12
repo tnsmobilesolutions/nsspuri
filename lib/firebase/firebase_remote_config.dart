@@ -125,6 +125,14 @@ class RemoteConfigHelper {
   set setVersionNumber(String versionNumberr) {
     versionNumber = versionNumberr;
   }
+  String apiBaseURL = "";
+  String get getapiBaseURL {
+    return apiBaseURL;
+  }
+
+  set setapiBaseURL(String baseURL) {
+    apiBaseURL = baseURL;
+  }
 
   factory RemoteConfigHelper() {
     return _networkHelper;
@@ -163,6 +171,8 @@ fetchRemoteConfigData() async {
 
     RemoteConfigHelper().sethelpContactNo =
         remoteConfig.getString('helpContactNo');
+    RemoteConfigHelper().setapiBaseURL =
+        remoteConfig.getString('apiBaseURL');
 
     RemoteConfigHelper().setVersionNumber =
         remoteConfig.getString('versionNumber');
