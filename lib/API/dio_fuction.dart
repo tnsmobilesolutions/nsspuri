@@ -1,7 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
+import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-String baseUrl = "https://api.nsspuri.org/";
+String baseUrl = RemoteConfigHelper().getapiBaseURL;
+// String baseUrl = "http://34.136.15.208:4400/";
 
 abstract class DioFuctionAPI {
   final dio = Dio();
@@ -147,27 +151,26 @@ abstract class DioFuctionAPI {
         options: Options(headers: {'Authorization': 'Bearer $jwttoken'}),
       );
 
+      print("response : $response");
+
       if (response.statusCode == 200) {
         return {"statusCode": response.statusCode, "data": response.data};
       } else {
         return {
           "statusCode": response.statusCode,
-          "error": "Error in Post API"
+          "error": "Error in put API - ${response.data}"
         };
       }
     } catch (e) {
       if (e is DioException) {
         if (e.response != null) {
-          print("error message : ${e.response!.data["message"]}");
+          print("error : ${e.response!.data["error"]}");
           return {
             "statusCode": 500,
-            "error": [e.response!.data["message"], false]
+            "error": [e.response!.data["error"], false]
           };
         } else {
-          return {
-            "statusCode": 500,
-            "error": [e.response!.data["message"], false]
-          };
+          return {"statusCode": 500, "error": e.response!.data["error"]};
           // return ['Dio error: ${e.message}', false];
         }
       } else {

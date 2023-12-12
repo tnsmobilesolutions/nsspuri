@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
+
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
@@ -22,6 +23,13 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
   final stateController = TextEditingController();
   final countryController = TextEditingController();
   final postalCodeController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    stateController.text = "Odisha";
+    countryController.text = "India";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -195,6 +203,11 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                           const Duration(seconds: 1)); // Simulating a delay
                       DevoteeModel devoteeAddress = DevoteeModel(
                           devoteeId: widget.devotee.devoteeId,
+                          devoteeCode: widget.devotee.devoteeCode,
+                          isAdmin: widget.devotee.isAdmin,
+                          isAllowedToScanPrasad:
+                              widget.devotee.isAllowedToScanPrasad,
+                          updatedOn: widget.devotee.updatedOn,
                           uid: widget.devotee.uid,
                           emailId: widget.devotee.emailId,
                           createdById: widget.devotee.devoteeId,
@@ -205,8 +218,9 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                           sangha: widget.devotee.sangha,
                           dob: widget.devotee.dob,
                           mobileNumber: widget.devotee.mobileNumber,
-                          status: "dataSubmitted",
-                          isAdmin: false,
+                          status: widget.devotee.status,
+                          createdOn: widget.devotee.createdOn,
+                          hasParichayaPatra: widget.devotee.hasParichayaPatra,
                           address: AddressModel(
                               addressLine1: addressLine1Controller.text,
                               addressLine2: addressLine2Controller.text,
