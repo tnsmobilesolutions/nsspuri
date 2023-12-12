@@ -735,8 +735,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           status: widget.devotee.status ?? "dataSubmitted",
                           uid: widget.devotee.uid ?? "",
                           updatedOn: DateTime.now().toString(),
-                          hasParichayaPatra: widget.devotee.hasParichayaPatra ??
-                              parichayaPatraValue,
+                          hasParichayaPatra: parichayaPatraValue,
                           isSpeciallyAbled:
                               widget.devotee.isSpeciallyAbled ?? false,
                           address: AddressModel(
