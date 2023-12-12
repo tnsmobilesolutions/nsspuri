@@ -114,7 +114,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
               DevoteeModel devoteedata = DevoteeModel.fromMap(devotees[index]);
               return FlipCard(
                 rotateSide: RotateSide.right,
-                onTapFlipping: true,
+                onTapFlipping: false,
                 axis: FlipAxis.vertical,
                 controller: con,
                 backWidget: CardFlip(color: getColorByDevotee(devoteedata)),
@@ -127,15 +127,16 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                       decoration: BoxDecoration(
                           color: getColorByDevotee(devoteedata),
                           boxShadow: const [
-                            // BoxShadow(
-                            //   color: getColorByDevotee(devoteedata),
-                            //   spreadRadius: 8,
-                            //   blurRadius: 8,
-                            // ),
+                            BoxShadow(
+                              color: Color.fromARGB(255, 194, 202, 218),
+                              spreadRadius: 4,
+                              blurRadius: 8,
+                            ),
                           ],
                           border: Border.all(
-                              width: 10,
-                              color: const Color.fromARGB(255, 233, 233, 233)),
+                            width: 10,
+                            color: const Color.fromARGB(255, 233, 233, 233),
+                          ),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(35))),
                       child: Column(
@@ -448,7 +449,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                 child: Text(
                                                   "${devoteedata.sangha}",
                                                   style: const TextStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 12,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),

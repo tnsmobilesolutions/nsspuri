@@ -92,7 +92,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
 // ...
 
   void selectImage(ImageSource source) async {
-    XFile? pickedFile = await ImagePicker().pickImage(source: source);
+    XFile? pickedFile =
+        await ImagePicker().pickImage(source: source, imageQuality: 50);
 
     if (pickedFile != null) {
       // Crop the picked image
