@@ -486,13 +486,15 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                               ],
                             ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 4),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'SAMPADAK:',
-                                style: TextStyle(color: Colors.white),
+                          Flexible(
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 8),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'SAMPADAK:',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
