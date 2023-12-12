@@ -143,369 +143,356 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Expanded(
-                              flex: 1,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Container(
-                                      child: Image.asset(
-                                        'assets/images/nsslogo.png',
-                                        scale: 50,
-                                      ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    child: Image.asset(
+                                      'assets/images/nsslogo.png',
+                                      scale: 50,
                                     ),
                                   ),
-                                  const Expanded(
-                                    flex: 6,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'JAYAGURU',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white, // Text color
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 1,
-                                        ),
-                                        Text(
-                                          'Nilachala Saraswata Sangha, Puri',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.white, // Text color
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Text(
-                                          '73RD UTKAL PRADESHIKA BHAKTA SAMMILANI',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 9,
-                                            color: Colors.white, // Text color
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 2,
-                                        ),
-                                        Text(
-                                          'PUNE-2024',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              color: Colors.white // Text color
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Container(
-                                      child: Image.asset(
-                                        'assets/images/nsslogo.png',
-                                        scale: 50,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 8,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height / 1.9,
-                              width: MediaQuery.of(context).size.width / 1.1,
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 255, 255)),
-                              child: Column(
-                                children: [
-                                  Row(
+                                ),
+                                const Expanded(
+                                  flex: 6,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Expanded(
-                                        flex: 1,
-                                        child: Text(''),
+                                      Text(
+                                        'JAYAGURU',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white, // Text color
+                                        ),
                                       ),
-
-                                      const Expanded(
-                                        flex: 4,
-                                        child: Text(
-                                          'DELEGATE CARD',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
+                                      SizedBox(
+                                        height: 1,
+                                      ),
+                                      Text(
+                                        'Nilachala Saraswata Sangha, Puri',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white, // Text color
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                        '73RD UTKAL PRADESHIKA BHAKTA SAMMILANI',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 9,
+                                          color: Colors.white, // Text color
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                        'PUNE-2024',
+                                        style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ),
-                                      // const SizedBox(
-                                      //   width: 50,
-                                      // ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: SizedBox(
-                                          width: 30,
-                                          height: 30,
-                                          child: IconButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) {
-                                                    return EditDevoteeDetailsPage(
-                                                      title: "edit",
-                                                      devotee: devoteedata,
-                                                    );
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                            icon: const Icon(Icons.edit,
-                                                size: 20,
-                                                color: IconButtonColor),
-                                          ),
-                                        ),
+                                            fontSize: 14,
+                                            color: Colors.white // Text color
+                                            ),
                                       ),
                                     ],
                                   ),
-                                  Expanded(
-                                    child: Center(
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: Container(
-                                              child:
-                                                  devoteedata.bloodGroup ==
-                                                              "Don't know" ||
-                                                          devoteedata
-                                                                  .bloodGroup ==
-                                                              null
-                                                      ? Container(
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    child: Image.asset(
+                                      'assets/images/nsslogo.png',
+                                      scale: 50,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height / 1.9,
+                            width: MediaQuery.of(context).size.width / 1.1,
+                            decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255)),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    const Expanded(
+                                      flex: 1,
+                                      child: Text(''),
+                                    ),
+
+                                    const Expanded(
+                                      flex: 4,
+                                      child: Text(
+                                        'DELEGATE CARD',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                    // const SizedBox(
+                                    //   width: 50,
+                                    // ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: SizedBox(
+                                        width: 30,
+                                        height: 30,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return EditDevoteeDetailsPage(
+                                                    title: "edit",
+                                                    devotee: devoteedata,
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                          icon: const Icon(Icons.edit,
+                                              size: 20, color: IconButtonColor),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: Center(
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 3,
+                                          child: Container(
+                                            child: devoteedata.bloodGroup ==
+                                                        "Don't know" ||
+                                                    devoteedata.bloodGroup ==
+                                                        null
+                                                ? Container(
+                                                    width: 75,
+                                                    height: 60,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      shape: BoxShape.rectangle,
+                                                    ),
+                                                  )
+                                                : Center(
+                                                    child: Stack(
+                                                      children: [
+                                                        Container(
                                                           width: 75,
                                                           height: 60,
                                                           decoration:
                                                               const BoxDecoration(
                                                             shape: BoxShape
                                                                 .rectangle,
-                                                          ),
-                                                        )
-                                                      : Center(
-                                                          child: Stack(
-                                                            children: [
-                                                              Container(
-                                                                width: 75,
-                                                                height: 60,
-                                                                decoration:
-                                                                    const BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .rectangle,
-                                                                  image:
-                                                                      DecorationImage(
-                                                                    fit: BoxFit
-                                                                        .fill,
-                                                                    image: AssetImage(
-                                                                        'assets/images/blood.png'),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Positioned(
-                                                                top: 7,
-                                                                left: 0,
-                                                                child: SizedBox(
-                                                                  width: 75,
-                                                                  height: 60,
-                                                                  child: Center(
-                                                                    child: Text(
-                                                                      "${devoteedata.bloodGroup}",
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        fontSize:
-                                                                            14,
-                                                                        color: Color.fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255),
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
+                                                            image:
+                                                                DecorationImage(
+                                                              fit: BoxFit.fill,
+                                                              image: AssetImage(
+                                                                  'assets/images/blood.png'),
+                                                            ),
                                                           ),
                                                         ),
-                                              // Return an empty Container if the condition is false
-                                            ),
+                                                        Positioned(
+                                                          top: 7,
+                                                          left: 0,
+                                                          child: SizedBox(
+                                                            width: 75,
+                                                            height: 60,
+                                                            child: Center(
+                                                              child: Text(
+                                                                "${devoteedata.bloodGroup}",
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          255,
+                                                                          255),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                            // Return an empty Container if the condition is false
                                           ),
-                                          Expanded(
-                                            flex: 8,
-                                            child: Stack(
-                                              clipBehavior: Clip.none,
-                                              children: [
-                                                Positioned(
-                                                  child: Container(
-                                                    width: 145,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                            255, 212, 212, 212),
-                                                        width: 1,
-                                                      ),
-                                                      shape: BoxShape
-                                                          .rectangle, // This makes the container circular
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: NetworkImage(
-                                                            devoteedata
-                                                                .profilePhotoUrl
-                                                                .toString()),
-                                                      ),
+                                        ),
+                                        Expanded(
+                                          flex: 8,
+                                          child: Stack(
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              Positioned(
+                                                child: Container(
+                                                  width: 145,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              212,
+                                                              212,
+                                                              212),
+                                                      width: 1,
+                                                    ),
+                                                    shape: BoxShape
+                                                        .rectangle, // This makes the container circular
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(
+                                                          devoteedata
+                                                              .profilePhotoUrl
+                                                              .toString()),
                                                     ),
                                                   ),
                                                 ),
-                                                if (devoteedata.status !=
-                                                    DevoteeStatus
-                                                        .dataSubmitted.name)
-                                                  Positioned(
-                                                    top: 50,
-                                                    left: 105,
-                                                    child: Transform.rotate(
-                                                      angle: 12,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(4.0),
-                                                        child: Container(
-                                                          decoration: BoxDecoration(
-                                                              border: Border.all(
-                                                                  color: const Color
-                                                                      .fromARGB(
+                                              ),
+                                              if (devoteedata.status !=
+                                                  DevoteeStatus
+                                                      .dataSubmitted.name)
+                                                Positioned(
+                                                  top: 50,
+                                                  left: 105,
+                                                  child: Transform.rotate(
+                                                    angle: 12,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              4.0),
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                                color: const Color
+                                                                    .fromARGB(
+                                                                    255,
+                                                                    44,
+                                                                    7,
+                                                                    209),
+                                                                width: 4),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        4)),
+                                                        child: const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  4.0),
+                                                          child: Text(
+                                                            'PAID',
+                                                            style: TextStyle(
+                                                              fontSize: 40.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: Color
+                                                                  .fromARGB(
                                                                       255,
                                                                       44,
                                                                       7,
                                                                       209),
-                                                                  width: 4),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          4)),
-                                                          child: const Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    4.0),
-                                                            child: Text(
-                                                              'PAID',
-                                                              style: TextStyle(
-                                                                fontSize: 40.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        44,
-                                                                        7,
-                                                                        209),
-                                                              ),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  devoteedata.name != null
-                                      ? Text(
-                                          _toPascalCase(
-                                              devoteedata.name.toString()),
-                                          style: const TextStyle(
-                                            color: Colors.deepOrange,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )
-                                      : const Text(""),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Flexible(
-                                        flex: 1,
-                                        child: devoteedata.sangha != null
-                                            ? Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0, right: 0),
-                                                child: Center(
-                                                  child: Text(
-                                                    "${devoteedata.sangha}",
-                                                    style: const TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
                                                 ),
-                                              )
-                                            : const Text(""),
-                                      ),
-                                      Flexible(
-                                        flex: 2,
-                                        child: Container(
-                                          padding: const EdgeInsets.all(0),
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              4.8,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              4.8,
-                                          child: SfBarcodeGenerator(
-                                            value: devoteedata.devoteeCode
-                                                .toString(),
-                                            symbology: QRCode(),
-                                            showValue: false,
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                devoteedata.name != null
+                                    ? Text(
+                                        _toPascalCase(
+                                            devoteedata.name.toString()),
+                                        style: const TextStyle(
+                                          color: Colors.deepOrange,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    : const Text(""),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Flexible(
+                                      flex: 1,
+                                      child: devoteedata.sangha != null
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 0, right: 0),
+                                              child: Center(
+                                                child: Text(
+                                                  "${devoteedata.sangha}",
+                                                  style: const TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            )
+                                          : const Text(""),
+                                    ),
+                                    Flexible(
+                                      flex: 2,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(0),
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                4.8,
+                                        width:
+                                            MediaQuery.of(context).size.height /
+                                                4.8,
+                                        child: SfBarcodeGenerator(
+                                          value: devoteedata.devoteeCode
+                                              .toString(),
+                                          symbology: QRCode(),
+                                          showValue: false,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          const Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 4),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'SAMPADAK:',
-                                  style: TextStyle(color: Colors.white),
-                                ),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 4),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'SAMPADAK:',
+                                style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
