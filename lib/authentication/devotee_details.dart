@@ -447,7 +447,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         children: [
                           //SizedBox
                           const Text(
-                            'Parichaya Patra',
+                            'Has Parichaya Patra?',
                             style: TextStyle(fontSize: 17.0),
                           ), //Text
                           //SizedBox
