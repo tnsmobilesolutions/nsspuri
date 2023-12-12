@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
-import 'package:sammilani_delegate/home_page/qr_scanner/qrcode_scanner.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class ScanSuccess extends StatefulWidget {

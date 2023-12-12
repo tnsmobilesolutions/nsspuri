@@ -48,7 +48,7 @@ class _CardFlipState extends State<CardFlip> {
                 boxShadow: const [
                   BoxShadow(
                     color: Color.fromARGB(255, 194, 202, 218),
-                    spreadRadius: 8,
+                    spreadRadius: 4,
                     blurRadius: 8,
                   ),
                 ],
@@ -69,8 +69,8 @@ class _CardFlipState extends State<CardFlip> {
                     Expanded(
                       flex: 1,
                       child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30.0),
                             topRight: Radius.circular(30.0),
                           ),
