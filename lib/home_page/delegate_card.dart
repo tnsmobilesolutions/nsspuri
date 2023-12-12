@@ -7,6 +7,7 @@ import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:sammilani_delegate/home_page/relative_delegate.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
+import 'package:sammilani_delegate/screen/pranami_info_screen.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -113,19 +114,34 @@ class _DelegateCardState extends State<DelegateCard> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                SizedBox(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Center(
-                        child: Text(
-                          RemoteConfigHelper().getAccountInfo,
-                          style: Theme.of(context).textTheme.bodyMedium,
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PranamiInfoScreen(),
                         ),
-                      ),
-                    ),
+                      );
+                    },
+                    child: Text('Payment Info'),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return IconButtonColor;
+                          }
+                          return IconButtonColor;
+                        }),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50)))),
                   ),
                 ),
+
                 FutureBuilder(
                   future: GetDevoteeAPI().devoteeWithRelatives(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {

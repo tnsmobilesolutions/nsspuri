@@ -53,13 +53,58 @@ class RemoteConfigHelper {
     mandatoryUpgradeText = upgradeText;
   }
 
-  String accountInfo = "";
-  String get getAccountInfo {
-    return accountInfo;
+  String paymentMessage = "";
+  String get getPaymentMessage {
+    return paymentMessage;
   }
 
-  set setAccountInfo(String acctInfo) {
-    accountInfo = acctInfo;
+  set setPaymentMessage(String message) {
+    paymentMessage = message;
+  }
+
+  String paymentContact = "";
+  String get getPaymentContact {
+    return paymentContact;
+  }
+
+  set setPaymentContact(String contact) {
+    paymentContact = contact;
+  }
+
+  String bankName = "";
+  String get getBankName {
+    return bankName;
+  }
+
+  set setBankName(String name) {
+    bankName = name;
+  }
+
+  String bankAccountNo = "";
+  String get getBankAccountNo {
+    return bankAccountNo;
+  }
+
+  set setBankAccountNo(String accountNo) {
+    bankAccountNo = accountNo;
+  }
+
+  String bankIfscCode = "";
+  String get getBankIfscCode {
+    return bankIfscCode;
+  }
+
+  set setBankIfscCode(String ifscCode) {
+    bankIfscCode = ifscCode;
+  }
+
+  String branchName = "";
+  String get getBranchName {
+    return branchName;
+  }
+
+  set setBranchName(String brName) {
+    branchName = brName;
   }
 
   String helpContactNo = "";
@@ -100,7 +145,21 @@ fetchRemoteConfigData() async {
     RemoteConfigHelper().setUpgradeText =
         remoteConfig.getString('mandatoryUpgradeText');
 
-    RemoteConfigHelper().setAccountInfo = remoteConfig.getString('accountInfo');
+    RemoteConfigHelper().setPaymentMessage =
+        remoteConfig.getString('paymentMessage');
+
+    RemoteConfigHelper().setPaymentContact =
+        remoteConfig.getString('paymentContact');
+
+    RemoteConfigHelper().setBankName = remoteConfig.getString('bankName');
+
+    RemoteConfigHelper().setBankAccountNo =
+        remoteConfig.getString('bankAccountNo');
+
+    RemoteConfigHelper().setBankIfscCode =
+        remoteConfig.getString('bankIfscCode');
+
+    RemoteConfigHelper().setBranchName = remoteConfig.getString('branchName');
 
     RemoteConfigHelper().sethelpContactNo =
         remoteConfig.getString('helpContactNo');
