@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/authentication/address_screen.dart';
@@ -239,26 +241,37 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      style: Theme.of(context).textTheme.displaySmall,
-                      keyboardType: TextInputType.phone,
-                      controller: mobileController,
-                      onSaved: (newValue) => mobileController,
+                    IntlPhoneField(
                       validator: (value) {
-                        RegExp regex = RegExp(r'^.{10}$');
-                        // if (value!.isEmpty) {
-                        //   return ("Please enter Phone Number");
-                        // }
-                        if ((value ?? '').isNotEmpty &&
-                            !regex.hasMatch(value ?? '') &&
-                            value?.length != 10) {
-                          return ("Enter 10 Digit Mobile Number");
+                        if ((value?.number ?? "").isEmpty) {
+                          return ("Please enter Mobile Number");
+                        } else {
+                          return null;
                         }
-                        return null;
                       },
+                      style: Theme.of(context).textTheme.displaySmall,
+                      controller: mobileController,
+                      invalidNumberMessage:
+                          "Please enter a valid Mobile Number",
+                      keyboardType: TextInputType.phone,
+                      dropdownTextStyle:
+                          Theme.of(context).textTheme.displaySmall,
+                      pickerDialogStyle: PickerDialogStyle(
+                          countryCodeStyle:
+                              Theme.of(context).textTheme.displaySmall,
+                          backgroundColor: Colors.grey,
+                          countryNameStyle:
+                              Theme.of(context).textTheme.displaySmall),
                       decoration: CommonStyle.textFieldStyle(
                           labelTextStr: "Mobile Number",
                           hintTextStr: "Enter Mobile Number"),
+                      initialCountryCode: 'IN',
+                      onSaved: (value) {
+                        mobileController.text = value.toString();
+                      },
+                      onChanged: (phone) {
+                        print(phone.completeNumber);
+                      },
                     ),
                     const SizedBox(
                       height: 20,

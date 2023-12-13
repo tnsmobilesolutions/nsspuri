@@ -192,8 +192,8 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                           child: IconButton(
                             onPressed: () {
                               // Call a function to copy text to clipboard
-                              copyToClipboard(context,
-                                  RemoteConfigHelper().getBankIfscCode);
+                              copyToClipboard(
+                                  context, RemoteConfigHelper().getBranchName);
                             },
                             icon: Icon(Icons.copy),
                           ),
