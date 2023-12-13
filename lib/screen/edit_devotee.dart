@@ -162,6 +162,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     super.initState();
     if (widget.title == "edit") {
       nameController.text = widget.devotee.name ?? "";
+      genderController = widget.devotee.gender == "Bhai" ? 0 : 1;
       mobileController.text = widget.devotee.mobileNumber ?? "";
       sanghaController.text = widget.devotee.sangha ?? "";
       dateInputController.text = widget.devotee.dob ?? "";
@@ -171,8 +172,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       addressLine2Controller.text = widget.devotee.address?.addressLine2 ?? "";
       cityController.text = widget.devotee.address?.city ?? "";
       stateController.text = widget.devotee.address?.state ?? "Odisha";
-      postalCodeController.text =
-          widget.devotee.address?.postalCode.toString() ?? "";
+      postalCodeController.text = widget.devotee.address?.postalCode != null
+          ? "${widget.devotee.address?.postalCode}"
+          : "";
       countryController.text = widget.devotee.address?.country ?? "India";
       parichayaPatraValue = widget.devotee.hasParichayaPatra ?? false;
     }
@@ -373,34 +375,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   readOnly:
                       true, //set it true, so that user will not able to edit text
                   onTap: () => _selectDate(context),
-                  // async {
-                  //   DateTime? pickedDate = await showDatePicker(
-                  //       initialEntryMode:
-                  //           DatePickerEntryMode.calendarOnly, // Hide edit button
-                  //       fieldHintText: 'dd-MM-yyyy',
-                  //       context: context,
-                  //       initialDate: DateTime.now(),
-                  //       firstDate: DateTime(
-                  //           1900), //DateTime.now() - not to allow to choose before today.
-                  //       lastDate: DateTime.now());
-
-                  //   if (pickedDate != null) {
-                  //     print(
-                  //         pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                  //     String formattedDate =
-                  //         DateFormat('dd-MM-yyyy').format(pickedDate);
-                  //     print(
-                  //         formattedDate); //formatted date output using intl package =>  2021-03-16
-                  //     //you can implement different kind of Date Format here according to your requirement
-
-                  //     setState(() {
-                  //       dateinput.text =
-                  //           formattedDate; //set output date to TextField value.
-                  //     });
-                  //   } else {
-                  //     print("Date is not selected");
-                  //   }
-                  // },
                 ),
               ),
               const SizedBox(
@@ -631,15 +605,12 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 height: 20,
               ),
               TextFormField(
-                keyboardType: TextInputType.phone,
+                keyboardType: TextInputType.number,
                 style: Theme.of(context).textTheme.displaySmall,
                 controller: postalCodeController,
-                onSaved: (newValue) => postalCodeController.text = newValue!,
-                validator: (value) {
-                  // if (value == null || value.isEmpty) {
-                  //   return 'Please enter postal code';
-                  // }
-                  return null;
+                onSaved: (newValue) {
+                  postalCodeController.text = newValue.toString();
+                  print("postalcode ==========================$newValue");
                 },
                 decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "PIN Code", hintTextStr: "Enter PIN Code"),
@@ -655,42 +626,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     BoxDecoration(borderRadius: BorderRadius.circular(90)),
                 child: ElevatedButton(
                   onPressed: () async {
-                    // Validate returns true if the form is valid, or false otherwise.
                     if (!_formKey.currentState!.validate()) {
                       return;
                     }
-                    // setState(() {
-                    //   nameController.text.isEmpty
-                    //       ? _validate = true
-                    //       : _validate = false;
-                    // });
-                    // if (_validate) {
-                    //   // Show an error message, indicating that the name is required.
-                    //   // You can display a snackbar or any other user-friendly message.
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     const SnackBar(
-                    //       content: Text('Name is required.'),
-                    //     ),
-                    //   );
-                    //   return;
-                    // }
 
-                    // setState(() {
-                    //   sanghaController.text.isEmpty ||
-                    //           sanghaController.text != sanghaSuggestions
-                    //       ? _validate1 = true
-                    //       : _validate1 = false;
-                    // });
-                    // if (_validate1) {
-                    //   // Show an error message, indicating that the name is required.
-                    //   // You can display a snackbar or any other user-friendly message.
-                    //   ScaffoldMessenger.of(context).showSnackBar(
-                    //     const SnackBar(
-                    //       content: Text('Please choose your sangha'),
-                    //     ),
-                    //   );
-                    //   return;
-                    // }
                     showDialog(
                       context: context,
                       barrierDismissible:
@@ -742,10 +681,12 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                               addressLine2: addressLine2Controller.text,
                               addressLine1: addressLine1Controller.text,
                               country: countryController.text,
-                              postalCode:
-                                  int.tryParse(postalCodeController.text),
+                              postalCode: postalCodeController.text == ""
+                                  ? 0
+                                  : int.tryParse(postalCodeController.text),
                               city: cityController.text,
                               state: stateController.text));
+
                       Map<String, dynamic> response;
                       if (widget.title == "edit") {
                         response = await PutDevoteeAPI().updateDevotee(

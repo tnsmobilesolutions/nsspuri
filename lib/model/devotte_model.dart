@@ -28,7 +28,6 @@ class DevoteeModel {
   String? status;
   String? createdById;
   bool?  hasParichayaPatra;
-
   AddressModel? address;
   DevoteeModel({
     this.devoteeId,
