@@ -162,6 +162,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     super.initState();
     if (widget.title == "edit") {
       nameController.text = widget.devotee.name ?? "";
+      genderController = widget.devotee.gender == "Bhai" ? 0 : 1;
       mobileController.text = widget.devotee.mobileNumber ?? "";
       sanghaController.text = widget.devotee.sangha ?? "";
       dateInputController.text = widget.devotee.dob ?? "";
@@ -171,8 +172,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       addressLine2Controller.text = widget.devotee.address?.addressLine2 ?? "";
       cityController.text = widget.devotee.address?.city ?? "";
       stateController.text = widget.devotee.address?.state ?? "Odisha";
-      postalCodeController.text =
-          widget.devotee.address?.postalCode.toString() ?? "";
+      postalCodeController.text = widget.devotee.address?.postalCode != null
+          ? "${widget.devotee.address?.postalCode}"
+          : "";
       countryController.text = widget.devotee.address?.country ?? "India";
       parichayaPatraValue = widget.devotee.hasParichayaPatra ?? false;
     }
