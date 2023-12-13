@@ -682,7 +682,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                               addressLine1: addressLine1Controller.text,
                               country: countryController.text,
                               postalCode: postalCodeController.text == ""
-                                  ? 0
+                                  ? null
                                   : int.tryParse(postalCodeController.text),
                               city: cityController.text,
                               state: stateController.text));
