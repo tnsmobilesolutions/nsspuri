@@ -245,14 +245,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       controller: mobileController,
                       onSaved: (newValue) => mobileController,
                       validator: (value) {
-                        RegExp regex = RegExp(r'^.{10}$');
-                        // if (value!.isEmpty) {
-                        //   return ("Please enter Phone Number");
-                        // }
-                        if ((value ?? '').isNotEmpty &&
-                            !regex.hasMatch(value ?? '') &&
-                            value?.length != 10) {
-                          return ("Enter 10 Digit Mobile Number");
+                        RegExp regex = RegExp(r'^\+[1-9]{1}[0-9]{3,14}$');
+                        if ((value ?? "").isEmpty) {
+                          return ("Please enter Mobile Number");
+                        } else if (!regex.hasMatch(value.toString())) {
+                          return ("Please enter a valid Mobile Number");
                         }
                         return null;
                       },
