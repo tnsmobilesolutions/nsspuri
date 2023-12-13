@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
@@ -279,23 +281,33 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 height: 12,
               ),
               const SizedBox(height: 10),
-              TextFormField(
-                style: Theme.of(context).textTheme.displaySmall,
-                keyboardType: TextInputType.phone,
-                controller: mobileController,
-                onSaved: (newValue) => mobileController,
+              IntlPhoneField(
                 validator: (value) {
-                  RegExp regex = RegExp(r'^\+[1-9]{1}[0-9]{3,14}$');
-                  if ((value ?? "").isEmpty) {
+                  if ((value?.number ?? "").isEmpty) {
                     return ("Please enter Mobile Number");
-                  } else if (!regex.hasMatch(value.toString())) {
-                    return ("Please enter a valid Mobile Number");
+                  } else {
+                    return null;
                   }
-                  return null;
                 },
+                style: Theme.of(context).textTheme.displaySmall,
+                controller: mobileController,
+                invalidNumberMessage: "Please enter a valid Mobile Number",
+                keyboardType: TextInputType.phone,
+                dropdownTextStyle: Theme.of(context).textTheme.displaySmall,
+                pickerDialogStyle: PickerDialogStyle(
+                    countryCodeStyle: Theme.of(context).textTheme.displaySmall,
+                    backgroundColor: Colors.grey,
+                    countryNameStyle: Theme.of(context).textTheme.displaySmall),
                 decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "Mobile Number",
                     hintTextStr: "Enter Mobile Number"),
+                initialCountryCode: 'IN',
+                onSaved: (value) {
+                  mobileController.text = value.toString();
+                },
+                onChanged: (phone) {
+                  print(phone.completeNumber);
+                },
               ),
               const SizedBox(
                 height: 20,
