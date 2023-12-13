@@ -69,7 +69,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     }
   }
 
-  List gender = ["Bhai", "Maa"];
+  List gender = ["Male", "Female"];
   int genderController = 0;
   String? profileURL;
 
@@ -162,7 +162,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     super.initState();
     if (widget.title == "edit") {
       nameController.text = widget.devotee.name ?? "";
-      genderController = widget.devotee.gender == "Bhai" ? 0 : 1;
+      genderController = widget.devotee.gender == "Male" ? 0 : 1;
       mobileController.text = widget.devotee.mobileNumber ?? "";
       sanghaController.text = widget.devotee.sangha ?? "";
       dateInputController.text = widget.devotee.dob ?? "";
