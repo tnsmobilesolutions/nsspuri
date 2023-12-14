@@ -56,7 +56,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 30,
                   ),
                   TextFormField(
-                    style: Theme.of(context).textTheme.displaySmall,
                     controller: _emailTextController,
                     onSaved: (newValue) => _emailTextController,
                     validator: (value) {
@@ -85,7 +84,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 12,
                   ),
                   TextFormField(
-                      style: Theme.of(context).textTheme.displaySmall,
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: _obscured1,
                       focusNode: textFieldFocusNode,
@@ -97,16 +95,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         }
                         return null;
                       },
-                      // decoration: InputDecoration(
-                      //   labelText: "Enter Password",
-                      //   filled: true,
-                      //   floatingLabelBehavior: FloatingLabelBehavior.never,
-                      //   border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(30.0),
-                      //       borderSide: const BorderSide(
-                      //           width: 0, style: BorderStyle.none)),
-
-                      // ),
+                    
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(12),
                         labelText: "Password",
@@ -147,7 +136,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 50,
+                    height: 45,
                     margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(90)),
@@ -254,7 +243,6 @@ class _SignInScreenState extends State<SignInScreen> {
         const Text("Don't have account?",
             style: TextStyle(color: TextThemeColor)),
         TextButton(
-          style: Theme.of(context).textButtonTheme.style,
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {
@@ -264,6 +252,9 @@ class _SignInScreenState extends State<SignInScreen> {
               },
             ));
           },
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.deepOrange,
+          ),
           child: const Text(
             'Sign Up',
           ),
@@ -274,7 +265,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
   forgetPassword(BuildContext context) {
     return TextButton(
-      style: Theme.of(context).textButtonTheme.style,
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.deepOrange,
+      ),
       child: const Text(
         "Forgot Password?",
         textAlign: TextAlign.right,

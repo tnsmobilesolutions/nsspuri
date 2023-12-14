@@ -82,7 +82,6 @@ class _DelegateCardState extends State<DelegateCard> {
             children: [
               Text(
                 "Pune Sammilani",
-                style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
                 '${timeUntilSammilani.inDays} days to go (23, 24, 25 Feb 2024)',

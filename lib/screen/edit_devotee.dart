@@ -12,6 +12,7 @@ import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:sammilani_delegate/home_page/delegate_card.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 
 import 'package:sammilani_delegate/model/address_model.dart';
@@ -70,6 +71,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       });
     }
   }
+
+  FocusNode focusNode = FocusNode();
 
   List gender = ["Male", "Female"];
   int genderController = 0;
@@ -134,10 +137,12 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     Navigator.pop(context);
                     selectImage(ImageSource.gallery);
                   },
-                  leading: const Icon(Icons.photo_album),
-                  title: Text(
+                  leading: const Icon(
+                    Icons.photo_album,
+                    color: Colors.deepOrange,
+                  ),
+                  title: const Text(
                     "Select from Gallery",
-                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                 ),
                 ListTile(
@@ -145,10 +150,12 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     Navigator.pop(context);
                     selectImage(ImageSource.camera);
                   },
-                  leading: const Icon(Icons.camera_alt),
-                  title: Text(
+                  leading: const Icon(
+                    Icons.camera_alt,
+                    color: Colors.deepOrange,
+                  ),
+                  title: const Text(
                     "Take a photo",
-                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                 ),
               ],
@@ -222,6 +229,20 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     return Scaffold(
       backgroundColor: ScaffoldBackgroundColor,
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DelegateCard(),
+              ),
+            );
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.deepOrange,
+          ),
+        ),
         backgroundColor: AppBarColor,
         title: widget.title == 'edit'
             ? const Text('Edit Delegate')
@@ -241,30 +262,29 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   showPhotoOptions();
                 },
                 child: CircleAvatar(
-                  backgroundImage:
-                      previewImage != null && previewImage!.path.isNotEmpty
-                          ? Image.file(
-                              File('${previewImage?.path}'),
-                              fit: BoxFit.cover,
-                            ).image
-                          : Image.network(profileURL.toString()).image,
+                  backgroundImage: (previewImage != null &&
+                          previewImage!.path.isNotEmpty)
+                      ? Image.file(
+                          File('${previewImage?.path}'),
+                          fit: BoxFit.cover,
+                        ).image
+                      : (profileURL != null && profileURL!.isNotEmpty)
+                          ? Image.network(profileURL.toString()).image
+                          : const AssetImage(
+                              'assets/images/profile.jpeg'), // Set your default image asset path here
                   radius: 60,
                   child: const Align(
                     alignment: Alignment.bottomRight,
-                    child: CircleAvatar(
-                      backgroundColor: CircleAvatarClor,
-                      radius: 20.0,
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 18.0,
-                      ),
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.deepOrange,
+                      size: 22.0,
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 10),
               TextFormField(
-                style: Theme.of(context).textTheme.displaySmall,
                 controller: nameController,
                 textCapitalization: TextCapitalization.words,
                 onSaved: (newValue) => nameController,
@@ -282,6 +302,11 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               ),
               const SizedBox(height: 10),
               IntlPhoneField(
+                dropdownIcon: const Icon(
+                  Icons.arrow_drop_down,
+                  color: Colors.deepOrange,
+                ),
+                focusNode: focusNode,
                 validator: (value) {
                   if ((value?.number ?? "").isEmpty) {
                     return ("Please enter Mobile Number");
@@ -289,15 +314,30 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                     return null;
                   }
                 },
-                style: Theme.of(context).textTheme.displaySmall,
                 controller: mobileController,
                 invalidNumberMessage: "Please enter a valid Mobile Number",
                 keyboardType: TextInputType.phone,
-                dropdownTextStyle: Theme.of(context).textTheme.displaySmall,
                 pickerDialogStyle: PickerDialogStyle(
-                    countryCodeStyle: Theme.of(context).textTheme.displaySmall,
-                    backgroundColor: Colors.grey,
-                    countryNameStyle: Theme.of(context).textTheme.displaySmall),
+                  countryCodeStyle: const TextStyle(fontSize: 14),
+                  countryNameStyle: const TextStyle(fontSize: 14),
+                  searchFieldCursorColor: Colors.deepOrange,
+                  searchFieldInputDecoration: InputDecoration(
+                    label: const Text('Search Country'),
+                    labelStyle: const TextStyle(
+                        color: Colors.black), // Set label text color
+                    hintStyle: TextStyle(
+                        color: Colors.black
+                            .withOpacity(0.5)), // Set hint text color
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.deepOrange),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.black.withOpacity(0.5)),
+                    ),
+                  ),
+                  backgroundColor: Colors.white,
+                ),
                 decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "Mobile Number",
                     hintTextStr: "Enter Mobile Number"),
@@ -312,106 +352,78 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               const SizedBox(
                 height: 20,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          const Text(
-                            'Gender',
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: RadioListTile(
-                              value: 0,
-                              groupValue: genderController,
-                              title: Text(
-                                "Bhai",
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              onChanged: (newValue) => setState(
-                                  () => genderController = newValue ?? 0),
-                              activeColor: RadioButtonColor,
-                              // Set the unselected color to blue
-                              selectedTileColor:
-                                  RadioButtonColor, // Set the selected color
-                              selected: false,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: RadioListTile(
-                              value: 1,
-                              groupValue: genderController,
-
-                              title: Text(
-                                "Maa",
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  genderController = newValue ?? 0;
-                                });
-                              },
-                              activeColor: RadioButtonColor,
-                              // Set the unselected color to blue
-                              selectedTileColor:
-                                  RadioButtonColor, // Set the selected color
-                              selected: false,
-                            ),
-                          ),
-                        ],
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Row(
+                  children: <Widget>[
+                    const Text(
+                      'Gender',
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: RadioListTile(
+                        value: 0,
+                        groupValue: genderController,
+                        title: const Text(
+                          "Bhai",
+                        ),
+                        onChanged: (newValue) =>
+                            setState(() => genderController = newValue ?? 0),
+                        activeColor: RadioButtonColor,
+                        // Set the unselected color to blue
+                        selectedTileColor:
+                            RadioButtonColor, // Set the selected color
+                        selected: false,
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: RadioListTile(
+                        value: 1,
+                        groupValue: genderController,
+
+                        title: const Text(
+                          "Maa",
+                        ),
+                        onChanged: (newValue) {
+                          setState(() {
+                            genderController = newValue ?? 0;
+                          });
+                        },
+                        activeColor: RadioButtonColor,
+                        // Set the unselected color to blue
+                        selectedTileColor:
+                            RadioButtonColor, // Set the selected color
+                        selected: false,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 20,
               ),
               GestureDetector(
-                child: TextField(
-                  style: Theme.of(context).textTheme.displaySmall,
-                  controller:
-                      dateInputController, //editing controller of this TextField
-                  decoration: CommonStyle.textFieldStyle(
-                      labelTextStr: "Date Of Birth",
-                      hintTextStr: "Enter Date Of Birth"),
-                  readOnly:
-                      true, //set it true, so that user will not able to edit text
-                  onTap: () => _selectDate(context),
-                  // async {
-                  //   DateTime? pickedDate = await showDatePicker(
-                  //       initialEntryMode:
-                  //           DatePickerEntryMode.calendarOnly, // Hide edit button
-                  //       fieldHintText: 'dd-MM-yyyy',
-                  //       context: context,
-                  //       initialDate: DateTime.now(),
-                  //       firstDate: DateTime(
-                  //           1900), //DateTime.now() - not to allow to choose before today.
-                  //       lastDate: DateTime.now());
-
-                  //   if (pickedDate != null) {
-                  //     print(
-                  //         pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                  //     String formattedDate =
-                  //         DateFormat('dd-MM-yyyy').format(pickedDate);
-                  //     print(
-                  //         formattedDate); //formatted date output using intl package =>  2021-03-16
-                  //     //you can implement different kind of Date Format here according to your requirement
-
-                  //     setState(() {
-                  //       dateinput.text =
-                  //           formattedDate; //set output date to TextField value.
-                  //     });
-                  //   } else {
-                  //     print("Date is not selected");
-                  //   }
-                  // },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller:
+                            dateInputController, //editing controller of this TextField
+                        decoration: CommonStyle.textFieldStyle(
+                          labelTextStr: "Date Of Birth",
+                          hintTextStr: "Enter Date Of Birth",
+                          suffixIcon: const Icon(
+                            Icons.calendar_view_month_rounded,
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        readOnly:
+                            true, //set it true, so that user will not able to edit text
+                        onTap: () => _selectDate(context),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(
@@ -422,9 +434,11 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 children: [
                   Expanded(
                     child: DropdownButtonFormField(
-                      style: Theme.of(context).textTheme.displaySmall,
                       value: bloodGroupController,
-
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.deepOrange,
+                      ),
                       elevation: 16,
                       decoration: CommonStyle.textFieldStyle(
                           labelTextStr: "Blood Group",
@@ -451,7 +465,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               const SizedBox(
                 height: 20,
               ),
-              TypeAheadFormField(
+              TypeAheadFormField<String>(
                 noItemsFoundBuilder: (context) => const SizedBox(
                   height: 70,
                   child: Center(
@@ -468,11 +482,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 ),
                 debounceDuration: const Duration(milliseconds: 400),
                 textFieldConfiguration: TextFieldConfiguration(
-                  style: Theme.of(context).textTheme.displaySmall,
                   controller: sanghaController,
                   decoration: CommonStyle.textFieldStyle(
-                      labelTextStr: "Sangha Name",
-                      hintTextStr: "Enter Sangha Name"),
+                    labelTextStr: "Sangha Name",
+                    hintTextStr: "Enter Sangha Name",
+                    suffixIcon: Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.deepOrange,
+                    ),
+                  ),
                 ),
                 validator: (value) {
                   if ((value ?? '').isNotEmpty &&
@@ -528,9 +546,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     //SizedBox
-                    Text(
+                    const Text(
                       'Has Parichaya Patra?',
-                      style: Theme.of(context).textTheme.bodyMedium,
                     ), //Text
                     //SizedBox
                     /** Checkbox Widget **/
@@ -553,7 +570,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 height: 20,
               ),
               TextFormField(
-                style: Theme.of(context).textTheme.displaySmall,
                 controller: addressLine1Controller,
                 textCapitalization: TextCapitalization.words,
                 onSaved: (newValue) => addressLine1Controller,
@@ -571,7 +587,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 height: 20,
               ),
               TextFormField(
-                style: Theme.of(context).textTheme.displaySmall,
                 controller: addressLine2Controller,
                 textCapitalization: TextCapitalization.words,
                 onSaved: (newValue) => addressLine2Controller,
@@ -589,7 +604,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 height: 20,
               ),
               TextFormField(
-                style: Theme.of(context).textTheme.displaySmall,
                 controller: cityController,
                 textCapitalization: TextCapitalization.words,
                 onSaved: (newValue) => cityController,
@@ -606,7 +620,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 height: 20,
               ),
               TextFormField(
-                style: Theme.of(context).textTheme.displaySmall,
                 controller: stateController,
                 textCapitalization: TextCapitalization.words,
                 onSaved: (newValue) => stateController,
@@ -624,7 +637,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 height: 20,
               ),
               TextFormField(
-                style: Theme.of(context).textTheme.displaySmall,
                 textCapitalization: TextCapitalization.words,
                 controller: countryController,
                 onSaved: (newValue) => addressLine1Controller,
@@ -643,7 +655,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               ),
               TextFormField(
                 keyboardType: TextInputType.phone,
-                style: Theme.of(context).textTheme.displaySmall,
                 controller: postalCodeController,
                 onSaved: (newValue) => postalCodeController.text = newValue!,
                 validator: (value) {
