@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 final ThemeData appTheme = ThemeData(
+  brightness: Brightness.light,
   primaryColor: Colors.deepOrange, // Set your primary color
   hintColor: const Color.fromARGB(255, 27, 27, 27), // Set your accent color
   textTheme: const TextTheme(
