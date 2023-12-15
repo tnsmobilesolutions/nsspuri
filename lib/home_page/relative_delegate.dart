@@ -454,7 +454,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                 child: Text(
                                                   "${devoteedata.sangha}",
                                                   style: const TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),

@@ -57,6 +57,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
       });
   }
 
+  FocusNode focusNode = FocusNode();
   List gender = ["Male", "Female"];
   int genderController = 0;
 
@@ -103,7 +104,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(
+            title: const Text(
               "Upload Profile Picture",
               style: TextStyle(
                   color: Color.fromARGB(255, 135, 135, 135), fontSize: 16),
@@ -116,10 +117,12 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     Navigator.pop(context);
                     selectImage(ImageSource.gallery);
                   },
-                  leading: const Icon(Icons.photo_album),
-                  title: Text(
+                  leading: const Icon(
+                    Icons.photo_album,
+                    color: Colors.deepOrange,
+                  ),
+                  title: const Text(
                     "Select from Gallery",
-                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                 ),
                 ListTile(
@@ -127,10 +130,12 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     Navigator.pop(context);
                     selectImage(ImageSource.camera);
                   },
-                  leading: const Icon(Icons.camera_alt),
-                  title: Text(
+                  leading: const Icon(
+                    Icons.camera_alt,
+                    color: Colors.deepOrange,
+                  ),
+                  title: const Text(
                     "Take a photo",
-                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                 ),
               ],
@@ -184,6 +189,12 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppBarColor,
+          automaticallyImplyLeading: false,
+          title: Text('Devotee Details'),
+          centerTitle: true,
+        ),
         backgroundColor: ScaffoldBackgroundColor,
         body: SafeArea(
             child: Padding(
@@ -199,33 +210,27 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         showPhotoOptions();
                       },
                       child: CircleAvatar(
-                        radius: 50,
-                        child: CircleAvatar(
-                          backgroundImage: previewImage != null &&
-                                  previewImage!.path.isNotEmpty
-                              ? Image.file(
-                                  File('${previewImage?.path}'),
-                                  fit: BoxFit.cover,
-                                ).image
-                              : null,
-                          radius: 60,
-                          child: const Align(
-                            alignment: Alignment.bottomRight,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 15.0,
-                              child: Icon(
-                                Icons.camera_alt,
-                                size: 20.0,
-                              ),
-                            ),
+                        backgroundImage: previewImage != null &&
+                                previewImage!.path.isNotEmpty
+                            ? Image.file(
+                                File('${previewImage?.path}'),
+                                fit: BoxFit.cover,
+                              ).image
+                            : const AssetImage('assets/images/profile.jpeg'),
+                        radius: 60,
+                        child: const Align(
+                          alignment: Alignment.bottomRight,
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.deepOrange,
+                            size: 22.0,
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
-                      style: Theme.of(context).textTheme.displaySmall,
+                      // style: Theme.of(context).textTheme.displaySmall,
                       controller: nameController,
                       textCapitalization: TextCapitalization.words,
                       onSaved: (newValue) => nameController,
@@ -242,6 +247,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       height: 20,
                     ),
                     IntlPhoneField(
+                      dropdownIcon: Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.deepOrange,
+                      ),
+                      focusNode: focusNode,
                       validator: (value) {
                         if ((value?.number ?? "").isEmpty) {
                           return ("Please enter Mobile Number");
@@ -249,19 +259,29 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           return null;
                         }
                       },
-                      style: Theme.of(context).textTheme.displaySmall,
                       controller: mobileController,
                       invalidNumberMessage:
                           "Please enter a valid Mobile Number",
                       keyboardType: TextInputType.phone,
-                      dropdownTextStyle:
-                          Theme.of(context).textTheme.displaySmall,
                       pickerDialogStyle: PickerDialogStyle(
-                          countryCodeStyle:
-                              Theme.of(context).textTheme.displaySmall,
-                          backgroundColor: Colors.grey,
-                          countryNameStyle:
-                              Theme.of(context).textTheme.displaySmall),
+                        searchFieldCursorColor: Colors.deepOrange,
+                        searchFieldInputDecoration: InputDecoration(
+                          label: const Text('Search Country'),
+                          labelStyle: const TextStyle(
+                              color: Colors.black), // Set label text color
+                          hintStyle: TextStyle(
+                              color: Colors.black
+                                  .withOpacity(0.5)), // Set hint text color
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.deepOrange),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.5)),
+                          ),
+                        ),
+                        backgroundColor: Colors.white,
+                      ),
                       decoration: CommonStyle.textFieldStyle(
                           labelTextStr: "Mobile Number",
                           hintTextStr: "Enter Mobile Number"),
@@ -276,73 +296,78 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        const Text(
-                          'Gender',
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 1,
-                              child: RadioListTile(
-                                value: 0,
-                                groupValue: genderController,
-                                title: Text(
-                                  "Bhai",
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                onChanged: (newValue) => setState(
-                                    () => genderController = newValue ?? 0),
-                                activeColor: RadioButtonColor,
-                                // Set the unselected color to blue
-                                selectedTileColor:
-                                    RadioButtonColor, // Set the selected color
-                                selected: false,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12, right: 12),
+                      child: Row(
+                        children: <Widget>[
+                          const Text(
+                            'Gender',
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: RadioListTile(
+                              value: 0,
+                              groupValue: genderController,
+                              title: Text(
+                                "Bhai",
                               ),
+                              onChanged: (newValue) => setState(
+                                  () => genderController = newValue ?? 0),
+                              activeColor: RadioButtonColor,
+                              // Set the unselected color to blue
+                              selectedTileColor:
+                                  RadioButtonColor, // Set the selected color
+                              selected: false,
                             ),
-                            Expanded(
-                              flex: 1,
-                              child: RadioListTile(
-                                value: 1,
-                                groupValue: genderController,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: RadioListTile(
+                              value: 1,
+                              groupValue: genderController,
 
-                                title: Text(
-                                  "Maa",
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    genderController = newValue ?? 0;
-                                  });
-                                },
-                                activeColor: RadioButtonColor,
-                                // Set the unselected color to blue
-                                selectedTileColor:
-                                    RadioButtonColor, // Set the selected color
-                                selected: false,
+                              title: Text(
+                                "Maa",
                               ),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  genderController = newValue ?? 0;
+                                });
+                              },
+                              activeColor: RadioButtonColor,
+                              // Set the unselected color to blue
+                              selectedTileColor:
+                                  RadioButtonColor, // Set the selected color
+                              selected: false,
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     GestureDetector(
-                      child: TextField(
-                        style: Theme.of(context).textTheme.displaySmall,
-                        controller:
-                            dateInputController, //editing controller of this TextField
-                        decoration: CommonStyle.textFieldStyle(
-                            labelTextStr: "Date Of Birth",
-                            hintTextStr: "Select your Date of birth"),
-                        readOnly:
-                            true, //set it true, so that user will not able to edit text
-                        onTap: () => _selectDate(context),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller:
+                                  dateInputController, //editing controller of this TextField
+                              decoration: CommonStyle.textFieldStyle(
+                                labelTextStr: "Date Of Birth",
+                                hintTextStr: "Enter Date Of Birth",
+                                suffixIcon: Icon(
+                                  Icons.calendar_view_month_rounded,
+                                  color: Colors.deepOrange,
+                                ),
+                              ),
+                              readOnly:
+                                  true, //set it true, so that user will not able to edit text
+                              onTap: () => _selectDate(context),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(
@@ -353,14 +378,15 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       children: [
                         Expanded(
                           child: DropdownButtonFormField(
-                            style: Theme.of(context).textTheme.displaySmall,
                             value: bloodGroupController,
-
+                            icon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.deepOrange,
+                            ),
                             elevation: 16,
                             decoration: CommonStyle.textFieldStyle(
                                 labelTextStr: "Blood Group",
                                 hintTextStr: "Enter Blood Group"),
-
                             // style: const TextStyle(color: Colors.deepPurple),
 
                             onChanged: (String? value) {
@@ -399,11 +425,16 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                           )),
                       debounceDuration: const Duration(milliseconds: 400),
                       textFieldConfiguration: TextFieldConfiguration(
-                        style: Theme.of(context).textTheme.displaySmall,
+                        // style: Theme.of(context).textTheme.displaySmall,
                         controller: sanghaController,
                         decoration: CommonStyle.textFieldStyle(
-                            labelTextStr: "Sangha Name",
-                            hintTextStr: "Enter Sangha Name"),
+                          labelTextStr: "Sangha Name",
+                          hintTextStr: "Enter Sangha Name",
+                          suffixIcon: Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.deepOrange,
+                          ),
+                        ),
                       ),
                       validator: (value) {
                         if ((value ?? '').isNotEmpty &&
@@ -450,17 +481,16 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       },
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 4),
+                      padding: const EdgeInsets.only(left: 12, right: 12),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           //SizedBox
                           const Text(
                             'Has Parichaya Patra?',
-                            style: TextStyle(fontSize: 17.0),
                           ), //Text
                           //SizedBox
                           /** Checkbox Widget **/
@@ -480,11 +510,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 50,
+                      height: 45,
                       margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(90)),

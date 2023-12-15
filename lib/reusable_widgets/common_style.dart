@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CommonStyle {
-  static InputDecoration textFieldStyle(
-      {String labelTextStr = "", String hintTextStr = ""}) {
+  static InputDecoration textFieldStyle({
+    String labelTextStr = '',
+    String hintTextStr = '',
+    Icon? suffixIcon, // Change the type to Icon
+  }) {
     return InputDecoration(
       contentPadding: const EdgeInsets.all(12),
       labelText: labelTextStr,
@@ -14,9 +17,11 @@ class CommonStyle {
       fillColor: const Color.fromARGB(255, 190, 190, 190).withOpacity(0.3),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40.0),
+        borderRadius: BorderRadius.circular(30.0),
         borderSide: const BorderSide(width: 0, style: BorderStyle.none),
       ),
+      // Use suffixIcon to add an icon
+      suffixIcon: suffixIcon,
     );
   }
 }

@@ -82,7 +82,6 @@ class _DelegateCardState extends State<DelegateCard> {
             children: [
               Text(
                 "Pune Sammilani",
-                style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
                 '${timeUntilSammilani.inDays} days to go (23, 24, 25 Feb 2024)',
@@ -111,34 +110,38 @@ class _DelegateCardState extends State<DelegateCard> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Column(
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PranamiInfoScreen(),
-                        ),
-                      );
-                    },
-                    child: Text('Payment Info'),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith((states) {
-                          if (states.contains(MaterialState.pressed)) {
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PranamiInfoScreen(),
+                          ),
+                        );
+                      },
+                      child: Text('Payment Info'),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            if (states.contains(MaterialState.pressed)) {
+                              return IconButtonColor;
+                            }
                             return IconButtonColor;
-                          }
-                          return IconButtonColor;
-                        }),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50)))),
+                          }),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(40)))),
+                    ),
                   ),
                 ),
 

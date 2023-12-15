@@ -4,6 +4,7 @@ import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/authentication/devotee_details.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 import 'package:uuid/uuid.dart';
@@ -47,7 +48,6 @@ class _SignupScreenState extends State<SignupScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 30,
                 ),
                 TextFormField(
-                  style: Theme.of(context).textTheme.displaySmall,
+                  // style: Theme.of(context).textTheme.displaySmall,
                   controller: emailController,
                   onSaved: (newValue) => emailController,
                   validator: (value) {
@@ -89,28 +89,18 @@ class _SignupScreenState extends State<SignupScreen> {
                     // the email is valid
                     return null;
                   },
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle:
-                        const TextStyle(fontSize: 16, color: Colors.grey),
-                    hintText: 'Enter Email',
-                    hintStyle:
-                        const TextStyle(fontSize: 16, color: Colors.grey),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
+                  decoration: CommonStyle.textFieldStyle(
+                    labelTextStr: "Email",
+                    hintTextStr: "Enter Email",
                   ),
 
                   // hintText: 'Name',
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 TextFormField(
-                  style: Theme.of(context).textTheme.displaySmall,
+                  // style: Theme.of(context).textTheme.displaySmall,
                   controller: passwordController,
                   onSaved: (newValue) => passwordController,
                   validator: (value) {
@@ -125,18 +115,23 @@ class _SignupScreenState extends State<SignupScreen> {
                   obscureText: _obscured1,
                   focusNode: textFieldFocusNode,
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(12),
                     labelText: "Password",
-                    labelStyle:
-                        const TextStyle(fontSize: 16, color: Colors.grey),
-                    hintText: 'Enter Password',
-                    hintStyle:
-                        const TextStyle(fontSize: 16, color: Colors.grey),
+                    labelStyle: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400),
+                    hintText: "Password",
+                    hintStyle: const TextStyle(fontSize: 16, color: Colors.grey),
                     filled: true,
+                    fillColor: const Color.fromARGB(255, 190, 190, 190)
+                        .withOpacity(0.3),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
+                      borderRadius: BorderRadius.circular(40.0),
+                      borderSide:
+                          const BorderSide(width: 0, style: BorderStyle.none),
+                    ),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                       child: GestureDetector(
@@ -153,52 +148,56 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 22,
+                  height: 20,
                 ),
                 TextFormField(
-                  style: Theme.of(context).textTheme.displaySmall,
-                  controller: confirmPasswordController,
-                  onSaved: (newValue) => confirmPasswordController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter password';
-                    } else if (value != passwordController.text) {
-                      return "Confirm password !";
-                    }
-                    return null;
-                  },
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: _obscured2,
-                  decoration: InputDecoration(
-                    labelText: " Confirm Password",
-                    labelStyle:
-                        const TextStyle(fontSize: 16, color: Colors.grey),
-                    hintText: 'Confirm Password',
-                    hintStyle:
-                        const TextStyle(fontSize: 16, color: Colors.grey),
-                    filled: true,
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                    suffixIcon: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                      child: GestureDetector(
-                        onTap: _toggleObscured2,
-                        child: Icon(
-                          _obscured2
-                              ? Icons.visibility_off_rounded
-                              : Icons.visibility_rounded,
-                          color: IconButtonColor,
-                          size: 20,
+                    // style: Theme.of(context).textTheme.displaySmall,
+                    controller: confirmPasswordController,
+                    onSaved: (newValue) => confirmPasswordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter password';
+                      } else if (value != passwordController.text) {
+                        return "Confirm password !";
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: _obscured2,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(12),
+                      labelText: "Password",
+                      labelStyle: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400),
+                      hintText: "Password",
+                      hintStyle: const TextStyle(fontSize: 16, color: Colors.grey),
+                      filled: true,
+                      fillColor: const Color.fromARGB(255, 190, 190, 190)
+                          .withOpacity(0.3),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(40.0),
+                        borderSide:
+                            const BorderSide(width: 0, style: BorderStyle.none),
+                      ),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                        child: GestureDetector(
+                          onTap: _toggleObscured2,
+                          child: Icon(
+                            _obscured2
+                                ? Icons.visibility_off_rounded
+                                : Icons.visibility_rounded,
+                            size: 20,
+                            color: IconButtonColor,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
+                    )),
                 const SizedBox(
-                  height: 21,
+                  height: 25,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
