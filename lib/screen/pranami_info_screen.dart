@@ -122,7 +122,7 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                           Expanded(
                             flex: 5,
                             child: Text(
-                              "A/C No: ${RemoteConfigHelper().getBankAccountNo} ",
+                              "A/C No: ${RemoteConfigHelper().getBankAccountNo}",
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -153,7 +153,7 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                         Expanded(
                           flex: 5,
                           child: Text(
-                            "IFSC CODE: ${RemoteConfigHelper().getBankIfscCode} ",
+                            "Ifsc Code:${RemoteConfigHelper().getBankIfscCode}",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
