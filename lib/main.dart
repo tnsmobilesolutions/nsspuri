@@ -7,7 +7,6 @@ import 'package:sammilani_delegate/firebase/firebase_options.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:sammilani_delegate/screen/splash_screen.dart';
 import 'package:sammilani_delegate/screen/update_dialouge.dart';
-import 'package:sammilani_delegate/utilities/app_theme_light.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
