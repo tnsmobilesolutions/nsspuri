@@ -33,13 +33,13 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     if (devotee.isGuest == true) {
       return Colors.yellow;
     } else if (devotee.isOrganizer == true) {
-      return Colors.red;
+      return Color.fromARGB(255, 220, 31, 18);
     } else if (devotee.dob != "" && devotee.dob != null) {
       if (isValidDateFormat(devotee.dob.toString())) {
         if (devotee.isSpeciallyAbled == true ||
-            calculateAge(DateTime.parse(devotee.dob.toString())) >= 60) {
+            calculateAge(DateTime.parse(devotee.dob.toString())) >= 70) {
           return Colors.purple;
-        } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 18) {
+        } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 12) {
           return Colors.green;
         } else {
           return Colors.blue;
@@ -50,7 +50,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     } else if (devotee.gender == "Male") {
       return Colors.blue;
     } else if (devotee.gender == "Female") {
-      return Colors.pink;
+      return Color.fromARGB(255, 254, 117, 163);
     } else {
       return Colors.blue;
     }
