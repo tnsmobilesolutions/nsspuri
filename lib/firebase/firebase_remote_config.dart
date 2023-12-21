@@ -62,6 +62,16 @@ class RemoteConfigHelper {
     paymentMessage = message;
   }
 
+  String upiId = "";
+  String get getUpiId {
+    return upiId;
+  }
+
+  set setUpiId(String upiIdLink) {
+    upiId = upiIdLink;
+   
+  }
+
   String paymentContact = "";
   String get getPaymentContact {
     return paymentContact;
@@ -125,6 +135,7 @@ class RemoteConfigHelper {
   set setVersionNumber(String versionNumberr) {
     versionNumber = versionNumberr;
   }
+
   String apiBaseURL = "";
   String get getapiBaseURL {
     return apiBaseURL;
@@ -155,6 +166,7 @@ fetchRemoteConfigData() async {
 
     RemoteConfigHelper().setPaymentMessage =
         remoteConfig.getString('paymentMessage');
+    RemoteConfigHelper().setUpiId = remoteConfig.getString('upiId');
 
     RemoteConfigHelper().setPaymentContact =
         remoteConfig.getString('paymentContact');
@@ -171,8 +183,7 @@ fetchRemoteConfigData() async {
 
     RemoteConfigHelper().sethelpContactNo =
         remoteConfig.getString('helpContactNo');
-    RemoteConfigHelper().setapiBaseURL =
-        remoteConfig.getString('apiBaseURL');
+    RemoteConfigHelper().setapiBaseURL = remoteConfig.getString('apiBaseURL');
 
     RemoteConfigHelper().setVersionNumber =
         remoteConfig.getString('versionNumber');

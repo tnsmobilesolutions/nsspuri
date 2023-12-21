@@ -29,24 +29,39 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     controller = PageController();
   }
 
+  // Color getColorByDevotee(DevoteeModel devotee) {
+  //   if (devotee.isGuest == true) {
+  //     return Colors.yellow;
+  //   } else if (devotee.isOrganizer == true) {
+  //     return Colors.red;
+  //   } else if (devotee.dob != "" && devotee.dob != null) {
+  //     if (isValidDateFormat(devotee.dob.toString())) {
+  //       if (devotee.isSpeciallyAbled == true ||
+  //           calculateAge(DateTime.parse(devotee.dob.toString())) >= 60) {
+  //         return Colors.purple;
+  //       } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 18) {
+  //         return Colors.green;
+  //       } else {
+  //         return Colors.blue;
+  //       }
+  //     } else {
+  //       return Colors.blue;
+  //     }
+  //   } else if (devotee.gender == "Male") {
+  //     return Colors.blue;
+  //   } else if (devotee.gender == "Female") {
+  //     return Colors.pink;
+  //   } else {
+  //     return Colors.blue;
+  //   }
+  // }
   Color getColorByDevotee(DevoteeModel devotee) {
     if (devotee.isGuest == true) {
       return Colors.yellow;
     } else if (devotee.isOrganizer == true) {
       return Colors.red;
-    } else if (devotee.dob != "" && devotee.dob != null) {
-      if (isValidDateFormat(devotee.dob.toString())) {
-        if (devotee.isSpeciallyAbled == true ||
-            calculateAge(DateTime.parse(devotee.dob.toString())) >= 60) {
-          return Colors.purple;
-        } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 18) {
-          return Colors.green;
-        } else {
-          return Colors.blue;
-        }
-      } else {
-        return Colors.blue;
-      }
+    } else if (devotee.isSpeciallyAbled == true) {
+      return Colors.purple;
     } else if (devotee.gender == "Male") {
       return Colors.blue;
     } else if (devotee.gender == "Female") {
