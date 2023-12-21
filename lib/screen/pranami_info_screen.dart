@@ -92,10 +92,20 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                     padding: const EdgeInsets.all(12.0),
                     child: Center(
                       child: Text(
-                          "Whatsapp - ${RemoteConfigHelper().getPaymentContact} ",
-                          style: TextStyle(color: Colors.white)),
+                        "Whatsapp - ${RemoteConfigHelper().getPaymentContact} ",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
+                ),
+              ),
+              Divider(
+                thickness: 2,
+              ),
+              Center(
+                child: Text(
+                  'UPI Details',
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
               SizedBox(
@@ -153,6 +163,12 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
               ),
               Divider(
                 thickness: 2,
+              ),
+              Center(
+                child: Text(
+                  'Bank Details',
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
               SizedBox(
                 child: Card(
