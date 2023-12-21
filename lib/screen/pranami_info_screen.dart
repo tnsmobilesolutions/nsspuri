@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class PranamiInfoScreen extends StatefulWidget {
@@ -20,6 +21,24 @@ void copyToClipboard(BuildContext context, String text) {
 }
 
 class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
+  void _launchWhatsApp() async {
+    String phoneNumber = RemoteConfigHelper().getPaymentContact;
+
+    if (phoneNumber.isNotEmpty) {
+      String whatsappUrl = "https://wa.me/+91$phoneNumber";
+
+      // ignore: deprecated_member_use
+      if (await canLaunch(whatsappUrl)) {
+        // ignore: deprecated_member_use
+        await launch(whatsappUrl);
+      } else {
+        print("Failed to launch WhatsApp.");
+      }
+    } else {
+      print("Invalid phone number.");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +84,7 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  launchUrlString(
-                      "tel:+91${RemoteConfigHelper().paymentContact}");
+                  _launchWhatsApp();
                 },
                 child: Card(
                   color: Colors.deepOrange,
@@ -74,10 +92,82 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                     padding: const EdgeInsets.all(12.0),
                     child: Center(
                       child: Text(
-                          "Call - ${RemoteConfigHelper().getPaymentContact} ",
-                          style: TextStyle(color: Colors.white)),
+                        "WhatsApp - ${RemoteConfigHelper().getPaymentContact} ",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
+                ),
+              ),
+              Divider(
+                thickness: 2,
+              ),
+              Center(
+                child: Text(
+                  'UPI Details',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              SizedBox(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Center(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 5,
+                            child: Text(
+                              "Upi id:  ${RemoteConfigHelper().getUpiId}",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              onPressed: () {
+                                // Call a function to copy text to clipboard
+                                copyToClipboard(
+                                    context, RemoteConfigHelper().getUpiId);
+                              },
+                              icon: Icon(Icons.copy),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Center(
+                child: Container(
+                  width: 370,
+                  height: 400,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          8.0), // Adjust the radius as needed
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          15.0), // Match the Card's borderRadius
+                      child: Image.asset(
+                        'assets/images/upi.jpeg',
+                        width: 375,
+                        height: 375,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Divider(
+                thickness: 2,
+              ),
+              Center(
+                child: Text(
+                  'Bank Details',
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
               SizedBox(
@@ -122,7 +212,7 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                           Expanded(
                             flex: 5,
                             child: Text(
-                              "A/C No: ${RemoteConfigHelper().getBankAccountNo} ",
+                              "A/C No: ${RemoteConfigHelper().getBankAccountNo}",
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -153,7 +243,7 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                         Expanded(
                           flex: 5,
                           child: Text(
-                            "IFSC CODE: ${RemoteConfigHelper().getBankIfscCode} ",
+                            "Ifsc Code:${RemoteConfigHelper().getBankIfscCode}",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
@@ -164,6 +254,36 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                               // Call a function to copy text to clipboard
                               copyToClipboard(context,
                                   RemoteConfigHelper().getBankIfscCode);
+                            },
+                            icon: Icon(Icons.copy),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: Text(
+                            "Branch: ${RemoteConfigHelper().getBranchName} ",
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: IconButton(
+                            onPressed: () {
+                              // Call a function to copy text to clipboard
+                              copyToClipboard(
+                                  context, RemoteConfigHelper().getBranchName);
                             },
                             icon: Icon(Icons.copy),
                           ),
