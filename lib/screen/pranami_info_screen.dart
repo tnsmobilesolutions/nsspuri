@@ -92,7 +92,7 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                     padding: const EdgeInsets.all(12.0),
                     child: Center(
                       child: Text(
-                        "Whatsapp - ${RemoteConfigHelper().getPaymentContact} ",
+                        "WhatsApp - ${RemoteConfigHelper().getPaymentContact} ",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
