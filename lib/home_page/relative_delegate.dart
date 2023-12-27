@@ -448,20 +448,20 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           const SizedBox(
                                             height: 6,
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Flexible(
-                                                flex: 1,
-                                                child: Expanded(
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Flexible(
+                                                  flex: 1,
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .spaceBetween,
+                                                            .spaceAround,
                                                     children: [
                                                       devoteedata.devoteeCode !=
                                                               null
@@ -481,7 +481,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                               ),
                                                             )
                                                           : const Text(""),
-                                                
                                                       Text(
                                                         "Sri Sri Thakura Charanasrita",
                                                         style: TextStyle(
@@ -501,30 +500,32 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                     ],
                                                   ),
                                                 ),
-                                              ),
-                                              Flexible(
-                                                flex: 2,
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(0),
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      4.8,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      4.8,
-                                                  child: SfBarcodeGenerator(
-                                                    value: devoteedata
-                                                        .devoteeCode
-                                                        .toString(),
-                                                    symbology: QRCode(),
-                                                    showValue: false,
+                                                Flexible(
+                                                  flex: 2,
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(0),
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            4.8,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            4.8,
+                                                    child: SfBarcodeGenerator(
+                                                      value: devoteedata
+                                                          .devoteeCode
+                                                          .toString(),
+                                                      symbology: QRCode(),
+                                                      showValue: false,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       )),
