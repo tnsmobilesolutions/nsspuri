@@ -345,8 +345,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                                   devoteedata),
                                                               width: 3,
                                                             ),
-                                                            shape: BoxShape
-                                                                .circle, // This makes the container circular
+                                                            shape:
+                                                                BoxShape.circle,
                                                             image:
                                                                 DecorationImage(
                                                               fit: BoxFit.cover,
@@ -460,7 +460,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.start,
+                                                        MainAxisAlignment
+                                                            .spaceAround,
                                                     children: [
                                                       devoteedata.devoteeCode !=
                                                               null
@@ -487,9 +488,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 50,
                                                       ),
                                                       const Text(
                                                         'SECRETARY',
