@@ -293,36 +293,6 @@ class _PranamiInfoScreenState extends State<PranamiInfoScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 5,
-                          child: Text(
-                            "Branch: ${RemoteConfigHelper().getBranchName} ",
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: IconButton(
-                            onPressed: () {
-                              // Call a function to copy text to clipboard
-                              copyToClipboard(
-                                  context, RemoteConfigHelper().getBranchName);
-                            },
-                            icon: Icon(Icons.copy),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
