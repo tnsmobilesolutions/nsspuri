@@ -269,7 +269,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                                     .bloodGroup ==
                                                                 null
                                                         ? Container(
-                                                            width: 65,
+                                                            width: 75,
                                                             height: 60,
                                                             decoration:
                                                                 const BoxDecoration(
@@ -281,7 +281,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                             child: Stack(
                                                               children: [
                                                                 Container(
-                                                                  width: 65,
+                                                                  width: 75,
                                                                   height: 60,
                                                                   decoration:
                                                                       const BoxDecoration(
@@ -301,7 +301,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                                   left: 0,
                                                                   child:
                                                                       SizedBox(
-                                                                    width: 65,
+                                                                    width: 75,
                                                                     height: 60,
                                                                     child:
                                                                         Center(
@@ -419,6 +419,9 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                               ],
                                             ),
                                           ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
                                           devoteedata.name != null
                                               ? Text(
                                                   _toPascalCase(devoteedata.name
@@ -449,39 +452,37 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Expanded(
-                                                child: Column(
-                                                  children: [
-                                                    devoteedata.devoteeCode !=
-                                                            null
-                                                        ? Center(
-                                                            child: Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topLeft,
-                                                              child: Text(
-                                                                _toPascalCase(
-                                                                    devoteedata
-                                                                        .devoteeCode
-                                                                        .toString()),
-                                                                style:
-                                                                    const TextStyle(
-                                                                  color: Colors
-                                                                      .deepOrange,
-                                                                  fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
+                                              Flexible(
+                                                flex: 1,
+                                                child: Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      devoteedata.devoteeCode !=
+                                                              null
+                                                          ? Text(
+                                                              _toPascalCase(
+                                                                  devoteedata
+                                                                      .devoteeCode
+                                                                      .toString()),
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Colors
+                                                                    .deepOrange,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
                                                               ),
-                                                            ),
-                                                          )
-                                                        : const Text(""),
-                                                    const SizedBox(
-                                                      height: 50,
-                                                    ),
-                                                    const Center(
-                                                      child: Text(
+                                                            )
+                                                          : const Text(""),
+                                                
+                                                      Text(
                                                         "Sri Sri Thakura Charanasrita",
                                                         style: TextStyle(
                                                             fontSize: 13,
@@ -489,23 +490,16 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                                 FontWeight
                                                                     .bold),
                                                       ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 50,
-                                                    ),
-                                                    const Align(
-                                                      alignment:
-                                                          Alignment.bottomLeft,
-                                                      child: Text(
+                                                      Text(
                                                         'SECRETARY',
                                                         style: TextStyle(
-                                                            fontSize: 16,
+                                                            fontSize: 14,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Flexible(
