@@ -58,6 +58,7 @@ dependencies:
   syncfusion_flutter_barcodes: ^23.2.4
   flutter_flip_card: ^0.0.4
   intl_phone_field: ^3.2.0
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
