@@ -432,18 +432,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                   ),
                                                 )
                                               : const Text(""),
-                                          devoteedata.sangha != null
-                                              ? Text(
-                                                  _toPascalCase(devoteedata
-                                                      .sangha
-                                                      .toString()),
-                                                  style: const TextStyle(
-                                                    color: Colors.deepOrange,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                )
-                                              : const Text(""),
                                           const SizedBox(
                                             height: 6,
                                           ),
@@ -462,6 +450,23 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                         MainAxisAlignment
                                                             .spaceAround,
                                                     children: [
+                                                      devoteedata.sangha != null
+                                                          ? Text(
+                                                              _toPascalCase(
+                                                                  devoteedata
+                                                                      .sangha
+                                                                      .toString()),
+                                                              style:
+                                                                  const TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            )
+                                                          : const Text(""),
                                                       devoteedata.devoteeCode !=
                                                               null
                                                           ? Text(
@@ -489,7 +494,23 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                                     .bold),
                                                       ),
                                                       const Text(
-                                                        'SECRETARY',
+                                                        "",
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      const Text(
+                                                        "",
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      const Text(
+                                                        'Secretary',
                                                         style: TextStyle(
                                                             fontSize: 14,
                                                             fontWeight:
