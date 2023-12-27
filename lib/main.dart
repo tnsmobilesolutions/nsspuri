@@ -54,9 +54,7 @@ class _MyAppState extends State<MyApp> {
         RemoteConfigHelper().getupdateRequiredByVersionnumber;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(
-      
-      ),
+      theme: ThemeData.light(),
       home: (upgradePrompt && upgradeVersionAvailable)
           ? UpdateDialouge()
           : const SplashScreen(),

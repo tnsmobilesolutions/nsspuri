@@ -460,8 +460,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
+                                                        MainAxisAlignment.start,
                                                     children: [
                                                       devoteedata.devoteeCode !=
                                                               null
@@ -474,22 +473,25 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                                   const TextStyle(
                                                                 color: Colors
                                                                     .deepOrange,
-                                                                fontSize: 20,
+                                                                fontSize: 15,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
                                                               ),
                                                             )
                                                           : const Text(""),
-                                                      Text(
+                                                      const Text(
                                                         "Sri Sri Thakura Charanasrita",
                                                         style: TextStyle(
-                                                            fontSize: 13,
+                                                            fontSize: 10,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .bold),
                                                       ),
-                                                      Text(
+                                                      SizedBox(
+                                                        height: 50,
+                                                      ),
+                                                      const Text(
                                                         'SECRETARY',
                                                         style: TextStyle(
                                                             fontSize: 14,
