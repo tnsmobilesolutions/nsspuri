@@ -227,7 +227,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             '73RD UTKALA PRADESHIKA',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               color: Color.fromARGB(255, 51, 45,
                                                   45), // Text color
                                             ),
@@ -236,7 +236,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             'BHAKTA SAMMILANI, PUNE - 2024',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               color: Colors.black, // Text color
                                             ),
                                           ),
@@ -254,7 +254,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             ),
                                           ),
                                           const SizedBox(
-                                            height: 5,
+                                            height: 10,
                                           ),
                                           Expanded(
                                             child: Row(
@@ -449,8 +449,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              Flexible(
-                                                flex: 1,
+                                              Expanded(
                                                 child: Column(
                                                   children: [
                                                     devoteedata.devoteeCode !=
