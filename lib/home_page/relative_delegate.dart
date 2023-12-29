@@ -143,37 +143,38 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                         padding: const EdgeInsets.all(.0),
                         child: Column(
                           children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height / 13,
-                              decoration: BoxDecoration(
-                                  color: getColorByDevotee(devoteedata),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(18),
-                                    topRight: Radius.circular(18),
-                                  )),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return EditDevoteeDetailsPage(
-                                              title: "edit",
-                                              devotee: devoteedata,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.edit,
-                                        size: 20, color: IconButtonColor),
-                                  ),
-                                ],
+                            if (devoteedata.status == "dataSubmitted")
+                              Container(
+                                height: MediaQuery.of(context).size.height / 13,
+                                decoration: BoxDecoration(
+                                    color: getColorByDevotee(devoteedata),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(18),
+                                      topRight: Radius.circular(18),
+                                    )),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return EditDevoteeDetailsPage(
+                                                title: "edit",
+                                                devotee: devoteedata,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(Icons.edit,
+                                          size: 20, color: IconButtonColor),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
                             Container(
                               height: MediaQuery.of(context).size.height / 1.79,
                               child: Row(
