@@ -143,18 +143,18 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                         padding: const EdgeInsets.all(.0),
                         child: Column(
                           children: [
-                            if (devoteedata.status == "dataSubmitted")
-                              Container(
-                                height: MediaQuery.of(context).size.height / 13,
-                                decoration: BoxDecoration(
-                                    color: getColorByDevotee(devoteedata),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(18),
-                                      topRight: Radius.circular(18),
-                                    )),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height / 13,
+                              decoration: BoxDecoration(
+                                  color: getColorByDevotee(devoteedata),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(18),
+                                    topRight: Radius.circular(18),
+                                  )),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  if (devoteedata.status == "dataSubmitted")
                                     IconButton(
                                       onPressed: () {
                                         Navigator.push(
@@ -172,9 +172,9 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       icon: const Icon(Icons.edit,
                                           size: 20, color: IconButtonColor),
                                     ),
-                                  ],
-                                ),
+                                ],
                               ),
+                            ),
                             Container(
                               height: MediaQuery.of(context).size.height / 1.79,
                               child: Row(
