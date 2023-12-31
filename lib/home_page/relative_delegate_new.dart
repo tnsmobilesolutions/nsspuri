@@ -174,7 +174,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         'Nilachala Saraswata Sangha, Puri',
                                         style: TextStyle(
                                           fontSize: 12,
-                                          
+
                                           color: Colors.white, // Text color
                                         ),
                                       ),

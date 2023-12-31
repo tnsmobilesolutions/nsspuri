@@ -152,26 +152,56 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                     topRight: Radius.circular(18),
                                   )),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  if (devoteedata.status == "dataSubmitted")
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return EditDevoteeDetailsPage(
-                                                title: "edit",
-                                                devotee: devoteedata,
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(Icons.edit,
-                                          size: 20, color: IconButtonColor),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                      child: const Text(''),
                                     ),
+                                  ),
+
+                                  Expanded(
+                                    flex: 4,
+                                    child: Container(
+                                      child: const Text(
+                                        'DELEGATE CARD',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  // const SizedBox(
+                                  //   width: 50,
+                                  // ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: devoteedata.status == "dataSubmitted"
+                                        ? Container(
+                                            child: IconButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return EditDevoteeDetailsPage(
+                                                        title: "edit",
+                                                        devotee: devoteedata,
+                                                      );
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                              icon: const Icon(Icons.edit,
+                                                  size: 20,
+                                                  color: Colors.white),
+                                            ),
+                                          )
+                                        : Container(), // You can use an empty Container or any other widget based on your requirements
+                                  )
                                 ],
                               ),
                             ),
@@ -201,58 +231,72 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Container(
-                                                child: Image.asset(
-                                                  'assets/images/nsslogo.png',
-                                                  scale: 35,
+                                              Expanded(
+                                                flex: 1,
+                                                child: Container(
+                                                  child: Image.asset(
+                                                    'assets/images/nsslogo.png',
+                                                    scale: 35,
+                                                  ),
                                                 ),
                                               ),
-                                              const Text(
-                                                'JAYAGURU',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors
-                                                      .black, // Text color
+                                              Expanded(
+                                                flex: 4,
+                                                child: Container(
+                                                  child: const Center(
+                                                    child: Text(
+                                                      'JAYAGURU',
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors
+                                                              .black // Text color
+                                                          ),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                              Container(
-                                                child: Image.asset(
-                                                  'assets/images/Subtract.png',
-                                                  scale: 80,
+                                              Expanded(
+                                                flex: 1,
+                                                child: Container(
+                                                  child: Image.asset(
+                                                    'assets/images/Subtract.png',
+                                                    scale: 85,
+                                                  ),
                                                 ),
                                               ),
                                             ],
                                           ),
                                           const Text(
-                                            '73RD UTKALA PRADESHIKA',
+                                            'NILACHALA SARASWATA SANGHA, PURI',
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              color: Color.fromARGB(255, 51, 45,
-                                                  45), // Text color
-                                            ),
-                                          ),
-                                          const Text(
-                                            'BHAKTA SAMMILANI, PUNE - 2024',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                              color: Colors.black, // Text color
-                                            ),
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold,
+                                                color:
+                                                    Colors.deepOrange // Text color
+                                                ),
                                           ),
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          Text(
-                                            'DELEGATE CARD',
-                                            textAlign: TextAlign.center,
+                                          const Text(
+                                            '73RD UTKALA PRADESHIKA',
                                             style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                              color: getColorByDevotee(
-                                                  devoteedata),
-                                            ),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Colors
+                                                    .black // Text color
+                                                ),
+                                          ),
+                                          const Text(
+                                            'BHAKTA SAMMILANI, PUNE - 2024',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                                color: Colors
+                                                    .black // Text color
+                                                ),
                                           ),
                                           const SizedBox(
                                             height: 10,
