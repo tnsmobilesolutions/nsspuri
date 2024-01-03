@@ -216,7 +216,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
-                                          'assets/images/F.7.svg',
+                                          'assets/images/2.svg',
                                           color: getColorByDevotee(devoteedata),
                                           height: 22,
                                         );
@@ -273,8 +273,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.bold,
-                                                color:
-                                                    Colors.deepOrange // Text color
+                                                color: Colors
+                                                    .deepOrange // Text color
                                                 ),
                                           ),
                                           const SizedBox(
@@ -285,8 +285,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14,
-                                                color: Colors
-                                                    .black // Text color
+                                                color:
+                                                    Colors.black // Text color
                                                 ),
                                           ),
                                           const Text(
@@ -294,8 +294,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14,
-                                                color: Colors
-                                                    .black // Text color
+                                                color:
+                                                    Colors.black // Text color
                                                 ),
                                           ),
                                           const SizedBox(
@@ -601,7 +601,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
-                                          'assets/images/F.7.svg',
+                                          'assets/images/2.svg',
                                           height: 22,
                                           color: getColorByDevotee(devoteedata),
                                         );
@@ -630,7 +630,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return SvgPicture.asset(
-                                        'assets/images/F.7.svg',
+                                        'assets/images/2.svg',
                                         height: 22,
                                         color: getColorByDevotee(devoteedata),
                                       );
