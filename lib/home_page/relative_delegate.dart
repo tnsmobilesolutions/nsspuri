@@ -211,8 +211,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                 children: [
                                   Expanded(
                                     flex: 1,
-                                    child: ListView.builder(
-                                      itemCount: 22,
+                                    child: ListView.separated(
+                                      itemCount: 18,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
@@ -220,6 +220,14 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           color: getColorByDevotee(devoteedata),
                                           height: 22,
                                         );
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
+                                        // This widget will be used as a separator between items.
+                                        // You can adjust the size and appearance of the separator here.
+                                        return SizedBox(
+                                            height:
+                                                4); // Adjust the height as needed.
                                       },
                                     ),
                                   ),
@@ -596,15 +604,23 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         ],
                                       )),
                                   Expanded(
-                                    child: ListView.builder(
-                                      itemCount: 21,
+                                    child: ListView.separated(
+                                      itemCount: 18,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
                                           'assets/images/2.svg',
-                                          height: 22,
                                           color: getColorByDevotee(devoteedata),
+                                          height: 22,
                                         );
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
+                                        // This widget will be used as a separator between items.
+                                        // You can adjust the size and appearance of the separator here.
+                                        return SizedBox(
+                                            height:
+                                                4); // Adjust the height as needed.
                                       },
                                     ),
                                   ),
@@ -612,30 +628,28 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                               ),
                             ),
                             Expanded(
-                              child: Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 17, left: 4.5, right: 4.5),
-                                  child: GridView.builder(
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 12, // Number of columns
-                                      crossAxisSpacing:
-                                          4.0, // Adjust the spacing between columns
-                                      mainAxisSpacing:
-                                          8.0, // Adjust the spacing between rows
-                                    ),
-                                    itemCount:
-                                        12, // Change this number based on your actual requirement
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return SvgPicture.asset(
-                                        'assets/images/2.svg',
-                                        height: 22,
-                                        color: getColorByDevotee(devoteedata),
-                                      );
-                                    },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 17, left: 4.5, right: 4.5),
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 12, // Number of columns
+                                    crossAxisSpacing:
+                                        4.0, // Adjust the spacing between columns
+                                    mainAxisSpacing:
+                                        8.0, // Adjust the spacing between rows
                                   ),
+                                  itemCount:
+                                      12, // Change this number based on your actual requirement
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return SvgPicture.asset(
+                                      'assets/images/2.svg',
+                                      height: 22,
+                                      color: getColorByDevotee(devoteedata),
+                                    );
+                                  },
                                 ),
                               ),
                             ),
