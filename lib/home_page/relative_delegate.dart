@@ -212,13 +212,13 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                   Expanded(
                                     flex: 1,
                                     child: ListView.separated(
-                                      itemCount: 18,
+                                      itemCount: 20,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
-                                          'assets/images/2.svg',
+                                          'assets/images/3.svg',
                                           color: getColorByDevotee(devoteedata),
-                                          height: 22,
+                                          height: 20,
                                         );
                                       },
                                       separatorBuilder:
@@ -227,7 +227,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         // You can adjust the size and appearance of the separator here.
                                         return SizedBox(
                                             height:
-                                                4); // Adjust the height as needed.
+                                                3); // Adjust the height as needed.
                                       },
                                     ),
                                   ),
@@ -605,13 +605,13 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       )),
                                   Expanded(
                                     child: ListView.separated(
-                                      itemCount: 18,
+                                      itemCount: 20,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
-                                          'assets/images/2.svg',
+                                          'assets/images/3.svg',
                                           color: getColorByDevotee(devoteedata),
-                                          height: 22,
+                                          height: 20,
                                         );
                                       },
                                       separatorBuilder:
@@ -620,7 +620,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         // You can adjust the size and appearance of the separator here.
                                         return SizedBox(
                                             height:
-                                                4); // Adjust the height as needed.
+                                                3); // Adjust the height as needed.
                                       },
                                     ),
                                   ),
@@ -630,11 +630,11 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                    bottom: 17, left: 4.5, right: 4.5),
+                                    bottom: 17, left: 5, right: 5),
                                 child: GridView.builder(
                                   gridDelegate:
                                       const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 12, // Number of columns
+                                    crossAxisCount: 13, // Number of columns
                                     crossAxisSpacing:
                                         4.0, // Adjust the spacing between columns
                                     mainAxisSpacing:
@@ -645,8 +645,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return SvgPicture.asset(
-                                      'assets/images/2.svg',
-                                      height: 22,
+                                      'assets/images/3.svg',
+                                      height: 20,
                                       color: getColorByDevotee(devoteedata),
                                     );
                                   },
