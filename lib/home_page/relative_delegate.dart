@@ -8,6 +8,7 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
 class RelativeDelegate extends StatefulWidget {
@@ -24,10 +25,14 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
   final con = FlipCardController();
   GlobalKey<PageContainerState> key = GlobalKey();
 
+  int updatedPageIndex =
+      0; // Add this variable to keep track of the updated page index
+
   @override
   void initState() {
     super.initState();
-    controller = PageController();
+    controller =
+        PageController(initialPage: updatedPageIndex); // Set initialPage
   }
 
   Color getColorByDevotee(DevoteeModel devotee) {
@@ -95,19 +100,14 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     if (devotees.isEmpty) {
       return const Center(child: Text("No data"));
     }
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.4,
-      child: PageIndicatorContainer(
-        length: devotees.length,
-        align: IndicatorAlign.bottom,
-        indicatorSpace: 10.0,
-        // padding: const EdgeInsets.all(30),
-        indicatorColor: Colors.blueAccent,
-        indicatorSelectorColor: Colors.white,
-        shape: IndicatorShape.circle(size: 8),
-        child: PageView.builder(
+    return Column(
+      children: [
+        Container(
+          height: MediaQuery.of(context).size.height / 1.4,
+          child: PageView.builder(
             itemCount: devotees.length,
-            controller: PageController(),
+            controller:
+                controller, // Use the same controller for PageView.builder
             itemBuilder: (
               BuildContext context,
               int index,
@@ -641,7 +641,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         8.0, // Adjust the spacing between rows
                                   ),
                                   itemCount:
-                                      12, // Change this number based on your actual requirement
+                                      13, // Change this number based on your actual requirement
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return SvgPicture.asset(
@@ -660,8 +660,25 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                   ),
                 ),
               );
-            }),
-      ),
+            },
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        SmoothPageIndicator(
+          controller:
+              controller, // Use the same controller for SmoothPageIndicator
+          count: devotees.length,
+          effect: const WormEffect(
+            dotColor: Colors.grey,
+            activeDotColor: Colors.deepOrange,
+            dotHeight: 8,
+            dotWidth: 8,
+            type: WormType.thinUnderground,
+          ),
+        ),
+      ],
     );
   }
 }

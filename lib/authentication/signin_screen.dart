@@ -57,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   TextFormField(
                     controller: _emailTextController,
-                    onSaved: (newValue) => _emailTextController,
+                    onSaved: (newValue) =>_emailTextController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter  Email';
