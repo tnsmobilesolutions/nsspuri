@@ -7,8 +7,8 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+   HomePage({Key? key, this.index}) : super(key: key);
+int? index;
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -42,7 +42,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     _pages = [
-      const DelegateCard(),
+       DelegateCard(
+        index: widget.index,
+       ),
       const KnowMore(),
       if (currentDevotee?.isAllowedToScanPrasad == true)
         const QrScannerScreen(),

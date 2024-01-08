@@ -12,8 +12,8 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class DelegateCard extends StatefulWidget {
-  const DelegateCard({super.key});
-
+   DelegateCard({super.key, this.index});
+int? index;
   @override
   State<DelegateCard> createState() => _DelegateCardState();
 }
@@ -154,7 +154,7 @@ class _DelegateCardState extends State<DelegateCard> {
                       );
                     } else {
                       if (snapshot.data["statusCode"] == 200) {
-                        return RelativeDelegate(devoteeData: snapshot.data);
+                        return RelativeDelegate(devoteeData: snapshot.data,editedIndex: widget.index,);
                       } else {
                         return const Column(
                           children: [

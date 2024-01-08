@@ -26,8 +26,10 @@ import 'package:uuid/uuid.dart';
 
 // ignore: must_be_immutable
 class EditDevoteeDetailsPage extends StatefulWidget {
-  EditDevoteeDetailsPage({Key? key, required this.devotee, required this.title})
+  EditDevoteeDetailsPage(
+      {Key? key, required this.devotee, required this.title, this.index})
       : super(key: key);
+  int? index;
   DevoteeModel devotee;
   String title;
   get currentUser => null;
@@ -234,7 +236,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const DelegateCard(),
+                builder: (context) => DelegateCard(),
               ),
             );
           },
@@ -792,10 +794,13 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         );
                         Navigator.of(context)
                             .pop(); // Close the circular progress indicator
+                        // Close the circular progress indicator
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const HomePage(),
+                              builder: (context) => HomePage(
+                                index: widget.index,
+                              ),
                             ));
                       } else {
                         Navigator.of(context)

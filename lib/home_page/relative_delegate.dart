@@ -12,9 +12,10 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
 class RelativeDelegate extends StatefulWidget {
-  RelativeDelegate({super.key, required this.devoteeData});
+  RelativeDelegate({super.key, required this.devoteeData, this.editedIndex});
 
   Map<String, dynamic> devoteeData;
+  int? editedIndex;
 
   @override
   State<RelativeDelegate> createState() => _RelativeDelegateState();
@@ -106,8 +107,11 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
           height: MediaQuery.of(context).size.height / 1.4,
           child: PageView.builder(
             itemCount: devotees.length,
-            controller:
-                controller, // Use the same controller for PageView.builder
+            controller: controller,
+            onPageChanged: (index) {
+              // Update updatedPageIndex when the page changes
+              updatedPageIndex = index;
+            },
             itemBuilder: (
               BuildContext context,
               int index,
@@ -182,7 +186,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                     child: devoteedata.status == "dataSubmitted"
                                         ? Container(
                                             child: IconButton(
-                                              onPressed: () {
+                                              onPressed: () async {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -190,10 +194,27 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                       return EditDevoteeDetailsPage(
                                                         title: "edit",
                                                         devotee: devoteedata,
+                                                        index: index,
                                                       );
                                                     },
                                                   ),
                                                 );
+                                                // .then((devotee) {
+                                                //   setState(() {
+                                                //     if (devotee != null) {
+                                                //       devoteedata = devotee;
+                                                //     }
+                                                //   });
+                                                // });
+
+                                                // After editing, set the updatedPageIndex to the index of the edited card
+                                                setState(() {
+                                                  updatedPageIndex = index;
+                                                });
+
+                                                // Update the PageController to jump to the desired page after editing
+                                                controller.jumpToPage(
+                                                    updatedPageIndex);
                                               },
                                               icon: const Icon(Icons.edit,
                                                   size: 20,
