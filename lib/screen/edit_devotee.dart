@@ -66,7 +66,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
-        String formattedDate = DateFormat('y-MM-dd').format(selectedDate);
+        String formattedDate = DateFormat('dd/MM/yyyy').format(selectedDate);
         dateInputController.text = formattedDate;
       });
     }
