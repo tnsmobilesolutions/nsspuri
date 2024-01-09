@@ -22,6 +22,6 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
         splashIconSize: 200,
         splashTransition: SplashTransition.scaleTransition,
-        nextScreen: uid != null ? HomePage() : const SignInScreen());
+        nextScreen: uid != null ? const HomePage() : const SignInScreen());
   }
 }

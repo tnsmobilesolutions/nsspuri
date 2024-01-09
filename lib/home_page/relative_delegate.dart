@@ -22,10 +22,9 @@ class RelativeDelegate extends StatefulWidget {
 }
 
 class _RelativeDelegateState extends State<RelativeDelegate> {
-  late PageController controller;
   final con = FlipCardController();
+  late PageController controller;
   GlobalKey<PageContainerState> key = GlobalKey();
-
   int updatedPageIndex =
       0; // Add this variable to keep track of the updated page index
 
@@ -59,14 +58,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     } else if (devotee.gender == "Female") {
       return const Color.fromARGB(255, 254, 117, 163);
     } else {
-      return Colors.blue;
+      return Colors.grey;
     }
-  }
-
-  bool isValidDateFormat(String date) {
-    // Check if the date is in the format yyyy-mm-dd
-    final RegExp dateFormat = RegExp(r'^\d{4}-\d{2}-\d{2}$');
-    return dateFormat.hasMatch(date);
   }
 
   int calculateAge(DateTime dob) {
@@ -77,6 +70,12 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
       age--;
     }
     return age;
+  }
+
+  bool isValidDateFormat(String date) {
+    // Check if the date is in the format yyyy-mm-dd
+    final RegExp dateFormat = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+    return dateFormat.hasMatch(date);
   }
 
   String _toPascalCase(String input) {
@@ -103,7 +102,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     }
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: MediaQuery.of(context).size.height / 1.4,
           child: PageView.builder(
             itemCount: devotees.length,
@@ -157,24 +156,20 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                   )),
                               child: Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     flex: 2,
-                                    child: Container(
-                                      child: const Text(''),
-                                    ),
+                                    child: Text(''),
                                   ),
 
-                                  Expanded(
+                                  const Expanded(
                                     flex: 4,
-                                    child: Container(
-                                      child: const Text(
-                                        'DELEGATE CARD',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                        ),
+                                    child: Text(
+                                      'DELEGATE CARD',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -184,32 +179,29 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                   Expanded(
                                     flex: 2,
                                     child: devoteedata.status == "dataSubmitted"
-                                        ? Container(
-                                            child: IconButton(
-                                              onPressed: () async {
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return EditDevoteeDetailsPage(
-                                                        title: "edit",
-                                                        devotee: devoteedata,
-                                                      );
-                                                    },
-                                                  ),
-                                                );
-                                              },
-                                              icon: const Icon(Icons.edit,
-                                                  size: 20,
-                                                  color: Colors.white),
-                                            ),
+                                        ? IconButton(
+                                            onPressed: () async {
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return EditDevoteeDetailsPage(
+                                                      title: "edit",
+                                                      devotee: devoteedata,
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                            icon: const Icon(Icons.edit,
+                                                size: 20, color: Colors.white),
                                           )
-                                        : Container(), // You can use an empty Container or any other widget based on your requirements
+                                        : Container(),
                                   )
                                 ],
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               height: MediaQuery.of(context).size.height / 1.79,
                               child: Row(
                                 children: [
@@ -229,7 +221,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           (BuildContext context, int index) {
                                         // This widget will be used as a separator between items.
                                         // You can adjust the size and appearance of the separator here.
-                                        return SizedBox(
+                                        return const SizedBox(
                                             height:
                                                 3); // Adjust the height as needed.
                                       },
@@ -622,7 +614,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           (BuildContext context, int index) {
                                         // This widget will be used as a separator between items.
                                         // You can adjust the size and appearance of the separator here.
-                                        return SizedBox(
+                                        return const SizedBox(
                                             height:
                                                 3); // Adjust the height as needed.
                                       },
@@ -667,7 +659,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
             },
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         SmoothPageIndicator(
