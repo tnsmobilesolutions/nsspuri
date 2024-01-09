@@ -7,6 +7,7 @@ import 'package:sammilani_delegate/home_page/card_flip.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:sammilani_delegate/utilities/custom_calender.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -106,8 +107,11 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
           height: MediaQuery.of(context).size.height / 1.4,
           child: PageView.builder(
             itemCount: devotees.length,
-            controller:
-                controller, // Use the same controller for PageView.builder
+            controller: controller,
+            onPageChanged: (index) {
+              // Update updatedPageIndex when the page changes
+              updatedPageIndex = index;
+            },
             itemBuilder: (
               BuildContext context,
               int index,
@@ -182,8 +186,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                     child: devoteedata.status == "dataSubmitted"
                                         ? Container(
                                             child: IconButton(
-                                              onPressed: () {
-                                                Navigator.push(
+                                              onPressed: () async {
+                                                await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) {
