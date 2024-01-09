@@ -57,22 +57,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   List<String>? sanghaSuggestions = [];
   bool? parichayaPatraValue = false;
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-        String formattedDate = DateFormat('dd/MM/yyyy').format(selectedDate);
-        dateInputController.text = formattedDate;
-      });
-    }
-  }
-
   FocusNode focusNode = FocusNode();
 
   List gender = ["Male", "Female"];
@@ -98,22 +82,30 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     final selectedDate = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Column(
-            children: [
-              Text("Select Date"),
-              Divider(thickness: 2, color: Color.fromARGB(255, 206, 206, 206)),
-            ],
-          ),
-          content: CustomCalender(),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Close"),
+        return SingleChildScrollView(
+          child: Center(
+            child: AlertDialog(
+              title: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Select Date"),
+                  Divider(
+                      thickness: 2, color: Color.fromARGB(255, 206, 206, 206)),
+                ],
+              ),
+              content: CustomCalender(),
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: 20, vertical: 10), // Adjust the values as needed
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Close"),
+                ),
+              ],
             ),
-          ],
+          ),
         );
       },
     );
