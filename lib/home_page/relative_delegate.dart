@@ -41,15 +41,23 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     } else if (devotee.isOrganizer == true) {
       return const Color.fromARGB(255, 220, 31, 18);
     } else if (devotee.dob != "" && devotee.dob != null) {
-      if (isValidDateFormat(devotee.dob.toString())) {
-        if (devotee.isSpeciallyAbled == true ||
-            calculateAge(DateTime.parse(devotee.dob.toString())) >= 70) {
-          return Colors.purple;
-        } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 12) {
-          return Colors.green;
-        } else {
-          return Colors.blue;
-        }
+      // if (isValidDateFormat(devotee.dob.toString())) {
+      //   if (devotee.isSpeciallyAbled == true ||
+      //       calculateAge(DateTime.parse(devotee.dob.toString())) >= 70) {
+      //     return Colors.purple;
+      //   } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 12) {
+      //     return Colors.green;
+      //   } else {
+      //     return Colors.blue;
+      //   }
+      // } else {
+      //   return Colors.blue;
+      // }
+      if (devotee.isSpeciallyAbled == true ||
+          calculateAge(DateTime.parse(devotee.dob.toString())) >= 70) {
+        return Colors.purple;
+      } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 12) {
+        return Colors.green;
       } else {
         return Colors.blue;
       }
@@ -208,7 +216,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                   Expanded(
                                     flex: 1,
                                     child: ListView.separated(
-                                      itemCount: 20,
+                                      itemCount: 22,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
@@ -601,7 +609,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       )),
                                   Expanded(
                                     child: ListView.separated(
-                                      itemCount: 20,
+                                      itemCount: 22,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(

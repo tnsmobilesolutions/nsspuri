@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +31,7 @@ import 'package:uuid/uuid.dart';
 class EditDevoteeDetailsPage extends StatefulWidget {
   EditDevoteeDetailsPage({Key? key, required this.devotee, required this.title})
       : super(key: key);
-  DevoteeModel devotee;
+  DevoteeModel? devotee;
   String title;
   get currentUser => null;
 
@@ -56,13 +58,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   // bool _validate1 = false;
   List<String>? sanghaSuggestions = [];
   bool? parichayaPatraValue = false;
-
   FocusNode focusNode = FocusNode();
-
   List gender = ["Male", "Female"];
   int genderController = 0;
   String? profileURL;
-
   String? profileImage;
   XFile? previewImage;
   List<String> bloodGrouplist = <String>[
@@ -79,31 +78,48 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
 
   get districtList => null;
   void _showCustomCalendarDialog(BuildContext context) async {
+    String day = "", month = "", year = "";
+
+    if (widget.devotee != null) {
+      List<String> dateParts = widget.devotee?.dob?.split('-') ?? [];
+      setState(() {
+        day = int.parse(dateParts[2]).toString();
+        month = int.parse(dateParts[1]).toString();
+        year = int.parse(dateParts[0]).toString();
+      });
+    }
+
     final selectedDate = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: Center(
+        return Center(
+          child: SingleChildScrollView(
             child: AlertDialog(
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              icon: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Select Date"),
-                  Divider(
-                      thickness: 2, color: Color.fromARGB(255, 206, 206, 206)),
+                  const Text(
+                    "Select Date",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.deepOrange,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ],
               ),
-              content: CustomCalender(),
-              contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20, vertical: 10), // Adjust the values as needed
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text("Close"),
-                ),
-              ],
+              content: CustomCalender(
+                day: day,
+                month: month,
+                year: year,
+              ),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
           ),
         );
@@ -111,12 +127,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     );
 
     if (selectedDate != null) {
-      // Set the selected date to the controller
       dateInputController.text = selectedDate;
     }
   }
-
-// ...
 
   void selectImage(ImageSource source) async {
     XFile? pickedFile =
@@ -191,23 +204,23 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.title == "edit") {
-      nameController.text = widget.devotee.name ?? "";
-      genderController = widget.devotee.gender == "Male" ? 0 : 1;
-      mobileController.text = widget.devotee.mobileNumber ?? "";
-      sanghaController.text = widget.devotee.sangha ?? "";
-      dateInputController.text = widget.devotee.dob ?? "";
-      bloodGroupController = widget.devotee.bloodGroup ?? bloodGroupController;
-      profileURL = widget.devotee.profilePhotoUrl ?? "";
-      addressLine1Controller.text = widget.devotee.address?.addressLine1 ?? "";
-      addressLine2Controller.text = widget.devotee.address?.addressLine2 ?? "";
-      cityController.text = widget.devotee.address?.city ?? "";
-      stateController.text = widget.devotee.address?.state ?? "Odisha";
-      postalCodeController.text = widget.devotee.address?.postalCode != null
-          ? "${widget.devotee.address?.postalCode}"
+    if (widget.devotee != null) {
+      nameController.text = widget.devotee?.name ?? "";
+      genderController = widget.devotee?.gender == "Male" ? 0 : 1;
+      mobileController.text = widget.devotee?.mobileNumber ?? "";
+      sanghaController.text = widget.devotee?.sangha ?? "";
+      dateInputController.text = widget.devotee?.dob ?? "";
+      bloodGroupController = widget.devotee?.bloodGroup ?? bloodGroupController;
+      profileURL = widget.devotee?.profilePhotoUrl ?? "";
+      addressLine1Controller.text = widget.devotee?.address?.addressLine1 ?? "";
+      addressLine2Controller.text = widget.devotee?.address?.addressLine2 ?? "";
+      cityController.text = widget.devotee?.address?.city ?? "";
+      stateController.text = widget.devotee?.address?.state ?? "Odisha";
+      postalCodeController.text = widget.devotee?.address?.postalCode != null
+          ? "${widget.devotee?.address?.postalCode}"
           : "";
-      countryController.text = widget.devotee.address?.country ?? "India";
-      parichayaPatraValue = widget.devotee.hasParichayaPatra ?? false;
+      countryController.text = widget.devotee?.address?.country ?? "India";
+      parichayaPatraValue = widget.devotee?.hasParichayaPatra ?? false;
     }
     stateController.text = "Odisha";
     countryController.text = "India";
@@ -246,25 +259,32 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     return image.path.split("/").last;
   }
 
+  String _formatDOB(String dob) {
+    String dateString = dob;
+    DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
+    String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+    return formattedDate;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ScaffoldBackgroundColor,
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DelegateCard(),
-              ),
-            );
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.deepOrange,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => const DelegateCard(),
+        //       ),
+        //     );
+        //   },
+        //   icon: const Icon(
+        //     Icons.arrow_back,
+        //     color: Colors.deepOrange,
+        //   ),
+        // ),
         backgroundColor: AppBarColor,
         title: widget.title == 'edit'
             ? const Text('Edit Delegate')
@@ -506,7 +526,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "Sangha Name",
                     hintTextStr: "Enter Sangha Name",
-                    suffixIcon: Icon(
+                    suffixIcon: const Icon(
                       Icons.arrow_drop_down,
                       color: Colors.deepOrange,
                     ),
@@ -749,37 +769,37 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                       String? profileURL = previewImage != null
                           ? await uploadImageToFirebaseStorage(
                               previewImage as XFile, nameController.text)
-                          : widget.devotee.profilePhotoUrl;
+                          : widget.devotee?.profilePhotoUrl;
 
                       // print("devoteeee -- ${widget.devotee}");
                       DevoteeModel updateDevotee = DevoteeModel(
                           devoteeId: widget.title == "edit"
-                              ? widget.devotee.devoteeId
+                              ? widget.devotee?.devoteeId
                               : const Uuid().v1(),
                           createdById: widget.title == "edit"
-                              ? widget.devotee.createdById
+                              ? widget.devotee?.createdById
                               : const Uuid().v1(),
-                          emailId: widget.devotee.emailId,
+                          emailId: widget.devotee?.emailId,
                           bloodGroup: bloodGroupController,
                           name: nameController.text,
                           devoteeCode: widget.title == "edit"
-                              ? widget.devotee.devoteeCode
+                              ? widget.devotee?.devoteeCode
                               : 0,
-                          isAdmin: widget.devotee.isAdmin ?? false,
+                          isAdmin: widget.devotee?.isAdmin ?? false,
                           isAllowedToScanPrasad:
-                              widget.devotee.isAllowedToScanPrasad ?? false,
+                              widget.devotee?.isAllowedToScanPrasad ?? false,
                           gender: gender[genderController],
                           profilePhotoUrl: profileURL,
                           sangha: sanghaController.text,
-                          dob: dateInputController.text,
+                          dob: _formatDOB(dateInputController.text),
                           mobileNumber: mobileController.text,
-                          createdOn: widget.devotee.createdOn,
-                          status: widget.devotee.status ?? "dataSubmitted",
-                          uid: widget.devotee.uid ?? "",
+                          createdOn: widget.devotee?.createdOn,
+                          status: widget.devotee?.status ?? "dataSubmitted",
+                          uid: widget.devotee?.uid ?? "",
                           updatedOn: DateTime.now().toString(),
                           hasParichayaPatra: parichayaPatraValue,
                           isSpeciallyAbled:
-                              widget.devotee.isSpeciallyAbled ?? false,
+                              widget.devotee?.isSpeciallyAbled ?? false,
                           address: AddressModel(
                               addressLine2: addressLine2Controller.text,
                               addressLine1: addressLine1Controller.text,
@@ -791,7 +811,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                       Map<String, dynamic> response;
                       if (widget.title == "edit") {
                         response = await PutDevoteeAPI().updateDevotee(
-                            updateDevotee, widget.devotee.devoteeId.toString());
+                            updateDevotee, widget.devotee?.devoteeId ?? "");
                       } else {
                         response = await PostDevoteeAPI()
                             .addRelativeDevotee(updateDevotee);

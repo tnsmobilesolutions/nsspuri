@@ -43,30 +43,68 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   List<String>? sanghaSuggestions = [];
   bool? parichayaPatraValue = false;
 
+  // void _showCustomCalendarDialog(BuildContext context) async {
+  //   final selectedDate = await showDialog<String>(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Center(child: Text("Select Date")),
+  //         content: CustomCalender(),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: const Text(
+  //               "Close",
+  //               style: TextStyle(color: Colors.deepOrange),
+  //             ),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+
+  //   if (selectedDate != null) {
+  //     dateInputController.text = selectedDate;
+  //   }
+  // }
+
   void _showCustomCalendarDialog(BuildContext context) async {
     final selectedDate = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Center(child: Text("Select Date")),
-          content: CustomCalender(),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                "Close",
-                style: TextStyle(color: Colors.deepOrange),
+        return Center(
+          child: SingleChildScrollView(
+            child: AlertDialog(
+              icon: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Select Date",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.deepOrange,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
               ),
+              content: CustomCalender(),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
-          ],
+          ),
         );
       },
     );
 
     if (selectedDate != null) {
-      // Set the selected date to the controller
       dateInputController.text = selectedDate;
     }
   }
@@ -111,6 +149,13 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     );
 
     return croppedFile != null ? XFile(croppedFile.path) : null;
+  }
+
+  String _formatDOB(String dob) {
+    String dateString = dob;
+    DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
+    String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+    return formattedDate;
   }
 
   void showPhotoOptions() {
@@ -206,7 +251,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
         appBar: AppBar(
           backgroundColor: AppBarColor,
           automaticallyImplyLeading: false,
-          title: Text('Devotee Details'),
+          title: const Text('Devotee Details'),
           centerTitle: true,
         ),
         backgroundColor: ScaffoldBackgroundColor,
@@ -261,7 +306,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       height: 20,
                     ),
                     IntlPhoneField(
-                      dropdownIcon: Icon(
+                      dropdownIcon: const Icon(
                         Icons.arrow_drop_down,
                         color: Colors.deepOrange,
                       ),
@@ -322,7 +367,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                             child: RadioListTile(
                               value: 0,
                               groupValue: genderController,
-                              title: Text(
+                              title: const Text(
                                 "Bhai",
                               ),
                               onChanged: (newValue) => setState(
@@ -340,7 +385,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               value: 1,
                               groupValue: genderController,
 
-                              title: Text(
+                              title: const Text(
                                 "Maa",
                               ),
                               onChanged: (newValue) {
@@ -442,7 +487,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         decoration: CommonStyle.textFieldStyle(
                           labelTextStr: "Sangha Name",
                           hintTextStr: "Enter Sangha Name",
-                          suffixIcon: Icon(
+                          suffixIcon: const Icon(
                             Icons.arrow_drop_down,
                             color: Colors.deepOrange,
                           ),
@@ -571,7 +616,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               gender: gender[genderController],
                               profilePhotoUrl: profileURL,
                               sangha: sanghaController.text,
-                              dob: dateInputController.text,
+                              dob: _formatDOB(dateInputController.text),
                               mobileNumber: mobileController.text,
                               status: "dataSubmitted",
                             );
