@@ -15,6 +15,7 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:sammilani_delegate/utilities/custom_calender.dart';
 
 // ignore: depend_on_referenced_packages
 
@@ -42,19 +43,32 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   List<String>? sanghaSuggestions = [];
   bool? parichayaPatraValue = false;
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+  void _showCustomCalendarDialog(BuildContext context) async {
+    final selectedDate = await showDialog<String>(
       context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(child: Text("Select Date")),
+          content: CustomCalender(),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                "Close",
+                style: TextStyle(color: Colors.deepOrange),
+              ),
+            ),
+          ],
+        );
+      },
     );
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-        String formattedDate = DateFormat('dd/MM/yyyy').format(selectedDate);
-        dateInputController.text = formattedDate;
-      });
+
+    if (selectedDate != null) {
+      // Set the selected date to the controller
+      dateInputController.text = selectedDate;
+    }
   }
 
   FocusNode focusNode = FocusNode();
@@ -352,19 +366,17 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         children: [
                           Expanded(
                             child: TextField(
-                              controller:
-                                  dateInputController, //editing controller of this TextField
+                              controller: dateInputController,
                               decoration: CommonStyle.textFieldStyle(
                                 labelTextStr: "Date Of Birth",
                                 hintTextStr: "Enter Date Of Birth",
-                                suffixIcon: Icon(
+                                suffixIcon: const Icon(
                                   Icons.calendar_view_month_rounded,
                                   color: Colors.deepOrange,
                                 ),
                               ),
-                              readOnly:
-                                  true, //set it true, so that user will not able to edit text
-                              onTap: () => _selectDate(context),
+                              readOnly: true,
+                              onTap: () => _showCustomCalendarDialog(context),
                             ),
                           ),
                         ],

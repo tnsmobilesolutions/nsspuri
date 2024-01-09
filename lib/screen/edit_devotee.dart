@@ -20,16 +20,15 @@ import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:sammilani_delegate/utilities/custom_calender.dart';
 import 'package:uuid/uuid.dart';
 
 // ignore: depend_on_referenced_packages
 
 // ignore: must_be_immutable
 class EditDevoteeDetailsPage extends StatefulWidget {
-  EditDevoteeDetailsPage(
-      {Key? key, required this.devotee, required this.title, this.index})
+  EditDevoteeDetailsPage({Key? key, required this.devotee, required this.title})
       : super(key: key);
-  int? index;
   DevoteeModel devotee;
   String title;
   get currentUser => null;
@@ -95,6 +94,35 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   ];
 
   get districtList => null;
+  void _showCustomCalendarDialog(BuildContext context) async {
+    final selectedDate = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Column(
+            children: [
+              Text("Select Date"),
+              Divider(thickness: 2, color: Color.fromARGB(255, 206, 206, 206)),
+            ],
+          ),
+          content: CustomCalender(),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Close"),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (selectedDate != null) {
+      // Set the selected date to the controller
+      dateInputController.text = selectedDate;
+    }
+  }
 
 // ...
 
@@ -236,7 +264,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DelegateCard(),
+                builder: (context) => const DelegateCard(),
               ),
             );
           },
@@ -410,8 +438,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   children: [
                     Expanded(
                       child: TextField(
-                        controller:
-                            dateInputController, //editing controller of this TextField
+                        controller: dateInputController,
                         decoration: CommonStyle.textFieldStyle(
                           labelTextStr: "Date Of Birth",
                           hintTextStr: "Enter Date Of Birth",
@@ -420,9 +447,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                             color: Colors.deepOrange,
                           ),
                         ),
-                        readOnly:
-                            true, //set it true, so that user will not able to edit text
-                        onTap: () => _selectDate(context),
+                        readOnly: true,
+                        onTap: () => _showCustomCalendarDialog(context),
                       ),
                     ),
                   ],
@@ -794,13 +820,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         );
                         Navigator.of(context)
                             .pop(); // Close the circular progress indicator
-                        // Close the circular progress indicator
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomePage(
-                                index: widget.index,
-                              ),
+                              builder: (context) => const HomePage(),
                             ));
                       } else {
                         Navigator.of(context)

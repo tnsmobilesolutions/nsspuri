@@ -7,15 +7,15 @@ import 'package:sammilani_delegate/home_page/card_flip.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:sammilani_delegate/utilities/custom_calender.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
 class RelativeDelegate extends StatefulWidget {
-  RelativeDelegate({super.key, required this.devoteeData, this.editedIndex});
+  RelativeDelegate({super.key, required this.devoteeData});
 
   Map<String, dynamic> devoteeData;
-  int? editedIndex;
 
   @override
   State<RelativeDelegate> createState() => _RelativeDelegateState();
@@ -187,34 +187,17 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         ? Container(
                                             child: IconButton(
                                               onPressed: () async {
-                                                Navigator.push(
+                                                await Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) {
                                                       return EditDevoteeDetailsPage(
                                                         title: "edit",
                                                         devotee: devoteedata,
-                                                        index: index,
                                                       );
                                                     },
                                                   ),
                                                 );
-                                                // .then((devotee) {
-                                                //   setState(() {
-                                                //     if (devotee != null) {
-                                                //       devoteedata = devotee;
-                                                //     }
-                                                //   });
-                                                // });
-
-                                                // After editing, set the updatedPageIndex to the index of the edited card
-                                                setState(() {
-                                                  updatedPageIndex = index;
-                                                });
-
-                                                // Update the PageController to jump to the desired page after editing
-                                                controller.jumpToPage(
-                                                    updatedPageIndex);
                                               },
                                               icon: const Icon(Icons.edit,
                                                   size: 20,
