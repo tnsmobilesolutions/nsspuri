@@ -106,7 +106,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     );
 
     if (selectedDate != null) {
-      // dobController.text = selectedDate;
+      dobController.text = selectedDate;
     }
   }
 
@@ -413,19 +413,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         children: [
                           Expanded(
                             child: TextField(
-                                controller: dobController,
-                                decoration: CommonStyle.textFieldStyle(
-                                  labelTextStr: "Date Of Birth",
-                                  hintTextStr: "Enter Date Of Birth",
-                                  suffixIcon: const Icon(
-                                    Icons.calendar_view_month_rounded,
-                                    color: Colors.deepOrange,
-                                  ),
+                              controller: dobController,
+                              decoration: CommonStyle.textFieldStyle(
+                                labelTextStr: "Date Of Birth",
+                                hintTextStr: "Enter Date Of Birth",
+                                suffixIcon: const Icon(
+                                  Icons.calendar_view_month_rounded,
+                                  color: Colors.deepOrange,
                                 ),
-                                readOnly: true,
-                                onTap:
-                                    () {} //=> _showCustomCalendarDialog(context),
-                                ),
+                              ),
+                              readOnly: true,
+                              onTap: () => _showCustomCalendarDialog(context),
+                            ),
                           ),
                         ],
                       ),

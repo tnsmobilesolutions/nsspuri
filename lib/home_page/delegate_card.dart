@@ -7,7 +7,6 @@ import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 
 import 'package:sammilani_delegate/home_page/relative_delegate.dart';
-import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/screen/pranami_info_screen.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
@@ -56,6 +55,21 @@ class _DelegateCardState extends State<DelegateCard> {
   //   }
   //   return age;
   // }
+  // Map<String, dynamic> allDevotees = {};
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchAllDevotees();
+  // }
+
+  // void fetchAllDevotees() async {
+  //   var a = await GetDevoteeAPI().devoteeWithRelatives();
+  //   setState(() {
+  //     allDevotees = a!;
+  //   });
+
+  //   // print("all devoteeeeees: ${allDevotees?["data"]?.length}");
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +85,7 @@ class _DelegateCardState extends State<DelegateCard> {
                 MaterialPageRoute(
                   builder: (context) => EditDevoteeDetailsPage(
                     title: "add relatives",
+                    // devoteeIndex: allDevotees.length + 1,
                   ),
                 ),
               );
@@ -150,7 +165,10 @@ class _DelegateCardState extends State<DelegateCard> {
                     ),
                   ),
                 ),
-
+                // RelativeDelegate(
+                //   devoteeData: allDevotees,
+                //   editedDevoteeIndex: widget.index,
+                // ),
                 FutureBuilder(
                   future: GetDevoteeAPI().devoteeWithRelatives(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -174,9 +192,9 @@ class _DelegateCardState extends State<DelegateCard> {
                     }
                   },
                 ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),
