@@ -6,16 +6,19 @@ import 'package:sammilani_delegate/enums/devotee_status.dart';
 import 'package:sammilani_delegate/home_page/card_flip.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
-import 'package:sammilani_delegate/utilities/color_palette.dart';
-import 'package:sammilani_delegate/utilities/custom_calender.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
 class RelativeDelegate extends StatefulWidget {
-  RelativeDelegate({super.key, required this.devoteeData});
+  RelativeDelegate({
+    super.key,
+    required this.devoteeData,
+    this.editedDevoteeIndex,
+  });
 
   Map<String, dynamic> devoteeData;
+  int? editedDevoteeIndex;
 
   @override
   State<RelativeDelegate> createState() => _RelativeDelegateState();
@@ -25,49 +28,63 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
   final con = FlipCardController();
   late PageController controller;
   GlobalKey<PageContainerState> key = GlobalKey();
-  int updatedPageIndex =
-      0; // Add this variable to keep track of the updated page index
+  int updatedPageIndex = 0;
+  int seniorCitizenAgeLimit = 70;
+  int teenAgeLimit = 12;
 
   @override
   void initState() {
     super.initState();
-    controller =
-        PageController(initialPage: updatedPageIndex); // Set initialPage
+    controller = PageController(
+        initialPage:
+            widget.editedDevoteeIndex ?? updatedPageIndex); // Set initialPage
   }
 
+  // Color getColorByDevotee(DevoteeModel devotee) {
+  //   if (devotee.isGuest == true) {
+  //     return Colors.yellow;
+  //   } else if (devotee.isOrganizer == true) {
+  //     return const Color.fromARGB(255, 220, 31, 18);
+  //   } else if (devotee.dob != "" && devotee.dob != null) {
+  //     if (devotee.isSpeciallyAbled == true ||
+  //         calculateAge(DateTime.parse(devotee.dob.toString())) >=
+  //             seniorCitizenAgeLimit) {
+  //       return Colors.purple;
+  //     } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <=
+  //         teenAgeLimit) {
+  //       return Colors.green;
+  //     } else {
+  //       return Colors.yellow;
+  //     }
+  //   } else if (devotee.gender == "Male") {
+  //     return Colors.blue;
+  //   } else if (devotee.gender == "Female") {
+  //     return const Color.fromARGB(255, 254, 117, 163);
+  //   } else {
+  //     return Colors.grey;
+  //   }
+  // }
+
   Color getColorByDevotee(DevoteeModel devotee) {
+    int age = calculateAge(DateTime.parse(devotee.dob.toString()));
     if (devotee.isGuest == true) {
       return Colors.yellow;
     } else if (devotee.isOrganizer == true) {
-      return const Color.fromARGB(255, 220, 31, 18);
+      return Colors.red;
+    } else if (age <= teenAgeLimit) {
+      return Colors.green;
     } else if (devotee.dob != "" && devotee.dob != null) {
-      // if (isValidDateFormat(devotee.dob.toString())) {
-      //   if (devotee.isSpeciallyAbled == true ||
-      //       calculateAge(DateTime.parse(devotee.dob.toString())) >= 70) {
-      //     return Colors.purple;
-      //   } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 12) {
-      //     return Colors.green;
-      //   } else {
-      //     return Colors.blue;
-      //   }
-      // } else {
-      //   return Colors.blue;
-      // }
-      if (devotee.isSpeciallyAbled == true ||
-          calculateAge(DateTime.parse(devotee.dob.toString())) >= 70) {
+      if (age >= seniorCitizenAgeLimit || devotee.isSpeciallyAbled == true) {
         return Colors.purple;
-      } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 12) {
-        return Colors.green;
-      } else {
+      } else if (devotee.gender == "Male") {
         return Colors.blue;
+      } else if (devotee.gender == "Female") {
+        return Colors.pink;
       }
-    } else if (devotee.gender == "Male") {
-      return Colors.blue;
-    } else if (devotee.gender == "Female") {
-      return const Color.fromARGB(255, 254, 117, 163);
-    } else {
-      return Colors.grey;
     }
+
+    //return const Color.fromARGB(255, 253, 171, 48);
+    return Colors.yellow;
   }
 
   int calculateAge(DateTime dob) {
@@ -77,6 +94,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
         (now.month == dob.month && now.day < dob.day)) {
       age--;
     }
+    print("age: $age");
     return age;
   }
 
@@ -196,6 +214,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                     return EditDevoteeDetailsPage(
                                                       title: "edit",
                                                       devotee: devoteedata,
+                                                      devoteeIndex: index,
                                                     );
                                                   },
                                                 ),

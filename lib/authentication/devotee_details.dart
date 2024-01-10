@@ -34,9 +34,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController sanghaController = TextEditingController();
-  TextEditingController dateInputController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
   String name = "";
   String? bloodGroupController;
   DateTime selectedDate = DateTime.now();
@@ -66,7 +65,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   //   );
 
   //   if (selectedDate != null) {
-  //     dateInputController.text = selectedDate;
+  //     dobController.text = selectedDate;
   //   }
   // }
 
@@ -95,7 +94,9 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                   ),
                 ],
               ),
-              content: CustomCalender(),
+              content: CustomCalender(
+                forEdit: false,
+              ),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),
@@ -105,13 +106,13 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     );
 
     if (selectedDate != null) {
-      dateInputController.text = selectedDate;
+      // dobController.text = selectedDate;
     }
   }
 
   FocusNode focusNode = FocusNode();
   List gender = ["Male", "Female"];
-  int genderController = 0;
+  int genderValue = 0;
 
   String? profileImage;
   XFile? previewImage;
@@ -238,10 +239,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     return image.path.split("/").last;
   }
 
-  void initState() {
-    dateInputController.text = "";
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   //dobController.text = "";
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -366,12 +368,12 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                             flex: 1,
                             child: RadioListTile(
                               value: 0,
-                              groupValue: genderController,
+                              groupValue: genderValue,
                               title: const Text(
                                 "Bhai",
                               ),
-                              onChanged: (newValue) => setState(
-                                  () => genderController = newValue ?? 0),
+                              onChanged: (newValue) =>
+                                  setState(() => genderValue = newValue ?? 0),
                               activeColor: RadioButtonColor,
                               // Set the unselected color to blue
                               selectedTileColor:
@@ -383,14 +385,14 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                             flex: 1,
                             child: RadioListTile(
                               value: 1,
-                              groupValue: genderController,
+                              groupValue: genderValue,
 
                               title: const Text(
                                 "Maa",
                               ),
                               onChanged: (newValue) {
                                 setState(() {
-                                  genderController = newValue ?? 0;
+                                  genderValue = newValue ?? 0;
                                 });
                               },
                               activeColor: RadioButtonColor,
@@ -411,18 +413,19 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         children: [
                           Expanded(
                             child: TextField(
-                              controller: dateInputController,
-                              decoration: CommonStyle.textFieldStyle(
-                                labelTextStr: "Date Of Birth",
-                                hintTextStr: "Enter Date Of Birth",
-                                suffixIcon: const Icon(
-                                  Icons.calendar_view_month_rounded,
-                                  color: Colors.deepOrange,
+                                controller: dobController,
+                                decoration: CommonStyle.textFieldStyle(
+                                  labelTextStr: "Date Of Birth",
+                                  hintTextStr: "Enter Date Of Birth",
+                                  suffixIcon: const Icon(
+                                    Icons.calendar_view_month_rounded,
+                                    color: Colors.deepOrange,
+                                  ),
                                 ),
-                              ),
-                              readOnly: true,
-                              onTap: () => _showCustomCalendarDialog(context),
-                            ),
+                                readOnly: true,
+                                onTap:
+                                    () {} //=> _showCustomCalendarDialog(context),
+                                ),
                           ),
                         ],
                       ),
@@ -613,10 +616,10 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               createdById: widget.devotee.devoteeId,
                               bloodGroup: bloodGroupController,
                               name: nameController.text,
-                              gender: gender[genderController],
+                              gender: gender[genderValue],
                               profilePhotoUrl: profileURL,
                               sangha: sanghaController.text,
-                              dob: _formatDOB(dateInputController.text),
+                              dob: _formatDOB(dobController.text),
                               mobileNumber: mobileController.text,
                               status: "dataSubmitted",
                             );

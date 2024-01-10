@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
@@ -74,12 +76,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   controller: emailController,
                   onSaved: (newValue) => emailController,
                   validator: (value) {
-                    // Check if this field is empty
                     if (value == null || value.isEmpty) {
                       return 'This field is required';
                     }
 
-                    // using regular expression
                     if (!RegExp(
                       r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
                     ).hasMatch(value)) {
@@ -117,12 +117,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(12),
                     labelText: "Password",
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
                         fontWeight: FontWeight.w400),
                     hintText: "Password",
-                    hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 16, color: Colors.grey),
                     filled: true,
                     fillColor: const Color.fromARGB(255, 190, 190, 190)
                         .withOpacity(0.3),
@@ -167,12 +168,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.all(12),
                       labelText: "Password",
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
                           fontWeight: FontWeight.w400),
                       hintText: "Password",
-                      hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                      hintStyle:
+                          const TextStyle(fontSize: 16, color: Colors.grey),
                       filled: true,
                       fillColor: const Color.fromARGB(255, 190, 190, 190)
                           .withOpacity(0.3),
@@ -254,7 +256,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             if (uid != null) {
                               String devoteeId = const Uuid().v1();
                               DevoteeModel newDevotee = DevoteeModel(
-                                  emailId: emailController.text,
+                                  emailId: emailController.text.trim(),
                                   uid: uid,
                                   devoteeId: devoteeId,
                                   createdById: devoteeId,
@@ -266,41 +268,41 @@ class _SignupScreenState extends State<SignupScreen> {
                                   .signupDevotee(newDevotee);
                               await GetDevoteeAPI().loginDevotee(uid);
                               if (response["statusCode"] == 200) {
-                                // Show a circular progress indicator while navigating
-                                // ignore: use_build_context_synchronously
-                                Navigator.of(context)
-                                    .pop(); // Close the circular progress indicator
-                                // ignore: use_build_context_synchronously
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return DevoteeDetailsPage(
-                                        devotee: newDevotee,
-                                      );
-                                    },
-                                  ),
-                                );
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return DevoteeDetailsPage(
+                                          devotee: newDevotee,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                }
                               } else {
-                                Navigator.of(context)
-                                    .pop(); // Close the circular progress indicator
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Signup failed')));
+                                }
+                              }
+                            } else {
+                              if (context.mounted) {
+                                Navigator.of(context).pop();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content: Text('Signup failed')));
-                                // Handle the case where the response status code is not 200
                               }
-                            } else {
-                              Navigator.of(context)
-                                  .pop(); // Close the circular progress indicator
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Signup failed')));
-                              // Handle the case where uid is null
                             }
                           }
                         } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())));
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+                          }
                           print(e);
                         }
                       }

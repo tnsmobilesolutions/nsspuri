@@ -8,8 +8,10 @@ class CustomCalender extends StatefulWidget {
     this.day,
     this.month,
     this.year,
+    required this.forEdit,
   });
   String? day, month, year;
+  bool forEdit;
 
   @override
   _CustomCalenderState createState() => _CustomCalenderState();
@@ -42,16 +44,45 @@ class _CustomCalenderState extends State<CustomCalender> {
   @override
   void initState() {
     super.initState();
-    if (widget.day != null && widget.month != null && widget.year != null) {
-      selectedDate = widget.day.toString();
-      selectedMonth = getMonthName(widget.month.toString(), months);
-      selectedYear = widget.year.toString();
-    } else {
-      selectedDate = '1';
-      selectedMonth = 'Jan';
-      selectedYear = DateTime.now().year.toString();
+
+    if (widget.forEdit) {
+      if ((widget.day?.isNotEmpty == true) &&
+          (widget.month?.isNotEmpty == true) &&
+          (widget.year?.isNotEmpty == true)) {
+        print("day: ${widget.day == null}");
+        print("month: ${widget.month}");
+        print("year: ${widget.year}");
+        selectedDate = widget.day.toString();
+        selectedMonth = getMonthName(widget.month.toString(), months);
+        selectedYear = widget.year.toString();
+      } else {
+        selectedDate = '1';
+        selectedMonth = 'Jan';
+        selectedYear = DateTime.now().year.toString();
+      }
     }
   }
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   if (widget.forEdit) {
+  //     if ((widget.day != null || widget.day?.isNotEmpty == true) &&
+  //         (widget.month != null || widget.month?.isNotEmpty == true) &&
+  //         (widget.year != null || widget.year?.isNotEmpty == true)) {
+  //       print("day: ${widget.day == null}");
+  //       print("month: ${widget.month}");
+  //       print("year: ${widget.year}");
+  //       selectedDate = widget.day.toString();
+  //       selectedMonth = getMonthName(widget.month.toString(), months);
+  //       selectedYear = widget.year.toString();
+  //     } else {
+  //       selectedDate = '1';
+  //       selectedMonth = 'Jan';
+  //       selectedYear = DateTime.now().year.toString();
+  //     }
+  //   }
+  // }
 
   String getMonthName(String monthNumber, List<String> months) {
     int index = int.parse(monthNumber) - 1;
@@ -61,6 +92,19 @@ class _CustomCalenderState extends State<CustomCalender> {
       return "Invalid Month";
     }
   }
+
+  // String getMonthName(String monthNumber, List<String> months) {
+  //   try {
+  //     int index = int.parse(monthNumber) - 1;
+  //     if (index >= 0 && index < months.length) {
+  //       return months[index];
+  //     } else {
+  //       return "Invalid Month";
+  //     }
+  //   } catch (e) {
+  //     return "Invalid Month";
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
@@ -12,8 +14,11 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class DelegateCard extends StatefulWidget {
-  const DelegateCard({super.key});
-
+  DelegateCard({
+    super.key,
+    this.index,
+  });
+  int? index;
   @override
   State<DelegateCard> createState() => _DelegateCardState();
 }
@@ -66,7 +71,6 @@ class _DelegateCardState extends State<DelegateCard> {
                 MaterialPageRoute(
                   builder: (context) => EditDevoteeDetailsPage(
                     title: "add relatives",
-                    devotee: DevoteeModel(),
                   ),
                 ),
               );
@@ -117,7 +121,7 @@ class _DelegateCardState extends State<DelegateCard> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 50,
                     child: ElevatedButton(
@@ -129,7 +133,6 @@ class _DelegateCardState extends State<DelegateCard> {
                           ),
                         );
                       },
-                      child: const Text('Payment Info'),
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.resolveWith((states) {
@@ -143,6 +146,7 @@ class _DelegateCardState extends State<DelegateCard> {
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(40)))),
+                      child: const Text('Payment Info'),
                     ),
                   ),
                 ),
@@ -156,7 +160,10 @@ class _DelegateCardState extends State<DelegateCard> {
                       );
                     } else {
                       if (snapshot.data["statusCode"] == 200) {
-                        return RelativeDelegate(devoteeData: snapshot.data);
+                        return RelativeDelegate(
+                          devoteeData: snapshot.data,
+                          editedDevoteeIndex: widget.index,
+                        );
                       } else {
                         return const Column(
                           children: [

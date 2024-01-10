@@ -1,10 +1,9 @@
-// ignore_for_file: avoid_print
-
+// ignore_for_file: avoid_print, must_be_immutable
+// ignore: depend_on_referenced_packages
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -14,9 +13,7 @@ import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:sammilani_delegate/home_page/delegate_card.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
-
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
@@ -25,12 +22,11 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:sammilani_delegate/utilities/custom_calender.dart';
 import 'package:uuid/uuid.dart';
 
-// ignore: depend_on_referenced_packages
-
-// ignore: must_be_immutable
 class EditDevoteeDetailsPage extends StatefulWidget {
-  EditDevoteeDetailsPage({Key? key, required this.devotee, required this.title})
+  EditDevoteeDetailsPage(
+      {Key? key, this.devoteeIndex, this.devotee, required this.title})
       : super(key: key);
+  int? devoteeIndex;
   DevoteeModel? devotee;
   String title;
   get currentUser => null;
@@ -43,7 +39,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   final nameController = TextEditingController();
   final mobileController = TextEditingController();
   final sanghaController = TextEditingController();
-  TextEditingController dateInputController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
   final addressLine1Controller = TextEditingController();
   final addressLine2Controller = TextEditingController();
   final cityController = TextEditingController();
@@ -117,6 +113,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 day: day,
                 month: month,
                 year: year,
+                forEdit: true,
               ),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -127,7 +124,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     );
 
     if (selectedDate != null) {
-      dateInputController.text = selectedDate;
+      dobController.text = selectedDate;
     }
   }
 
@@ -209,7 +206,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       genderController = widget.devotee?.gender == "Male" ? 0 : 1;
       mobileController.text = widget.devotee?.mobileNumber ?? "";
       sanghaController.text = widget.devotee?.sangha ?? "";
-      dateInputController.text = widget.devotee?.dob ?? "";
+      dobController.text = formatDate(widget.devotee?.dob ?? "");
       bloodGroupController = widget.devotee?.bloodGroup ?? bloodGroupController;
       profileURL = widget.devotee?.profilePhotoUrl ?? "";
       addressLine1Controller.text = widget.devotee?.address?.addressLine1 ?? "";
@@ -224,6 +221,33 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     }
     stateController.text = "Odisha";
     countryController.text = "India";
+  }
+
+  String formatDate(String inputDate) {
+    DateTime dateTime = DateTime.parse(inputDate);
+
+    List<String> monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+
+    int day = dateTime.day;
+    String month = monthNames[dateTime.month - 1];
+    int year = dateTime.year;
+
+    String formattedDate = '$day/$month/$year';
+
+    return formattedDate;
   }
 
   Row addRadioButton(int btnValue, String title) {
@@ -450,7 +474,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   children: [
                     Expanded(
                       child: TextField(
-                        controller: dateInputController,
+                        controller: dobController,
                         decoration: CommonStyle.textFieldStyle(
                           labelTextStr: "Date Of Birth",
                           hintTextStr: "Enter Date Of Birth",
@@ -598,7 +622,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         value: parichayaPatraValue,
                         onChanged: (bool? value) {
                           setState(() {
-                            this.parichayaPatraValue = value;
+                            parichayaPatraValue = value;
                           });
                         },
                       ),
@@ -771,6 +795,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                               previewImage as XFile, nameController.text)
                           : widget.devotee?.profilePhotoUrl;
 
+                      //String devoteeDOB = _formatDOB(dobController.text);
                       // print("devoteeee -- ${widget.devotee}");
                       DevoteeModel updateDevotee = DevoteeModel(
                           devoteeId: widget.title == "edit"
@@ -791,7 +816,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           gender: gender[genderController],
                           profilePhotoUrl: profileURL,
                           sangha: sanghaController.text,
-                          dob: _formatDOB(dateInputController.text),
+                          dob: _formatDOB(dobController.text),
                           mobileNumber: mobileController.text,
                           createdOn: widget.devotee?.createdOn,
                           status: widget.devotee?.status ?? "dataSubmitted",
@@ -830,24 +855,31 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                             );
                           },
                         );
-                        Navigator.of(context)
-                            .pop(); // Close the circular progress indicator
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(),
-                            ));
+                        if (context.mounted) {
+                          Navigator.of(context)
+                              .pop(); // Close the circular progress indicator
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HomePage(index: widget.devoteeIndex),
+                              ));
+                        }
                       } else {
-                        Navigator.of(context)
-                            .pop(); // Close the circular progress indicator
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
+// Close the circular progress indicator
                         // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text('devotee update issue')));
                       }
                     } catch (e) {
-                      Navigator.of(context)
-                          .pop(); // Close the circular progress indicator
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+// Close the circular progress indicator
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(e.toString())));
