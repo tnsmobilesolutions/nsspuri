@@ -261,6 +261,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   devoteeId: devoteeId,
                                   createdById: devoteeId,
                                   isAdmin: false,
+                                  role: "User",
                                   isAllowedToScanPrasad: false,
                                   status: "dataSubmitted");
 
