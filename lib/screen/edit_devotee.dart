@@ -365,6 +365,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   }
                   return null;
                 },
+                autovalidateMode: AutovalidateMode.always,
                 decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "Name", hintTextStr: "Enter Name"),
               ),
@@ -380,31 +381,32 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 focusNode: focusNode,
                 validator: (value) {
                   if ((value?.number ?? "").isEmpty) {
-                    return ("Please enter Mobile Number");
+                    return ("Mobile Number is Required");
                   } else {
                     return null;
                   }
                 },
+
                 controller: mobileController,
                 invalidNumberMessage: "Please enter a valid Mobile Number",
                 keyboardType: TextInputType.phone,
                 pickerDialogStyle: PickerDialogStyle(
-                  countryCodeStyle: const TextStyle(fontSize: 14),
-                  countryNameStyle: const TextStyle(fontSize: 14),
                   searchFieldCursorColor: Colors.deepOrange,
                   searchFieldInputDecoration: InputDecoration(
                     label: const Text('Search Country'),
                     labelStyle: const TextStyle(
-                        color: Colors.black), // Set label text color
+                      color: Colors.black,
+                    ),
                     hintStyle: TextStyle(
-                        color: Colors.black
-                            .withOpacity(0.5)), // Set hint text color
+                      color: Colors.black.withOpacity(0.5),
+                    ),
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.deepOrange),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.black.withOpacity(0.5)),
+                      borderSide: BorderSide(
+                        color: Colors.black.withOpacity(0.5),
+                      ),
                     ),
                   ),
                   backgroundColor: Colors.white,
@@ -419,6 +421,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 onChanged: (phone) {
                   print(phone.completeNumber);
                 },
+                // Set autovalidateMode to always validate when interacting with the field
+                autovalidateMode: AutovalidateMode.always,
               ),
               const SizedBox(
                 height: 20,
@@ -818,8 +822,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           isAdmin: widget.devotee?.isAdmin ?? false,
                           isAllowedToScanPrasad:
                               widget.devotee?.isAllowedToScanPrasad ?? false,
-                              role: widget.devotee?.role,
-                              
+                          role: widget.devotee?.role,
                           gender: gender[genderController],
                           profilePhotoUrl: profileURL,
                           sangha: sanghaController.text,
