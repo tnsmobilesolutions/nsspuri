@@ -222,6 +222,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool submitted = true; // Add this boolean flag
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -272,10 +273,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       onSaved: (newValue) => nameController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter name';
+                          return 'Name is Required';
                         }
                         return null;
                       },
+                      autovalidateMode: AutovalidateMode.always,
                       decoration: CommonStyle.textFieldStyle(
                           labelTextStr: "Name", hintTextStr: "Enter Name"),
                     ),
@@ -290,11 +292,12 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       focusNode: focusNode,
                       validator: (value) {
                         if ((value?.number ?? "").isEmpty) {
-                          return ("Please enter Mobile Number");
+                          return ("Mobile Number is Required");
                         } else {
                           return null;
                         }
                       },
+
                       controller: mobileController,
                       invalidNumberMessage:
                           "Please enter a valid Mobile Number",
@@ -304,16 +307,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                         searchFieldInputDecoration: InputDecoration(
                           label: const Text('Search Country'),
                           labelStyle: const TextStyle(
-                              color: Colors.black), // Set label text color
+                            color: Colors.black,
+                          ),
                           hintStyle: TextStyle(
-                              color: Colors.black
-                                  .withOpacity(0.5)), // Set hint text color
+                            color: Colors.black.withOpacity(0.5),
+                          ),
                           focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.deepOrange),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Colors.black.withOpacity(0.5)),
+                              color: Colors.black.withOpacity(0.5),
+                            ),
                           ),
                         ),
                         backgroundColor: Colors.white,
@@ -328,6 +333,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       onChanged: (phone) {
                         print(phone.completeNumber);
                       },
+                      // Set autovalidateMode to always validate when interacting with the field
+                      autovalidateMode: AutovalidateMode.always,
                     ),
                     const SizedBox(
                       height: 20,
@@ -584,7 +591,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               isAdmin: widget.devotee.isAdmin,
                               isAllowedToScanPrasad:
                                   widget.devotee.isAllowedToScanPrasad,
-                                  role: "User",
+                              role: "User",
                               updatedOn: widget.devotee.updatedOn,
                               uid: widget.devotee.uid,
                               emailId: widget.devotee.emailId,
