@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,33 +43,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   DateTime selectedDate = DateTime.now();
   List<String>? sanghaSuggestions = [];
   bool? parichayaPatraValue = false;
-
-  // void _showCustomCalendarDialog(BuildContext context) async {
-  //   final selectedDate = await showDialog<String>(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: const Center(child: Text("Select Date")),
-  //         content: CustomCalender(),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //             child: const Text(
-  //               "Close",
-  //               style: TextStyle(color: Colors.deepOrange),
-  //             ),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-
-  //   if (selectedDate != null) {
-  //     dobController.text = selectedDate;
-  //   }
-  // }
 
   void _showCustomCalendarDialog(BuildContext context) async {
     final selectedDate = await showDialog<String>(
@@ -229,7 +204,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   Future<String?> uploadImageToFirebaseStorage(XFile image, String name) async {
     // print('**************${getImageName(image)}**************');
     Reference storage =
-        FirebaseStorage.instance.ref('${name}/${getImageName(image)}');
+        FirebaseStorage.instance.ref('$name/${getImageName(image)}');
     await storage.putFile(File(image.path));
     return await storage.getDownloadURL();
   }
@@ -560,7 +535,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               value: parichayaPatraValue,
                               onChanged: (bool? value) {
                                 setState(() {
-                                  this.parichayaPatraValue = value;
+                                  parichayaPatraValue = value;
                                 });
                               },
                             ),
@@ -627,28 +602,31 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                                 .updateDevotee(newDevotee,
                                     widget.devotee.devoteeId.toString());
                             if (response["statusCode"] == 200) {
-                              Navigator.of(context)
-                                  .pop(); // Close the circular progress indicator
-                              // ignore: use_build_context_synchronously
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) {
-                                  return AddressDetailsScreen(
-                                      devotee: newDevotee);
-                                }),
-                              );
+                              if (context.mounted) {
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return AddressDetailsScreen(
+                                        devotee: newDevotee);
+                                  }),
+                                );
+                              }
                             } else {
-                              Navigator.of(context)
-                                  .pop(); // Close the circular progress indicator
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('devotee update issue')));
+                              if (context.mounted) {
+                                Navigator.of(context)
+                                    .pop(); // Close the circular progress indicator
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('devotee update issue')));
+                              }
                             }
                           } catch (e) {
-                            Navigator.of(context)
-                                .pop(); // Close the circular progress indicator
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(e.toString())));
+                            if (context.mounted) {
+                              Navigator.of(context).pop();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(e.toString())));
+                            }
                             print(e);
                           }
                         },

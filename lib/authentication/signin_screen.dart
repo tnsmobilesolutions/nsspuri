@@ -52,12 +52,10 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 children: <Widget>[
                   logoWidget("assets/images/nsslogo.png"),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _emailTextController,
-                    onSaved: (newValue) =>_emailTextController,
+                    onSaved: (newValue) => _emailTextController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter  Email';
@@ -80,9 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       hintTextStr: "Enter Email",
                     ),
                   ),
-                  SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                   TextFormField(
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: _obscured1,
@@ -95,16 +91,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         }
                         return null;
                       },
-                    
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(12),
                         labelText: "Password",
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                             fontSize: 16,
                             color: Colors.grey,
                             fontWeight: FontWeight.w400),
                         hintText: "Password",
-                        hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                        hintStyle:
+                            const TextStyle(fontSize: 16, color: Colors.grey),
                         filled: true,
                         fillColor: const Color.fromARGB(255, 190, 190, 190)
                             .withOpacity(0.3),
@@ -131,9 +127,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                       // hintText: 'Name',
                       ),
-                  const SizedBox(
-                    height: 21,
-                  ),
+                  const SizedBox(height: 21),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 45,
@@ -160,9 +154,11 @@ class _SignInScreenState extends State<SignInScreen> {
                         await Future.delayed(
                             const Duration(seconds: 1)); // Simulating a delay
                         try {
-                          final uid = await FirebaseAuthentication()
-                              .signinWithFirebase(_emailTextController.text,
-                                  _passwordTextController.text);
+                          final uid =
+                              await FirebaseAuthentication().signinWithFirebase(
+                            _emailTextController.text.trim(),
+                            _passwordTextController.text.trim(),
+                          );
                           if (uid != null) {
                             final data = await GetDevoteeAPI()
                                 .loginDevotee(uid.toString());
@@ -200,7 +196,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           Navigator.of(context).pop();
                           if (e.toString().contains("Null")) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("No Devotee Found")));
+                                const SnackBar(
+                                    content: Text("No Devotee Found")));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(e.toString())));
