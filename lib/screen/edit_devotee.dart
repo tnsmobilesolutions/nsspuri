@@ -818,6 +818,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           isAdmin: widget.devotee?.isAdmin ?? false,
                           isAllowedToScanPrasad:
                               widget.devotee?.isAllowedToScanPrasad ?? false,
+                              role: widget.devotee?.role,
+                              
                           gender: gender[genderController],
                           profilePhotoUrl: profileURL,
                           sangha: sanghaController.text,

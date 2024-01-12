@@ -584,6 +584,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               isAdmin: widget.devotee.isAdmin,
                               isAllowedToScanPrasad:
                                   widget.devotee.isAllowedToScanPrasad,
+                                  role: "User",
                               updatedOn: widget.devotee.updatedOn,
                               uid: widget.devotee.uid,
                               emailId: widget.devotee.emailId,

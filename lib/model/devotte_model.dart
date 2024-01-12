@@ -13,6 +13,7 @@ class DevoteeModel {
   String? profilePhotoUrl;
   String? gender;
   String? sangha;
+  String? role;
   String? uid;
   bool? isGuest;
   bool? isOrganizer;
@@ -27,7 +28,7 @@ class DevoteeModel {
   String? updatedOn;
   String? status;
   String? createdById;
-  bool?  hasParichayaPatra;
+  bool? hasParichayaPatra;
 
   AddressModel? address;
   DevoteeModel({
@@ -40,6 +41,7 @@ class DevoteeModel {
     this.profilePhotoUrl,
     this.gender,
     this.sangha,
+    this.role,
     this.uid,
     this.isGuest,
     this.isOrganizer,
@@ -68,6 +70,7 @@ class DevoteeModel {
     String? profilePhotoUrl,
     String? gender,
     String? sangha,
+    String? role,
     String? uid,
     bool? isGuest,
     bool? isOrganizer,
@@ -95,6 +98,7 @@ class DevoteeModel {
       profilePhotoUrl: profilePhotoUrl ?? this.profilePhotoUrl,
       gender: gender ?? this.gender,
       sangha: sangha ?? this.sangha,
+      role: role ?? this.role,
       uid: uid ?? this.uid,
       isGuest: isGuest ?? this.isGuest,
       isOrganizer: isOrganizer ?? this.isOrganizer,
@@ -143,6 +147,9 @@ class DevoteeModel {
     }
     if(sangha != null){
       result.addAll({'sangha': sangha});
+    }
+    if(role != null){
+      result.addAll({'role': role});
     }
     if(uid != null){
       result.addAll({'uid': uid});
@@ -207,6 +214,7 @@ class DevoteeModel {
       profilePhotoUrl: map['profilePhotoUrl'],
       gender: map['gender'],
       sangha: map['sangha'],
+      role: map['role'],
       uid: map['uid'],
       isGuest: map['isGuest'],
       isOrganizer: map['isOrganizer'],
@@ -228,11 +236,12 @@ class DevoteeModel {
 
   String toJson() => json.encode(toMap());
 
-  factory DevoteeModel.fromJson(String source) => DevoteeModel.fromMap(json.decode(source));
+  factory DevoteeModel.fromJson(String source) =>
+      DevoteeModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'DevoteeModel(devoteeId: $devoteeId, devoteeCode: $devoteeCode, name: $name, emailId: $emailId, mobileNumber: $mobileNumber, bloodGroup: $bloodGroup, profilePhotoUrl: $profilePhotoUrl, gender: $gender, sangha: $sangha, uid: $uid, isGuest: $isGuest, isOrganizer: $isOrganizer, isSpeciallyAbled: $isSpeciallyAbled, dob: $dob, isKYDVerified: $isKYDVerified, isAllowedToScanPrasad: $isAllowedToScanPrasad, isApproved: $isApproved, isAdmin: $isAdmin, isGruhasanaApproved: $isGruhasanaApproved, createdOn: $createdOn, updatedOn: $updatedOn, status: $status, createdById: $createdById, hasParichayaPatra: $hasParichayaPatra, address: $address)';
+    return 'DevoteeModel(devoteeId: $devoteeId, devoteeCode: $devoteeCode, name: $name, emailId: $emailId, mobileNumber: $mobileNumber, bloodGroup: $bloodGroup, profilePhotoUrl: $profilePhotoUrl, gender: $gender, sangha: $sangha, role: $role, uid: $uid, isGuest: $isGuest, isOrganizer: $isOrganizer, isSpeciallyAbled: $isSpeciallyAbled, dob: $dob, isKYDVerified: $isKYDVerified, isAllowedToScanPrasad: $isAllowedToScanPrasad, isApproved: $isApproved, isAdmin: $isAdmin, isGruhasanaApproved: $isGruhasanaApproved, createdOn: $createdOn, updatedOn: $updatedOn, status: $status, createdById: $createdById, hasParichayaPatra: $hasParichayaPatra, address: $address)';
   }
 
   @override
@@ -249,6 +258,7 @@ class DevoteeModel {
       other.profilePhotoUrl == profilePhotoUrl &&
       other.gender == gender &&
       other.sangha == sangha &&
+      other.role == role &&
       other.uid == uid &&
       other.isGuest == isGuest &&
       other.isOrganizer == isOrganizer &&
@@ -278,6 +288,7 @@ class DevoteeModel {
       profilePhotoUrl.hashCode ^
       gender.hashCode ^
       sangha.hashCode ^
+      role.hashCode ^
       uid.hashCode ^
       isGuest.hashCode ^
       isOrganizer.hashCode ^
