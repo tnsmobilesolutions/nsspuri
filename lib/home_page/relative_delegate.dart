@@ -489,8 +489,9 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                         ),
                                                       ),
                                                       if (devoteedata.status ==
-                                                          DevoteeStatus
-                                                              .paid.name)
+                                                              "paid" ||
+                                                          devoteedata.status ==
+                                                              "printed")
                                                         Positioned(
                                                           top: 50,
                                                           left: 105,
