@@ -112,7 +112,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
         print("Error parsing date: $e");
       }
     } else {
-      return Colors.yellow;
+      return Colors.blue;
     }
 
     if (devotee.isGuest == true) {
