@@ -128,11 +128,27 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   }
 
   String _formatDOB(String dob) {
-    String dateString = dob;
-    DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
-    String formattedDate = DateFormat('y-MM-dd').format(dateTime);
-    return formattedDate;
+    if (dob.isEmpty) {
+      return '';
+    }
+
+    try {
+      DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dob);
+      String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+      return formattedDate;
+    } catch (e) {
+      // Handle the case where the date cannot be parsed.
+      print("Error parsing date: $e");
+      return ''; // or any default value you want to return for an invalid date
+    }
   }
+
+  // String _formatDOB(String dob) {
+  //   String dateString = dob;
+  //   DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
+  //   String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+  //   return formattedDate;
+  // }
 
   void showPhotoOptions() {
     showDialog(
@@ -394,7 +410,8 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: TextField(
+                            child: TextFormField(
+                              validator: (value) => null,
                               controller: dobController,
                               decoration: CommonStyle.textFieldStyle(
                                 labelTextStr: "Date Of Birth",

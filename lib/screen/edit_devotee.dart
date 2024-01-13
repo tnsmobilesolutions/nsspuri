@@ -24,12 +24,17 @@ import 'package:uuid/uuid.dart';
 
 class EditDevoteeDetailsPage extends StatefulWidget {
   EditDevoteeDetailsPage(
-      {Key? key, this.devoteeIndex, this.devotee, required this.title})
+      {Key? key,
+      this.devoteeIndex,
+      this.devotee,
+      required this.title,
+      required this.isRelatives})
       : super(key: key);
 
   DevoteeModel? devotee;
   int? devoteeIndex;
   String title;
+  bool isRelatives;
 
   @override
   State<EditDevoteeDetailsPage> createState() => _EditDevoteeDetailsPageState();
@@ -40,6 +45,8 @@ class EditDevoteeDetailsPage extends StatefulWidget {
 class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   final addressLine1Controller = TextEditingController();
   final addressLine2Controller = TextEditingController();
+  final remarkController = TextEditingController();
+
   String? bloodGroupController;
   List<String> bloodGrouplist = <String>[
     'A+',
@@ -86,7 +93,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       genderController = widget.devotee?.gender == "Male" ? 0 : 1;
       mobileController.text = widget.devotee?.mobileNumber ?? "";
       sanghaController.text = widget.devotee?.sangha ?? "";
-      dobController.text = formatDate(widget.devotee?.dob ?? "");
+      dobController.text = widget.devotee?.dob != ""
+          ? formatDate(widget.devotee?.dob ?? "")
+          : "";
       bloodGroupController = widget.devotee?.bloodGroup ?? bloodGroupController;
       profileURL = widget.devotee?.profilePhotoUrl ?? "";
       addressLine1Controller.text = widget.devotee?.address?.addressLine1 ?? "";
@@ -236,13 +245,28 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   void _showCustomCalendarDialog(BuildContext context) async {
     String day = "", month = "", year = "";
 
-    if (widget.devotee != null) {
-      List<String> dateParts = widget.devotee?.dob?.split('-') ?? [];
-      setState(() {
-        day = int.parse(dateParts[2]).toString();
-        month = int.parse(dateParts[1]).toString();
-        year = int.parse(dateParts[0]).toString();
-      });
+    // if (widget.devotee != null) {
+    //   List<String> dateParts = widget.devotee?.dob?.split('-') ?? [];
+    //   setState(() {
+    //     day = int.parse(dateParts[2]).toString();
+    //     month = int.parse(dateParts[1]).toString();
+    //     year = int.parse(dateParts[0]).toString();
+    //   });
+    // }
+    if (widget.devotee != null && widget.devotee?.dob != null) {
+      List<String> dateParts = widget.devotee!.dob!.split('-');
+
+      // Check if dateParts has at least three elements
+      if (dateParts.length >= 3) {
+        setState(() {
+          day = int.tryParse(dateParts[2])?.toString() ?? '';
+          month = int.tryParse(dateParts[1])?.toString() ?? '';
+          year = int.tryParse(dateParts[0])?.toString() ?? '';
+        });
+      } else {
+        // Handle the case where dateParts doesn't have enough elements
+        print('Invalid date format: ${widget.devotee?.dob}');
+      }
     }
 
     final selectedDate = await showDialog<String>(
@@ -288,11 +312,26 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     }
   }
 
+  // String _formatDOB(String dob) {
+  //   String dateString = dob;
+  //   DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
+  //   String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+  //   return formattedDate;
+  // }
   String _formatDOB(String dob) {
-    String dateString = dob;
-    DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
-    String formattedDate = DateFormat('y-MM-dd').format(dateTime);
-    return formattedDate;
+    if (dob.isEmpty) {
+      return ''; // or any default value you want to return for an empty string
+    }
+
+    try {
+      DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dob);
+      String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+      return formattedDate;
+    } catch (e) {
+      // Handle the case where the date cannot be parsed.
+      print("Error parsing date: $e");
+      return ''; // or any default value you want to return for an invalid date
+    }
   }
 
   @override
@@ -379,14 +418,29 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   color: Colors.deepOrange,
                 ),
                 focusNode: focusNode,
-                validator: (value) {
-                  if ((value?.number ?? "").isEmpty) {
-                    return ("Mobile Number is Required");
+                // validator: (value) {
+                //   if (widget.isRelatives == true) {
+                //     // If isRelatives is true, the mobile number is optional
+                //     return null;
+                //   } else {
+                //     // If isRelatives is false, perform validation for the mobile number
+                //     if ((value?.number ?? "").isEmpty) {
+                //       return "Mobile Number is Required";
+                //     } else {
+                //       return null;
+                //     }
+                //   }
+                // },
+                autovalidateMode: widget.isRelatives
+                    ? AutovalidateMode.disabled
+                    : AutovalidateMode.always,
+                validator: (phone) {
+                  if (!widget.isRelatives && (phone?.number ?? "").isEmpty) {
+                    return "Mobile Number is Required";
                   } else {
                     return null;
                   }
                 },
-
                 controller: mobileController,
                 invalidNumberMessage: "Please enter a valid Mobile Number",
                 keyboardType: TextInputType.phone,
@@ -422,7 +476,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   print(phone.completeNumber);
                 },
                 // Set autovalidateMode to always validate when interacting with the field
-                autovalidateMode: AutovalidateMode.always,
+                //autovalidateMode: AutovalidateMode.always,
               ),
               const SizedBox(
                 height: 20,
@@ -738,6 +792,21 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 },
                 decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "PIN Code", hintTextStr: "Enter PIN Code"),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: remarkController,
+                textCapitalization: TextCapitalization.words,
+                onSaved: (newValue) => remarkController,
+                validator: (value) {
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.always,
+                maxLines: 4,
+                decoration: CommonStyle.textFieldStyle(
+                    labelTextStr: "Remarks", hintTextStr: "Enter Remark"),
               ),
               const SizedBox(
                 height: 20,
