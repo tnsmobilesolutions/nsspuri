@@ -245,7 +245,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool submitted = true; // Add this boolean flag
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

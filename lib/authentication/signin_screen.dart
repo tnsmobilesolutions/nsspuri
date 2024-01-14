@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
@@ -55,21 +56,26 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(height: 30),
                   TextFormField(
                     controller: _emailTextController,
-                    onSaved: (newValue) => _emailTextController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(
+                          RegExp(r'\s')), // Deny whitespace
+                    ],
+                    onSaved: (newValue) =>
+                        _emailTextController.text = newValue!.trim(),
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
+                      if (value == null || value.trim().isEmpty) {
                         return 'This field is required';
                       }
                       if (!RegExp(
                         r'^[a-zA-Z0-9._%+$&-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                       ).hasMatch(value)) {
-                        return "Please enter a valid email address";
+                        return 'Please enter a valid email address';
                       }
                       return null;
                     },
                     decoration: CommonStyle.textFieldStyle(
-                      labelTextStr: "Email",
-                      hintTextStr: "Enter Email",
+                      labelTextStr: 'Email',
+                      hintTextStr: 'Enter Email',
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -78,6 +84,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       obscureText: _obscured1,
                       focusNode: textFieldFocusNode,
                       controller: _passwordTextController,
+                       inputFormatters: [
+                      FilteringTextInputFormatter.deny(
+                          RegExp(r'\s')), // Deny whitespace
+                    ],
                       onSaved: (newValue) => _passwordTextController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
