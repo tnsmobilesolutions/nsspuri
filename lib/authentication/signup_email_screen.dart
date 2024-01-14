@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/authentication/devotee_details.dart';
@@ -72,27 +73,28 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 30,
                 ),
                 TextFormField(
-                  // style: Theme.of(context).textTheme.displaySmall,
                   controller: emailController,
-                  onSaved: (newValue) => emailController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(
+                        RegExp(r'\s')), // Deny whitespace
+                  ],
+                  onSaved: (newValue) =>
+                      emailController.text = newValue!.trim(),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null || value.trim().isEmpty) {
                       return 'This field is required';
                     }
                     if (!RegExp(
                       r'^[a-zA-Z0-9._%+$&-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                     ).hasMatch(value)) {
-                      return "Please enter a valid email address";
+                      return 'Please enter a valid email address';
                     }
                     return null;
                   },
-
                   decoration: CommonStyle.textFieldStyle(
-                    labelTextStr: "Email",
-                    hintTextStr: "Enter Email",
+                    labelTextStr: 'Email',
+                    hintTextStr: 'Enter Email',
                   ),
-
-                  // hintText: 'Name',
                 ),
                 const SizedBox(
                   height: 20,
@@ -100,6 +102,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 TextFormField(
                   // style: Theme.of(context).textTheme.displaySmall,
                   controller: passwordController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(
+                        RegExp(r'\s')), // Deny whitespace
+                  ],
                   onSaved: (newValue) => passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -152,6 +158,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 TextFormField(
                     // style: Theme.of(context).textTheme.displaySmall,
                     controller: confirmPasswordController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(
+                          RegExp(r'\s')), // Deny whitespace
+                    ],
                     onSaved: (newValue) => confirmPasswordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
