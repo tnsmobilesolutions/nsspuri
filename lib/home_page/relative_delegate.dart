@@ -204,26 +204,29 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                   // ),
                                   Expanded(
                                     flex: 2,
-                                    child: devoteedata.status == "dataSubmitted"
-                                        ? IconButton(
-                                            onPressed: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) {
-                                                    return EditDevoteeDetailsPage(
-                                                      title: "edit",
-                                                      devotee: devoteedata,
-                                                      devoteeIndex: index,
-                                                    );
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                            icon: const Icon(Icons.edit,
-                                                size: 20, color: Colors.white),
-                                          )
-                                        : Container(),
+                                    child:
+                                        devoteedata.status == "dataSubmitted" ||
+                                                devoteedata.status == "rejected"
+                                            ? IconButton(
+                                                onPressed: () async {
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) {
+                                                        return EditDevoteeDetailsPage(
+                                                          title: "edit",
+                                                          devotee: devoteedata,
+                                                          devoteeIndex: index,
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                                icon: const Icon(Icons.edit,
+                                                    size: 20,
+                                                    color: Colors.white),
+                                              )
+                                            : const SizedBox(),
                                   )
                                 ],
                               ),
