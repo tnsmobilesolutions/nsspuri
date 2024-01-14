@@ -1,7 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_indicator/page_indicator.dart';
+import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/enums/devotee_status.dart';
 import 'package:sammilani_delegate/home_page/card_flip.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
@@ -31,13 +34,25 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
   int updatedPageIndex = 0;
   int seniorCitizenAgeLimit = 70;
   int teenAgeLimit = 12;
+  DevoteeModel? currentDevotee;
 
   @override
   void initState() {
     super.initState();
+
     controller = PageController(
-        initialPage:
-            widget.editedDevoteeIndex ?? updatedPageIndex); // Set initialPage
+        initialPage: widget.editedDevoteeIndex ?? updatedPageIndex);
+    getDevotee(); // Set initialPage
+  }
+
+  getDevotee() async {
+    final devoteeData = await GetDevoteeAPI().currentDevotee();
+    print("devotee data: $devoteeData");
+    if (mounted && devoteeData != null && devoteeData.containsKey("data")) {
+      setState(() {
+        currentDevotee = devoteeData["data"];
+      });
+    }
   }
 
   // Color getColorByDevotee(DevoteeModel devotee) {
@@ -65,8 +80,41 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
   //   }
   // }
 
+  // Color getColorByDevotee(DevoteeModel devotee) {
+  //   int age = calculateAge(DateTime.parse(devotee.dob.toString()));
+  //   if (devotee.isGuest == true) {
+  //     return Colors.yellow;
+  //   } else if (devotee.isOrganizer == true) {
+  //     return Colors.red;
+  //   } else if (age <= teenAgeLimit) {
+  //     return Colors.green;
+  //   } else if (devotee.dob != "" && devotee.dob != null) {
+  //     if (age >= seniorCitizenAgeLimit || devotee.isSpeciallyAbled == true) {
+  //       return Colors.purple;
+  //     } else if (devotee.gender == "Male") {
+  //       return Colors.blue;
+  //     } else if (devotee.gender == "Female") {
+  //       return Colors.pink;
+  //     }
+  //   }
+
+  //   //return const Color.fromARGB(255, 253, 171, 48);
+  //   return Colors.yellow;
+  // }
+
   Color getColorByDevotee(DevoteeModel devotee) {
-    int age = calculateAge(DateTime.parse(devotee.dob.toString()));
+    int age = 0;
+
+    if (devotee.dob != null && devotee.dob!.isNotEmpty) {
+      try {
+        age = calculateAge(DateTime.parse(devotee.dob.toString()));
+      } catch (e) {
+        print("Error parsing date: $e");
+      }
+    } else {
+      return Colors.blue;
+    }
+
     if (devotee.isGuest == true) {
       return Colors.yellow;
     } else if (devotee.isOrganizer == true) {
@@ -83,7 +131,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
       }
     }
 
-    //return const Color.fromARGB(255, 253, 171, 48);
+    // Default color if none of the conditions are met
     return Colors.yellow;
   }
 
@@ -215,6 +263,12 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                       builder: (context) {
                                                         return EditDevoteeDetailsPage(
                                                           title: "edit",
+                                                          isRelatives: currentDevotee
+                                                                      ?.devoteeId ==
+                                                                  devoteedata
+                                                                      .devoteeId
+                                                              ? false
+                                                              : true,
                                                           devotee: devoteedata,
                                                           devoteeIndex: index,
                                                         );
@@ -438,8 +492,9 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                         ),
                                                       ),
                                                       if (devoteedata.status ==
-                                                          DevoteeStatus
-                                                              .paid.name)
+                                                              "paid" ||
+                                                          devoteedata.status ==
+                                                              "printed")
                                                         Positioned(
                                                           top: 50,
                                                           left: 105,

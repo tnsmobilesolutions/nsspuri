@@ -79,16 +79,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     if (value == null || value.isEmpty) {
                       return 'This field is required';
                     }
-
                     if (!RegExp(
-                      r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
+                      r'^[a-zA-Z0-9._%+$&-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                     ).hasMatch(value)) {
                       return "Please enter a valid email address";
                     }
-
-                    // the email is valid
                     return null;
                   },
+
                   decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "Email",
                     hintTextStr: "Enter Email",

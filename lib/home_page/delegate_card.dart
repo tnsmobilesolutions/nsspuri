@@ -85,6 +85,7 @@ class _DelegateCardState extends State<DelegateCard> {
                 MaterialPageRoute(
                   builder: (context) => EditDevoteeDetailsPage(
                     title: "add relatives",
+                    isRelatives: true,
                     // devoteeIndex: allDevotees.length + 1,
                   ),
                 ),
