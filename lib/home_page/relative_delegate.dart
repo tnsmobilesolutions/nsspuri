@@ -7,6 +7,7 @@ import 'package:page_indicator/page_indicator.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/enums/devotee_status.dart';
 import 'package:sammilani_delegate/home_page/card_flip.dart';
+import 'package:sammilani_delegate/home_page/constants.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
@@ -32,8 +33,6 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
   late PageController controller;
   GlobalKey<PageContainerState> key = GlobalKey();
   int updatedPageIndex = 0;
-  int seniorCitizenAgeLimit = 70;
-  int teenAgeLimit = 12;
   DevoteeModel? currentDevotee;
 
   @override
@@ -55,102 +54,11 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     }
   }
 
-  // Color getColorByDevotee(DevoteeModel devotee) {
-  //   if (devotee.isGuest == true) {
-  //     return Colors.yellow;
-  //   } else if (devotee.isOrganizer == true) {
-  //     return const Color.fromARGB(255, 220, 31, 18);
-  //   } else if (devotee.dob != "" && devotee.dob != null) {
-  //     if (devotee.isSpeciallyAbled == true ||
-  //         calculateAge(DateTime.parse(devotee.dob.toString())) >=
-  //             seniorCitizenAgeLimit) {
-  //       return Colors.purple;
-  //     } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <=
-  //         teenAgeLimit) {
-  //       return Colors.green;
-  //     } else {
-  //       return Colors.yellow;
-  //     }
-  //   } else if (devotee.gender == "Male") {
-  //     return Colors.blue;
-  //   } else if (devotee.gender == "Female") {
-  //     return const Color.fromARGB(255, 254, 117, 163);
-  //   } else {
-  //     return Colors.grey;
-  //   }
+  // bool isValidDateFormat(String date) {
+  //   // Check if the date is in the format yyyy-mm-dd
+  //   final RegExp dateFormat = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+  //   return dateFormat.hasMatch(date);
   // }
-
-  // Color getColorByDevotee(DevoteeModel devotee) {
-  //   int age = calculateAge(DateTime.parse(devotee.dob.toString()));
-  //   if (devotee.isGuest == true) {
-  //     return Colors.yellow;
-  //   } else if (devotee.isOrganizer == true) {
-  //     return Colors.red;
-  //   } else if (age <= teenAgeLimit) {
-  //     return Colors.green;
-  //   } else if (devotee.dob != "" && devotee.dob != null) {
-  //     if (age >= seniorCitizenAgeLimit || devotee.isSpeciallyAbled == true) {
-  //       return Colors.purple;
-  //     } else if (devotee.gender == "Male") {
-  //       return Colors.blue;
-  //     } else if (devotee.gender == "Female") {
-  //       return Colors.pink;
-  //     }
-  //   }
-
-  //   //return const Color.fromARGB(255, 253, 171, 48);
-  //   return Colors.yellow;
-  // }
-
-  Color getColorByDevotee(DevoteeModel devotee) {
-    int age = 0;
-
-    if (devotee.dob != null && devotee.dob!.isNotEmpty) {
-      try {
-        age = calculateAge(DateTime.parse(devotee.dob.toString()));
-      } catch (e) {
-        print("Error parsing date: $e");
-      }
-    } else {
-      return Colors.blue;
-    }
-
-    if (devotee.isGuest == true) {
-      return Colors.yellow;
-    } else if (devotee.isOrganizer == true) {
-      return Colors.red;
-    } else if (age <= teenAgeLimit) {
-      return Colors.green;
-    } else if (devotee.dob != "" && devotee.dob != null) {
-      if (age >= seniorCitizenAgeLimit || devotee.isSpeciallyAbled == true) {
-        return Colors.purple;
-      } else if (devotee.gender == "Male") {
-        return Colors.blue;
-      } else if (devotee.gender == "Female") {
-        return Colors.pink;
-      }
-    }
-
-    // Default color if none of the conditions are met
-    return Colors.yellow;
-  }
-
-  int calculateAge(DateTime dob) {
-    DateTime now = DateTime.now();
-    int age = now.year - dob.year;
-    if (now.month < dob.month ||
-        (now.month == dob.month && now.day < dob.day)) {
-      age--;
-    }
-    print("age: $age");
-    return age;
-  }
-
-  bool isValidDateFormat(String date) {
-    // Check if the date is in the format yyyy-mm-dd
-    final RegExp dateFormat = RegExp(r'^\d{4}-\d{2}-\d{2}$');
-    return dateFormat.hasMatch(date);
-  }
 
   String _toPascalCase(String input) {
     if (input.isEmpty) {

@@ -223,8 +223,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         try {
-                          if (passwordController.text !=
-                              confirmPasswordController.text) {
+                          if (passwordController.text.trim() !=
+                              confirmPasswordController.text.trim()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content:
@@ -248,8 +248,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
                             String? uid = await FirebaseAuthentication()
                                 .signupWithpassword(
-                              emailController.text,
-                              passwordController.text,
+                              emailController.text.trim(),
+                              passwordController.text.trim(),
                             );
                             if (uid != null) {
                               String devoteeId = const Uuid().v1();
@@ -266,6 +266,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               final response = await PostDevoteeAPI()
                                   .signupDevotee(newDevotee);
                               await GetDevoteeAPI().loginDevotee(uid);
+                              print("devotee response : $response");
                               if (response["statusCode"] == 200) {
                                 if (context.mounted) {
                                   Navigator.of(context).pop();
@@ -274,7 +275,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                     MaterialPageRoute(
                                       builder: (context) {
                                         return DevoteeDetailsPage(
-                                          devotee: newDevotee,
+                                          devotee: DevoteeModel.fromMap(
+                                              response["data"]),
                                         );
                                       },
                                     ),
