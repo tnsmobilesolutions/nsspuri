@@ -26,51 +26,6 @@ DateTime sammilaniDate = DateTime(2024, 2, 23);
 //int _currentIndex = 0;
 
 class _DelegateCardState extends State<DelegateCard> {
-  // Color getColorByDevotee(DevoteeModel devotee) {
-  //   if (devotee.isGuest == true) {
-  //     return Colors.yellow;
-  //   } else if (devotee.isOrganizer == true) {
-  //     return Colors.red;
-  //   } else if (devotee.isSpeciallyAbled == true ||
-  //       calculateAge(DateTime.parse(devotee.dob ?? "2000-01-01")) >= 60) {
-  //     return Colors.purple;
-  //   } else if (calculateAge(DateTime.parse(devotee.dob ?? "2000-01-01")) <=
-  //       12) {
-  //     return Colors.green;
-  //   } else if (devotee.gender == "Male") {
-  //     return Colors.blue;
-  //   } else if (devotee.gender == "Female") {
-  //     return Colors.pink;
-  //   } else {
-  //     return Colors.grey;
-  //   }
-  // }
-
-  // int calculateAge(DateTime dob) {
-  //   DateTime now = DateTime.now();
-  //   int age = now.year - dob.year;
-  //   if (now.month < dob.month ||
-  //       (now.month == dob.month && now.day < dob.day)) {
-  //     age--;
-  //   }
-  //   return age;
-  // }
-  // Map<String, dynamic> allDevotees = {};
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchAllDevotees();
-  // }
-
-  // void fetchAllDevotees() async {
-  //   var a = await GetDevoteeAPI().devoteeWithRelatives();
-  //   setState(() {
-  //     allDevotees = a!;
-  //   });
-
-  //   // print("all devoteeeeees: ${allDevotees?["data"]?.length}");
-  // }
-
   @override
   Widget build(BuildContext context) {
     Duration timeUntilSammilani = sammilaniDate.difference(DateTime.now());
