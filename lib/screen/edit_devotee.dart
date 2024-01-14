@@ -107,6 +107,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
           : "";
       countryController.text = widget.devotee?.address?.country ?? "India";
       parichayaPatraValue = widget.devotee?.hasParichayaPatra ?? false;
+      remarkController.text = widget.devotee?.remarks ?? "";
     }
     stateController.text = "Odisha";
     countryController.text = "India";
@@ -902,6 +903,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           uid: widget.devotee?.uid ?? "",
                           updatedOn: DateTime.now().toString(),
                           hasParichayaPatra: parichayaPatraValue,
+                          remarks: remarkController.text,
                           isSpeciallyAbled:
                               widget.devotee?.isSpeciallyAbled ?? false,
                           address: AddressModel(
