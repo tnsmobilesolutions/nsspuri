@@ -37,6 +37,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   TextEditingController mobileController = TextEditingController();
   TextEditingController sanghaController = TextEditingController();
   TextEditingController dobController = TextEditingController();
+  final remarkController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String name = "";
   String? bloodGroupController;
@@ -576,6 +577,18 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     const SizedBox(
                       height: 15,
                     ),
+                    TextFormField(
+                      controller: remarkController,
+                      textCapitalization: TextCapitalization.words,
+                      onSaved: (newValue) => remarkController,
+                      validator: (value) {
+                        return null;
+                      },
+                      autovalidateMode: AutovalidateMode.always,
+                      maxLines: 4,
+                      decoration: CommonStyle.textFieldStyle(
+                          labelTextStr: "Remarks", hintTextStr: "Enter Remark"),
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 45,
@@ -625,6 +638,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               profilePhotoUrl: profileURL,
                               sangha: sanghaController.text,
                               dob: _formatDOB(dobController.text),
+                              remarks: remarkController.text,
                               mobileNumber: mobileController.text,
                               status: "dataSubmitted",
                             );
