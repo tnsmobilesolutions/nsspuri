@@ -44,6 +44,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   DateTime selectedDate = DateTime.now();
   List<String>? sanghaSuggestions = [];
   bool? parichayaPatraValue = false;
+  String day = "", month = "", year = "";
 
   void _showCustomCalendarDialog(BuildContext context) async {
     final selectedDate = await showDialog<String>(
@@ -71,7 +72,9 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                 ],
               ),
               content: CustomCalender(
-                forEdit: false,
+                day: day,
+                month: month,
+                year: year,
               ),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -82,7 +85,15 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     );
 
     if (selectedDate != null) {
+      print("selected date: $selectedDate");
       dobController.text = selectedDate;
+      List<String> selectedDateParts = selectedDate.split('-');
+      print("selected date parts: $selectedDateParts");
+      setState(() {
+        day = selectedDateParts[0];
+        month = selectedDateParts[1];
+        year = selectedDateParts[2];
+      });
     }
   }
 

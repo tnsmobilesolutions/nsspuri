@@ -7,8 +7,8 @@ int seniorCitizenAgeLimit = 70;
 int teenAgeLimit = 12;
 
 Color getColorByDevotee(DevoteeModel devotee) {
-  if (devotee.isSpeciallyAbled == true) return Colors.purple;
   if (devotee.isGuest == true) return Colors.yellow;
+  if (devotee.isSpeciallyAbled == true) return Colors.purple;
   if (devotee.isOrganizer == true) return Colors.red;
 
   if (devotee.dob?.isNotEmpty == true && devotee.dob != null) {
