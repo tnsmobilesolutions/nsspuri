@@ -286,7 +286,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                          backgroundColor: Colors.deepOrange,
                                           content: Text(
                                               "The password provided is too weak !")));
                                 }
@@ -294,7 +293,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
-                                          backgroundColor: Colors.deepOrange,
                                           content:
                                               Text("Email already exists !")));
                                 }
@@ -344,12 +342,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                 }
                               }
                             } else {
-                              if (context.mounted) {
-                                Navigator.of(context).pop();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Signup failed !')));
-                              }
+                              Navigator.of(context).pop();
+                              // if (context.mounted) {
+
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //       const SnackBar(
+                              //           content: Text('Signup failed !')));
+                              // }
                             }
                           }
                         } catch (e) {

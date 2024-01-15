@@ -84,10 +84,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       obscureText: _obscured1,
                       focusNode: textFieldFocusNode,
                       controller: _passwordTextController,
-                       inputFormatters: [
-                      FilteringTextInputFormatter.deny(
-                          RegExp(r'\s')), // Deny whitespace
-                    ],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(
+                            RegExp(r'\s')), // Deny whitespace
+                      ],
                       onSaved: (newValue) => _passwordTextController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -194,7 +194,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text(
-                                        'Please check your Email and Password.')));
+                                        'Email doesn\'t exists or wrong password !')));
                           }
                         } catch (e) {
                           Navigator.of(context).pop();
