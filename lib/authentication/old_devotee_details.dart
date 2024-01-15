@@ -22,22 +22,21 @@ import 'package:sammilani_delegate/utilities/custom_calender.dart';
 // ignore: depend_on_referenced_packages
 
 // ignore: must_be_immutable
-class DevoteeDetailsPage extends StatefulWidget {
-  DevoteeDetailsPage({Key? key, required this.devotee}) : super(key: key);
+class OldDevoteeDetailsPage extends StatefulWidget {
+  OldDevoteeDetailsPage({Key? key, required this.devotee}) : super(key: key);
 
   DevoteeModel devotee;
   // get currentUser => null;
 
   @override
-  State<DevoteeDetailsPage> createState() => _DevoteeDetailsPageState();
+  State<OldDevoteeDetailsPage> createState() => _OldDevoteeDetailsPageState();
 }
 
-class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
+class _OldDevoteeDetailsPageState extends State<OldDevoteeDetailsPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController sanghaController = TextEditingController();
   TextEditingController dobController = TextEditingController();
-  final remarkController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String name = "";
   String? bloodGroupController;
@@ -106,12 +105,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
 
   get districtList => null;
 
-  @override
-  void initState() {
-    super.initState();
-    print("devotee code : ${widget.devotee.devoteeCode}");
-  }
-
   void selectImage(ImageSource source) async {
     XFile? pickedFile = await ImagePicker().pickImage(source: source);
 
@@ -135,25 +128,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   }
 
   String _formatDOB(String dob) {
-    if (dob.isEmpty) {
-      return '';
-    }
-    try {
-      DateTime dateTime = DateFormat('d-MMM-yyyy', 'en_US').parse(dob);
-      String formattedDate = DateFormat('y-MM-dd').format(dateTime);
-      return formattedDate;
-    } catch (e) {
-      print("Error parsing date: $e");
-      return '';
-    }
+    String dateString = dob;
+    DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
+    String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+    return formattedDate;
   }
-
-  // String _formatDOB(String dob) {
-  //   String dateString = dob;
-  //   DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
-  //   String formattedDate = DateFormat('y-MM-dd').format(dateTime);
-  //   return formattedDate;
-  // }
 
   void showPhotoOptions() {
     showDialog(
@@ -243,6 +222,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool submitted = true; // Add this boolean flag
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -414,8 +394,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: TextFormField(
-                              validator: (value) => null,
+                            child: TextField(
                               controller: dobController,
                               decoration: CommonStyle.textFieldStyle(
                                 labelTextStr: "Date Of Birth",
@@ -574,22 +553,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     const SizedBox(
                       height: 15,
                     ),
-                    TextFormField(
-                      controller: remarkController,
-                      textCapitalization: TextCapitalization.words,
-                      onSaved: (newValue) {
-                        setState(() {
-                          remarkController.text = newValue ?? "";
-                        });
-                      },
-                      validator: (value) {
-                        return null;
-                      },
-                      autovalidateMode: AutovalidateMode.always,
-                      maxLines: 4,
-                      decoration: CommonStyle.textFieldStyle(
-                          labelTextStr: "Remarks", hintTextStr: "Enter Remark"),
-                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: 45,
@@ -639,7 +602,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               profilePhotoUrl: profileURL,
                               sangha: sanghaController.text,
                               dob: _formatDOB(dobController.text),
-                              remarks: remarkController.text,
                               mobileNumber: mobileController.text,
                               status: "dataSubmitted",
                             );
