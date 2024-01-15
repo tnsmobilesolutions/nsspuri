@@ -138,15 +138,13 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     if (dob.isEmpty) {
       return '';
     }
-
     try {
-      DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dob);
+      DateTime dateTime = DateFormat('d-MMM-yyyy', 'en_US').parse(dob);
       String formattedDate = DateFormat('y-MM-dd').format(dateTime);
       return formattedDate;
     } catch (e) {
-      // Handle the case where the date cannot be parsed.
       print("Error parsing date: $e");
-      return ''; // or any default value you want to return for an invalid date
+      return '';
     }
   }
 
@@ -245,7 +243,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

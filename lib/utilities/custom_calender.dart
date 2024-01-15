@@ -179,7 +179,7 @@ class _CustomCalenderState extends State<CustomCalender> {
             ),
             onPressed: () {
               Navigator.of(context)
-                  .pop('$selectedDate - $selectedMonth - $selectedYear');
+                  .pop('$selectedDate-$selectedMonth-$selectedYear');
             },
             child: Text(
               "Submit",

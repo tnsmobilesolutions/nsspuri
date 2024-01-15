@@ -205,7 +205,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     String month = monthNames[dateTime.month - 1];
     int year = dateTime.year;
 
-    String formattedDate = '$day/$month/$year';
+    String formattedDate = '$day-$month-$year';
 
     return formattedDate;
   }
@@ -308,7 +308,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       return '';
     }
     try {
-      DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dob);
+      DateTime dateTime = DateFormat('d-MMM-yyyy', 'en_US').parse(dob);
       String formattedDate = DateFormat('y-MM-dd').format(dateTime);
       return formattedDate;
     } catch (e) {
