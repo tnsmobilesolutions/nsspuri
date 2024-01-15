@@ -117,6 +117,8 @@ class _CustomCalenderState extends State<CustomCalender> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               DropdownButton<String>(
+                menuMaxHeight: 300,
+                iconEnabledColor: Colors.deepOrange,
                 value: selectedDate,
                 onChanged: (String? newValue) {
                   setState(() {
@@ -132,6 +134,8 @@ class _CustomCalenderState extends State<CustomCalender> {
               ),
               const SizedBox(width: 16),
               DropdownButton<String>(
+                menuMaxHeight: 300,
+                iconEnabledColor: Colors.deepOrange,
                 value: selectedMonth,
                 onChanged: (String? newValue) {
                   setState(() {
@@ -147,6 +151,8 @@ class _CustomCalenderState extends State<CustomCalender> {
               ),
               const SizedBox(width: 16),
               DropdownButton<String>(
+                menuMaxHeight: 300,
+                iconEnabledColor: Colors.deepOrange,
                 value: selectedYear,
                 onChanged: (String? newValue) {
                   setState(() {
@@ -173,14 +179,14 @@ class _CustomCalenderState extends State<CustomCalender> {
             ),
             onPressed: () {
               Navigator.of(context)
-                  .pop('$selectedDate/$selectedMonth/$selectedYear');
+                  .pop('$selectedDate - $selectedMonth - $selectedYear');
             },
             child: Text(
               "Submit",
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
-                  ?.merge(const TextStyle(color: Colors.white)),
+                  ?.merge(const TextStyle(fontSize: 17, color: Colors.white)),
             ),
           ),
         ],

@@ -1,11 +1,10 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
-
 import 'package:sammilani_delegate/home_page/relative_delegate.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/screen/pranami_info_screen.dart';
@@ -26,6 +25,23 @@ DateTime sammilaniDate = DateTime(2024, 2, 23);
 //int _currentIndex = 0;
 
 class _DelegateCardState extends State<DelegateCard> {
+  Map<String, dynamic>? allDevotees;
+  int devoteeCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    totalDevoteeCount();
+  }
+
+  void totalDevoteeCount() async {
+    allDevotees = await GetDevoteeAPI().devoteeWithRelatives();
+    setState(() {
+      devoteeCount = allDevotees?["data"].length;
+    });
+    //print("total devotee count: ${allDevotees?["data"].length}");
+  }
+
   @override
   Widget build(BuildContext context) {
     Duration timeUntilSammilani = sammilaniDate.difference(DateTime.now());
@@ -41,7 +57,7 @@ class _DelegateCardState extends State<DelegateCard> {
                   builder: (context) => EditDevoteeDetailsPage(
                     title: "add relatives",
                     isRelatives: true,
-                    // devoteeIndex: allDevotees.length + 1,
+                    devoteeIndex: devoteeCount,
                   ),
                 ),
               );

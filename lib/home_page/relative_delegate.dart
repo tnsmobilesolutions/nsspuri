@@ -5,7 +5,6 @@ import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
-import 'package:sammilani_delegate/enums/devotee_status.dart';
 import 'package:sammilani_delegate/home_page/card_flip.dart';
 import 'package:sammilani_delegate/home_page/constants.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';

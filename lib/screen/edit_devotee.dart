@@ -246,18 +246,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   void _showCustomCalendarDialog(BuildContext context) async {
     String day = "", month = "", year = "";
 
-    // if (widget.devotee != null) {
-    //   List<String> dateParts = widget.devotee?.dob?.split('-') ?? [];
-    //   setState(() {
-    //     day = int.parse(dateParts[2]).toString();
-    //     month = int.parse(dateParts[1]).toString();
-    //     year = int.parse(dateParts[0]).toString();
-    //   });
-    // }
     if (widget.devotee != null && widget.devotee?.dob != null) {
       List<String> dateParts = widget.devotee!.dob!.split('-');
 
-      // Check if dateParts has at least three elements
       if (dateParts.length >= 3) {
         setState(() {
           day = int.tryParse(dateParts[2])?.toString() ?? '';
@@ -265,7 +256,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
           year = int.tryParse(dateParts[0])?.toString() ?? '';
         });
       } else {
-        // Handle the case where dateParts doesn't have enough elements
         print('Invalid date format: ${widget.devotee?.dob}');
       }
     }
@@ -313,25 +303,17 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     }
   }
 
-  // String _formatDOB(String dob) {
-  //   String dateString = dob;
-  //   DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
-  //   String formattedDate = DateFormat('y-MM-dd').format(dateTime);
-  //   return formattedDate;
-  // }
   String _formatDOB(String dob) {
     if (dob.isEmpty) {
-      return ''; // or any default value you want to return for an empty string
+      return '';
     }
-
     try {
       DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dob);
       String formattedDate = DateFormat('y-MM-dd').format(dateTime);
       return formattedDate;
     } catch (e) {
-      // Handle the case where the date cannot be parsed.
       print("Error parsing date: $e");
-      return ''; // or any default value you want to return for an invalid date
+      return '';
     }
   }
 
