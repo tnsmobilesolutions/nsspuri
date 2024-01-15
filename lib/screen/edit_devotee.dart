@@ -78,7 +78,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   // bool _validate = false;
   // bool _validate1 = false;
   List<String>? sanghaSuggestions = [];
-
+  String day = "", month = "", year = "";
   String? select;
   DateTime selectedDate = DateTime.now();
   final stateController = TextEditingController();
@@ -244,8 +244,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   }
 
   void _showCustomCalendarDialog(BuildContext context) async {
-    String day = "", month = "", year = "";
-
     if (widget.devotee != null && widget.devotee?.dob != null) {
       List<String> dateParts = widget.devotee!.dob!.split('-');
 
@@ -288,7 +286,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 day: day,
                 month: month,
                 year: year,
-                forEdit: true,
               ),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -299,7 +296,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     );
 
     if (selectedDate != null) {
+      print("selected date: $selectedDate");
       dobController.text = selectedDate;
+      List<String> selectedDateParts = selectedDate.split('-');
+      print("selected date parts: $selectedDateParts");
+      setState(() {
+        day = selectedDateParts[0];
+        month = selectedDateParts[1];
+        year = selectedDateParts[2];
+      });
     }
   }
 
