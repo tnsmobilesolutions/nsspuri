@@ -73,6 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 30,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.always,
                   controller: emailController,
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(
@@ -100,6 +101,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.always,
+
                   // style: Theme.of(context).textTheme.displaySmall,
                   controller: passwordController,
                   inputFormatters: [
@@ -156,6 +159,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                    autovalidateMode: AutovalidateMode.always,
+
                     // style: Theme.of(context).textTheme.displaySmall,
                     controller: confirmPasswordController,
                     inputFormatters: [
@@ -165,7 +170,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     onSaved: (newValue) => confirmPasswordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter password';
+                        return 'Please cofirm password';
                       } else if (value != passwordController.text) {
                         return "Confirm password !";
                       }
@@ -175,12 +180,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     obscureText: _obscured2,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.all(12),
-                      labelText: "Password",
+                      labelText: "Confirm Password",
                       labelStyle: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
                           fontWeight: FontWeight.w400),
-                      hintText: "Password",
+                      hintText: "Confirm Password",
                       hintStyle:
                           const TextStyle(fontSize: 16, color: Colors.grey),
                       filled: true,
@@ -305,7 +310,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 Navigator.of(context).pop();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        content: Text('Signup failed')));
+                                        content: Text('User already exists')));
                               }
                             }
                           }
