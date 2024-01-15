@@ -1,8 +1,11 @@
+// ignore_for_file: avoid_print
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/authentication/devotee_details.dart';
-import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
@@ -70,38 +73,42 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 30,
                 ),
                 TextFormField(
-                  // style: Theme.of(context).textTheme.displaySmall,
+                  autovalidateMode: AutovalidateMode.always,
                   controller: emailController,
-                  onSaved: (newValue) => emailController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(
+                        RegExp(r'\s')), // Deny whitespace
+                  ],
+                  onSaved: (newValue) =>
+                      emailController.text = newValue!.trim(),
                   validator: (value) {
-                    // Check if this field is empty
-                    if (value == null || value.isEmpty) {
+                    if (value == null || value.trim().isEmpty) {
                       return 'This field is required';
                     }
-
-                    // using regular expression
                     if (!RegExp(
-                      r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
+                      r'^[a-zA-Z0-9._%+$&-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                     ).hasMatch(value)) {
-                      return "Please enter a valid email address";
+                      return 'Please enter a valid email address';
                     }
-
-                    // the email is valid
                     return null;
                   },
                   decoration: CommonStyle.textFieldStyle(
-                    labelTextStr: "Email",
-                    hintTextStr: "Enter Email",
+                    labelTextStr: 'Email',
+                    hintTextStr: 'Enter Email',
                   ),
-
-                  // hintText: 'Name',
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.always,
+
                   // style: Theme.of(context).textTheme.displaySmall,
                   controller: passwordController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(
+                        RegExp(r'\s')), // Deny whitespace
+                  ],
                   onSaved: (newValue) => passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -122,7 +129,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         color: Colors.grey,
                         fontWeight: FontWeight.w400),
                     hintText: "Password",
-                    hintStyle: const TextStyle(fontSize: 16, color: Colors.grey),
+                    hintStyle:
+                        const TextStyle(fontSize: 16, color: Colors.grey),
                     filled: true,
                     fillColor: const Color.fromARGB(255, 190, 190, 190)
                         .withOpacity(0.3),
@@ -151,12 +159,18 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 20,
                 ),
                 TextFormField(
+                    autovalidateMode: AutovalidateMode.always,
+
                     // style: Theme.of(context).textTheme.displaySmall,
                     controller: confirmPasswordController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(
+                          RegExp(r'\s')), // Deny whitespace
+                    ],
                     onSaved: (newValue) => confirmPasswordController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter password';
+                        return 'Please cofirm password';
                       } else if (value != passwordController.text) {
                         return "Confirm password !";
                       }
@@ -166,13 +180,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     obscureText: _obscured2,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.all(12),
-                      labelText: "Password",
+                      labelText: "Confirm Password",
                       labelStyle: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
                           fontWeight: FontWeight.w400),
-                      hintText: "Password",
-                      hintStyle: const TextStyle(fontSize: 16, color: Colors.grey),
+                      hintText: "Confirm Password",
+                      hintStyle:
+                          const TextStyle(fontSize: 16, color: Colors.grey),
                       filled: true,
                       fillColor: const Color.fromARGB(255, 190, 190, 190)
                           .withOpacity(0.3),
@@ -223,8 +238,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         try {
-                          if (passwordController.text !=
-                              confirmPasswordController.text) {
+                          if (passwordController.text.trim() !=
+                              confirmPasswordController.text.trim()) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content:
@@ -245,62 +260,101 @@ class _SignupScreenState extends State<SignupScreen> {
                             await Future.delayed(const Duration(
                                 seconds: 1)); // Simulating a delay
                             // ignore: use_build_context_synchronously
+                            String? uid;
+                            // try {
+                            //   uid = await FirebaseAuthentication()
+                            //       .signupWithpassword(
+                            //     emailController.text.trim(),
+                            //     passwordController.text.trim(),
+                            //   );
+                            // } on Exception catch (e) {
+                            // if (context.mounted) {
+                            //   ScaffoldMessenger.of(context).showSnackBar(
+                            //       SnackBar(content: Text(e.toString())));
+                            // }
+                            // }
+                            try {
+                              await FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  )
+                                  .then((value) => uid = value.user?.uid);
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'weak-password') {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              "The password provided is too weak !")));
+                                }
+                              } else if (e.code == 'email-already-in-use') {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content:
+                                              Text("Email already exists !")));
+                                }
+                              }
+                            } catch (e) {
+                              print(e);
+                            }
 
-                            String? uid = await FirebaseAuthentication()
-                                .signupWithpassword(
-                              emailController.text,
-                              passwordController.text,
-                            );
                             if (uid != null) {
                               String devoteeId = const Uuid().v1();
                               DevoteeModel newDevotee = DevoteeModel(
-                                  emailId: emailController.text,
+                                  emailId: emailController.text.trim(),
                                   uid: uid,
                                   devoteeId: devoteeId,
                                   createdById: devoteeId,
                                   isAdmin: false,
+                                  role: "User",
                                   isAllowedToScanPrasad: false,
                                   status: "dataSubmitted");
 
                               final response = await PostDevoteeAPI()
                                   .signupDevotee(newDevotee);
-                              await GetDevoteeAPI().loginDevotee(uid);
+                              await GetDevoteeAPI()
+                                  .loginDevotee(uid.toString());
+                              print("devotee response : $response");
                               if (response["statusCode"] == 200) {
-                                // Show a circular progress indicator while navigating
-                                // ignore: use_build_context_synchronously
-                                Navigator.of(context)
-                                    .pop(); // Close the circular progress indicator
-                                // ignore: use_build_context_synchronously
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return DevoteeDetailsPage(
-                                        devotee: newDevotee,
-                                      );
-                                    },
-                                  ),
-                                );
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return DevoteeDetailsPage(
+                                          devotee: DevoteeModel.fromMap(
+                                              response["data"]),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                }
                               } else {
-                                Navigator.of(context)
-                                    .pop(); // Close the circular progress indicator
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Signup failed')));
-                                // Handle the case where the response status code is not 200
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Signup failed')));
+                                }
                               }
                             } else {
-                              Navigator.of(context)
-                                  .pop(); // Close the circular progress indicator
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Signup failed')));
-                              // Handle the case where uid is null
+                              Navigator.of(context).pop();
+                              // if (context.mounted) {
+
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //       const SnackBar(
+                              //           content: Text('Signup failed !')));
+                              // }
                             }
                           }
                         } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())));
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+                          }
                           print(e);
                         }
                       }

@@ -4,11 +4,13 @@ class CommonStyle {
   static InputDecoration textFieldStyle({
     String labelTextStr = '',
     String hintTextStr = '',
+    bool isRequired = false,
     Icon? suffixIcon, // Change the type to Icon
   }) {
     return InputDecoration(
       contentPadding: const EdgeInsets.all(12),
       labelText: labelTextStr,
+      
       labelStyle: TextStyle(
           fontSize: 16, color: Colors.grey, fontWeight: FontWeight.w400),
       hintText: hintTextStr,

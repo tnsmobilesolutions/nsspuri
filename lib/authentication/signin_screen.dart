@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signup_email_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
@@ -52,42 +53,41 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 children: <Widget>[
                   logoWidget("assets/images/nsslogo.png"),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _emailTextController,
-                    onSaved: (newValue) => _emailTextController,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(
+                          RegExp(r'\s')), // Deny whitespace
+                    ],
+                    onSaved: (newValue) =>
+                        _emailTextController.text = newValue!.trim(),
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter  Email';
+                      if (value == null || value.trim().isEmpty) {
+                        return 'This field is required';
                       }
                       if (!RegExp(
-                              r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
-                              r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
-                              r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
-                              r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
-                              r'[0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9]'
-                              r'[0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\'
-                              r'x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])')
-                          .hasMatch(value)) {
-                        return "Please enter a valid email address";
+                        r'^[a-zA-Z0-9._%+$&-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                      ).hasMatch(value)) {
+                        return 'Please enter a valid email address';
                       }
                       return null;
                     },
                     decoration: CommonStyle.textFieldStyle(
-                      labelTextStr: "Email",
-                      hintTextStr: "Enter Email",
+                      labelTextStr: 'Email',
+                      hintTextStr: 'Enter Email',
                     ),
                   ),
-                  SizedBox(
-                    height: 12,
-                  ),
+                  const SizedBox(height: 12),
                   TextFormField(
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: _obscured1,
                       focusNode: textFieldFocusNode,
                       controller: _passwordTextController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(
+                            RegExp(r'\s')), // Deny whitespace
+                      ],
                       onSaved: (newValue) => _passwordTextController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -95,16 +95,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         }
                         return null;
                       },
-                    
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(12),
                         labelText: "Password",
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                             fontSize: 16,
                             color: Colors.grey,
                             fontWeight: FontWeight.w400),
                         hintText: "Password",
-                        hintStyle: TextStyle(fontSize: 16, color: Colors.grey),
+                        hintStyle:
+                            const TextStyle(fontSize: 16, color: Colors.grey),
                         filled: true,
                         fillColor: const Color.fromARGB(255, 190, 190, 190)
                             .withOpacity(0.3),
@@ -131,9 +131,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                       // hintText: 'Name',
                       ),
-                  const SizedBox(
-                    height: 21,
-                  ),
+                  const SizedBox(height: 21),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: 45,
@@ -160,9 +158,11 @@ class _SignInScreenState extends State<SignInScreen> {
                         await Future.delayed(
                             const Duration(seconds: 1)); // Simulating a delay
                         try {
-                          final uid = await FirebaseAuthentication()
-                              .signinWithFirebase(_emailTextController.text,
-                                  _passwordTextController.text);
+                          final uid =
+                              await FirebaseAuthentication().signinWithFirebase(
+                            _emailTextController.text.trim(),
+                            _passwordTextController.text.trim(),
+                          );
                           if (uid != null) {
                             final data = await GetDevoteeAPI()
                                 .loginDevotee(uid.toString());
@@ -194,13 +194,14 @@ class _SignInScreenState extends State<SignInScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text(
-                                        'Please check your Email and Password.')));
+                                        'Email doesn\'t exists or wrong password !')));
                           }
                         } catch (e) {
                           Navigator.of(context).pop();
                           if (e.toString().contains("Null")) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("No Devotee Found")));
+                                const SnackBar(
+                                    content: Text("No Devotee Found")));
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(e.toString())));

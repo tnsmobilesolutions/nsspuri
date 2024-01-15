@@ -1,55 +1,45 @@
+// ignore_for_file: must_be_immutable, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/authentication/signin_screen.dart';
 import 'package:sammilani_delegate/firebase/firebase_auth_api.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
-
 import 'package:sammilani_delegate/home_page/relative_delegate.dart';
-import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:sammilani_delegate/screen/pranami_info_screen.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class DelegateCard extends StatefulWidget {
-  const DelegateCard({super.key});
-
+  DelegateCard({
+    super.key,
+    this.index,
+  });
+  int? index;
   @override
   State<DelegateCard> createState() => _DelegateCardState();
 }
 
 DateTime sammilaniDate = DateTime(2024, 2, 23);
-int _currentIndex = 0;
+//int _currentIndex = 0;
 
 class _DelegateCardState extends State<DelegateCard> {
-  Color getColorByDevotee(DevoteeModel devotee) {
-    if (devotee.isGuest == true) {
-      return Colors.yellow;
-    } else if (devotee.isOrganizer == true) {
-      return Colors.red;
-    } else if (devotee.isSpeciallyAbled == true ||
-        calculateAge(DateTime.parse(devotee.dob ?? "2000-01-01")) >= 60) {
-      return Colors.purple;
-    } else if (calculateAge(DateTime.parse(devotee.dob ?? "2000-01-01")) <=
-        18) {
-      return Colors.green;
-    } else if (devotee.gender == "Male") {
-      return Colors.blue;
-    } else if (devotee.gender == "Female") {
-      return Colors.pink;
-    } else {
-      return Colors.blue;
-    }
+  Map<String, dynamic>? allDevotees;
+  int devoteeCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    totalDevoteeCount();
   }
 
-  int calculateAge(DateTime dob) {
-    DateTime now = DateTime.now();
-    int age = now.year - dob.year;
-    if (now.month < dob.month ||
-        (now.month == dob.month && now.day < dob.day)) {
-      age--;
-    }
-    return age;
+  void totalDevoteeCount() async {
+    allDevotees = await GetDevoteeAPI().devoteeWithRelatives();
+    setState(() {
+      devoteeCount = allDevotees?["data"].length;
+    });
+    //print("total devotee count: ${allDevotees?["data"].length}");
   }
 
   @override
@@ -66,7 +56,8 @@ class _DelegateCardState extends State<DelegateCard> {
                 MaterialPageRoute(
                   builder: (context) => EditDevoteeDetailsPage(
                     title: "add relatives",
-                    devotee: DevoteeModel(),
+                    isRelatives: true,
+                    devoteeIndex: devoteeCount,
                   ),
                 ),
               );
@@ -80,13 +71,15 @@ class _DelegateCardState extends State<DelegateCard> {
           title: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 "Pune Sammilani",
+                style: TextStyle(color: Colors.white),
               ),
               Text(
                 '${timeUntilSammilani.inDays} days to go (23, 24, 25 Feb 2024)',
                 style: const TextStyle(
                   fontSize: 14,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -115,7 +108,7 @@ class _DelegateCardState extends State<DelegateCard> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 50,
                     child: ElevatedButton(
@@ -127,7 +120,6 @@ class _DelegateCardState extends State<DelegateCard> {
                           ),
                         );
                       },
-                      child: Text('Payment Info'),
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.resolveWith((states) {
@@ -141,10 +133,14 @@ class _DelegateCardState extends State<DelegateCard> {
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(40)))),
+                      child: const Text('Payment Info'),
                     ),
                   ),
                 ),
-
+                // RelativeDelegate(
+                //   devoteeData: allDevotees,
+                //   editedDevoteeIndex: widget.index,
+                // ),
                 FutureBuilder(
                   future: GetDevoteeAPI().devoteeWithRelatives(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -154,7 +150,10 @@ class _DelegateCardState extends State<DelegateCard> {
                       );
                     } else {
                       if (snapshot.data["statusCode"] == 200) {
-                        return RelativeDelegate(devoteeData: snapshot.data);
+                        return RelativeDelegate(
+                          devoteeData: snapshot.data,
+                          editedDevoteeIndex: widget.index,
+                        );
                       } else {
                         return const Column(
                           children: [
@@ -165,9 +164,9 @@ class _DelegateCardState extends State<DelegateCard> {
                     }
                   },
                 ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),

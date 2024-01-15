@@ -202,6 +202,7 @@ class _AddressDetailsScreenState extends State<AddressDetailsScreen> {
                               widget.devotee.isAllowedToScanPrasad,
                           updatedOn: widget.devotee.updatedOn,
                           uid: widget.devotee.uid,
+                          role: widget.devotee.role,
                           emailId: widget.devotee.emailId,
                           createdById: widget.devotee.devoteeId,
                           bloodGroup: widget.devotee.bloodGroup,

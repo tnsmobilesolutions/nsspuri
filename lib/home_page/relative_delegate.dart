@@ -1,76 +1,63 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_indicator/page_indicator.dart';
-import 'package:sammilani_delegate/enums/devotee_status.dart';
+import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/home_page/card_flip.dart';
+import 'package:sammilani_delegate/home_page/constants.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
-import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
 class RelativeDelegate extends StatefulWidget {
-  RelativeDelegate({super.key, required this.devoteeData});
+  RelativeDelegate({
+    super.key,
+    required this.devoteeData,
+    this.editedDevoteeIndex,
+  });
+
   Map<String, dynamic> devoteeData;
+  int? editedDevoteeIndex;
 
   @override
   State<RelativeDelegate> createState() => _RelativeDelegateState();
 }
 
 class _RelativeDelegateState extends State<RelativeDelegate> {
-  late PageController controller;
   final con = FlipCardController();
+  late PageController controller;
   GlobalKey<PageContainerState> key = GlobalKey();
+  int updatedPageIndex = 0;
+  DevoteeModel? currentDevotee;
 
   @override
   void initState() {
     super.initState();
-    controller = PageController();
+
+    controller = PageController(
+        initialPage: widget.editedDevoteeIndex ?? updatedPageIndex);
+    getDevotee(); // Set initialPage
   }
 
-  Color getColorByDevotee(DevoteeModel devotee) {
-    if (devotee.isGuest == true) {
-      return Colors.yellow;
-    } else if (devotee.isOrganizer == true) {
-      return const Color.fromARGB(255, 220, 31, 18);
-    } else if (devotee.dob != "" && devotee.dob != null) {
-      if (isValidDateFormat(devotee.dob.toString())) {
-        if (devotee.isSpeciallyAbled == true ||
-            calculateAge(DateTime.parse(devotee.dob.toString())) >= 70) {
-          return Colors.purple;
-        } else if (calculateAge(DateTime.parse(devotee.dob.toString())) <= 12) {
-          return Colors.green;
-        } else {
-          return Colors.blue;
-        }
-      } else {
-        return Colors.blue;
-      }
-    } else if (devotee.gender == "Male") {
-      return Colors.blue;
-    } else if (devotee.gender == "Female") {
-      return const Color.fromARGB(255, 254, 117, 163);
-    } else {
-      return Colors.blue;
+  getDevotee() async {
+    final devoteeData = await GetDevoteeAPI().currentDevotee();
+    print("devotee data: $devoteeData");
+    if (mounted && devoteeData != null && devoteeData.containsKey("data")) {
+      setState(() {
+        currentDevotee = devoteeData["data"];
+      });
     }
   }
 
-  bool isValidDateFormat(String date) {
-    // Check if the date is in the format yyyy-mm-dd
-    final RegExp dateFormat = RegExp(r'^\d{4}-\d{2}-\d{2}$');
-    return dateFormat.hasMatch(date);
-  }
-
-  int calculateAge(DateTime dob) {
-    DateTime now = DateTime.now();
-    int age = now.year - dob.year;
-    if (now.month < dob.month ||
-        (now.month == dob.month && now.day < dob.day)) {
-      age--;
-    }
-    return age;
-  }
+  // bool isValidDateFormat(String date) {
+  //   // Check if the date is in the format yyyy-mm-dd
+  //   final RegExp dateFormat = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+  //   return dateFormat.hasMatch(date);
+  // }
 
   String _toPascalCase(String input) {
     if (input.isEmpty) {
@@ -94,19 +81,17 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     if (devotees.isEmpty) {
       return const Center(child: Text("No data"));
     }
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.4,
-      child: PageIndicatorContainer(
-        length: devotees.length,
-        align: IndicatorAlign.bottom,
-        indicatorSpace: 10.0,
-        // padding: const EdgeInsets.all(30),
-        indicatorColor: Colors.blueAccent,
-        indicatorSelectorColor: Colors.white,
-        shape: IndicatorShape.circle(size: 8),
-        child: PageView.builder(
+    return Column(
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 1.4,
+          child: PageView.builder(
             itemCount: devotees.length,
-            controller: PageController(),
+            controller: controller,
+            onPageChanged: (index) {
+              // Update updatedPageIndex when the page changes
+              updatedPageIndex = index;
+            },
             itemBuilder: (
               BuildContext context,
               int index,
@@ -152,24 +137,20 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                   )),
                               child: Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     flex: 2,
-                                    child: Container(
-                                      child: const Text(''),
-                                    ),
+                                    child: Text(''),
                                   ),
 
-                                  Expanded(
+                                  const Expanded(
                                     flex: 4,
-                                    child: Container(
-                                      child: const Text(
-                                        'DELEGATE CARD',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                        ),
+                                    child: Text(
+                                      'DELEGATE CARD',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -178,40 +159,47 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                   // ),
                                   Expanded(
                                     flex: 2,
-                                    child: devoteedata.status == "dataSubmitted"
-                                        ? Container(
-                                            child: IconButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return EditDevoteeDetailsPage(
-                                                        title: "edit",
-                                                        devotee: devoteedata,
-                                                      );
-                                                    },
-                                                  ),
-                                                );
-                                              },
-                                              icon: const Icon(Icons.edit,
-                                                  size: 20,
-                                                  color: Colors.white),
-                                            ),
-                                          )
-                                        : Container(), // You can use an empty Container or any other widget based on your requirements
+                                    child:
+                                        devoteedata.status == "dataSubmitted" ||
+                                                devoteedata.status == "rejected"
+                                            ? IconButton(
+                                                onPressed: () async {
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) {
+                                                        return EditDevoteeDetailsPage(
+                                                          title: "edit",
+                                                          isRelatives: currentDevotee
+                                                                      ?.devoteeId ==
+                                                                  devoteedata
+                                                                      .devoteeId
+                                                              ? false
+                                                              : true,
+                                                          devotee: devoteedata,
+                                                          devoteeIndex: index,
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                                icon: const Icon(Icons.edit,
+                                                    size: 20,
+                                                    color: Colors.white),
+                                              )
+                                            : const SizedBox(),
                                   )
                                 ],
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               height: MediaQuery.of(context).size.height / 1.79,
                               child: Row(
                                 children: [
                                   Expanded(
                                     flex: 1,
                                     child: ListView.separated(
-                                      itemCount: 20,
+                                      itemCount: 22,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
@@ -224,7 +212,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           (BuildContext context, int index) {
                                         // This widget will be used as a separator between items.
                                         // You can adjust the size and appearance of the separator here.
-                                        return SizedBox(
+                                        return const SizedBox(
                                             height:
                                                 3); // Adjust the height as needed.
                                       },
@@ -278,7 +266,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           const Text(
                                             'NILACHALA SARASWATA SANGHA, PURI',
                                             style: TextStyle(
-                                                fontSize: 13,
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors
                                                     .deepOrange // Text color
@@ -410,10 +398,10 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                           ),
                                                         ),
                                                       ),
-                                                      if (devoteedata.status !=
-                                                          DevoteeStatus
-                                                              .dataSubmitted
-                                                              .name)
+                                                      if (devoteedata.status ==
+                                                              "paid" ||
+                                                          devoteedata.status ==
+                                                              "printed")
                                                         Positioned(
                                                           top: 50,
                                                           left: 105,
@@ -494,87 +482,105 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Flexible(
-                                                  flex: 1,
+                                                  flex: 2,
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
                                                     children: [
-                                                      devoteedata.sangha != null
-                                                          ? Text(
-                                                              _toPascalCase(
-                                                                  devoteedata
-                                                                      .sangha
-                                                                      .toString()),
-                                                              style:
-                                                                  const TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            )
-                                                          : const Text(""),
-                                                      devoteedata.devoteeCode !=
-                                                              null
-                                                          ? Text(
-                                                              _toPascalCase(
-                                                                  devoteedata
-                                                                      .devoteeCode
-                                                                      .toString()),
-                                                              style:
-                                                                  const TextStyle(
-                                                                color: Colors
-                                                                    .deepOrange,
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            )
-                                                          : const Text(""),
-                                                      const Text(
-                                                        "Sri Sri Thakura Charanasrita",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: devoteedata
+                                                                    .sangha !=
+                                                                null
+                                                            ? Text(
+                                                                _toPascalCase(
+                                                                    devoteedata
+                                                                        .sangha
+                                                                        .toString()),
+                                                                style:
+                                                                    const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              )
+                                                            : const Text(""),
                                                       ),
-                                                      const Text(
-                                                        "",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: devoteedata
+                                                                    .devoteeCode !=
+                                                                null
+                                                            ? Text(
+                                                                _toPascalCase(
+                                                                    devoteedata
+                                                                        .devoteeCode
+                                                                        .toString()),
+                                                                style:
+                                                                    const TextStyle(
+                                                                  color: Colors
+                                                                      .deepOrange,
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              )
+                                                            : const Text(""),
                                                       ),
-                                                      const Text(
-                                                        "",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      const Expanded(
+                                                        flex: 2,
+                                                        child: Text(
+                                                          "Sri Sri Thakura Charanasrita",
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                       ),
-                                                      const Text(
-                                                        'Secretary',
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      const Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          "",
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                      const Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          "",
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                      const Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          'Secretary',
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
                                                 Flexible(
-                                                  flex: 2,
+                                                  flex: 3,
                                                   child: Container(
                                                     padding:
                                                         const EdgeInsets.all(0),
@@ -604,7 +610,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       )),
                                   Expanded(
                                     child: ListView.separated(
-                                      itemCount: 20,
+                                      itemCount: 22,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
@@ -617,7 +623,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           (BuildContext context, int index) {
                                         // This widget will be used as a separator between items.
                                         // You can adjust the size and appearance of the separator here.
-                                        return SizedBox(
+                                        return const SizedBox(
                                             height:
                                                 3); // Adjust the height as needed.
                                       },
@@ -640,7 +646,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                         8.0, // Adjust the spacing between rows
                                   ),
                                   itemCount:
-                                      12, // Change this number based on your actual requirement
+                                      13, // Change this number based on your actual requirement
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return SvgPicture.asset(
@@ -659,8 +665,25 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                   ),
                 ),
               );
-            }),
-      ),
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        SmoothPageIndicator(
+          controller:
+              controller, // Use the same controller for SmoothPageIndicator
+          count: devotees.length,
+          effect: const WormEffect(
+            dotColor: Colors.grey,
+            activeDotColor: Colors.deepOrange,
+            dotHeight: 8,
+            dotWidth: 8,
+            type: WormType.thinUnderground,
+          ),
+        ),
+      ],
     );
   }
 }

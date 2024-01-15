@@ -1,8 +1,9 @@
+// ignore_for_file: avoid_print, must_be_immutable
+// ignore: depend_on_referenced_packages
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -12,74 +13,41 @@ import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/post_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:sammilani_delegate/home_page/delegate_card.dart';
 import 'package:sammilani_delegate/home_page/home_page.dart';
-
 import 'package:sammilani_delegate/model/address_model.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
+import 'package:sammilani_delegate/utilities/custom_calender.dart';
 import 'package:uuid/uuid.dart';
 
-// ignore: depend_on_referenced_packages
-
-// ignore: must_be_immutable
 class EditDevoteeDetailsPage extends StatefulWidget {
-  EditDevoteeDetailsPage({Key? key, required this.devotee, required this.title})
+  EditDevoteeDetailsPage(
+      {Key? key,
+      this.devoteeIndex,
+      this.devotee,
+      required this.title,
+      required this.isRelatives})
       : super(key: key);
-  DevoteeModel devotee;
+
+  DevoteeModel? devotee;
+  int? devoteeIndex;
   String title;
-  get currentUser => null;
+  bool isRelatives;
 
   @override
   State<EditDevoteeDetailsPage> createState() => _EditDevoteeDetailsPageState();
+
+  get currentUser => null;
 }
 
 class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
-  final nameController = TextEditingController();
-  final mobileController = TextEditingController();
-  final sanghaController = TextEditingController();
-  TextEditingController dateInputController = TextEditingController();
   final addressLine1Controller = TextEditingController();
   final addressLine2Controller = TextEditingController();
-  final cityController = TextEditingController();
-  final stateController = TextEditingController();
-  final countryController = TextEditingController();
-  final postalCodeController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final remarkController = TextEditingController();
+
   String? bloodGroupController;
-  String? devoteeId;
-  DateTime selectedDate = DateTime.now();
-  // bool _validate = false;
-  // bool _validate1 = false;
-  List<String>? sanghaSuggestions = [];
-  bool? parichayaPatraValue = false;
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-        String formattedDate = DateFormat('y-MM-dd').format(selectedDate);
-        dateInputController.text = formattedDate;
-      });
-    }
-  }
-
-  FocusNode focusNode = FocusNode();
-
-  List gender = ["Male", "Female"];
-  int genderController = 0;
-  String? profileURL;
-
-  String? profileImage;
-  XFile? previewImage;
   List<String> bloodGrouplist = <String>[
     'A+',
     'A-',
@@ -92,9 +60,60 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     "Don't know",
   ];
 
-  get districtList => null;
+  final cityController = TextEditingController();
+  final countryController = TextEditingController();
+  String? devoteeId;
+  TextEditingController dobController = TextEditingController();
+  FocusNode focusNode = FocusNode();
+  List gender = ["Male", "Female"];
+  int genderController = 0;
+  final mobileController = TextEditingController();
+  final nameController = TextEditingController();
+  bool? parichayaPatraValue = false;
+  final postalCodeController = TextEditingController();
+  XFile? previewImage;
+  String? profileImage;
+  String? profileURL;
+  final sanghaController = TextEditingController();
+  // bool _validate = false;
+  // bool _validate1 = false;
+  List<String>? sanghaSuggestions = [];
 
-// ...
+  String? select;
+  DateTime selectedDate = DateTime.now();
+  final stateController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.devotee != null) {
+      nameController.text = widget.devotee?.name ?? "";
+      genderController = widget.devotee?.gender == "Male" ? 0 : 1;
+      mobileController.text = widget.devotee?.mobileNumber ?? "";
+      sanghaController.text = widget.devotee?.sangha ?? "";
+      dobController.text = widget.devotee?.dob != ""
+          ? formatDate(widget.devotee?.dob ?? "")
+          : "";
+      bloodGroupController = widget.devotee?.bloodGroup ?? bloodGroupController;
+      profileURL = widget.devotee?.profilePhotoUrl ?? "";
+      addressLine1Controller.text = widget.devotee?.address?.addressLine1 ?? "";
+      addressLine2Controller.text = widget.devotee?.address?.addressLine2 ?? "";
+      cityController.text = widget.devotee?.address?.city ?? "";
+      stateController.text = widget.devotee?.address?.state ?? "Odisha";
+      postalCodeController.text = widget.devotee?.address?.postalCode != null
+          ? "${widget.devotee?.address?.postalCode}"
+          : "";
+      countryController.text = widget.devotee?.address?.country ?? "India";
+      parichayaPatraValue = widget.devotee?.hasParichayaPatra ?? false;
+      remarkController.text = widget.devotee?.remarks ?? "";
+    }
+    stateController.text = "Odisha";
+    countryController.text = "India";
+  }
+
+  get districtList => null;
 
   void selectImage(ImageSource source) async {
     XFile? pickedFile =
@@ -164,31 +183,31 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
         });
   }
 
-  String? select;
+  String formatDate(String inputDate) {
+    DateTime dateTime = DateTime.parse(inputDate);
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.title == "edit") {
-      nameController.text = widget.devotee.name ?? "";
-      genderController = widget.devotee.gender == "Male" ? 0 : 1;
-      mobileController.text = widget.devotee.mobileNumber ?? "";
-      sanghaController.text = widget.devotee.sangha ?? "";
-      dateInputController.text = widget.devotee.dob ?? "";
-      bloodGroupController = widget.devotee.bloodGroup ?? bloodGroupController;
-      profileURL = widget.devotee.profilePhotoUrl ?? "";
-      addressLine1Controller.text = widget.devotee.address?.addressLine1 ?? "";
-      addressLine2Controller.text = widget.devotee.address?.addressLine2 ?? "";
-      cityController.text = widget.devotee.address?.city ?? "";
-      stateController.text = widget.devotee.address?.state ?? "Odisha";
-      postalCodeController.text = widget.devotee.address?.postalCode != null
-          ? "${widget.devotee.address?.postalCode}"
-          : "";
-      countryController.text = widget.devotee.address?.country ?? "India";
-      parichayaPatraValue = widget.devotee.hasParichayaPatra ?? false;
-    }
-    stateController.text = "Odisha";
-    countryController.text = "India";
+    List<String> monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+
+    int day = dateTime.day;
+    String month = monthNames[dateTime.month - 1];
+    int year = dateTime.year;
+
+    String formattedDate = '$day-$month-$year';
+
+    return formattedDate;
   }
 
   Row addRadioButton(int btnValue, String title) {
@@ -224,25 +243,99 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     return image.path.split("/").last;
   }
 
+  void _showCustomCalendarDialog(BuildContext context) async {
+    String day = "", month = "", year = "";
+
+    if (widget.devotee != null && widget.devotee?.dob != null) {
+      List<String> dateParts = widget.devotee!.dob!.split('-');
+
+      if (dateParts.length >= 3) {
+        setState(() {
+          day = int.tryParse(dateParts[2])?.toString() ?? '';
+          month = int.tryParse(dateParts[1])?.toString() ?? '';
+          year = int.tryParse(dateParts[0])?.toString() ?? '';
+        });
+      } else {
+        print('Invalid date format: ${widget.devotee?.dob}');
+      }
+    }
+
+    final selectedDate = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: SingleChildScrollView(
+            child: AlertDialog(
+              icon: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Select Date",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.deepOrange,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+              content: CustomCalender(
+                day: day,
+                month: month,
+                year: year,
+                forEdit: true,
+              ),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            ),
+          ),
+        );
+      },
+    );
+
+    if (selectedDate != null) {
+      dobController.text = selectedDate;
+    }
+  }
+
+  String _formatDOB(String dob) {
+    if (dob.isEmpty) {
+      return '';
+    }
+    try {
+      DateTime dateTime = DateFormat('d-MMM-yyyy', 'en_US').parse(dob);
+      String formattedDate = DateFormat('y-MM-dd').format(dateTime);
+      return formattedDate;
+    } catch (e) {
+      print("Error parsing date: $e");
+      return '';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ScaffoldBackgroundColor,
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DelegateCard(),
-              ),
-            );
-          },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.deepOrange,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => const DelegateCard(),
+        //       ),
+        //     );
+        //   },
+        //   icon: const Icon(
+        //     Icons.arrow_back,
+        //     color: Colors.deepOrange,
+        //   ),
+        // ),
         backgroundColor: AppBarColor,
         title: widget.title == 'edit'
             ? const Text('Edit Delegate')
@@ -294,6 +387,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   }
                   return null;
                 },
+                autovalidateMode: AutovalidateMode.always,
                 decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "Name", hintTextStr: "Enter Name"),
               ),
@@ -307,9 +401,25 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   color: Colors.deepOrange,
                 ),
                 focusNode: focusNode,
-                validator: (value) {
-                  if ((value?.number ?? "").isEmpty) {
-                    return ("Please enter Mobile Number");
+                // validator: (value) {
+                //   if (widget.isRelatives == true) {
+                //     // If isRelatives is true, the mobile number is optional
+                //     return null;
+                //   } else {
+                //     // If isRelatives is false, perform validation for the mobile number
+                //     if ((value?.number ?? "").isEmpty) {
+                //       return "Mobile Number is Required";
+                //     } else {
+                //       return null;
+                //     }
+                //   }
+                // },
+                autovalidateMode: widget.isRelatives
+                    ? AutovalidateMode.disabled
+                    : AutovalidateMode.always,
+                validator: (phone) {
+                  if (!widget.isRelatives && (phone?.number ?? "").isEmpty) {
+                    return "Mobile Number is Required";
                   } else {
                     return null;
                   }
@@ -318,22 +428,22 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 invalidNumberMessage: "Please enter a valid Mobile Number",
                 keyboardType: TextInputType.phone,
                 pickerDialogStyle: PickerDialogStyle(
-                  countryCodeStyle: const TextStyle(fontSize: 14),
-                  countryNameStyle: const TextStyle(fontSize: 14),
                   searchFieldCursorColor: Colors.deepOrange,
                   searchFieldInputDecoration: InputDecoration(
                     label: const Text('Search Country'),
                     labelStyle: const TextStyle(
-                        color: Colors.black), // Set label text color
+                      color: Colors.black,
+                    ),
                     hintStyle: TextStyle(
-                        color: Colors.black
-                            .withOpacity(0.5)), // Set hint text color
+                      color: Colors.black.withOpacity(0.5),
+                    ),
                     focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.deepOrange),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.black.withOpacity(0.5)),
+                      borderSide: BorderSide(
+                        color: Colors.black.withOpacity(0.5),
+                      ),
                     ),
                   ),
                   backgroundColor: Colors.white,
@@ -348,6 +458,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 onChanged: (phone) {
                   print(phone.completeNumber);
                 },
+                // Set autovalidateMode to always validate when interacting with the field
+                //autovalidateMode: AutovalidateMode.always,
               ),
               const SizedBox(
                 height: 20,
@@ -408,8 +520,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   children: [
                     Expanded(
                       child: TextField(
-                        controller:
-                            dateInputController, //editing controller of this TextField
+                        controller: dobController,
                         decoration: CommonStyle.textFieldStyle(
                           labelTextStr: "Date Of Birth",
                           hintTextStr: "Enter Date Of Birth",
@@ -418,9 +529,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                             color: Colors.deepOrange,
                           ),
                         ),
-                        readOnly:
-                            true, //set it true, so that user will not able to edit text
-                        onTap: () => _selectDate(context),
+                        readOnly: true,
+                        onTap: () => _showCustomCalendarDialog(context),
                       ),
                     ),
                   ],
@@ -486,7 +596,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   decoration: CommonStyle.textFieldStyle(
                     labelTextStr: "Sangha Name",
                     hintTextStr: "Enter Sangha Name",
-                    suffixIcon: Icon(
+                    suffixIcon: const Icon(
                       Icons.arrow_drop_down,
                       color: Colors.deepOrange,
                     ),
@@ -547,7 +657,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   children: [
                     //SizedBox
                     const Text(
-                      'Has Parichaya Patra?',
+                      'Has Parichaya Patra ?',
                     ), //Text
                     //SizedBox
                     /** Checkbox Widget **/
@@ -558,7 +668,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         value: parichayaPatraValue,
                         onChanged: (bool? value) {
                           setState(() {
-                            this.parichayaPatraValue = value;
+                            parichayaPatraValue = value;
                           });
                         },
                       ),
@@ -666,6 +776,21 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
               const SizedBox(
                 height: 20,
               ),
+              TextFormField(
+                controller: remarkController,
+                textCapitalization: TextCapitalization.words,
+                onSaved: (newValue) => remarkController,
+                validator: (value) {
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.always,
+                maxLines: 4,
+                decoration: CommonStyle.textFieldStyle(
+                    labelTextStr: "Remarks", hintTextStr: "Enter Remark"),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: 50,
@@ -694,37 +819,40 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                       String? profileURL = previewImage != null
                           ? await uploadImageToFirebaseStorage(
                               previewImage as XFile, nameController.text)
-                          : widget.devotee.profilePhotoUrl;
+                          : widget.devotee?.profilePhotoUrl;
 
+                      //String devoteeDOB = _formatDOB(dobController.text);
                       // print("devoteeee -- ${widget.devotee}");
                       DevoteeModel updateDevotee = DevoteeModel(
                           devoteeId: widget.title == "edit"
-                              ? widget.devotee.devoteeId
+                              ? widget.devotee?.devoteeId
                               : const Uuid().v1(),
                           createdById: widget.title == "edit"
-                              ? widget.devotee.createdById
+                              ? widget.devotee?.createdById
                               : const Uuid().v1(),
-                          emailId: widget.devotee.emailId,
+                          emailId: widget.devotee?.emailId,
                           bloodGroup: bloodGroupController,
                           name: nameController.text,
                           devoteeCode: widget.title == "edit"
-                              ? widget.devotee.devoteeCode
+                              ? widget.devotee?.devoteeCode
                               : 0,
-                          isAdmin: widget.devotee.isAdmin ?? false,
+                          isAdmin: widget.devotee?.isAdmin ?? false,
                           isAllowedToScanPrasad:
-                              widget.devotee.isAllowedToScanPrasad ?? false,
+                              widget.devotee?.isAllowedToScanPrasad ?? false,
+                          role: widget.devotee?.role,
                           gender: gender[genderController],
                           profilePhotoUrl: profileURL,
                           sangha: sanghaController.text,
-                          dob: dateInputController.text,
+                          dob: _formatDOB(dobController.text),
                           mobileNumber: mobileController.text,
-                          createdOn: widget.devotee.createdOn,
-                          status: widget.devotee.status ?? "dataSubmitted",
-                          uid: widget.devotee.uid ?? "",
+                          createdOn: widget.devotee?.createdOn,
+                          status: widget.devotee?.status ?? "dataSubmitted",
+                          uid: widget.devotee?.uid ?? "",
                           updatedOn: DateTime.now().toString(),
                           hasParichayaPatra: parichayaPatraValue,
+                          remarks: remarkController.text,
                           isSpeciallyAbled:
-                              widget.devotee.isSpeciallyAbled ?? false,
+                              widget.devotee?.isSpeciallyAbled ?? false,
                           address: AddressModel(
                               addressLine2: addressLine2Controller.text,
                               addressLine1: addressLine1Controller.text,
@@ -738,46 +866,54 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                       Map<String, dynamic> response;
                       if (widget.title == "edit") {
                         response = await PutDevoteeAPI().updateDevotee(
-                            updateDevotee, widget.devotee.devoteeId.toString());
+                            updateDevotee, widget.devotee?.devoteeId ?? "");
                       } else {
                         response = await PostDevoteeAPI()
                             .addRelativeDevotee(updateDevotee);
                       }
 
                       if (response["statusCode"] == 200) {
-                        // Show a circular progress indicator while navigating
-                        // ignore: use_build_context_synchronously
-                        showDialog(
-                          context: context,
-                          barrierDismissible:
-                              false, // Prevent dismissing by tapping outside
-                          builder: (BuildContext context) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                        );
-                        Navigator.of(context)
-                            .pop(); // Close the circular progress indicator
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(),
-                            ));
+                        if (context.mounted) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          );
+                        }
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HomePage(index: widget.devoteeIndex),
+                              ));
+                        }
                       } else {
-                        Navigator.of(context)
-                            .pop(); // Close the circular progress indicator
-                        // ignore: use_build_context_synchronously
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('devotee update issue')));
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
+
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('devotee update issue')));
+                        }
                       }
                     } catch (e) {
-                      Navigator.of(context)
-                          .pop(); // Close the circular progress indicator
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text('devotee update issue')));
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())));
+                      }
+                      print(e);
                     }
                   },
                   style: ButtonStyle(
