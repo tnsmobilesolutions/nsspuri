@@ -577,7 +577,11 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                     TextFormField(
                       controller: remarkController,
                       textCapitalization: TextCapitalization.words,
-                      onSaved: (newValue) => remarkController,
+                      onSaved: (newValue) {
+                        setState(() {
+                          remarkController.text = newValue ?? "";
+                        });
+                      },
                       validator: (value) {
                         return null;
                       },
