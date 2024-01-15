@@ -89,6 +89,19 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   void initState() {
     super.initState();
     if (widget.devotee != null) {
+      if (widget.devotee?.dob != null) {
+        List<String> dateParts = widget.devotee!.dob!.split('-');
+
+        if (dateParts.length >= 3) {
+          setState(() {
+            day = int.tryParse(dateParts[2])?.toString() ?? '';
+            month = int.tryParse(dateParts[1])?.toString() ?? '';
+            year = int.tryParse(dateParts[0])?.toString() ?? '';
+          });
+        } else {
+          print('Invalid date format: ${widget.devotee?.dob}');
+        }
+      }
       nameController.text = widget.devotee?.name ?? "";
       genderController = widget.devotee?.gender == "Male" ? 0 : 1;
       mobileController.text = widget.devotee?.mobileNumber ?? "";
@@ -244,20 +257,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   }
 
   void _showCustomCalendarDialog(BuildContext context) async {
-    if (widget.devotee != null && widget.devotee?.dob != null) {
-      List<String> dateParts = widget.devotee!.dob!.split('-');
-
-      if (dateParts.length >= 3) {
-        setState(() {
-          day = int.tryParse(dateParts[2])?.toString() ?? '';
-          month = int.tryParse(dateParts[1])?.toString() ?? '';
-          year = int.tryParse(dateParts[0])?.toString() ?? '';
-        });
-      } else {
-        print('Invalid date format: ${widget.devotee?.dob}');
-      }
-    }
-
     final selectedDate = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
@@ -530,7 +529,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           labelTextStr: "Date Of Birth",
                           hintTextStr: "Enter Date Of Birth",
                           suffixIcon: const Icon(
-                            Icons.calendar_view_month_rounded,
+                            Icons.calendar_month_rounded,
                             color: Colors.deepOrange,
                           ),
                         ),

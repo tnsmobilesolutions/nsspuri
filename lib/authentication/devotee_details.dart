@@ -432,7 +432,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                                 labelTextStr: "Date Of Birth",
                                 hintTextStr: "Enter Date Of Birth",
                                 suffixIcon: const Icon(
-                                  Icons.calendar_view_month_rounded,
+                                  Icons.calendar_month_rounded,
                                   color: Colors.deepOrange,
                                 ),
                               ),
