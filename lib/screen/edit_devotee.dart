@@ -339,7 +339,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
         backgroundColor: AppBarColor,
         title: widget.title == 'edit'
             ? const Text('Edit Delegate')
-            : const Text('Add Relative Delegate'),
+            : const Text('Add Member'),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -961,7 +961,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(90)))),
                   child: Text(
-                    widget.title == 'edit' ? "Update" : "Add your Relative",
+                    widget.title == 'edit' ? "Update" : "Create",
                   ),
 
                   //Row
