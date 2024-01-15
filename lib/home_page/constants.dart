@@ -20,7 +20,7 @@ Color getColorByDevotee(DevoteeModel devotee) {
   if (devotee.gender == "Male") return Colors.blue;
   if (devotee.gender == "Female") return Colors.pink;
 
-  return Colors.grey;
+  return Colors.blue;
 }
 
 int calculateAge(DateTime dob) {

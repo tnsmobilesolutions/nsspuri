@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
@@ -260,12 +261,48 @@ class _SignupScreenState extends State<SignupScreen> {
                             await Future.delayed(const Duration(
                                 seconds: 1)); // Simulating a delay
                             // ignore: use_build_context_synchronously
+                            String? uid;
+                            // try {
+                            //   uid = await FirebaseAuthentication()
+                            //       .signupWithpassword(
+                            //     emailController.text.trim(),
+                            //     passwordController.text.trim(),
+                            //   );
+                            // } on Exception catch (e) {
+                            // if (context.mounted) {
+                            //   ScaffoldMessenger.of(context).showSnackBar(
+                            //       SnackBar(content: Text(e.toString())));
+                            // }
+                            // }
+                            try {
+                              await FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  )
+                                  .then((value) => uid = value.user?.uid);
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'weak-password') {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          backgroundColor: Colors.deepOrange,
+                                          content: Text(
+                                              "The password provided is too weak !")));
+                                }
+                              } else if (e.code == 'email-already-in-use') {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          backgroundColor: Colors.deepOrange,
+                                          content:
+                                              Text("Email already exists !")));
+                                }
+                              }
+                            } catch (e) {
+                              print(e);
+                            }
 
-                            String? uid = await FirebaseAuthentication()
-                                .signupWithpassword(
-                              emailController.text.trim(),
-                              passwordController.text.trim(),
-                            );
                             if (uid != null) {
                               String devoteeId = const Uuid().v1();
                               DevoteeModel newDevotee = DevoteeModel(
@@ -280,7 +317,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
                               final response = await PostDevoteeAPI()
                                   .signupDevotee(newDevotee);
-                              await GetDevoteeAPI().loginDevotee(uid);
+                              await GetDevoteeAPI()
+                                  .loginDevotee(uid.toString());
                               print("devotee response : $response");
                               if (response["statusCode"] == 200) {
                                 if (context.mounted) {
@@ -310,7 +348,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 Navigator.of(context).pop();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        content: Text('User already exists')));
+                                        content: Text('Signup failed !')));
                               }
                             }
                           }
