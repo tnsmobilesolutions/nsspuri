@@ -267,7 +267,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           const Text(
                                             'NILACHALA SARASWATA SANGHA, PURI',
                                             style: TextStyle(
-                                                fontSize: 13,
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors
                                                     .deepOrange // Text color
@@ -483,87 +483,105 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Flexible(
-                                                  flex: 1,
+                                                  flex: 2,
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
                                                     children: [
-                                                      devoteedata.sangha != null
-                                                          ? Text(
-                                                              _toPascalCase(
-                                                                  devoteedata
-                                                                      .sangha
-                                                                      .toString()),
-                                                              style:
-                                                                  const TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            )
-                                                          : const Text(""),
-                                                      devoteedata.devoteeCode !=
-                                                              null
-                                                          ? Text(
-                                                              _toPascalCase(
-                                                                  devoteedata
-                                                                      .devoteeCode
-                                                                      .toString()),
-                                                              style:
-                                                                  const TextStyle(
-                                                                color: Colors
-                                                                    .deepOrange,
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            )
-                                                          : const Text(""),
-                                                      const Text(
-                                                        "Sri Sri Thakura Charanasrita",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: devoteedata
+                                                                    .sangha !=
+                                                                null
+                                                            ? Text(
+                                                                _toPascalCase(
+                                                                    devoteedata
+                                                                        .sangha
+                                                                        .toString()),
+                                                                style:
+                                                                    const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              )
+                                                            : const Text(""),
                                                       ),
-                                                      const Text(
-                                                        "",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: devoteedata
+                                                                    .devoteeCode !=
+                                                                null
+                                                            ? Text(
+                                                                _toPascalCase(
+                                                                    devoteedata
+                                                                        .devoteeCode
+                                                                        .toString()),
+                                                                style:
+                                                                    const TextStyle(
+                                                                  color: Colors
+                                                                      .deepOrange,
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              )
+                                                            : const Text(""),
                                                       ),
-                                                      const Text(
-                                                        "",
-                                                        style: TextStyle(
-                                                            fontSize: 10,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      const Expanded(
+                                                        flex: 2,
+                                                        child: Text(
+                                                          "Sri Sri Thakura Charanasrita",
+                                                          style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                       ),
-                                                      const Text(
-                                                        'Secretary',
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                      const Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          "",
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                      const Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          "",
+                                                          style: TextStyle(
+                                                              fontSize: 10,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ),
+                                                      const Expanded(
+                                                        flex: 1,
+                                                        child: Text(
+                                                          'Secretary',
+                                                          style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
                                                 Flexible(
-                                                  flex: 2,
+                                                  flex: 3,
                                                   child: Container(
                                                     padding:
                                                         const EdgeInsets.all(0),
