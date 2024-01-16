@@ -69,9 +69,7 @@ class _OldDevoteeDetailsPageState extends State<OldDevoteeDetailsPage> {
                   ),
                 ],
               ),
-              content: CustomCalender(
-                forEdit: false,
-              ),
+              content: CustomCalender(),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             ),

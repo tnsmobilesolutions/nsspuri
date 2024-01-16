@@ -78,7 +78,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   // bool _validate = false;
   // bool _validate1 = false;
   List<String>? sanghaSuggestions = [];
-
+  String day = "", month = "", year = "";
   String? select;
   DateTime selectedDate = DateTime.now();
   final stateController = TextEditingController();
@@ -89,6 +89,19 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   void initState() {
     super.initState();
     if (widget.devotee != null) {
+      if (widget.devotee?.dob != null) {
+        List<String> dateParts = widget.devotee!.dob!.split('-');
+
+        if (dateParts.length >= 3) {
+          setState(() {
+            day = int.tryParse(dateParts[2])?.toString() ?? '';
+            month = int.tryParse(dateParts[1])?.toString() ?? '';
+            year = int.tryParse(dateParts[0])?.toString() ?? '';
+          });
+        } else {
+          print('Invalid date format: ${widget.devotee?.dob}');
+        }
+      }
       nameController.text = widget.devotee?.name ?? "";
       genderController = widget.devotee?.gender == "Male" ? 0 : 1;
       mobileController.text = widget.devotee?.mobileNumber ?? "";
@@ -244,22 +257,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   }
 
   void _showCustomCalendarDialog(BuildContext context) async {
-    String day = "", month = "", year = "";
-
-    if (widget.devotee != null && widget.devotee?.dob != null) {
-      List<String> dateParts = widget.devotee!.dob!.split('-');
-
-      if (dateParts.length >= 3) {
-        setState(() {
-          day = int.tryParse(dateParts[2])?.toString() ?? '';
-          month = int.tryParse(dateParts[1])?.toString() ?? '';
-          year = int.tryParse(dateParts[0])?.toString() ?? '';
-        });
-      } else {
-        print('Invalid date format: ${widget.devotee?.dob}');
-      }
-    }
-
     final selectedDate = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
@@ -288,7 +285,6 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 day: day,
                 month: month,
                 year: year,
-                forEdit: true,
               ),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -299,7 +295,15 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     );
 
     if (selectedDate != null) {
+      print("selected date: $selectedDate");
       dobController.text = selectedDate;
+      List<String> selectedDateParts = selectedDate.split('-');
+      print("selected date parts: $selectedDateParts");
+      setState(() {
+        day = selectedDateParts[0];
+        month = selectedDateParts[1];
+        year = selectedDateParts[2];
+      });
     }
   }
 
@@ -339,7 +343,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
         backgroundColor: AppBarColor,
         title: widget.title == 'edit'
             ? const Text('Edit Delegate')
-            : const Text('Add Relative Delegate'),
+            : const Text('Add Member'),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -525,7 +529,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           labelTextStr: "Date Of Birth",
                           hintTextStr: "Enter Date Of Birth",
                           suffixIcon: const Icon(
-                            Icons.calendar_view_month_rounded,
+                            Icons.calendar_month_rounded,
                             color: Colors.deepOrange,
                           ),
                         ),
@@ -928,7 +932,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(90)))),
                   child: Text(
-                    widget.title == 'edit' ? "Update" : "Add your Relative",
+                    widget.title == 'edit' ? "Update" : "Create",
                   ),
 
                   //Row
