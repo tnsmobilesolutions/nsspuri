@@ -89,7 +89,8 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   void initState() {
     super.initState();
     if (widget.devotee != null) {
-      if (widget.devotee?.dob != null) {
+      if (widget.devotee?.dob != null ||
+          widget.devotee?.dob?.isNotEmpty == true) {
         List<String> dateParts = widget.devotee!.dob!.split('-');
 
         if (dateParts.length >= 3) {
@@ -106,9 +107,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       genderController = widget.devotee?.gender == "Male" ? 0 : 1;
       mobileController.text = widget.devotee?.mobileNumber ?? "";
       sanghaController.text = widget.devotee?.sangha ?? "";
-      dobController.text = widget.devotee?.dob != ""
-          ? formatDate(widget.devotee?.dob ?? "")
-          : "";
+      dobController.text =
+          widget.devotee?.dob != null || widget.devotee?.dob?.isNotEmpty == true
+              ? formatDate(widget.devotee?.dob ?? "")
+              : "";
       bloodGroupController = widget.devotee?.bloodGroup ?? bloodGroupController;
       profileURL = widget.devotee?.profilePhotoUrl ?? "";
       addressLine1Controller.text = widget.devotee?.address?.addressLine1 ?? "";
