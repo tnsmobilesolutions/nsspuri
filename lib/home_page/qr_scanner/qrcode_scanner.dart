@@ -2,13 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
+import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
-import 'package:sammilani_delegate/home_page/qr_scanner/scan_failed.dart';
-import 'package:sammilani_delegate/home_page/qr_scanner/scan_success_screen.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class QrScannerScreen extends StatefulWidget {
-  const QrScannerScreen({Key? key}) : super(key: key);
+  String? role;
+  QrScannerScreen({
+    Key? key,
+    this.role,
+  }) : super(key: key);
 
   @override
   State<QrScannerScreen> createState() => _QrScannerScreenState();
@@ -28,50 +31,26 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
     qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
       context: context,
       onCode: (code) async {
-        Map<String, dynamic> response = {};
-        try {
-          response = await PutDevoteeAPI().updatePrasad(code.toString());
-        } on Exception catch (e) {
-          print("Error while scanning: $e");
-        }
-        if (response["statusCode"] == 200) {
-          setState(() {
-            this.code = code;
-          });
-          if (context.mounted) {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return PrasadScanResultDialog(
-                    response: response,
-                    title: "Success !",
-                    dialogColor: Colors.white,
-                    buttonColor: Colors.deepOrange,
-                    textColor: Colors.black,
-                  );
-                });
-            // Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //   return ScanSuccess(successMessage: response["data"]["error"]);
-            // }));
-          }
-        } else {
-          if (context.mounted) {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return PrasadScanResultDialog(
-                    response: response,
-                    title: "Failed !",
-                    dialogColor: Colors.deepOrange,
-                    buttonColor: Colors.white,
-                    textColor: Colors.white,
-                  );
-                });
-            // Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //   return ScanFailedScreen(errorMessage: response["error"][0]);
-            // }));
-          }
-        }
+        Map<String, dynamic> response = widget.role == "PrasadScanner"
+            ? await PutDevoteeAPI().updatePrasad(code.toString())
+            : await GetDevoteeAPI().securityScanner(code.toString());
+        print("scanner response: $response");
+        // if (response["statusCode"] == 200) {
+        //   setState(() {
+        //     this.code = code;
+        //   });
+        //   if (context.mounted) {
+        //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //       return ScanSuccess(successMessage: response["data"]["error"]);
+        //     }));
+        //   }
+        // } else {
+        //   if (context.mounted) {
+        //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //       return ScanFailedScreen(errorMessage: response["error"][0]);
+        //     }));
+        //   }
+        // }
       },
     );
   }
