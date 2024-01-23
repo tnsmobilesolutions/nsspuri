@@ -28,22 +28,48 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
     qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
       context: context,
       onCode: (code) async {
-        Map<String, dynamic> response =
-            await PutDevoteeAPI().updatePrasad(code.toString());
+        Map<String, dynamic> response = {};
+        try {
+          response = await PutDevoteeAPI().updatePrasad(code.toString());
+        } on Exception catch (e) {
+          print("Error while scanning: $e");
+        }
         if (response["statusCode"] == 200) {
           setState(() {
             this.code = code;
           });
           if (context.mounted) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return ScanSuccess(successMessage: response["data"]["error"]);
-            }));
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return PrasadScanResultDialog(
+                    response: response,
+                    title: "Success !",
+                    dialogColor: Colors.white,
+                    buttonColor: Colors.deepOrange,
+                    textColor: Colors.black,
+                  );
+                });
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return ScanSuccess(successMessage: response["data"]["error"]);
+            // }));
           }
         } else {
           if (context.mounted) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return ScanFailedScreen(errorMessage: response["error"][0]);
-            }));
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return PrasadScanResultDialog(
+                    response: response,
+                    title: "Failed !",
+                    dialogColor: Colors.deepOrange,
+                    buttonColor: Colors.white,
+                    textColor: Colors.white,
+                  );
+                });
+            // Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //   return ScanFailedScreen(errorMessage: response["error"][0]);
+            // }));
           }
         }
       },
@@ -63,6 +89,72 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
           child: const Text('Scan QR Code'),
         ),
       ),
+    );
+  }
+}
+
+class PrasadScanResultDialog extends StatelessWidget {
+  PrasadScanResultDialog({
+    super.key,
+    required this.response,
+    required this.title,
+    required this.dialogColor,
+    required this.textColor,
+    required this.buttonColor,
+  });
+
+  final Map<String, dynamic> response;
+  String title;
+  Color dialogColor;
+  Color textColor;
+  Color buttonColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: dialogColor,
+      title: Text(
+        title,
+        style: TextStyle(color: textColor, fontSize: 25),
+        textAlign: TextAlign.center,
+      ),
+      content: Text(
+        "${response["error"][0]}",
+        style: TextStyle(color: textColor, fontSize: 20),
+      ),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 45,
+              width: 100,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(90)),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith((states) {
+                      return buttonColor;
+                    }),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(90)))),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'OK',
+                  style: TextStyle(
+                      color: dialogColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

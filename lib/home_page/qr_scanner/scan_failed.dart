@@ -20,7 +20,7 @@ class _ScanFailedScreenState extends State<ScanFailedScreen> {
         backgroundColor: AppBarColor,
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 100, left: 15, right: 15),
+        padding: const EdgeInsets.all(20),
         child: Container(
           height: MediaQuery.of(context).size.height / 1.5,
           width: MediaQuery.of(context).size.width,
