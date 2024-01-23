@@ -44,8 +44,12 @@ class _HomePageState extends State<HomePage> {
     _pages = [
       DelegateCard(index: widget.index),
       const KnowMore(),
-      if (currentDevotee?.role == "PrasadScanner")
-        const QrScannerScreen(),
+      if (currentDevotee?.role == "PrasadScanner" ||
+          currentDevotee?.role == "SecurityCheck")
+        QrScannerScreen(
+            role: currentDevotee?.role == "SecurityCheck"
+                ? "SecurityCheck"
+                : "PrasadScanner"),
     ];
     return WillPopScope(
       onWillPop: () async => false,
@@ -71,6 +75,11 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.more),
               label: 'Know More',
             ),
+            if (currentDevotee?.role == "SecurityCheck")
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.qr_code_scanner),
+                label: 'Scan',
+              ),
             if (currentDevotee?.role == "PrasadScanner")
               const BottomNavigationBarItem(
                 icon: Icon(Icons.qr_code_scanner),

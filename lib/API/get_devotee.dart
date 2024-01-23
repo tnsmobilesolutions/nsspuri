@@ -91,6 +91,15 @@ class GetDevoteeAPI extends DioFuctionAPI {
     return sanghas;
   }
 
+  Future<Map<String, dynamic>> securityScanner(String devoteeCode) async {
+    try {
+      final response = await getAPI("verifyDevotee/$devoteeCode");
+      return response;
+    } catch (e) {
+      print("Post Error....$e");
+      return {"statusCode": 500, "error": e};
+    }
+  }
   // Future<List<SanghaModel>?> getAllSangha() async {
   //   try {
   //     final response = await getAPI("sangha");
