@@ -159,12 +159,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     }
   }
 
-  // String _formatDOB(String dob) {
-  //   String dateString = dob;
-  //   DateTime dateTime = DateFormat('dd/MMM/yyyy', 'en').parse(dateString);
-  //   String formattedDate = DateFormat('y-MM-dd').format(dateTime);
-  //   return formattedDate;
-  // }
 
   void showPhotoOptions() {
     showDialog(
