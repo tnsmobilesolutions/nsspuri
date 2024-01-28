@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
@@ -24,35 +24,64 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
   @override
   void initState() {
     super.initState();
-    //_openQrScannerDialog();
   }
 
   Future<void> _openQrScannerDialog() async {
-    qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
-      context: context,
-      onCode: (code) async {
-        Map<String, dynamic> response = widget.role == "PrasadScanner"
-            ? await PutDevoteeAPI().updatePrasad(code.toString())
-            : await GetDevoteeAPI().securityScanner(code.toString());
-        print("scanner response: $response");
-        // if (response["statusCode"] == 200) {
-        //   setState(() {
-        //     this.code = code;
-        //   });
-        //   if (context.mounted) {
-        //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //       return ScanSuccess(successMessage: response["data"]["error"]);
-        //     }));
-        //   }
-        // } else {
-        //   if (context.mounted) {
-        //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //       return ScanFailedScreen(errorMessage: response["error"][0]);
-        //     }));
-        //   }
-        // }
-      },
-    );
+    try {
+      qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+        context: context,
+        onCode: (code) async {
+          try {
+            final response = widget.role == "PrasadScanner"
+                ? await PutDevoteeAPI().updatePrasad(code.toString())
+                : await GetDevoteeAPI().securityScanner(code.toString());
+            print("API scan response: $response");
+            _handleScanResponse(code.toString(), response);
+          } on Exception catch (e) {
+            print("error while scanning: $e");
+          }
+        },
+      );
+    } on Exception catch (e) {
+      print("Error while scanning: $e");
+    }
+  }
+
+  void _handleScanResponse(String code, Map<String, dynamic> response) {
+    try {
+      if (response["statusCode"] == 200) {
+        setState(() {
+          this.code = code;
+        });
+
+        _showScanResultDialog(
+            response, "Success !", Colors.green, Colors.white, Colors.white);
+      } else {
+        _showScanResultDialog(response, "Failed !", Colors.deepOrange,
+            Colors.white, Colors.white);
+      }
+    } catch (e, stackTrace) {
+      print("Error in _handleScanResponse: $e");
+      print("Stack trace: $stackTrace");
+    }
+  }
+
+  void _showScanResultDialog(Map<String, dynamic> response, String title,
+      Color dialogColor, Color buttonColor, Color textColor) {
+    if (context.mounted) {
+      print("scan response: $response");
+      showDialog(
+        context: context,
+        builder: (context) => PrasadScanResultDialog(
+          response: response,
+          role: widget.role,
+          title: title,
+          dialogColor: dialogColor,
+          buttonColor: buttonColor,
+          textColor: textColor,
+        ),
+      );
+    }
   }
 
   @override
@@ -60,7 +89,10 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppBarColor,
-        title: const Text('QR Scanner'),
+        title: const Text(
+          'QR Scanner',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Center(
         child: ElevatedButton(
@@ -77,16 +109,70 @@ class PrasadScanResultDialog extends StatelessWidget {
     super.key,
     required this.response,
     required this.title,
+    this.role,
     required this.dialogColor,
     required this.textColor,
     required this.buttonColor,
   });
 
   final Map<String, dynamic> response;
+  String? role;
   String title;
   Color dialogColor;
   Color textColor;
   Color buttonColor;
+
+  Widget getContent() {
+    try {
+      if (role == "PrasadScanner") {
+        if (response["statusCode"] == 200) {
+          return Text(
+            "${response["data"]["error"]}",
+            style: TextStyle(color: textColor, fontSize: 20),
+            textAlign: TextAlign.center,
+          );
+        } else {
+          return Text(
+            "${response["error"][0]}",
+            style: TextStyle(color: textColor, fontSize: 20),
+            textAlign: TextAlign.center,
+          );
+        }
+      } else {
+        if (response["statusCode"] == 200) {
+          return Text(
+            "${response["data"]}",
+            style: TextStyle(color: textColor, fontSize: 20),
+            textAlign: TextAlign.center,
+          );
+        } else {
+          return Text(
+            "Devotee not found !", //"${response["error"][0]}",
+            style: TextStyle(color: textColor, fontSize: 20),
+            textAlign: TextAlign.center,
+          );
+        }
+      }
+    } on Exception catch (e) {
+      print("scan error: $e");
+      return const ScaffoldMessenger(
+        child: SnackBar(
+          content: Text("Something went wrong !"),
+        ),
+      );
+    }
+  }
+  // Widget getContent() {
+  //   final bool isSuccess = response["statusCode"] == 200;
+  //   final dynamic responseData =
+  //       isSuccess ? response["data"] : response["error"][0];
+
+  //   return Text(
+  //     "$responseData",
+  //     style: TextStyle(color: textColor, fontSize: 20),
+  //     textAlign: TextAlign.center,
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +183,7 @@ class PrasadScanResultDialog extends StatelessWidget {
         style: TextStyle(color: textColor, fontSize: 25),
         textAlign: TextAlign.center,
       ),
-      content: Text(
-        "${response["error"][0]}",
-        style: TextStyle(color: textColor, fontSize: 20),
-      ),
+      content: getContent(),
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
