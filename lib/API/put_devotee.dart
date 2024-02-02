@@ -28,6 +28,7 @@ class PutDevoteeAPI extends DioFuctionAPI {
       final data = {"date": date, "time": time};
       final encodedData = json.encode(data);
       final response = await putAPI("prasadUpdate/$devoteeCode", encodedData);
+      print("scan response: $response");
       return response;
     }
     // catch (e) {

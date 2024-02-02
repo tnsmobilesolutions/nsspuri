@@ -5,6 +5,7 @@ import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String baseUrl = RemoteConfigHelper().getapiBaseURL;
+//int duration = RemoteConfigHelper().closeDration;
 // String baseUrl = "http://34.136.15.208:4400/";
 
 abstract class DioFuctionAPI {

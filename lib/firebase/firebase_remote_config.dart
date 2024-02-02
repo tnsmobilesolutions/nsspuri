@@ -69,7 +69,6 @@ class RemoteConfigHelper {
 
   set setUpiId(String upiIdLink) {
     upiId = upiIdLink;
-   
   }
 
   String paymentContact = "";
@@ -145,6 +144,11 @@ class RemoteConfigHelper {
     apiBaseURL = baseURL;
   }
 
+  int closeDration = 5;
+  set setScannerCloseDuration(int duration) {
+    closeDration = duration;
+  }
+
   factory RemoteConfigHelper() {
     return _networkHelper;
   }
@@ -161,11 +165,16 @@ fetchRemoteConfigData() async {
     await remoteConfig.fetchAndActivate();
     RemoteConfigHelper().setUpgradePrompt =
         remoteConfig.getBool('shouldShowMandatoryUpgradePrompt');
+
     RemoteConfigHelper().setUpgradeText =
         remoteConfig.getString('mandatoryUpgradeText');
 
+    RemoteConfigHelper().setScannerCloseDuration =
+        remoteConfig.getInt('scanner_auto_close_duration');
+
     RemoteConfigHelper().setPaymentMessage =
         remoteConfig.getString('paymentMessage');
+
     RemoteConfigHelper().setUpiId = remoteConfig.getString('upiId');
 
     RemoteConfigHelper().setPaymentContact =
@@ -177,18 +186,22 @@ fetchRemoteConfigData() async {
         remoteConfig.getString('bankAccountNo');
 
     RemoteConfigHelper().setBankIfscCode =
-        remoteConfig.getString('bankIfscCode');
+        RemoteConfigHelper().setBankName = remoteConfig.getString('bankName');
 
     RemoteConfigHelper().setBranchName = remoteConfig.getString('branchName');
 
     RemoteConfigHelper().sethelpContactNo =
         remoteConfig.getString('helpContactNo');
+
     RemoteConfigHelper().setapiBaseURL = remoteConfig.getString('apiBaseURL');
 
     RemoteConfigHelper().setVersionNumber =
         remoteConfig.getString('versionNumber');
+
     String remoteVersion = remoteConfig.getString('versionNumber');
+
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
     String appVersion = packageInfo.version;
     print('Version: $appVersion, remoteVersion: $remoteVersion');
     if (appVersion == remoteVersion) {
