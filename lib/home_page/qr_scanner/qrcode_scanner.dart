@@ -1,32 +1,66 @@
 // ignore_for_file: avoid_print, must_be_immutable
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/scan_failed.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/scan_success_screen.dart';
+import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class QrScannerScreen extends StatefulWidget {
-  String? role;
   QrScannerScreen({
     Key? key,
     this.role,
   }) : super(key: key);
+
+  String? role;
 
   @override
   State<QrScannerScreen> createState() => _QrScannerScreenState();
 }
 
 class _QrScannerScreenState extends State<QrScannerScreen> {
-  final qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   String? code;
+  final qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
+  late int scannerCloseDuration;
 
   @override
   void initState() {
     super.initState();
+    _initialize();
   }
 
-  Future<void> _openQrScannerDialog() async {
+  Future<void> _initialize() async {
+    await fetchScannerCloseDuration(context);
+  }
+
+  fetchScannerCloseDuration(context) async {
+    final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+    try {
+      await remoteConfig.setConfigSettings(RemoteConfigSettings(
+        fetchTimeout: const Duration(hours: 24),
+        minimumFetchInterval: Duration.zero,
+      ));
+      remoteConfig.getInt('scanner_auto_close_duration');
+      await remoteConfig.fetchAndActivate();
+      int closeDuration = remoteConfig.getInt('scanner_auto_close_duration');
+      setState(() {
+        scannerCloseDuration = closeDuration;
+      });
+    } on PlatformException catch (exception) {
+      print(exception);
+    } catch (exception) {
+      print('Unable to fetch remote config. Cached or default values will be '
+          'used');
+      print("exception===>$exception");
+    }
+  }
+
+  _openQrScannerDialog() async {
     try {
       qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
         context: context,
@@ -47,18 +81,56 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
     }
   }
 
-  void _handleScanResponse(String code, Map<String, dynamic> response) {
+  void _handleScanResponse(String code, Map<String, dynamic> response) async {
     try {
       if (response["statusCode"] == 200) {
         setState(() {
           this.code = code;
         });
+        String status = response["data"]["status"];
+        String devoteeName = "";
+        String errorMessage = "";
+        DevoteeModel devotee;
 
-        _showScanResultDialog(
-            response, "Success !", Colors.green, Colors.white, Colors.white);
+        if (response["data"]["devoteeData"] != null) {
+          devotee = DevoteeModel.fromMap(response["data"]["devoteeData"]);
+          devoteeName = devotee.name.toString();
+        }
+
+        if (status == "Success") {
+          var result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ScanSuccess(
+                      devoteeName: devoteeName,
+                      closeDuration: scannerCloseDuration,
+                    )),
+          );
+          if (result != null && context.mounted) {
+            print("success back");
+            _openQrScannerDialog();
+          }
+        } else if (status == "Failure") {
+          errorMessage = response['data']["error"]["message"];
+          var result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ScanFailed(
+                      devoteeName: devoteeName,
+                      errorMessage: errorMessage,
+                      closeDuration: scannerCloseDuration,
+                    )),
+          );
+          if (result != null && context.mounted) {
+            print("failure back");
+            _openQrScannerDialog();
+          }
+        }
+
+        // _showScanResultDialog(
+        //     response, "Success !", Colors.green, Colors.white, Colors.white);
       } else {
-        _showScanResultDialog(response, "Failed !", Colors.deepOrange,
-            Colors.white, Colors.white);
+        print("invalid scan");
       }
     } catch (e, stackTrace) {
       print("Error in _handleScanResponse: $e");
@@ -70,17 +142,25 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
       Color dialogColor, Color buttonColor, Color textColor) {
     if (context.mounted) {
       print("scan response: $response");
-      showDialog(
-        context: context,
-        builder: (context) => PrasadScanResultDialog(
-          response: response,
-          role: widget.role,
-          title: title,
-          dialogColor: dialogColor,
-          buttonColor: buttonColor,
-          textColor: textColor,
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => ScanSuccess()),
+      // );
+      // showDialog(
+      //     context: context,
+      //     builder: (context) {
+      //       Future.delayed(const Duration(milliseconds: 1000), () {
+      //         Navigator.of(context).pop(true);
+      //       });
+      //       return PrasadScanResultDialog(
+      //         response: response,
+      //         role: widget.role,
+      //         title: title,
+      //         dialogColor: dialogColor,
+      //         buttonColor: buttonColor,
+      //         textColor: textColor,
+      //       );
+      //     });
     }
   }
 
@@ -93,11 +173,33 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
           'QR Scanner',
           style: TextStyle(color: Colors.white),
         ),
+        leading: const SizedBox(),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: _openQrScannerDialog,
-          child: const Text('Scan QR Code'),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width / 2,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                    return Colors.deepOrange;
+                  }),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(90)))),
+              onPressed: _openQrScannerDialog,
+              child: const Text(
+                'Scan QR Code',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -115,19 +217,19 @@ class PrasadScanResultDialog extends StatelessWidget {
     required this.buttonColor,
   });
 
+  Color buttonColor;
+  Color dialogColor;
   final Map<String, dynamic> response;
   String? role;
-  String title;
-  Color dialogColor;
   Color textColor;
-  Color buttonColor;
+  String title;
 
   Widget getContent() {
     try {
       if (role == "PrasadScanner") {
         if (response["statusCode"] == 200) {
           return Text(
-            "${response["data"]["error"]}",
+            "${response["data"]["message"]}",
             style: TextStyle(color: textColor, fontSize: 20),
             textAlign: TextAlign.center,
           );
@@ -162,6 +264,7 @@ class PrasadScanResultDialog extends StatelessWidget {
       );
     }
   }
+
   // Widget getContent() {
   //   final bool isSuccess = response["statusCode"] == 200;
   //   final dynamic responseData =
@@ -189,7 +292,7 @@ class PrasadScanResultDialog extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 45,
+              height: 60,
               width: 100,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(90)),
@@ -197,7 +300,7 @@ class PrasadScanResultDialog extends StatelessWidget {
                 style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.resolveWith((states) {
-                      return buttonColor;
+                      return Colors.deepOrange;
                     }),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
