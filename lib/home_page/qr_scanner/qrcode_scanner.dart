@@ -27,6 +27,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
   String? code;
   final qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   late int scannerCloseDuration;
+  TextEditingController devoteeInfoController = TextEditingController();
 
   @override
   void initState() {
@@ -138,31 +139,31 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
     }
   }
 
-  void _showScanResultDialog(Map<String, dynamic> response, String title,
-      Color dialogColor, Color buttonColor, Color textColor) {
-    if (context.mounted) {
-      print("scan response: $response");
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => ScanSuccess()),
-      // );
-      // showDialog(
-      //     context: context,
-      //     builder: (context) {
-      //       Future.delayed(const Duration(milliseconds: 1000), () {
-      //         Navigator.of(context).pop(true);
-      //       });
-      //       return PrasadScanResultDialog(
-      //         response: response,
-      //         role: widget.role,
-      //         title: title,
-      //         dialogColor: dialogColor,
-      //         buttonColor: buttonColor,
-      //         textColor: textColor,
-      //       );
-      //     });
-    }
-  }
+  // void _showScanResultDialog(Map<String, dynamic> response, String title,
+  //     Color dialogColor, Color buttonColor, Color textColor) {
+  //   if (context.mounted) {
+  //     print("scan response: $response");
+  // Navigator.push(
+  //   context,
+  //   MaterialPageRoute(builder: (context) => ScanSuccess()),
+  // );
+  // showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       Future.delayed(const Duration(milliseconds: 1000), () {
+  //         Navigator.of(context).pop(true);
+  //       });
+  //       return PrasadScanResultDialog(
+  //         response: response,
+  //         role: widget.role,
+  //         title: title,
+  //         dialogColor: dialogColor,
+  //         buttonColor: buttonColor,
+  //         textColor: textColor,
+  //       );
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -178,27 +179,202 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Container(
-            height: 60,
-            width: MediaQuery.of(context).size.width / 2,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith((states) {
-                    return Colors.deepOrange;
-                  }),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(90)))),
-              onPressed: _openQrScannerDialog,
-              child: const Text(
-                'Scan QR Code',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Card(
+                color: const Color.fromARGB(255, 250, 250, 233),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Current Status",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "23/02/2023",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            "Balya",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                      const Text(
+                        "523",
+                        style: TextStyle(fontSize: 60),
+                      ),
+                      SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: IconButton(
+                          onPressed: () {
+                            //TODO api call
+                          },
+                          icon: const Icon(
+                            Icons.refresh_rounded,
+                            size: 60,
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+              Card(
+                color: const Color.fromARGB(255, 250, 233, 233),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Offline Entry",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.upload,
+                                color: Colors.deepOrange,
+                              ))
+                        ],
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: TextFormField(
+                          controller: devoteeInfoController,
+                          onSaved: (newValue) => devoteeInfoController,
+                          // inputFormatters: [
+                          //   FilteringTextInputFormatter.allow(RegExp("[a-z A-Z]"))
+                          // ],
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter name';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: "",
+                            labelStyle: TextStyle(
+                                color: Colors.grey[600], fontSize: 15),
+                            // filled: true,
+                            floatingLabelBehavior: FloatingLabelBehavior.auto,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: const BorderSide(
+                                    width: 0, style: BorderStyle.solid)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        height: 60,
+                        width: 300,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(90)),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                return Colors.deepOrange;
+                              }),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(90)))),
+                          onPressed: () {},
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text("OR"),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 60,
+                            width: 200,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(90)),
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) {
+                                    return Colors.deepOrange;
+                                  }),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(90)))),
+                              onPressed: () {},
+                              child: const Text(
+                                'Add Offline Counter',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                          const Text(
+                            "10",
+                            style: TextStyle(fontSize: 40),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                height: 80,
+                width: MediaQuery.of(context).size.width,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(90)),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.resolveWith((states) {
+                        return Colors.deepOrange;
+                      }),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(90)))),
+                  onPressed: _openQrScannerDialog,
+                  child: const Text(
+                    'Scan QR Code',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -206,64 +382,64 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
   }
 }
 
-class PrasadScanResultDialog extends StatelessWidget {
-  PrasadScanResultDialog({
-    super.key,
-    required this.response,
-    required this.title,
-    this.role,
-    required this.dialogColor,
-    required this.textColor,
-    required this.buttonColor,
-  });
+// class PrasadScanResultDialog extends StatelessWidget {
+//   PrasadScanResultDialog({
+//     super.key,
+//     required this.response,
+//     required this.title,
+//     this.role,
+//     required this.dialogColor,
+//     required this.textColor,
+//     required this.buttonColor,
+//   });
 
-  Color buttonColor;
-  Color dialogColor;
-  final Map<String, dynamic> response;
-  String? role;
-  Color textColor;
-  String title;
+//   Color buttonColor;
+//   Color dialogColor;
+//   final Map<String, dynamic> response;
+//   String? role;
+//   Color textColor;
+//   String title;
 
-  Widget getContent() {
-    try {
-      if (role == "PrasadScanner") {
-        if (response["statusCode"] == 200) {
-          return Text(
-            "${response["data"]["message"]}",
-            style: TextStyle(color: textColor, fontSize: 20),
-            textAlign: TextAlign.center,
-          );
-        } else {
-          return Text(
-            "${response["error"][0]}",
-            style: TextStyle(color: textColor, fontSize: 20),
-            textAlign: TextAlign.center,
-          );
-        }
-      } else {
-        if (response["statusCode"] == 200) {
-          return Text(
-            "${response["data"]}",
-            style: TextStyle(color: textColor, fontSize: 20),
-            textAlign: TextAlign.center,
-          );
-        } else {
-          return Text(
-            "Devotee not found !", //"${response["error"][0]}",
-            style: TextStyle(color: textColor, fontSize: 20),
-            textAlign: TextAlign.center,
-          );
-        }
-      }
-    } on Exception catch (e) {
-      print("scan error: $e");
-      return const ScaffoldMessenger(
-        child: SnackBar(
-          content: Text("Something went wrong !"),
-        ),
-      );
-    }
-  }
+//   Widget getContent() {
+//     try {
+//       if (role == "PrasadScanner") {
+//         if (response["statusCode"] == 200) {
+//           return Text(
+//             "${response["data"]["message"]}",
+//             style: TextStyle(color: textColor, fontSize: 20),
+//             textAlign: TextAlign.center,
+//           );
+//         } else {
+//           return Text(
+//             "${response["error"][0]}",
+//             style: TextStyle(color: textColor, fontSize: 20),
+//             textAlign: TextAlign.center,
+//           );
+//         }
+//       } else {
+//         if (response["statusCode"] == 200) {
+//           return Text(
+//             "${response["data"]}",
+//             style: TextStyle(color: textColor, fontSize: 20),
+//             textAlign: TextAlign.center,
+//           );
+//         } else {
+//           return Text(
+//             "Devotee not found !", //"${response["error"][0]}",
+//             style: TextStyle(color: textColor, fontSize: 20),
+//             textAlign: TextAlign.center,
+//           );
+//         }
+//       }
+//     } on Exception catch (e) {
+//       print("scan error: $e");
+//       return const ScaffoldMessenger(
+//         child: SnackBar(
+//           content: Text("Something went wrong !"),
+//         ),
+//       );
+//     }
+//   }
 
   // Widget getContent() {
   //   final bool isSuccess = response["statusCode"] == 200;
@@ -277,49 +453,49 @@ class PrasadScanResultDialog extends StatelessWidget {
   //   );
   // }
 
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: dialogColor,
-      title: Text(
-        title,
-        style: TextStyle(color: textColor, fontSize: 25),
-        textAlign: TextAlign.center,
-      ),
-      content: getContent(),
-      actions: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 60,
-              width: 100,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(90)),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith((states) {
-                      return Colors.deepOrange;
-                    }),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(90)))),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  'OK',
-                  style: TextStyle(
-                      color: dialogColor,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return AlertDialog(
+//       backgroundColor: dialogColor,
+//       title: Text(
+//         title,
+//         style: TextStyle(color: textColor, fontSize: 25),
+//         textAlign: TextAlign.center,
+//       ),
+//       content: getContent(),
+//       actions: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Container(
+//               height: 60,
+//               width: 100,
+//               decoration:
+//                   BoxDecoration(borderRadius: BorderRadius.circular(90)),
+//               child: ElevatedButton(
+//                 style: ButtonStyle(
+//                     backgroundColor:
+//                         MaterialStateProperty.resolveWith((states) {
+//                       return Colors.deepOrange;
+//                     }),
+//                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+//                         RoundedRectangleBorder(
+//                             borderRadius: BorderRadius.circular(90)))),
+//                 onPressed: () {
+//                   Navigator.pop(context);
+//                 },
+//                 child: Text(
+//                   'OK',
+//                   style: TextStyle(
+//                       color: dialogColor,
+//                       fontSize: 15,
+//                       fontWeight: FontWeight.bold),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ],
+//     );
+//   }
+// }
