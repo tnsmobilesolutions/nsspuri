@@ -5,6 +5,7 @@ import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 String baseUrl = RemoteConfigHelper().getapiBaseURL;
+//int duration = RemoteConfigHelper().closeDration;
 // String baseUrl = "http://34.136.15.208:4400/";
 
 abstract class DioFuctionAPI {
@@ -166,17 +167,20 @@ abstract class DioFuctionAPI {
         if (e.response != null) {
           print("error : ${e.response!.data["error"]}");
           return {
-            "statusCode": 500,
-            "error": [e.response!.data["error"], false]
+            "statusCode": e.response?.statusCode,
+            "error": [e.response!.data["error"], false],
           };
         } else {
-          return {"statusCode": 500, "error": e.response!.data["error"]};
+          return {
+            "statusCode": e.response?.statusCode,
+            "error": e.response!.data["error"],
+          };
           // return ['Dio error: ${e.message}', false];
         }
       } else {
         return {
           "statusCode": 500,
-          "error": ['An error occurred: ${e.toString()}', false]
+          "error": ['An error occurred: ${e.toString()}', false],
         };
       }
     }

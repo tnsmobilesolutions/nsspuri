@@ -1,103 +1,88 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
-class ScanFailedScreen extends StatefulWidget {
-  ScanFailedScreen({super.key, this.errorMessage});
-  String? errorMessage;
+class ScanFailed extends StatefulWidget {
+  ScanFailed({
+    super.key,
+    required this.devoteeName,
+    required this.errorMessage,
+    required this.closeDuration,
+  });
+  String? devoteeName, errorMessage;
+  int closeDuration;
   @override
-  State<ScanFailedScreen> createState() => _ScanFailedScreenState();
+  State<ScanFailed> createState() => _ScanFailedState();
 }
 
-class _ScanFailedScreenState extends State<ScanFailedScreen> {
-  final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
-  String? code;
+class _ScanFailedState extends State<ScanFailed> {
+  //String? code;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: widget.closeDuration), () {
+      Navigator.pop(context, true);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ScaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: AppBarColor,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 100, left: 15, right: 15),
-        child: Container(
-          height: MediaQuery.of(context).size.height / 1.5,
-          width: MediaQuery.of(context).size.width,
-          color: const Color.fromARGB(255, 241, 66, 64),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Center(
-                  child: Stack(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 60,
-                      ),
-                      Positioned(
-                        left: 20,
-                        top: 20,
-                        child: Icon(
-                          Icons.close,
-                          size: 80,
-                          color: Color.fromARGB(255, 241, 66, 64),
-                        ),
-                      ),
-                    ],
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.deepOrange,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    "${widget.devoteeName}",
+                    style: const TextStyle(fontSize: 50, color: Colors.white),
                   ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Text(
-                    widget.errorMessage.toString(),
-                    style: const TextStyle(fontSize: 35, color: Colors.white),
+                  Text(
+                    "${widget.errorMessage}",
+                    style: const TextStyle(fontSize: 40, color: Colors.white),
                   ),
-                )),
-                const SizedBox(
-                  height: 141,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(0)),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
+                ],
+              ),
+              const Icon(
+                Icons.close,
+                size: 150,
+                color: Colors.white,
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(90)),
+                child: ElevatedButton(
+                  style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.resolveWith((states) {
-                        if (states.contains(MaterialState.pressed)) {
-                          return Colors.green;
-                        }
-                        return ButtonColor;
+                        return Colors.white;
                       }),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                      ),
-                    ),
-                    // Within the `FirstRoute` widget
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      'DONE',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(90)))),
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(
+                        color: Colors.deepOrange,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

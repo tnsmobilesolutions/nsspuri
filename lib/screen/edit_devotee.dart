@@ -60,6 +60,21 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     "Don't know",
   ];
 
+  List<String> monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
+
   final cityController = TextEditingController();
   final countryController = TextEditingController();
   String? devoteeId;
@@ -88,10 +103,12 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.devotee != null) {
-      if (widget.devotee?.dob != null) {
-        List<String> dateParts = widget.devotee!.dob!.split('-');
 
+    if (widget.devotee != null) {
+      if (widget.devotee?.dob != null || widget.devotee?.dob == "") {
+        List<String> dateParts = widget.devotee!.dob!.split('-');
+        print("dob: ${widget.devotee?.dob}");
+        print("dob is empty: ${widget.devotee?.dob?.isEmpty}");
         if (dateParts.length >= 3) {
           setState(() {
             day = int.tryParse(dateParts[2])?.toString() ?? '';
@@ -106,9 +123,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
       genderController = widget.devotee?.gender == "Male" ? 0 : 1;
       mobileController.text = widget.devotee?.mobileNumber ?? "";
       sanghaController.text = widget.devotee?.sangha ?? "";
-      dobController.text = widget.devotee?.dob != ""
-          ? formatDate(widget.devotee?.dob ?? "")
-          : "";
+      dobController.text =
+          widget.devotee?.dob != null || widget.devotee?.dob?.isNotEmpty == true
+              ? formatDate(widget.devotee?.dob ?? "")
+              : "";
       bloodGroupController = widget.devotee?.bloodGroup ?? bloodGroupController;
       profileURL = widget.devotee?.profilePhotoUrl ?? "";
       addressLine1Controller.text = widget.devotee?.address?.addressLine1 ?? "";
@@ -196,31 +214,31 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
         });
   }
 
+  // String formatDate(String inputDate) {
+  //   DateTime dateTime = DateTime.parse(inputDate);
+
+  //   int day = dateTime.day;
+  //   String month = monthNames[dateTime.month - 1];
+  //   int year = dateTime.year;
+
+  //   String formattedDate = '$day-$month-$year';
+
+  //   return formattedDate;
+  // }
+
   String formatDate(String inputDate) {
-    DateTime dateTime = DateTime.parse(inputDate);
+    if (inputDate != "") {
+      DateTime dateTime = DateFormat('yyyy-MM-dd', 'en_US').parse(inputDate);
 
-    List<String> monthNames = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-    ];
+      int day = dateTime.day;
+      String month = monthNames[dateTime.month - 1];
+      int year = dateTime.year;
 
-    int day = dateTime.day;
-    String month = monthNames[dateTime.month - 1];
-    int year = dateTime.year;
+      String formattedDate = '$day-$month-$year';
 
-    String formattedDate = '$day-$month-$year';
-
-    return formattedDate;
+      return formattedDate;
+    }
+    return "";
   }
 
   Row addRadioButton(int btnValue, String title) {
