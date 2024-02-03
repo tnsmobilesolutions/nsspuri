@@ -3,6 +3,7 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
@@ -28,11 +29,30 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
   final qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   late int scannerCloseDuration;
   TextEditingController devoteeInfoController = TextEditingController();
+  late String date, time;
+  String prasadTiming = "";
+  int totalCount = 0;
 
   @override
   void initState() {
     super.initState();
+    date = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    time = DateFormat("HH:mm").format(DateTime.now());
     _initialize();
+    fetchPrasadInfo();
+  }
+
+  fetchPrasadInfo() async {
+    Map<String, dynamic>? response =
+        await GetDevoteeAPI().prasdCountNow(date, time);
+    if (response != null && response["data"] != null) {
+      print("response: $response");
+      setState(() {
+        totalCount = response["data"]["count"];
+        prasadTiming = response["data"]["timing"];
+        date = response["data"]["date"];
+      });
+    }
   }
 
   Future<void> _initialize() async {
@@ -197,29 +217,40 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
                           ),
                         ],
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "23/02/2023",
-                            style: TextStyle(fontSize: 20),
+                            date,
+                            style: const TextStyle(fontSize: 20),
                           ),
                           Text(
-                            "Balya",
-                            style: TextStyle(fontSize: 20),
+                            prasadTiming,
+                            style: const TextStyle(fontSize: 20),
                           ),
                         ],
                       ),
-                      const Text(
-                        "523",
-                        style: TextStyle(fontSize: 60),
+                      Text(
+                        "$totalCount",
+                        style: const TextStyle(fontSize: 60),
                       ),
                       SizedBox(
                         height: 100,
                         width: 100,
                         child: IconButton(
-                          onPressed: () {
-                            //TODO api call
+                          onPressed: () async {
+                            await fetchPrasadInfo();
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text("api called")));
+                            }
+                            // Map<String, dynamic>? response =
+                            //     await GetDevoteeAPI().prasdCountNow(date, time);
+                            // if (response != null) {
+                            //   setState(() {
+                            //     totalCount = response["data"]["count"];
+                            //   });
+                            // }
                           },
                           icon: const Icon(
                             Icons.refresh_rounded,
@@ -263,7 +294,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
                           // ],
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter name';
+                              return 'Please enter data';
                             }
                             return null;
                           },

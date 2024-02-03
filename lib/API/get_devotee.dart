@@ -34,6 +34,18 @@ class GetDevoteeAPI extends DioFuctionAPI {
     }
   }
 
+  Future<Map<String, dynamic>?> prasdCountNow(String date, String time) async {
+    try {
+      final response =
+          await getAPI("prasdCountNow?date=$date&currentTime=$time");
+      print(response);
+      return {"statusCode": 200, "data": response["data"]};
+    } catch (e) {
+      print(e);
+      return {"statusCode": 500, "data": null};
+    }
+  }
+
   Future<Map<String, dynamic>?> allDevotee() async {
     try {
       final response = await getAPI("devotee");
