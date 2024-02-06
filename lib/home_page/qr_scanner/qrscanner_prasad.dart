@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
+import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:sammilani_delegate/home_page/qr_scanner/scan_failed.dart';
 import 'package:sammilani_delegate/home_page/qr_scanner/scan_success_screen.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
@@ -31,11 +32,12 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
   String? code;
   String offlinePrasadKey = "offline_prasad";
   final qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
-  late int scannerCloseDuration;
+  int scannerCloseDuration = RemoteConfigHelper().getScannerCloseDuration;
   TextEditingController devoteeInfoController = TextEditingController();
   late String date, time;
   String prasadTiming = "";
   int totalCount = 0;
+  int _offlineCounter = 0;
   List<OfflinePrasad> offlinePrasads = [];
   final _offlinePrasadFormKey = GlobalKey<FormState>();
 
@@ -44,8 +46,9 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     super.initState();
     date = DateFormat("yyyy-MM-dd").format(DateTime.now());
     time = DateFormat("HH:mm").format(DateTime.now());
-    _initialize();
+    // _initialize();
     fetchPrasadInfo();
+    _loadCounter();
   }
 
   fetchPrasadInfo() async {
@@ -61,47 +64,23 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     }
   }
 
-  Future<void> _initialize() async {
-    await fetchScannerCloseDuration(context);
-  }
-
-  fetchScannerCloseDuration(context) async {
-    final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+  _openQrScannerDialog(BuildContext context) async {
     try {
-      await remoteConfig.setConfigSettings(RemoteConfigSettings(
-        fetchTimeout: const Duration(hours: 24),
-        minimumFetchInterval: Duration.zero,
-      ));
-      remoteConfig.getInt('scanner_auto_close_duration');
-      await remoteConfig.fetchAndActivate();
-      int closeDuration = remoteConfig.getInt('scanner_auto_close_duration');
-      setState(() {
-        scannerCloseDuration = closeDuration;
-      });
-    } on PlatformException catch (exception) {
-      print(exception);
-    } catch (exception) {
-      print('Unable to fetch remote config. Cached or default values will be '
-          'used');
-      print("exception===>$exception");
-    }
-  }
-
-  _openQrScannerDialog() async {
-    try {
-      qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
-        context: context,
-        onCode: (code) async {
-          try {
-            final response =
-                await PutDevoteeAPI().updatePrasad(code.toString());
-            print("API scan response: $response");
-            _handleScanResponse(code.toString(), response);
-          } on Exception catch (e) {
-            print("error while scanning: $e");
-          }
-        },
-      );
+      if (context.mounted) {
+        qrBarCodeScannerDialogPlugin.getScannedQrBarCode(
+          context: context,
+          onCode: (code) async {
+            try {
+              final response =
+                  await PutDevoteeAPI().updatePrasad(code.toString());
+              print("API scan response: $response");
+              _handleScanResponse(code.toString(), response);
+            } on Exception catch (e) {
+              print("error while scanning: $e");
+            }
+          },
+        );
+      }
     } on Exception catch (e) {
       print("Error while scanning: $e");
     }
@@ -136,7 +115,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
           );
           if (result != null && context.mounted) {
             print("success back");
-            _openQrScannerDialog();
+            _openQrScannerDialog(context);
           }
         } else if (status == "Failure") {
           print("scan code : $response");
@@ -151,8 +130,8 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                     )),
           );
           if (result != null && context.mounted) {
-            print("failure back");
-            _openQrScannerDialog();
+            print("***************  failure back");
+            _openQrScannerDialog(context);
           }
         }
 
@@ -174,19 +153,6 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     return formattedNumber;
   }
 
-  // static Future<void> saveListToPrefs(
-  //     String key, List<OfflinePrasad> prasadList) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final List<String> jsonList =
-  //       prasadList.map((prasad) => prasad.toJson()).toList();
-  //   prefs.setStringList(key, jsonList);
-  // }
-
-  //  static Future<void> saveToPrefs(String key, OfflinePrasad prasad) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   prefs.setString(key, prasad.toJson());
-  // }
-
   Future<void> saveToPrefs(String key, OfflinePrasad prasad) async {
     final prefs = await SharedPreferences.getInstance();
     final List<String> existingList = prefs.getStringList(key) != null ||
@@ -202,6 +168,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     final List<String>? jsonStringList = prefs.getStringList(key);
 
     if (jsonStringList != null) {
+      print("json string list: $jsonStringList");
       return jsonStringList
           .map((jsonString) => OfflinePrasad.fromJson(jsonString))
           .toList();
@@ -217,6 +184,22 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     return intCodeList;
   }
 
+  void _saveCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _offlineCounter++;
+      prefs.setInt('counter', _offlineCounter);
+    });
+  }
+
+  Future<int> _loadCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _offlineCounter = prefs.getInt('counter') ?? 0;
+    });
+    return _offlineCounter;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -229,17 +212,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
         leading: const SizedBox(),
       ),
       body: ConnectivityWidget(
-          onlineCallback: () async {
-            offlinePrasads = await loadListFromPrefs(offlinePrasadKey);
-            print("******** offline prasads: $offlinePrasads");
-
-            if (offlinePrasads.isNotEmpty) {
-              //todo 1 - api call
-              //todo 2 - need to clear local storage after api call
-              final prefs = await SharedPreferences.getInstance();
-              prefs.clear();
-            }
-          },
+          onlineCallback: () async {},
           offlineCallback: () async {},
           initialLoadingWidget: const Center(
             child: CircularProgressIndicator(),
@@ -265,7 +238,10 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                 children: [
                                   Text(
                                     "Current Status",
-                                    style: TextStyle(fontSize: 15),
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -320,10 +296,35 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                 children: [
                                   const Text(
                                     "Offline Entry",
-                                    style: TextStyle(fontSize: 15),
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   IconButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        offlinePrasads =
+                                            await loadListFromPrefs(
+                                                offlinePrasadKey);
+                                        _offlineCounter = await _loadCounter();
+
+                                        print(
+                                            "******** offline prasads: $offlinePrasads");
+                                        print(
+                                            "******** counter: $_offlineCounter");
+
+                                        if (offlinePrasads.isNotEmpty) {
+                                          //todo 1 - api call
+                                        }
+                                        setState(() {
+                                          devoteeInfoController.clear();
+                                          _offlineCounter = 0;
+                                        });
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        prefs.remove(offlinePrasadKey);
+                                        prefs.remove("counter");
+                                      },
                                       icon: const Icon(
                                         Icons.upload,
                                         color: Colors.deepOrange,
@@ -352,7 +353,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                       return null;
                                     },
                                     decoration: InputDecoration(
-                                      labelText: "",
+                                      labelText: "Devotee Codes",
                                       labelStyle: TextStyle(
                                           color: Colors.grey[600],
                                           fontSize: 15),
@@ -443,7 +444,9 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           90)))),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        _saveCounter();
+                                      },
                                       child: const Text(
                                         'Add Offline Counter',
                                         style: TextStyle(
@@ -453,9 +456,9 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                       ),
                                     ),
                                   ),
-                                  const Text(
-                                    "10",
-                                    style: TextStyle(fontSize: 40),
+                                  Text(
+                                    "$_offlineCounter",
+                                    style: const TextStyle(fontSize: 40),
                                   ),
                                 ],
                               ),
@@ -480,7 +483,9 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(90)))),
-                          onPressed: _openQrScannerDialog,
+                          onPressed: () {
+                            _openQrScannerDialog(context);
+                          },
                           child: const Text(
                             'Scan QR Code',
                             style: TextStyle(

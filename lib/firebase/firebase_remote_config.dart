@@ -149,6 +149,10 @@ class RemoteConfigHelper {
     closeDration = duration;
   }
 
+  int get getScannerCloseDuration {
+    return closeDration;
+  }
+
   factory RemoteConfigHelper() {
     return _networkHelper;
   }
