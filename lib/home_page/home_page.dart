@@ -47,16 +47,10 @@ class _HomePageState extends State<HomePage> {
       const KnowMore(),
       if (currentDevotee?.role == "PrasadScanner" ||
           currentDevotee?.role == "SecurityAndPrasadScan")
-        QrScannerPrasad(
-            role: currentDevotee?.role == "PrasadScanner"
-                ? "PrasadScanner"
-                : "SecurityAndPrasadScan"),
+        QrScannerPrasad(role: currentDevotee?.role),
       if (currentDevotee?.role == "SecurityCheck" ||
           currentDevotee?.role == "SecurityAndPrasadScan")
-        QrScannerSecurity(
-            role: currentDevotee?.role == "SecurityCheck"
-                ? "SecurityCheck"
-                : "SecurityAndPrasadScan"),
+        QrScannerSecurity(role: currentDevotee?.role),
     ];
     return WillPopScope(
       onWillPop: () async => false,
