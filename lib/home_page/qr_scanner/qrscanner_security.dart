@@ -1,19 +1,15 @@
 // ignore_for_file: avoid_print, must_be_immutable
 
 import 'package:connectivity_widget/connectivity_widget.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
-import 'package:sammilani_delegate/API/put_devotee.dart';
+import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:sammilani_delegate/home_page/qr_scanner/scan_failed.dart';
 import 'package:sammilani_delegate/home_page/qr_scanner/scan_success_screen.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
-import 'package:sammilani_delegate/model/offline_prasad.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class QrScannerSecurity extends StatefulWidget {
   QrScannerSecurity({
@@ -31,60 +27,15 @@ class _QrScannerSecurityState extends State<QrScannerSecurity> {
   String? code;
   String offlinePrasadKey = "offline_prasad";
   final qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
-  late int scannerCloseDuration;
+  int scannerCloseDuration = RemoteConfigHelper().getScannerCloseDuration;
   TextEditingController devoteeInfoController = TextEditingController();
   late String date, time;
   String prasadTiming = "";
   int totalCount = 0;
-  List<OfflinePrasad> offlinePrasads = [];
-  final _offlinePrasadFormKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    date = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    time = DateFormat("HH:mm").format(DateTime.now());
-    _initialize();
-    fetchPrasadInfo();
-  }
-
-  fetchPrasadInfo() async {
-    Map<String, dynamic>? response =
-        await GetDevoteeAPI().prasdCountNow(date, time);
-    if (response != null && response["data"] != null) {
-      print("response: $response");
-      setState(() {
-        totalCount = response["data"]["count"];
-        prasadTiming = response["data"]["timing"];
-        date = response["data"]["date"];
-      });
-    }
-  }
-
-  Future<void> _initialize() async {
-    await fetchScannerCloseDuration(context);
-  }
-
-  fetchScannerCloseDuration(context) async {
-    final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
-    try {
-      await remoteConfig.setConfigSettings(RemoteConfigSettings(
-        fetchTimeout: const Duration(hours: 24),
-        minimumFetchInterval: Duration.zero,
-      ));
-      remoteConfig.getInt('scanner_auto_close_duration');
-      await remoteConfig.fetchAndActivate();
-      int closeDuration = remoteConfig.getInt('scanner_auto_close_duration');
-      setState(() {
-        scannerCloseDuration = closeDuration;
-      });
-    } on PlatformException catch (exception) {
-      print(exception);
-    } catch (exception) {
-      print('Unable to fetch remote config. Cached or default values will be '
-          'used');
-      print("exception===>$exception");
-    }
   }
 
   _openQrScannerDialog() async {
@@ -155,9 +106,6 @@ class _QrScannerSecurityState extends State<QrScannerSecurity> {
             _openQrScannerDialog();
           }
         }
-
-        // _showScanResultDialog(
-        //     response, "Success !", Colors.green, Colors.white, Colors.white);
       } else {
         print("invalid scan");
       }
@@ -165,56 +113,6 @@ class _QrScannerSecurityState extends State<QrScannerSecurity> {
       print("Error in _handleScanResponse: $e");
       print("Stack trace: $stackTrace");
     }
-  }
-
-  String formatNumberWithCommas(int input) {
-    final formatter = NumberFormat("#,###");
-    String formattedNumber = formatter.format(input);
-
-    return formattedNumber;
-  }
-
-  // static Future<void> saveListToPrefs(
-  //     String key, List<OfflinePrasad> prasadList) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final List<String> jsonList =
-  //       prasadList.map((prasad) => prasad.toJson()).toList();
-  //   prefs.setStringList(key, jsonList);
-  // }
-
-  //  static Future<void> saveToPrefs(String key, OfflinePrasad prasad) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   prefs.setString(key, prasad.toJson());
-  // }
-
-  Future<void> saveToPrefs(String key, OfflinePrasad prasad) async {
-    final prefs = await SharedPreferences.getInstance();
-    final List<String> existingList = prefs.getStringList(key) != null ||
-            (prefs.getStringList(key)?.isNotEmpty == true)
-        ? (prefs.getStringList(key) ?? [])
-        : [];
-    existingList.add(prasad.toJson());
-    prefs.setStringList(key, existingList);
-  }
-
-  static Future<List<OfflinePrasad>> loadListFromPrefs(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    final List<String>? jsonStringList = prefs.getStringList(key);
-
-    if (jsonStringList != null) {
-      return jsonStringList
-          .map((jsonString) => OfflinePrasad.fromJson(jsonString))
-          .toList();
-    }
-
-    return [];
-  }
-
-  List<int> convertStringToList(String devoteeCodes) {
-    List<String> devoteeCodeList = devoteeCodes.split(',');
-    List<int> intCodeList =
-        devoteeCodeList.map((code) => int.parse(code)).toList();
-    return intCodeList;
   }
 
   @override

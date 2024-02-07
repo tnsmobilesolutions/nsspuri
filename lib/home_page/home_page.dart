@@ -46,16 +46,11 @@ class _HomePageState extends State<HomePage> {
       DelegateCard(index: widget.index),
       const KnowMore(),
       if (currentDevotee?.role == "PrasadScanner" ||
-          currentDevotee?.role == "SecurityCheck")
-        QrScannerPrasad(
-            role: currentDevotee?.role == "SecurityCheck"
-                ? "SecurityCheck"
-                : "PrasadScanner"),
-      //if (currentDevotee?.role == "SecurityCheck")
-      QrScannerSecurity(
-          role: currentDevotee?.role == "SecurityCheck"
-              ? "SecurityCheck"
-              : "PrasadScanner"),
+          currentDevotee?.role == "SecurityAndPrasadScan")
+        QrScannerPrasad(role: currentDevotee?.role),
+      if (currentDevotee?.role == "SecurityCheck" ||
+          currentDevotee?.role == "SecurityAndPrasadScan")
+        QrScannerSecurity(role: currentDevotee?.role),
     ];
     return WillPopScope(
       onWillPop: () async => false,
@@ -74,25 +69,27 @@ class _HomePageState extends State<HomePage> {
               _currentIndex = index;
             });
           },
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
+          items: <BottomNavigationBarItem>[
+            const BottomNavigationBarItem(
               icon: Icon(Icons.card_membership),
               label: 'Delegate',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.more),
               label: 'Know More',
             ),
-            // if (currentDevotee?.role == "PrasadScanner")
-            BottomNavigationBarItem(
-              icon: Icon(Icons.qr_code_scanner),
-              label: 'Prasad Scan',
-            ),
-            // if (currentDevotee?.role == "SecurityCheck")
-            BottomNavigationBarItem(
-              icon: Icon(Icons.qr_code_scanner),
-              label: 'Security Scan',
-            ),
+            if (currentDevotee?.role == "PrasadScanner" ||
+                currentDevotee?.role == "SecurityAndPrasadScan")
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.qr_code_scanner),
+                label: 'Prasad Scan',
+              ),
+            if (currentDevotee?.role == "SecurityCheck" ||
+                currentDevotee?.role == "SecurityAndPrasadScan")
+              const BottomNavigationBarItem(
+                icon: Icon(Icons.qr_code_scanner),
+                label: 'Security Scan',
+              ),
           ],
         ),
       ),
