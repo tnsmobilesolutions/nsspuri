@@ -9,6 +9,7 @@ import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/current_status.dart';
 import 'package:sammilani_delegate/home_page/qr_scanner/scan_failed.dart';
 import 'package:sammilani_delegate/home_page/qr_scanner/scan_success_screen.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
@@ -30,16 +31,18 @@ class QrScannerPrasad extends StatefulWidget {
 
 class _QrScannerPrasadState extends State<QrScannerPrasad> {
   String? code;
+  TextEditingController devoteeInfoController = TextEditingController();
   String offlinePrasadKey = "offline_prasad";
+  List<OfflinePrasad> offlinePrasads = [];
+  String prasadTiming = "";
   final qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   int scannerCloseDuration = RemoteConfigHelper().getScannerCloseDuration;
-  TextEditingController devoteeInfoController = TextEditingController();
   late String date, time;
-  String prasadTiming = "";
   int totalCount = 0;
+  List<String>? prasads;
   int _offlineCounter = 0;
-  List<OfflinePrasad> offlinePrasads = [];
   final _offlinePrasadFormKey = GlobalKey<FormState>();
+  bool isUserOnline = true;
 
   @override
   void initState() {
@@ -58,10 +61,40 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
       print("response: $response");
       setState(() {
         totalCount = response["data"]["count"];
-        prasadTiming = response["data"]["timing"];
+        prasadTiming = response["data"]["timing"] ?? "N/A";
         date = response["data"]["date"];
       });
     }
+  }
+
+  Future<void> saveToPrefs(String key, OfflinePrasad prasad) async {
+    final prefs = await SharedPreferences.getInstance();
+    final List<String> existingList = prefs.getStringList(key) != null ||
+            (prefs.getStringList(key)?.isNotEmpty == true)
+        ? (prefs.getStringList(key) ?? [])
+        : [];
+    existingList.add(prasad.toJson());
+    prefs.setStringList(key, existingList);
+  }
+
+  Future<List<OfflinePrasad>> loadListFromPrefs(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    final List<String>? jsonStringList = prefs.getStringList(key);
+    if (jsonStringList != null) {
+      prasads = jsonStringList;
+      print("json string list: $jsonStringList");
+      return jsonStringList
+          .map((jsonString) => OfflinePrasad.fromJson(jsonString))
+          .toList();
+    }
+    return [];
+  }
+
+  List<int> convertStringToList(String devoteeCodes) {
+    List<String> devoteeCodeList = devoteeCodes.split(',');
+    List<int> intCodeList =
+        devoteeCodeList.map((code) => int.parse(code)).toList();
+    return intCodeList;
   }
 
   _openQrScannerDialog(BuildContext context) async {
@@ -146,44 +179,6 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     }
   }
 
-  String formatNumberWithCommas(int input) {
-    final formatter = NumberFormat("#,###");
-    String formattedNumber = formatter.format(input);
-
-    return formattedNumber;
-  }
-
-  Future<void> saveToPrefs(String key, OfflinePrasad prasad) async {
-    final prefs = await SharedPreferences.getInstance();
-    final List<String> existingList = prefs.getStringList(key) != null ||
-            (prefs.getStringList(key)?.isNotEmpty == true)
-        ? (prefs.getStringList(key) ?? [])
-        : [];
-    existingList.add(prasad.toJson());
-    prefs.setStringList(key, existingList);
-  }
-
-  static Future<List<OfflinePrasad>> loadListFromPrefs(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    final List<String>? jsonStringList = prefs.getStringList(key);
-
-    if (jsonStringList != null) {
-      print("json string list: $jsonStringList");
-      return jsonStringList
-          .map((jsonString) => OfflinePrasad.fromJson(jsonString))
-          .toList();
-    }
-
-    return [];
-  }
-
-  List<int> convertStringToList(String devoteeCodes) {
-    List<String> devoteeCodeList = devoteeCodes.split(',');
-    List<int> intCodeList =
-        devoteeCodeList.map((code) => int.parse(code)).toList();
-    return intCodeList;
-  }
-
   void _saveCounter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -202,6 +197,8 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
 
   @override
   Widget build(BuildContext context) {
+    //final totalHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppBarColor,
@@ -212,74 +209,48 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
         leading: const SizedBox(),
       ),
       body: ConnectivityWidget(
-          onlineCallback: () async {},
+          onlineCallback: () async {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Center(
+                  child: Text(
+                    "You are back online ...",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 2),
+              ),
+            );
+          },
           offlineCallback: () async {},
           initialLoadingWidget: const Center(
             child: CircularProgressIndicator(),
           ),
           builder: (context, isOnline) {
+            isUserOnline = isOnline;
+
             return Center(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Card(
-                        color: const Color.fromARGB(255, 250, 250, 233),
-                        elevation: 10,
-                        shadowColor: const Color.fromARGB(255, 250, 250, 233),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              const Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Current Status",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Text(
-                                    date,
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    prasadTiming,
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                formatNumberWithCommas(totalCount),
-                                style: const TextStyle(fontSize: 60),
-                              ),
-                              SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: IconButton(
-                                  onPressed: () async {
-                                    await fetchPrasadInfo();
-                                  },
-                                  icon: const Icon(
-                                    Icons.refresh_rounded,
-                                    size: 60,
-                                    color: Colors.deepOrange,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      CurrentStatus(
+                        date: date,
+                        prasadTiming: prasadTiming,
+                        totalCount: totalCount,
+                        onPressed: prasadTiming != "N/A"
+                            ? () async {
+                                await fetchPrasadInfo();
+                              }
+                            : null,
                       ),
                       const SizedBox(height: 20),
                       Card(
@@ -314,7 +285,9 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                             "******** counter: $_offlineCounter");
 
                                         if (offlinePrasads.isNotEmpty) {
-                                          //todo 1 - api call
+                                          await PutDevoteeAPI()
+                                              .offlinePrasadEntry(
+                                                  offlinePrasads);
                                         }
                                         setState(() {
                                           devoteeInfoController.clear();
@@ -326,7 +299,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                         prefs.remove("counter");
                                       },
                                       icon: const Icon(
-                                        Icons.upload,
+                                        Icons.sync,
                                         color: Colors.deepOrange,
                                       ))
                                 ],
@@ -334,6 +307,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                               Form(
                                 key: _offlinePrasadFormKey,
                                 child: SizedBox(
+                                  //height: totalHeight / 8,
                                   width: MediaQuery.of(context).size.width,
                                   child: TextFormField(
                                     controller: devoteeInfoController,
@@ -371,7 +345,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                               ),
                               const SizedBox(height: 20),
                               Container(
-                                height: 60,
+                                height: 50,
                                 width: 300,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(90)),
@@ -391,7 +365,6 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                     if (_offlinePrasadFormKey.currentState
                                             ?.validate() ==
                                         true) {
-                                      //todo save data in a list
                                       String date = DateFormat("yyyy-MM-dd")
                                               .format(DateTime.now()),
                                           time = DateFormat("HH:mm")
@@ -426,8 +399,8 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 60,
-                                    width: 200,
+                                    height: 50,
+                                    width: 250,
                                     decoration: BoxDecoration(
                                         borderRadius:
                                             BorderRadius.circular(90)),
@@ -501,6 +474,21 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
               ),
             );
           }),
+      // floatingActionButton: SizedBox(
+      //   height: 80,
+      //   width: 120,
+      //   child: FloatingActionButton.extended(
+      //     backgroundColor: Colors.deepOrange,
+      //     onPressed: () {
+      //       _openQrScannerDialog(context);
+      //     },
+      //     label: const Text(
+      //       'Scan',
+      //       style: TextStyle(
+      //           color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

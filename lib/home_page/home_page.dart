@@ -9,16 +9,18 @@ import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, this.index}) : super(key: key);
+
   int? index;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
   String? code;
   DevoteeModel? currentDevotee;
 
+  int _currentIndex = 0;
   List<Widget> _pages = [];
 
   @override

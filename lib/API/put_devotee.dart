@@ -5,15 +5,29 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:sammilani_delegate/API/dio_fuction.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
+import 'package:sammilani_delegate/model/offline_prasad.dart';
 
 class PutDevoteeAPI extends DioFuctionAPI {
   Future<Map<String, dynamic>> updateDevotee(
       DevoteeModel devotee, String devoteeId) async {
-    // Dio dio = Dio();
     var encodedata = jsonEncode(devotee.toMap());
     try {
       final response = await putAPI("devotee/$devoteeId", encodedata);
-      print("devotee Encooded Data - $encodedata");
+      //print("devotee Encooded Data - $encodedata");
+      return response;
+    } catch (e) {
+      print("Post Error....$e");
+      return {"statusCode": 500, "error": e};
+    }
+  }
+
+  Future<Map<String, dynamic>> offlinePrasadEntry(
+      List<OfflinePrasad> offlinePrasads) async {
+    String jsonEncodedData =
+        jsonEncode(offlinePrasads.map((prasad) => prasad.toMap()).toList());
+    //print("offline prasad encoded data - $jsonEncodedData");
+    try {
+      final response = await putAPI("offlinePrasad", jsonEncodedData);
       return response;
     } catch (e) {
       print("Post Error....$e");
@@ -28,14 +42,9 @@ class PutDevoteeAPI extends DioFuctionAPI {
       final data = {"date": date, "time": time};
       final encodedData = json.encode(data);
       final response = await putAPI("prasadUpdate/$devoteeCode", encodedData);
-      print("scan response: $response");
+      //print("scan response: $response");
       return response;
-    }
-    // catch (e) {
-    //   print("Post Error....$e");
-    //   return {"statusCode": 500, "error": e};
-    // }
-    catch (e) {
+    } catch (e) {
       if (e is DioException) {
         if (e.response != null) {
           print("error : ${e.response!.data["error"]}");
@@ -48,7 +57,6 @@ class PutDevoteeAPI extends DioFuctionAPI {
             "statusCode": e.response?.statusCode,
             "error": e.response!.data["error"],
           };
-          // return ['Dio error: ${e.message}', false];
         }
       } else {
         return {

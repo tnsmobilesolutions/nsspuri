@@ -40,7 +40,7 @@ class OfflinePrasad {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  dynamic toJson() => json.encode(toMap());
 
   factory OfflinePrasad.fromJson(String source) =>
       OfflinePrasad.fromMap(json.decode(source));
