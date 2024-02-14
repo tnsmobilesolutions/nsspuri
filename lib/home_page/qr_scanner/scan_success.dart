@@ -3,22 +3,22 @@
 import 'package:flutter/material.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
-class ScanFailed extends StatefulWidget {
-  ScanFailed({
+class ScanSuccess extends StatefulWidget {
+  ScanSuccess({
     super.key,
-    required this.devoteeName,
-    required this.devoteeCode,
-    required this.errorMessage,
+    this.devoteeName,
+    this.devoteeCode,
     required this.closeDuration,
   });
-  String devoteeName, devoteeCode, errorMessage;
+  String? devoteeName, devoteeCode;
   int closeDuration;
   @override
-  State<ScanFailed> createState() => _ScanFailedState();
+  State<ScanSuccess> createState() => _ScanSuccessState();
 }
 
-class _ScanFailedState extends State<ScanFailed> {
+class _ScanSuccessState extends State<ScanSuccess> {
   //String? code;
+  String? devoteename;
   @override
   void initState() {
     super.initState();
@@ -34,31 +34,24 @@ class _ScanFailedState extends State<ScanFailed> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Colors.deepOrange,
+        color: Colors.green,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.devoteeName,
-                    style: const TextStyle(fontSize: 40, color: Colors.white),
-                  ),
-                  Text(
-                    widget.devoteeCode,
-                    style: const TextStyle(fontSize: 30, color: Colors.white),
-                  ),
-                  Text(
-                    widget.errorMessage,
-                    style: const TextStyle(fontSize: 30, color: Colors.white),
-                  ),
-                ],
+              Text(
+                "${widget.devoteeName}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 40, color: Colors.white),
+              ),
+              Text(
+                "${widget.devoteeCode}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 30, color: Colors.white),
               ),
               const Icon(
-                Icons.close,
+                Icons.done,
                 size: 150,
                 color: Colors.white,
               ),
@@ -82,7 +75,7 @@ class _ScanFailedState extends State<ScanFailed> {
                   child: const Text(
                     'OK',
                     style: TextStyle(
-                        color: Colors.deepOrange,
+                        color: Colors.green,
                         fontSize: 15,
                         fontWeight: FontWeight.bold),
                   ),
