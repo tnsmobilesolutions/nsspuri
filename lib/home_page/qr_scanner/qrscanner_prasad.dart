@@ -188,6 +188,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
             MaterialPageRoute(
                 builder: (context) => ScanSuccess(
                       devoteeName: devoteeName,
+                      devoteeCode: devoteeCode,
                       closeDuration: scannerCloseDuration,
                     )),
           );
