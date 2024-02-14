@@ -7,12 +7,14 @@ class CurrentStatus extends StatefulWidget {
   final String date;
   final String prasadTiming;
   final int totalCount;
+  final bool isOnline;
   final void Function()? onPressed;
 
   const CurrentStatus({
     super.key,
     required this.date,
     required this.prasadTiming,
+    required this.isOnline,
     required this.totalCount,
     required this.onPressed,
   });
@@ -81,7 +83,7 @@ class _CurrentStatusState extends State<CurrentStatus> {
                 icon: Icon(
                   Icons.refresh_rounded,
                   size: 60,
-                  color: widget.prasadTiming == "N/A"
+                  color: widget.prasadTiming == "N/A" || !widget.isOnline
                       ? Colors.grey
                       : Colors.deepOrange,
                 ),

@@ -7,9 +7,10 @@ class ScanSuccess extends StatefulWidget {
   ScanSuccess({
     super.key,
     this.devoteeName,
+    this.devoteeCode,
     required this.closeDuration,
   });
-  String? devoteeName;
+  String? devoteeName, devoteeCode;
   int closeDuration;
   @override
   State<ScanSuccess> createState() => _ScanSuccessState();
@@ -38,11 +39,17 @@ class _ScanSuccessState extends State<ScanSuccess> {
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 "${widget.devoteeName}",
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 50, color: Colors.white),
+                style: const TextStyle(fontSize: 40, color: Colors.white),
+              ),
+              Text(
+                "${widget.devoteeCode}",
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 30, color: Colors.white),
               ),
               const Icon(
                 Icons.done,
