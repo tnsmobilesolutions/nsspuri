@@ -35,6 +35,23 @@ class PutDevoteeAPI extends DioFuctionAPI {
     }
   }
 
+  Future<Map<String, dynamic>> offlinePrasadCounter(
+      String date, String time, int prasadCount) async {
+    try {
+      var jsonEncodedData = {
+        "date": date,
+        "time": time,
+        "numberOfDevotee": prasadCount,
+      };
+      final response =
+          await putAPI("offlinePrasadNonDevoteeCounter", jsonEncodedData);
+      return response;
+    } catch (e) {
+      print("Post Error....$e");
+      return {"statusCode": 500, "error": e};
+    }
+  }
+
   Future<Map<String, dynamic>> updatePrasad(String devoteeCode) async {
     final date = DateFormat('y-MM-dd').format(DateTime.now());
     final time = DateFormat('HH:mm').format(DateTime.now());

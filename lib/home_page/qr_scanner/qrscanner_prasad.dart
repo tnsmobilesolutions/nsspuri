@@ -32,17 +32,18 @@ class QrScannerPrasad extends StatefulWidget {
 class _QrScannerPrasadState extends State<QrScannerPrasad> {
   String? code;
   TextEditingController devoteeInfoController = TextEditingController();
+  bool isUserOnline = true;
   String offlinePrasadKey = "offline_prasad";
   List<OfflinePrasad> offlinePrasads = [];
   String prasadTiming = "";
+  List<String>? prasads;
   final qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   int scannerCloseDuration = RemoteConfigHelper().getScannerCloseDuration;
   late String date, time;
   int totalCount = 0;
-  List<String>? prasads;
+
   int _offlineCounter = 0;
   final _offlinePrasadFormKey = GlobalKey<FormState>();
-  bool isUserOnline = true;
 
   @override
   void initState() {
@@ -95,6 +96,48 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     List<int> intCodeList =
         devoteeCodeList.map((code) => int.parse(code)).toList();
     return intCodeList;
+  }
+
+  Future<void> offlinePrasadSyncCallback() async {
+    offlinePrasads = await loadListFromPrefs(offlinePrasadKey);
+    _offlineCounter = await _loadCounter();
+
+    // print("******** offline prasads: $offlinePrasads");
+    // print("******** counter: $_offlineCounter");
+
+    if (offlinePrasads.isNotEmpty) {
+      await PutDevoteeAPI().offlinePrasadEntry(offlinePrasads);
+    }
+    if (_offlineCounter > 0) {
+      String date = DateFormat("yyyy-MM-dd").format(DateTime.now()),
+          time = DateFormat("HH:mm").format(DateTime.now());
+      await PutDevoteeAPI().offlinePrasadCounter(date, time, _offlineCounter);
+    }
+    setState(() {
+      devoteeInfoController.clear();
+      _offlineCounter = 0;
+    });
+    await fetchPrasadInfo();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(offlinePrasadKey);
+    prefs.remove("counter");
+  }
+
+  Future<void> offlinePrasadEntrySaveToPrefs() async {
+    if (_offlinePrasadFormKey.currentState?.validate() == true) {
+      String date = DateFormat("yyyy-MM-dd").format(DateTime.now()),
+          time = DateFormat("HH:mm").format(DateTime.now());
+      OfflinePrasad prasads = OfflinePrasad(
+        devoteeCodes: convertStringToList(devoteeInfoController.text),
+        date: date,
+        time: time,
+      );
+      await saveToPrefs(
+        offlinePrasadKey,
+        prasads,
+      );
+      devoteeInfoController.clear();
+    }
   }
 
   _openQrScannerDialog(BuildContext context) async {
@@ -274,29 +317,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                   ),
                                   IconButton(
                                       onPressed: () async {
-                                        offlinePrasads =
-                                            await loadListFromPrefs(
-                                                offlinePrasadKey);
-                                        _offlineCounter = await _loadCounter();
-
-                                        print(
-                                            "******** offline prasads: $offlinePrasads");
-                                        print(
-                                            "******** counter: $_offlineCounter");
-
-                                        if (offlinePrasads.isNotEmpty) {
-                                          await PutDevoteeAPI()
-                                              .offlinePrasadEntry(
-                                                  offlinePrasads);
-                                        }
-                                        setState(() {
-                                          devoteeInfoController.clear();
-                                          _offlineCounter = 0;
-                                        });
-                                        final prefs = await SharedPreferences
-                                            .getInstance();
-                                        prefs.remove(offlinePrasadKey);
-                                        prefs.remove("counter");
+                                        await offlinePrasadSyncCallback();
                                       },
                                       icon: const Icon(
                                         Icons.sync,
@@ -345,7 +366,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                               ),
                               const SizedBox(height: 20),
                               Container(
-                                height: 50,
+                                height: 60,
                                 width: 300,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(90)),
@@ -362,25 +383,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                               borderRadius:
                                                   BorderRadius.circular(90)))),
                                   onPressed: () async {
-                                    if (_offlinePrasadFormKey.currentState
-                                            ?.validate() ==
-                                        true) {
-                                      String date = DateFormat("yyyy-MM-dd")
-                                              .format(DateTime.now()),
-                                          time = DateFormat("HH:mm")
-                                              .format(DateTime.now());
-                                      OfflinePrasad prasads = OfflinePrasad(
-                                        devoteeCodes: convertStringToList(
-                                            devoteeInfoController.text),
-                                        date: date,
-                                        time: time,
-                                      );
-                                      await saveToPrefs(
-                                        offlinePrasadKey,
-                                        prasads,
-                                      );
-                                      devoteeInfoController.clear();
-                                    }
+                                    await offlinePrasadEntrySaveToPrefs();
                                   },
                                   child: const Text(
                                     'Submit',
@@ -399,7 +402,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Container(
-                                    height: 50,
+                                    height: 60,
                                     width: 250,
                                     decoration: BoxDecoration(
                                         borderRadius:
