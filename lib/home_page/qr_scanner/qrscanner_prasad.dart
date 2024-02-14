@@ -11,7 +11,7 @@ import 'package:sammilani_delegate/API/put_devotee.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:sammilani_delegate/home_page/qr_scanner/current_status.dart';
 import 'package:sammilani_delegate/home_page/qr_scanner/scan_failed.dart';
-import 'package:sammilani_delegate/home_page/qr_scanner/scan_success_screen.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/scan_success.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/model/offline_prasad.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
@@ -188,7 +188,6 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
             MaterialPageRoute(
                 builder: (context) => ScanSuccess(
                       devoteeName: devoteeName,
-                      devoteeCode: devoteeCode,
                       closeDuration: scannerCloseDuration,
                     )),
           );
@@ -290,9 +289,9 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                   children: [
                     CurrentStatus(
                       date: date,
+                      isOnline: isOnline,
                       prasadTiming: prasadTiming,
                       totalCount: totalCount,
-                      isOnline: isOnline,
                       onPressed: prasadTiming != "N/A" || isOnline
                           ? () async {
                               await fetchPrasadInfo();
@@ -301,7 +300,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                     ),
                     const SizedBox(height: 20),
                     Card(
-                      color: const Color.fromARGB(255, 250, 250, 233),
+                      color: const Color.fromARGB(255, 250, 233, 233),
                       elevation: 10,
                       shadowColor: const Color.fromARGB(255, 250, 233, 233),
                       child: Padding(
@@ -322,11 +321,9 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                     onPressed: () async {
                                       await offlinePrasadSyncCallback();
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.sync,
-                                      color: isOnline
-                                          ? Colors.deepOrange
-                                          : Colors.grey,
+                                      color: Colors.deepOrange,
                                     ))
                               ],
                             ),
@@ -356,13 +353,13 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                         return null;
                                       },
                                       decoration: InputDecoration(
-                                        hintText: "100001, 100002 ...",
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
                                         // labelText: "Devotee Codes",
                                         // labelStyle: TextStyle(
                                         //     color: Colors.grey[600],
                                         //     fontSize: 15),
+                                        hintText: "100001, 100002 ...",
+                                        hintStyle:
+                                            const TextStyle(color: Colors.grey),
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.auto,
                                         border: OutlineInputBorder(

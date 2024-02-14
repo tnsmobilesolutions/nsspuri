@@ -7,7 +7,7 @@ import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/firebase/firebase_remote_config.dart';
 import 'package:sammilani_delegate/home_page/qr_scanner/scan_failed.dart';
-import 'package:sammilani_delegate/home_page/qr_scanner/scan_success_screen.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/scan_success.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
