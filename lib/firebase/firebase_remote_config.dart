@@ -144,9 +144,13 @@ class RemoteConfigHelper {
     apiBaseURL = baseURL;
   }
 
-  int closeDration = 5;
+  int closeDuration = 5;
   set setScannerCloseDuration(int duration) {
-    closeDration = duration;
+    closeDuration = duration;
+  }
+
+  int get getScannerCloseDuration {
+    return closeDuration;
   }
 
   factory RemoteConfigHelper() {

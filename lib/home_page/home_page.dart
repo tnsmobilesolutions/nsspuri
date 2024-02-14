@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/home_page/delegate_card.dart';
 import 'package:sammilani_delegate/home_page/know_more.dart';
-import 'package:sammilani_delegate/home_page/qr_scanner/qrcode_scanner.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/qrscanner_prasad.dart';
+import 'package:sammilani_delegate/home_page/qr_scanner/qrscanner_security.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, this.index}) : super(key: key);
+
   int? index;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
   String? code;
   DevoteeModel? currentDevotee;
 
+  int _currentIndex = 0;
   List<Widget> _pages = [];
 
   @override
@@ -45,11 +49,11 @@ class _HomePageState extends State<HomePage> {
       DelegateCard(index: widget.index),
       const KnowMore(),
       if (currentDevotee?.role == "PrasadScanner" ||
-          currentDevotee?.role == "SecurityCheck")
-        QrScannerScreen(
-            role: currentDevotee?.role == "SecurityCheck"
-                ? "SecurityCheck"
-                : "PrasadScanner"),
+          currentDevotee?.role == "SecurityAndPrasadScan")
+        QrScannerPrasad(role: currentDevotee?.role),
+      if (currentDevotee?.role == "SecurityCheck" ||
+          currentDevotee?.role == "SecurityAndPrasadScan")
+        QrScannerSecurity(role: currentDevotee?.role),
     ];
     return WillPopScope(
       onWillPop: () async => false,
@@ -59,6 +63,8 @@ class _HomePageState extends State<HomePage> {
         body: _pages[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Colors.deepOrange,
+          unselectedItemColor: Colors.grey,
+          showUnselectedLabels: true,
           backgroundColor: const Color.fromARGB(255, 236, 236, 236),
           currentIndex: _currentIndex,
           onTap: (index) {
@@ -75,15 +81,17 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.more),
               label: 'Know More',
             ),
-            if (currentDevotee?.role == "SecurityCheck")
+            if (currentDevotee?.role == "PrasadScanner" ||
+                currentDevotee?.role == "SecurityAndPrasadScan")
               const BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_scanner),
-                label: 'Scan',
+                icon: Icon(Icons.restaurant),
+                label: 'Prasad Scan',
               ),
-            if (currentDevotee?.role == "PrasadScanner")
+            if (currentDevotee?.role == "SecurityCheck" ||
+                currentDevotee?.role == "SecurityAndPrasadScan")
               const BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_scanner),
-                label: 'Scan',
+                icon: Icon(Icons.security_rounded),
+                label: 'Security Scan',
               ),
           ],
         ),
