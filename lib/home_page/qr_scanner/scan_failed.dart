@@ -7,10 +7,11 @@ class ScanFailed extends StatefulWidget {
   ScanFailed({
     super.key,
     required this.devoteeName,
+    required this.devoteeCode,
     required this.errorMessage,
     required this.closeDuration,
   });
-  String? devoteeName, errorMessage;
+  String devoteeName, devoteeCode, errorMessage;
   int closeDuration;
   @override
   State<ScanFailed> createState() => _ScanFailedState();
@@ -21,7 +22,7 @@ class _ScanFailedState extends State<ScanFailed> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: widget.closeDuration), () {
+    Future.delayed(Duration(seconds: 60), () {
       Navigator.pop(context, true);
     });
   }
@@ -40,14 +41,19 @@ class _ScanFailedState extends State<ScanFailed> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "${widget.devoteeName}",
-                    style: const TextStyle(fontSize: 50, color: Colors.white),
+                    widget.devoteeName,
+                    style: const TextStyle(fontSize: 40, color: Colors.white),
                   ),
                   Text(
-                    "${widget.errorMessage}",
-                    style: const TextStyle(fontSize: 40, color: Colors.white),
+                    widget.devoteeCode,
+                    style: const TextStyle(fontSize: 30, color: Colors.white),
+                  ),
+                  Text(
+                    widget.errorMessage,
+                    style: const TextStyle(fontSize: 30, color: Colors.white),
                   ),
                 ],
               ),

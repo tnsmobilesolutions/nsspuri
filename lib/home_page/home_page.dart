@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
 import 'package:sammilani_delegate/home_page/delegate_card.dart';
 import 'package:sammilani_delegate/home_page/know_more.dart';
@@ -83,13 +84,13 @@ class _HomePageState extends State<HomePage> {
             if (currentDevotee?.role == "PrasadScanner" ||
                 currentDevotee?.role == "SecurityAndPrasadScan")
               const BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_scanner),
+                icon: Icon(Icons.qr_code_2_rounded),
                 label: 'Prasad Scan',
               ),
             if (currentDevotee?.role == "SecurityCheck" ||
                 currentDevotee?.role == "SecurityAndPrasadScan")
               const BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_scanner),
+                icon: Icon(Icons.qr_code_2_rounded),
                 label: 'Security Scan',
               ),
           ],

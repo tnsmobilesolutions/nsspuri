@@ -67,12 +67,14 @@ class _QrScannerSecurityState extends State<QrScannerSecurity> {
         print("scan code : $response");
         String status = response["data"]["status"];
         String devoteeName = "";
+        String devoteeCode = "";
         String errorMessage = "";
         DevoteeModel devotee;
 
         if (response["data"]["devoteeData"] != null) {
           devotee = DevoteeModel.fromMap(response["data"]["devoteeData"]);
           devoteeName = devotee.name.toString();
+          devoteeCode = devotee.devoteeCode.toString();
         }
 
         if (status == "Success") {
@@ -82,6 +84,7 @@ class _QrScannerSecurityState extends State<QrScannerSecurity> {
             MaterialPageRoute(
                 builder: (context) => ScanSuccess(
                       devoteeName: devoteeName,
+                      devoteeCode: devoteeCode,
                       closeDuration: scannerCloseDuration,
                     )),
           );
@@ -97,6 +100,7 @@ class _QrScannerSecurityState extends State<QrScannerSecurity> {
             MaterialPageRoute(
                 builder: (context) => ScanFailed(
                       devoteeName: devoteeName,
+                      devoteeCode: devoteeCode,
                       errorMessage: errorMessage,
                       closeDuration: scannerCloseDuration,
                     )),

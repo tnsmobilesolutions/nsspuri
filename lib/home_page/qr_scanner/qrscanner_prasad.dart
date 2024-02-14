@@ -171,12 +171,14 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
         print("scan code : $response");
         String status = response["data"]["status"];
         String devoteeName = "";
+        String devoteeCode = "";
         String errorMessage = "";
         DevoteeModel devotee;
 
         if (response["data"]["devoteeData"] != null) {
           devotee = DevoteeModel.fromMap(response["data"]["devoteeData"]);
           devoteeName = devotee.name.toString();
+          devoteeCode = devotee.devoteeCode.toString();
         }
 
         if (status == "Success") {
@@ -186,6 +188,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
             MaterialPageRoute(
                 builder: (context) => ScanSuccess(
                       devoteeName: devoteeName,
+                      devoteeCode: devoteeCode,
                       closeDuration: scannerCloseDuration,
                     )),
           );
@@ -201,6 +204,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
             MaterialPageRoute(
                 builder: (context) => ScanFailed(
                       devoteeName: devoteeName,
+                      devoteeCode: devoteeCode,
                       errorMessage: errorMessage,
                       closeDuration: scannerCloseDuration,
                     )),
@@ -278,201 +282,207 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
           builder: (context, isOnline) {
             isUserOnline = isOnline;
 
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CurrentStatus(
-                        date: date,
-                        prasadTiming: prasadTiming,
-                        totalCount: totalCount,
-                        onPressed: prasadTiming != "N/A"
-                            ? () async {
-                                await fetchPrasadInfo();
-                              }
-                            : null,
-                      ),
-                      const SizedBox(height: 20),
-                      Card(
-                        color: const Color.fromARGB(255, 250, 233, 233),
-                        elevation: 10,
-                        shadowColor: const Color.fromARGB(255, 250, 233, 233),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Offline Entry",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CurrentStatus(
+                      date: date,
+                      prasadTiming: prasadTiming,
+                      totalCount: totalCount,
+                      isOnline: isOnline,
+                      onPressed: prasadTiming != "N/A" || isOnline
+                          ? () async {
+                              await fetchPrasadInfo();
+                            }
+                          : null,
+                    ),
+                    const SizedBox(height: 20),
+                    Card(
+                      color: const Color.fromARGB(255, 250, 250, 233),
+                      elevation: 10,
+                      shadowColor: const Color.fromARGB(255, 250, 233, 233),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  "Offline Entry",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  IconButton(
-                                      onPressed: () async {
-                                        await offlinePrasadSyncCallback();
-                                      },
-                                      icon: const Icon(
-                                        Icons.sync,
-                                        color: Colors.deepOrange,
-                                      ))
-                                ],
-                              ),
-                              Form(
-                                key: _offlinePrasadFormKey,
-                                child: SizedBox(
-                                  //height: totalHeight / 8,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: TextFormField(
-                                    controller: devoteeInfoController,
-                                    onSaved: (newValue) =>
-                                        devoteeInfoController,
-                                    // inputFormatters: [
-                                    //   FilteringTextInputFormatter.allow(
-                                    //       RegExp("[0-9 ,]"))
-                                    // ],
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (codeList) =>
-                                        devoteeInfoController.text = codeList,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter devotee codes !';
-                                      }
-                                      return null;
+                                ),
+                                IconButton(
+                                    onPressed: () async {
+                                      await offlinePrasadSyncCallback();
                                     },
-                                    decoration: InputDecoration(
-                                      labelText: "Devotee Codes",
-                                      labelStyle: TextStyle(
-                                          color: Colors.grey[600],
-                                          fontSize: 15),
-                                      floatingLabelBehavior:
-                                          FloatingLabelBehavior.auto,
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          borderSide: const BorderSide(
-                                              width: 0,
-                                              style: BorderStyle.solid)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              Container(
-                                height: 60,
-                                width: 300,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(90)),
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.resolveWith(
-                                              (states) {
-                                        return Colors.deepOrange;
-                                      }),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(90)))),
-                                  onPressed: () async {
-                                    await offlinePrasadEntrySaveToPrefs();
-                                  },
-                                  child: const Text(
-                                    'Submit',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              const Text("OR"),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Container(
-                                    height: 60,
-                                    width: 250,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(90)),
-                                    child: ElevatedButton(
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.resolveWith(
-                                                  (states) {
-                                            return Colors.deepOrange;
-                                          }),
-                                          shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          90)))),
-                                      onPressed: () {
-                                        _saveCounter();
+                                    icon: Icon(
+                                      Icons.sync,
+                                      color: isOnline
+                                          ? Colors.deepOrange
+                                          : Colors.grey,
+                                    ))
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Form(
+                                  key: _offlinePrasadFormKey,
+                                  child: SizedBox(
+                                    //height: totalHeight / 8,
+                                    width:
+                                        MediaQuery.of(context).size.width / 2,
+                                    child: TextFormField(
+                                      controller: devoteeInfoController,
+                                      onSaved: (newValue) =>
+                                          devoteeInfoController,
+                                      // inputFormatters: [
+                                      //   FilteringTextInputFormatter.allow(
+                                      //       RegExp("[0-9 ,]"))
+                                      // ],
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (codeList) =>
+                                          devoteeInfoController.text = codeList,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter devotee codes !';
+                                        }
+                                        return null;
                                       },
-                                      child: const Text(
-                                        'Add Offline Counter',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
+                                      decoration: InputDecoration(
+                                        hintText: "100001, 100002 ...",
+                                        hintStyle:
+                                            const TextStyle(color: Colors.grey),
+                                        // labelText: "Devotee Codes",
+                                        // labelStyle: TextStyle(
+                                        //     color: Colors.grey[600],
+                                        //     fontSize: 15),
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.auto,
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide: const BorderSide(
+                                                width: 0,
+                                                style: BorderStyle.solid)),
                                       ),
                                     ),
                                   ),
-                                  Text(
-                                    "$_offlineCounter",
-                                    style: const TextStyle(fontSize: 40),
+                                ),
+                                const SizedBox(width: 10),
+                                Container(
+                                  height: 60,
+                                  width: MediaQuery.of(context).size.width / 3,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(90)),
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.resolveWith(
+                                                (states) {
+                                          return Colors.deepOrange;
+                                        }),
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        90)))),
+                                    onPressed: () async {
+                                      await offlinePrasadEntrySaveToPrefs();
+                                    },
+                                    child: const Text(
+                                      'Submit',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            const Text("OR"),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 250,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(90)),
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.resolveWith(
+                                                (states) {
+                                          return Colors.deepOrange;
+                                        }),
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        90)))),
+                                    onPressed: () {
+                                      _saveCounter();
+                                    },
+                                    child: const Text(
+                                      'Add Offline Counter',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "$_offlineCounter",
+                                  style: const TextStyle(fontSize: 40),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      Container(
-                        height: 80,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(90)),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith((states) {
-                                return Colors.deepOrange;
-                              }),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(90)))),
-                          onPressed: () {
-                            _openQrScannerDialog(context);
-                          },
-                          child: const Text(
-                            'Scan QR Code',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(90)),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith((states) {
+                              return Colors.deepOrange;
+                            }),
+                            shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(90)))),
+                        onPressed: () {
+                          _openQrScannerDialog(context);
+                        },
+                        child: const Text(
+                          'Scan QR Code',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );
