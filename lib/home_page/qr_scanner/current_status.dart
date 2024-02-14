@@ -39,35 +39,32 @@ class _CurrentStatusState extends State<CurrentStatus> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color.fromARGB(255, 250, 250, 233),
+      color: const Color.fromARGB(255, 207, 232, 253),
       elevation: 10,
       shadowColor: const Color.fromARGB(255, 250, 250, 233),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Current Status",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  widget.date,
-                  style: const TextStyle(fontSize: 20),
-                ),
-                Text(
-                  widget.prasadTiming,
-                  style: const TextStyle(fontSize: 20),
+                IconButton(
+                  onPressed: widget.onPressed,
+                  icon: Icon(
+                    Icons.refresh_rounded,
+                    size: 60,
+                    color: widget.prasadTiming == "N/A" || !widget.isOnline
+                        ? Colors.grey
+                        : Colors.deepOrange,
+                  ),
                 ),
               ],
             ),
@@ -75,19 +72,18 @@ class _CurrentStatusState extends State<CurrentStatus> {
               formatNumberWithCommas(widget.totalCount),
               style: const TextStyle(fontSize: 60),
             ),
-            SizedBox(
-              height: 80,
-              width: 80,
-              child: IconButton(
-                onPressed: widget.onPressed,
-                icon: Icon(
-                  Icons.refresh_rounded,
-                  size: 60,
-                  color: widget.prasadTiming == "N/A" || !widget.isOnline
-                      ? Colors.grey
-                      : Colors.deepOrange,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.date,
+                  style: const TextStyle(fontSize: 25),
                 ),
-              ),
+                Text(
+                  widget.prasadTiming,
+                  style: const TextStyle(fontSize: 25),
+                ),
+              ],
             ),
           ],
         ),

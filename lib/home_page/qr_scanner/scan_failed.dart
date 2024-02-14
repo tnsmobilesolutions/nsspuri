@@ -8,10 +8,11 @@ class ScanFailed extends StatefulWidget {
     super.key,
     required this.devoteeName,
     required this.devoteeCode,
+    this.status,
     required this.errorMessage,
     required this.closeDuration,
   });
-  String devoteeName, devoteeCode, errorMessage;
+  String? devoteeName, devoteeCode, errorMessage, status;
   int closeDuration;
   @override
   State<ScanFailed> createState() => _ScanFailedState();
@@ -44,18 +45,22 @@ class _ScanFailedState extends State<ScanFailed> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    widget.devoteeName,
+                    widget.devoteeName.toString(),
                     style: const TextStyle(fontSize: 40, color: Colors.white),
+                    textAlign: TextAlign.center,
                   ),
                   Text(
-                    widget.devoteeCode,
-                    style: const TextStyle(fontSize: 30, color: Colors.white),
-                  ),
-                  Text(
-                    widget.errorMessage,
-                    style: const TextStyle(fontSize: 30, color: Colors.white),
+                    widget.devoteeCode.toString(),
+                    style: const TextStyle(fontSize: 30, color: Colors.yellow),
                   ),
                 ],
+              ),
+              ElevatedButton(
+                onPressed: null,
+                child: Text(
+                  widget.errorMessage.toString(),
+                  style: const TextStyle(fontSize: 30, color: Colors.white),
+                ),
               ),
               const Icon(
                 Icons.close,

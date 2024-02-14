@@ -84,13 +84,13 @@ class _HomePageState extends State<HomePage> {
             if (currentDevotee?.role == "PrasadScanner" ||
                 currentDevotee?.role == "SecurityAndPrasadScan")
               const BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_2_rounded),
+                icon: Icon(Icons.restaurant),
                 label: 'Prasad Scan',
               ),
             if (currentDevotee?.role == "SecurityCheck" ||
                 currentDevotee?.role == "SecurityAndPrasadScan")
               const BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_2_rounded),
+                icon: Icon(Icons.security_rounded),
                 label: 'Security Scan',
               ),
           ],

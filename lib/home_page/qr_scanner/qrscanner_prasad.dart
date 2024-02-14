@@ -32,7 +32,7 @@ class QrScannerPrasad extends StatefulWidget {
 class _QrScannerPrasadState extends State<QrScannerPrasad> {
   String? code;
   TextEditingController devoteeInfoController = TextEditingController();
-  bool isUserOnline = true;
+  //bool isUserOnline = true;
   String offlinePrasadKey = "offline_prasad";
   List<OfflinePrasad> offlinePrasads = [];
   String prasadTiming = "";
@@ -41,6 +41,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
   int scannerCloseDuration = RemoteConfigHelper().getScannerCloseDuration;
   late String date, time;
   int totalCount = 0;
+  bool shouldSync = false;
 
   int _offlineCounter = 0;
   final _offlinePrasadFormKey = GlobalKey<FormState>();
@@ -99,11 +100,11 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
   }
 
   Future<void> offlinePrasadSyncCallback() async {
+    setState(() {
+      shouldSync = true;
+    });
     offlinePrasads = await loadListFromPrefs(offlinePrasadKey);
     _offlineCounter = await _loadCounter();
-
-    // print("******** offline prasads: $offlinePrasads");
-    // print("******** counter: $_offlineCounter");
 
     if (offlinePrasads.isNotEmpty) {
       await PutDevoteeAPI().offlinePrasadEntry(offlinePrasads);
@@ -121,6 +122,9 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(offlinePrasadKey);
     prefs.remove("counter");
+    setState(() {
+      shouldSync = false;
+    });
   }
 
   Future<void> offlinePrasadEntrySaveToPrefs() async {
@@ -173,12 +177,14 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
         String devoteeName = "";
         String devoteeCode = "";
         String errorMessage = "";
+        String devoteeStatus = "";
         DevoteeModel devotee;
 
         if (response["data"]["devoteeData"] != null) {
           devotee = DevoteeModel.fromMap(response["data"]["devoteeData"]);
           devoteeName = devotee.name.toString();
           devoteeCode = devotee.devoteeCode.toString();
+          devoteeStatus = devotee.status.toString();
         }
 
         if (status == "Success") {
@@ -205,6 +211,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                 builder: (context) => ScanFailed(
                       devoteeName: devoteeName,
                       devoteeCode: devoteeCode,
+                      status: devoteeStatus,
                       errorMessage: errorMessage,
                       closeDuration: scannerCloseDuration,
                     )),
@@ -280,7 +287,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
             child: CircularProgressIndicator(),
           ),
           builder: (context, isOnline) {
-            isUserOnline = isOnline;
+            // isUserOnline = isOnline;
 
             return Padding(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 30),
@@ -293,7 +300,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                       isOnline: isOnline,
                       prasadTiming: prasadTiming,
                       totalCount: totalCount,
-                      onPressed: prasadTiming != "N/A" || isOnline
+                      onPressed: prasadTiming != "N/A" && isOnline
                           ? () async {
                               await fetchPrasadInfo();
                             }
@@ -301,7 +308,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                     ),
                     const SizedBox(height: 20),
                     Card(
-                      color: const Color.fromARGB(255, 250, 233, 233),
+                      color: Colors.orange[50],
                       elevation: 10,
                       shadowColor: const Color.fromARGB(255, 250, 233, 233),
                       child: Padding(
@@ -314,21 +321,34 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                 const Text(
                                   "Offline Entry",
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 IconButton(
                                     onPressed: () async {
+                                      //todo indicator
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return const Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          });
                                       await offlinePrasadSyncCallback();
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
                                     },
                                     icon: const Icon(
-                                      Icons.sync,
+                                      Icons.upload,
+                                      size: 60,
                                       color: Colors.deepOrange,
                                     ))
                               ],
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Form(
                                   key: _offlinePrasadFormKey,
@@ -373,10 +393,10 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 10),
+                                //const SizedBox(width: 5),
                                 Container(
                                   height: 60,
-                                  width: MediaQuery.of(context).size.width / 3,
+                                  width: 120,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(90)),
                                   child: ElevatedButton(
@@ -453,30 +473,53 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Container(
-                      height: 80,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(90)),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.resolveWith((states) {
-                              return Colors.deepOrange;
-                            }),
-                            shape: MaterialStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(90)))),
-                        onPressed: () {
-                          _openQrScannerDialog(context);
-                        },
-                        child: const Text(
-                          'Scan QR Code',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
+                    Card(
+                      color: Colors.green[100],
+                      elevation: 10,
+                      shadowColor: const Color.fromARGB(255, 250, 233, 233),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Online Entry",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Container(
+                              height: 80,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(90)),
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.resolveWith(
+                                            (states) {
+                                      return Colors.deepOrange;
+                                    }),
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(90)))),
+                                onPressed: () {
+                                  _openQrScannerDialog(context);
+                                },
+                                child: const Text(
+                                  'Scan QR Code',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
