@@ -61,9 +61,9 @@ class _CurrentStatusState extends State<CurrentStatus> {
                   icon: Icon(
                     Icons.refresh_rounded,
                     size: 60,
-                    color: widget.prasadTiming == "N/A" || !widget.isOnline
-                        ? Colors.grey
-                        : Colors.deepOrange,
+                    color:
+                        // widget.prasadTiming == "N/A" ||
+                        !widget.isOnline ? Colors.grey : Colors.deepOrange,
                   ),
                 ),
               ],
