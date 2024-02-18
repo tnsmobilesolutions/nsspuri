@@ -300,11 +300,22 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                       isOnline: isOnline,
                       prasadTiming: prasadTiming,
                       totalCount: totalCount,
-                      onPressed: prasadTiming != "N/A" && isOnline
-                          ? () async {
-                              await fetchPrasadInfo();
-                            }
-                          : null,
+                      onPressed:
+                          //prasadTiming != "N/A" &&
+                          isOnline
+                              ? () async {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      });
+                                  await fetchPrasadInfo();
+                                  if (context.mounted) {
+                                    Navigator.pop(context);
+                                  }
+                                }
+                              : null,
                     ),
                     const SizedBox(height: 20),
                     Card(
@@ -326,24 +337,28 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                                   ),
                                 ),
                                 IconButton(
-                                    onPressed: () async {
-                                      //todo indicator
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return const Center(
-                                                child:
-                                                    CircularProgressIndicator());
-                                          });
-                                      await offlinePrasadSyncCallback();
-                                      if (context.mounted) {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    icon: const Icon(
+                                    onPressed: isOnline
+                                        ? () async {
+                                            //todo indicator
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return const Center(
+                                                      child:
+                                                          CircularProgressIndicator());
+                                                });
+                                            await offlinePrasadSyncCallback();
+                                            if (context.mounted) {
+                                              Navigator.pop(context);
+                                            }
+                                          }
+                                        : null,
+                                    icon: Icon(
                                       Icons.upload,
                                       size: 60,
-                                      color: Colors.deepOrange,
+                                      color: isOnline
+                                          ? Colors.deepOrange
+                                          : Colors.grey,
                                     ))
                               ],
                             ),
@@ -498,10 +513,16 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                               child: ElevatedButton(
                                 style: ButtonStyle(
                                     backgroundColor:
+                                        // isOnline
+                                        //     ?
                                         MaterialStateProperty.resolveWith(
                                             (states) {
                                       return Colors.deepOrange;
                                     }),
+                                    // : MaterialStateProperty.resolveWith(
+                                    //     (states) {
+                                    //     return Colors.grey;
+                                    //   }),
                                     shape: MaterialStateProperty.all<
                                             RoundedRectangleBorder>(
                                         RoundedRectangleBorder(

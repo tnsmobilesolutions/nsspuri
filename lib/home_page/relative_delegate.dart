@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
@@ -398,61 +398,28 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                                           ),
                                                         ),
                                                       ),
-                                                      if (devoteedata.status ==
-                                                              "paid" ||
-                                                          devoteedata.status ==
-                                                              "printed")
-                                                        Positioned(
-                                                          top: 50,
-                                                          left: 105,
-                                                          child:
-                                                              Transform.rotate(
-                                                            angle: 12,
-                                                            child: Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(4.0),
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
-                                                                    border: Border.all(
-                                                                        color: const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            44,
-                                                                            7,
-                                                                            209),
-                                                                        width:
-                                                                            4),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            4)),
-                                                                child:
-                                                                    const Padding(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              4.0),
-                                                                  child: Text(
-                                                                    'PAID',
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          40.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color: Color.fromARGB(
-                                                                          255,
-                                                                          44,
-                                                                          7,
-                                                                          209),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
+                                                      devoteedata.status ==
+                                                                  "paid" ||
+                                                              devoteedata
+                                                                      .status ==
+                                                                  "printed"
+                                                          ? PaidTag(
+                                                              title: "PAID",
+                                                              status: devoteedata
+                                                                  .status
+                                                                  .toString(),
+                                                            )
+                                                          : devoteedata
+                                                                      .status ==
+                                                                  "dataSubmitted"
+                                                              ? PaidTag(
+                                                                  title:
+                                                                      "NOT PAID",
+                                                                  status: devoteedata
+                                                                      .status
+                                                                      .toString(),
+                                                                )
+                                                              : const SizedBox()
                                                     ],
                                                   ),
                                                 ),
@@ -684,6 +651,57 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class PaidTag extends StatelessWidget {
+  PaidTag({
+    super.key,
+    required this.title,
+    required this.status,
+  });
+  String title, status;
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: status == "paid" ? 50 : 80,
+      left: status == "paid" ? 105 : 120,
+      child: Transform.rotate(
+        angle: 12,
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: status == "paid"
+                        ? const Color.fromARGB(255, 44, 7, 209)
+                        : Colors.grey,
+                    width: 4),
+                borderRadius: BorderRadius.circular(4)),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: status == "paid"
+                  ? getStamp(
+                      40.0,
+                      const Color.fromARGB(255, 44, 7, 209),
+                    )
+                  : getStamp(20.0, Colors.grey),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Text getStamp(double? fontSize, Color color) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: fontSize,
+        fontWeight: FontWeight.bold,
+        color: color,
+      ),
     );
   }
 }
