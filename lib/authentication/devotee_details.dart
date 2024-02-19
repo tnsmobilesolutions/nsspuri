@@ -45,6 +45,9 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
   List<String>? sanghaSuggestions = [];
   bool? parichayaPatraValue = false;
   String day = "", month = "", year = "";
+  List<String> ageGroup = ["1 to 12", "13 to 70", "70 Above"];
+  int ageGroupIndex = 0;
+  String selectedAgeGroup = "13 to 70";
 
   void _showCustomCalendarDialog(BuildContext context) async {
     final selectedDate = await showDialog<String>(
@@ -159,7 +162,6 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     }
   }
 
-
   void showPhotoOptions() {
     showDialog(
         context: context,
@@ -240,11 +242,20 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
     return image.path.split("/").last;
   }
 
-  // @override
-  // void initState() {
-  //   //dobController.text = "";
-  //   super.initState();
-  // }
+  String setAgeGroupToDB() {
+    if (ageGroupIndex == 0) {
+      return "";
+    } else {
+      if (selectedAgeGroup == "1 to 12") {
+        return "Child";
+      } else if (selectedAgeGroup == "13 to 70") {
+        return "Adult";
+      } else if (selectedAgeGroup == "70 Above") {
+        return "Elder";
+      }
+      return "Adult";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -413,30 +424,108 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 10,
                     ),
-                    GestureDetector(
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
                       child: Row(
-                        children: [
+                        children: <Widget>[
+                          const Text(
+                            'Age Info',
+                          ),
                           Expanded(
-                            child: TextFormField(
-                              validator: (value) => null,
-                              controller: dobController,
-                              decoration: CommonStyle.textFieldStyle(
-                                labelTextStr: "Date Of Birth",
-                                hintTextStr: "Enter Date Of Birth",
-                                suffixIcon: const Icon(
-                                  Icons.calendar_month_rounded,
-                                  color: Colors.deepOrange,
-                                ),
+                            flex: 1,
+                            child: RadioListTile(
+                              value: 0,
+                              groupValue: ageGroupIndex,
+                              title: const Text(
+                                "DOB",
                               ),
-                              readOnly: true,
-                              onTap: () => _showCustomCalendarDialog(context),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  ageGroupIndex = newValue ?? 0;
+                                  if (ageGroupIndex == 0) {
+                                    selectedAgeGroup = "13 to 70";
+                                  }
+                                });
+                              },
+                              activeColor: RadioButtonColor,
+                              selected: false,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: RadioListTile(
+                              value: 1,
+                              groupValue: ageGroupIndex,
+                              title: const Text(
+                                "Age Group",
+                              ),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  ageGroupIndex = newValue ?? 1;
+                                  if (ageGroupIndex == 1) {
+                                    dobController.clear();
+                                  }
+                                });
+                              },
+                              activeColor: RadioButtonColor,
+                              selected: false,
                             ),
                           ),
                         ],
                       ),
                     ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ageGroupIndex == 0
+                        ? GestureDetector(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    validator: (value) => null,
+                                    controller: dobController,
+                                    decoration: CommonStyle.textFieldStyle(
+                                      labelTextStr: "Date Of Birth",
+                                      hintTextStr: "Enter Date Of Birth",
+                                      suffixIcon: const Icon(
+                                        Icons.calendar_month_rounded,
+                                        color: Colors.deepOrange,
+                                      ),
+                                    ),
+                                    readOnly: true,
+                                    onTap: () =>
+                                        _showCustomCalendarDialog(context),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : DropdownButtonFormField<String>(
+                            value: selectedAgeGroup,
+                            icon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.deepOrange,
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedAgeGroup = newValue!;
+                              });
+                            },
+                            elevation: 16,
+                            decoration: CommonStyle.textFieldStyle(
+                              labelTextStr: "Select age group",
+                            ),
+                            items: ageGroup
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -644,6 +733,7 @@ class _DevoteeDetailsPageState extends State<DevoteeDetailsPage> {
                               profilePhotoUrl: profileURL,
                               sangha: sanghaController.text,
                               dob: _formatDOB(dobController.text),
+                              ageGroup: setAgeGroupToDB(),
                               remarks: remarkController.text,
                               mobileNumber: mobileController.text,
                               status: "dataSubmitted",

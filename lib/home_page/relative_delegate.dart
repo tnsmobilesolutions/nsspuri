@@ -30,9 +30,9 @@ class RelativeDelegate extends StatefulWidget {
 class _RelativeDelegateState extends State<RelativeDelegate> {
   final con = FlipCardController();
   late PageController controller;
+  DevoteeModel? currentDevotee;
   GlobalKey<PageContainerState> key = GlobalKey();
   int updatedPageIndex = 0;
-  DevoteeModel? currentDevotee;
 
   @override
   void initState() {
@@ -661,7 +661,20 @@ class PaidTag extends StatelessWidget {
     required this.title,
     required this.status,
   });
+
   String title, status;
+
+  Text getStamp(double? fontSize, Color color) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: fontSize,
+        fontWeight: FontWeight.bold,
+        color: color,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -690,17 +703,6 @@ class PaidTag extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Text getStamp(double? fontSize, Color color) {
-    return Text(
-      title,
-      style: TextStyle(
-        fontSize: fontSize,
-        fontWeight: FontWeight.bold,
-        color: color,
       ),
     );
   }
