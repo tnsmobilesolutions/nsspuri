@@ -40,7 +40,7 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
   final qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   int scannerCloseDuration = RemoteConfigHelper().getScannerCloseDuration;
   late String date, time;
-  int totalCount = 0;
+  int totalCount = 0, onlineCount = 0, offlineCount = 0;
   bool shouldSync = false;
 
   int _offlineCounter = 0;
@@ -62,6 +62,8 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     if (response != null && response["data"] != null) {
       print("response: $response");
       setState(() {
+        onlineCount = response["data"]["online"];
+        offlineCount = response["data"]["offline"];
         totalCount = response["data"]["count"];
         prasadTiming = response["data"]["timing"] ?? "N/A";
         date = response["data"]["date"];
@@ -241,6 +243,16 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
     });
   }
 
+  void _removeCounter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (_offlineCounter > 0) {
+      setState(() {
+        _offlineCounter--;
+        prefs.setInt('counter', _offlineCounter);
+      });
+    }
+  }
+
   Future<int> _loadCounter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -300,6 +312,8 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                       isOnline: isOnline,
                       prasadTiming: prasadTiming,
                       totalCount: totalCount,
+                      onlineCount: onlineCount,
+                      offlineCount: offlineCount,
                       onPressed:
                           //prasadTiming != "N/A" &&
                           isOnline
@@ -444,44 +458,82 @@ class _QrScannerPrasadState extends State<QrScannerPrasad> {
                             const SizedBox(height: 10),
                             const Text("OR"),
                             const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  height: 60,
-                                  width: 250,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(90)),
-                                  child: ElevatedButton(
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.resolveWith(
-                                                (states) {
-                                          return Colors.deepOrange;
-                                        }),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        90)))),
-                                    onPressed: () {
-                                      _saveCounter();
-                                    },
-                                    child: const Text(
-                                      'Add Offline Counter',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    height: 60,
+                                    width: 120,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(90)),
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.resolveWith(
+                                                  (states) {
+                                            return Colors.deepOrange;
+                                          }),
+                                          shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          90)))),
+                                      onPressed: () {
+                                        _removeCounter();
+                                      },
+                                      child: const Text(
+                                        'Remove',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Text(
-                                  "$_offlineCounter",
-                                  style: const TextStyle(fontSize: 40),
-                                ),
-                              ],
+                                  Text(
+                                    "$_offlineCounter",
+                                    style: const TextStyle(fontSize: 40),
+                                  ),
+                                  Container(
+                                    height: 60,
+                                    width: 120,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(90)),
+                                    child: ElevatedButton(
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.resolveWith(
+                                                  (states) {
+                                            return Colors.deepOrange;
+                                          }),
+                                          shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          90)))),
+                                      onPressed: () {
+                                        _saveCounter();
+                                      },
+                                      child: const Text(
+                                        'Add Offline',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

@@ -7,6 +7,8 @@ class CurrentStatus extends StatefulWidget {
   final String date;
   final String prasadTiming;
   final int totalCount;
+  final int offlineCount;
+  final int onlineCount;
   final bool isOnline;
   final void Function()? onPressed;
 
@@ -15,6 +17,8 @@ class CurrentStatus extends StatefulWidget {
     required this.date,
     required this.prasadTiming,
     required this.isOnline,
+    required this.offlineCount,
+    required this.onlineCount,
     required this.totalCount,
     required this.onPressed,
   });
@@ -68,9 +72,40 @@ class _CurrentStatusState extends State<CurrentStatus> {
                 ),
               ],
             ),
-            Text(
-              formatNumberWithCommas(widget.totalCount),
-              style: const TextStyle(fontSize: 60),
+            // Text(
+            //   "${widget.onlineCount} + ${widget.offlineCount} = ${widget.totalCount}",
+            //   style: const TextStyle(fontSize: 60),
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  formatNumberWithCommas(widget.onlineCount),
+                  style: const TextStyle(
+                      fontSize: 30, color: Color.fromARGB(255, 6, 127, 10)),
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  "+",
+                  style: TextStyle(fontSize: 30),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  formatNumberWithCommas(widget.offlineCount),
+                  style:
+                      const TextStyle(fontSize: 30, color: Colors.deepOrange),
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  "=",
+                  style: TextStyle(fontSize: 30),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  formatNumberWithCommas(widget.totalCount),
+                  style: const TextStyle(fontSize: 60),
+                ),
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
