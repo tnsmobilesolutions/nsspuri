@@ -17,6 +17,17 @@ Color getColorByDevotee(DevoteeModel devotee) {
     if (age >= seniorCitizenAgeLimit) return Colors.purple;
   }
 
+  if (devotee.ageGroup?.isNotEmpty == true && devotee.ageGroup != null) {
+    String ageGroup = devotee.ageGroup ?? "";
+    if (ageGroup == "Child") {
+      return Colors.green;
+    } else if (ageGroup == "Adult") {
+      return Colors.blue;
+    } else if (ageGroup == "Elder") {
+      return Colors.purple;
+    }
+  }
+
   if (devotee.gender == "Male") return Colors.blue;
   if (devotee.gender == "Female") return Colors.pink;
 
@@ -32,9 +43,6 @@ int calculateAge(DateTime dob) {
   print("age: $age");
   return age;
 }
-
-
-
 
 
 

@@ -1,8 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
-import 'package:flutter/widgets.dart';
-
 import 'package:sammilani_delegate/model/address_model.dart';
 
 class DevoteeModel {
@@ -22,6 +19,7 @@ class DevoteeModel {
   bool? isOrganizer;
   bool? isSpeciallyAbled;
   String? dob;
+  String? ageGroup;
   bool? isKYDVerified;
   bool? isAllowedToScanPrasad;
   bool? isApproved;
@@ -51,6 +49,7 @@ class DevoteeModel {
     this.isOrganizer,
     this.isSpeciallyAbled,
     this.dob,
+    this.ageGroup,
     this.isKYDVerified,
     this.isAllowedToScanPrasad,
     this.isApproved,
@@ -65,71 +64,65 @@ class DevoteeModel {
   });
 
   DevoteeModel copyWith({
-    ValueGetter<String?>? devoteeId,
-    ValueGetter<int?>? devoteeCode,
-    ValueGetter<String?>? name,
-    ValueGetter<String?>? emailId,
-    ValueGetter<String?>? mobileNumber,
-    ValueGetter<String?>? bloodGroup,
-    ValueGetter<String?>? profilePhotoUrl,
-    ValueGetter<String?>? gender,
-    ValueGetter<String?>? sangha,
-    ValueGetter<String?>? role,
-    ValueGetter<String?>? uid,
-    ValueGetter<bool?>? isGuest,
-    ValueGetter<String?>? remarks,
-    ValueGetter<bool?>? isOrganizer,
-    ValueGetter<bool?>? isSpeciallyAbled,
-    ValueGetter<String?>? dob,
-    ValueGetter<bool?>? isKYDVerified,
-    ValueGetter<bool?>? isAllowedToScanPrasad,
-    ValueGetter<bool?>? isApproved,
-    ValueGetter<bool?>? isAdmin,
-    ValueGetter<bool?>? isGruhasanaApproved,
-    ValueGetter<String?>? createdOn,
-    ValueGetter<String?>? updatedOn,
-    ValueGetter<String?>? status,
-    ValueGetter<String?>? createdById,
-    ValueGetter<bool?>? hasParichayaPatra,
-    ValueGetter<AddressModel?>? address,
+    String? devoteeId,
+    int? devoteeCode,
+    String? name,
+    String? emailId,
+    String? mobileNumber,
+    String? bloodGroup,
+    String? profilePhotoUrl,
+    String? gender,
+    String? sangha,
+    String? role,
+    String? uid,
+    bool? isGuest,
+    String? remarks,
+    bool? isOrganizer,
+    bool? isSpeciallyAbled,
+    String? dob,
+    String? ageGroup,
+    bool? isKYDVerified,
+    bool? isAllowedToScanPrasad,
+    bool? isApproved,
+    bool? isAdmin,
+    bool? isGruhasanaApproved,
+    String? createdOn,
+    String? updatedOn,
+    String? status,
+    String? createdById,
+    bool? hasParichayaPatra,
+    AddressModel? address,
   }) {
     return DevoteeModel(
-      devoteeId: devoteeId != null ? devoteeId() : this.devoteeId,
-      devoteeCode: devoteeCode != null ? devoteeCode() : this.devoteeCode,
-      name: name != null ? name() : this.name,
-      emailId: emailId != null ? emailId() : this.emailId,
-      mobileNumber: mobileNumber != null ? mobileNumber() : this.mobileNumber,
-      bloodGroup: bloodGroup != null ? bloodGroup() : this.bloodGroup,
-      profilePhotoUrl:
-          profilePhotoUrl != null ? profilePhotoUrl() : this.profilePhotoUrl,
-      gender: gender != null ? gender() : this.gender,
-      sangha: sangha != null ? sangha() : this.sangha,
-      role: role != null ? role() : this.role,
-      uid: uid != null ? uid() : this.uid,
-      isGuest: isGuest != null ? isGuest() : this.isGuest,
-      remarks: remarks != null ? remarks() : this.remarks,
-      isOrganizer: isOrganizer != null ? isOrganizer() : this.isOrganizer,
-      isSpeciallyAbled:
-          isSpeciallyAbled != null ? isSpeciallyAbled() : this.isSpeciallyAbled,
-      dob: dob != null ? dob() : this.dob,
-      isKYDVerified:
-          isKYDVerified != null ? isKYDVerified() : this.isKYDVerified,
-      isAllowedToScanPrasad: isAllowedToScanPrasad != null
-          ? isAllowedToScanPrasad()
-          : this.isAllowedToScanPrasad,
-      isApproved: isApproved != null ? isApproved() : this.isApproved,
-      isAdmin: isAdmin != null ? isAdmin() : this.isAdmin,
-      isGruhasanaApproved: isGruhasanaApproved != null
-          ? isGruhasanaApproved()
-          : this.isGruhasanaApproved,
-      createdOn: createdOn != null ? createdOn() : this.createdOn,
-      updatedOn: updatedOn != null ? updatedOn() : this.updatedOn,
-      status: status != null ? status() : this.status,
-      createdById: createdById != null ? createdById() : this.createdById,
-      hasParichayaPatra: hasParichayaPatra != null
-          ? hasParichayaPatra()
-          : this.hasParichayaPatra,
-      address: address != null ? address() : this.address,
+      devoteeId: devoteeId ?? this.devoteeId,
+      devoteeCode: devoteeCode ?? this.devoteeCode,
+      name: name ?? this.name,
+      emailId: emailId ?? this.emailId,
+      mobileNumber: mobileNumber ?? this.mobileNumber,
+      bloodGroup: bloodGroup ?? this.bloodGroup,
+      profilePhotoUrl: profilePhotoUrl ?? this.profilePhotoUrl,
+      gender: gender ?? this.gender,
+      sangha: sangha ?? this.sangha,
+      role: role ?? this.role,
+      uid: uid ?? this.uid,
+      isGuest: isGuest ?? this.isGuest,
+      remarks: remarks ?? this.remarks,
+      isOrganizer: isOrganizer ?? this.isOrganizer,
+      isSpeciallyAbled: isSpeciallyAbled ?? this.isSpeciallyAbled,
+      dob: dob ?? this.dob,
+      ageGroup: ageGroup ?? this.ageGroup,
+      isKYDVerified: isKYDVerified ?? this.isKYDVerified,
+      isAllowedToScanPrasad:
+          isAllowedToScanPrasad ?? this.isAllowedToScanPrasad,
+      isApproved: isApproved ?? this.isApproved,
+      isAdmin: isAdmin ?? this.isAdmin,
+      isGruhasanaApproved: isGruhasanaApproved ?? this.isGruhasanaApproved,
+      createdOn: createdOn ?? this.createdOn,
+      updatedOn: updatedOn ?? this.updatedOn,
+      status: status ?? this.status,
+      createdById: createdById ?? this.createdById,
+      hasParichayaPatra: hasParichayaPatra ?? this.hasParichayaPatra,
+      address: address ?? this.address,
     );
   }
 
@@ -151,6 +144,7 @@ class DevoteeModel {
       'isOrganizer': isOrganizer,
       'isSpeciallyAbled': isSpeciallyAbled,
       'dob': dob,
+      'ageGroup': ageGroup,
       'isKYDVerified': isKYDVerified,
       'isAllowedToScanPrasad': isAllowedToScanPrasad,
       'isApproved': isApproved,
@@ -183,6 +177,7 @@ class DevoteeModel {
       isOrganizer: map['isOrganizer'],
       isSpeciallyAbled: map['isSpeciallyAbled'],
       dob: map['dob'],
+      ageGroup: map['ageGroup'],
       isKYDVerified: map['isKYDVerified'],
       isAllowedToScanPrasad: map['isAllowedToScanPrasad'],
       isApproved: map['isApproved'],
@@ -205,7 +200,7 @@ class DevoteeModel {
 
   @override
   String toString() {
-    return 'DevoteeModel(devoteeId: $devoteeId, devoteeCode: $devoteeCode, name: $name, emailId: $emailId, mobileNumber: $mobileNumber, bloodGroup: $bloodGroup, profilePhotoUrl: $profilePhotoUrl, gender: $gender, sangha: $sangha, role: $role, uid: $uid, isGuest: $isGuest, remarks: $remarks, isOrganizer: $isOrganizer, isSpeciallyAbled: $isSpeciallyAbled, dob: $dob, isKYDVerified: $isKYDVerified, isAllowedToScanPrasad: $isAllowedToScanPrasad, isApproved: $isApproved, isAdmin: $isAdmin, isGruhasanaApproved: $isGruhasanaApproved, createdOn: $createdOn, updatedOn: $updatedOn, status: $status, createdById: $createdById, hasParichayaPatra: $hasParichayaPatra, address: $address)';
+    return 'DevoteeModel(devoteeId: $devoteeId, devoteeCode: $devoteeCode, name: $name, emailId: $emailId, mobileNumber: $mobileNumber, bloodGroup: $bloodGroup, profilePhotoUrl: $profilePhotoUrl, gender: $gender, sangha: $sangha, role: $role, uid: $uid, isGuest: $isGuest, remarks: $remarks, isOrganizer: $isOrganizer, isSpeciallyAbled: $isSpeciallyAbled, dob: $dob, ageGroup: $ageGroup, isKYDVerified: $isKYDVerified, isAllowedToScanPrasad: $isAllowedToScanPrasad, isApproved: $isApproved, isAdmin: $isAdmin, isGruhasanaApproved: $isGruhasanaApproved, createdOn: $createdOn, updatedOn: $updatedOn, status: $status, createdById: $createdById, hasParichayaPatra: $hasParichayaPatra, address: $address)';
   }
 
   @override
@@ -229,6 +224,7 @@ class DevoteeModel {
         other.isOrganizer == isOrganizer &&
         other.isSpeciallyAbled == isSpeciallyAbled &&
         other.dob == dob &&
+        other.ageGroup == ageGroup &&
         other.isKYDVerified == isKYDVerified &&
         other.isAllowedToScanPrasad == isAllowedToScanPrasad &&
         other.isApproved == isApproved &&
@@ -260,6 +256,7 @@ class DevoteeModel {
         isOrganizer.hashCode ^
         isSpeciallyAbled.hashCode ^
         dob.hashCode ^
+        ageGroup.hashCode ^
         isKYDVerified.hashCode ^
         isAllowedToScanPrasad.hashCode ^
         isApproved.hashCode ^
