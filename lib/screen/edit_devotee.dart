@@ -46,7 +46,9 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
   final addressLine1Controller = TextEditingController();
   final addressLine2Controller = TextEditingController();
   final remarkController = TextEditingController();
-
+  List<String> ageGroup = ["1 to 12", "13 to 70", "70 Above"];
+  int ageGroupIndex = 0;
+  String selectedAgeGroup = "13 to 70";
   String? bloodGroupController;
   List<String> bloodGrouplist = <String>[
     'A+',
@@ -127,6 +129,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
           widget.devotee?.dob != null || widget.devotee?.dob?.isNotEmpty == true
               ? formatDate(widget.devotee?.dob ?? "")
               : "";
+      ageGroupIndex = getAgeGroupIndex(widget.devotee);
+      if (widget.devotee?.ageGroup?.isNotEmpty == true) {
+        selectedAgeGroup = getAgeGroup(widget.devotee);
+      }
       bloodGroupController = widget.devotee?.bloodGroup ?? bloodGroupController;
       profileURL = widget.devotee?.profilePhotoUrl ?? "";
       addressLine1Controller.text = widget.devotee?.address?.addressLine1 ?? "";
@@ -142,6 +148,31 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     }
     stateController.text = "Odisha";
     countryController.text = "India";
+  }
+
+  int getAgeGroupIndex(DevoteeModel? devotee) {
+    if (devotee?.dob?.isEmpty == true || devotee?.dob == null) {
+      if (devotee?.ageGroup?.isNotEmpty == true) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+    return 0;
+  }
+
+  String getAgeGroup(DevoteeModel? devotee) {
+    if (devotee?.ageGroup?.isNotEmpty == true || devotee?.ageGroup != null) {
+      if (devotee?.ageGroup == "Child") {
+        return "1 to 12";
+      } else if (devotee?.ageGroup == "Adult") {
+        return "13 to 70";
+      } else if (devotee?.ageGroup == "Elder") {
+        return "70 Above";
+      }
+      // return devotee?.ageGroup.toString() ?? "13 to 70";
+    }
+    return "13 to 70";
   }
 
   get districtList => null;
@@ -336,6 +367,21 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
     } catch (e) {
       print("Error parsing date: $e");
       return '';
+    }
+  }
+
+  String setAgeGroupToDB() {
+    if (ageGroupIndex == 0) {
+      return "";
+    } else {
+      if (selectedAgeGroup == "1 to 12") {
+        return "Child";
+      } else if (selectedAgeGroup == "13 to 70") {
+        return "Adult";
+      } else if (selectedAgeGroup == "70 Above") {
+        return "Elder";
+      }
+      return "Adult";
     }
   }
 
@@ -535,29 +581,106 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
-              GestureDetector(
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Row(
-                  children: [
+                  children: <Widget>[
+                    const Text(
+                      'Age Info',
+                    ),
                     Expanded(
-                      child: TextField(
-                        controller: dobController,
-                        decoration: CommonStyle.textFieldStyle(
-                          labelTextStr: "Date Of Birth",
-                          hintTextStr: "Enter Date Of Birth",
-                          suffixIcon: const Icon(
-                            Icons.calendar_month_rounded,
-                            color: Colors.deepOrange,
-                          ),
+                      flex: 1,
+                      child: RadioListTile(
+                        value: 0,
+                        groupValue: ageGroupIndex,
+                        title: const Text(
+                          "DOB",
                         ),
-                        readOnly: true,
-                        onTap: () => _showCustomCalendarDialog(context),
+                        onChanged: (newValue) {
+                          setState(() {
+                            ageGroupIndex = newValue ?? 0;
+                            if (ageGroupIndex == 0) {
+                              selectedAgeGroup = "13 to 70";
+                            }
+                          });
+                        },
+                        activeColor: RadioButtonColor,
+                        selected: false,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: RadioListTile(
+                        value: 1,
+                        groupValue: ageGroupIndex,
+                        title: const Text(
+                          "Age Group",
+                        ),
+                        onChanged: (newValue) {
+                          setState(() {
+                            ageGroupIndex = newValue ?? 1;
+                            if (ageGroupIndex == 1) {
+                              dobController.clear();
+                            }
+                          });
+                        },
+                        activeColor: RadioButtonColor,
+                        selected: false,
                       ),
                     ),
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              ageGroupIndex == 0
+                  ? GestureDetector(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: dobController,
+                              decoration: CommonStyle.textFieldStyle(
+                                labelTextStr: "Date Of Birth",
+                                hintTextStr: "Enter Date Of Birth",
+                                suffixIcon: const Icon(
+                                  Icons.calendar_month_rounded,
+                                  color: Colors.deepOrange,
+                                ),
+                              ),
+                              readOnly: true,
+                              onTap: () => _showCustomCalendarDialog(context),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : DropdownButtonFormField<String>(
+                      value: selectedAgeGroup,
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.deepOrange,
+                      ),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedAgeGroup = newValue!;
+                        });
+                      },
+                      elevation: 16,
+                      decoration: CommonStyle.textFieldStyle(
+                        labelTextStr: "Select age group",
+                      ),
+                      items: ageGroup
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
               const SizedBox(
                 height: 20,
               ),
@@ -866,6 +989,7 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                           profilePhotoUrl: profileURL,
                           sangha: sanghaController.text,
                           dob: _formatDOB(dobController.text),
+                          ageGroup: setAgeGroupToDB(),
                           mobileNumber: mobileController.text,
                           createdOn: widget.devotee?.createdOn,
                           status: widget.devotee?.status ?? "dataSubmitted",
