@@ -106,6 +106,7 @@ class _DelegateCardState extends State<DelegateCard> {
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
+                
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
