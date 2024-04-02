@@ -831,28 +831,10 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     //SizedBox
-                    const Text(
-                      'Centenary Event Attendance',
-                    ), //Text
+                    //Text
                     //SizedBox
                     /** Checkbox Widget **/
-                    ToggleSwitch(
-                      minWidth: 45.0,
-                      initialLabelIndex: 1,
-                      cornerRadius: 12.0,
-                      activeFgColor: Colors.white,
-                      inactiveBgColor: Colors.grey,
-                      inactiveFgColor: Colors.white,
-                      totalSwitches: 2,
-                      labels: ['Yes', 'No'],
-                      activeBgColors: [
-                        [Colors.blue],
-                        [Colors.pink]
-                      ],
-                      onToggle: (index) {
-                        print('switched to: $index');
-                      },
-                    ), //Checkbox
+                    //Checkbox
                   ], //<Widget>[]
                 ),
               ),
