@@ -103,12 +103,9 @@ class _DelegateCardState extends State<DelegateCard> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
             child: Column(
               children: [
-                Text(
-                    'Are you coming to Centenary Celebration at Puri on 14th April?',
-                    textAlign: TextAlign.center),
                 // Padding(
                 //   padding: const EdgeInsets.all(8.0),
                 //   child: SizedBox(
