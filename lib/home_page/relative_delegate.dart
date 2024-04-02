@@ -88,7 +88,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
     return Column(
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height / 1.2,
+          height: MediaQuery.of(context).size.height / 1.1,
           child: PageView.builder(
               itemCount: devotees.length,
               controller: controller,
@@ -106,9 +106,16 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                 // {
                 return Column(
                   children: [
+                    Text(
+                        'Are you coming to Centenary Celebration at Puri on 14th April?',
+                        textAlign: TextAlign.center),
+                    SizedBox(
+                      height: 12,
+                    ),
                     ToggleSwitch(
                       minWidth: 45.0,
-                      initialLabelIndex: 1,
+                      initialLabelIndex:
+                          devoteedata.eventAttendance == true ? 0 : 1,
                       cornerRadius: 12.0,
                       activeFgColor: Colors.white,
                       inactiveBgColor: Colors.white,
