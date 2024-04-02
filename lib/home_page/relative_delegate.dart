@@ -13,6 +13,7 @@ import 'package:sammilani_delegate/model/event_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import 'package:uuid/uuid.dart';
 
 // ignore: must_be_immutable
@@ -89,18 +90,20 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
         SizedBox(
           height: MediaQuery.of(context).size.height / 1.4,
           child: PageView.builder(
-            itemCount: devotees.length,
-            controller: controller,
-            onPageChanged: (index) {
-              // Update updatedPageIndex when the page changes
-              updatedPageIndex = index;
-            },
-            itemBuilder: (
-              BuildContext context,
-              int index,
-            ) {
-              DevoteeModel devoteedata = DevoteeModel.fromMap(devotees[index]);
-              if (devoteedata.eventAttendance != null) {
+              itemCount: devotees.length,
+              controller: controller,
+              onPageChanged: (index) {
+                // Update updatedPageIndex when the page changes
+                updatedPageIndex = index;
+              },
+              itemBuilder: (
+                BuildContext context,
+                int index,
+              ) {
+                DevoteeModel devoteedata =
+                    DevoteeModel.fromMap(devotees[index]);
+                // if (devoteedata.eventAttendance != null)
+                // {
                 return FlipCard(
                   rotateSide: RotateSide.right,
                   onTapFlipping: false,
@@ -150,7 +153,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       const Expanded(
                                         flex: 4,
                                         child: Text(
-                                          'DELEGATE CARD',
+                                          'Centenary Event',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -209,7 +212,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return SvgPicture.asset(
-                                              'assets/images/3.svg',
+                                              'assets/images/4.svg',
                                               color: getColorByDevotee(
                                                   devoteedata),
                                               height: 20,
@@ -285,24 +288,24 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                               const SizedBox(
                                                 height: 10,
                                               ),
-                                              const Text(
-                                                '73RD UTKALA PRADESHIKA',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
-                                                    color: Colors
-                                                        .black // Text color
-                                                    ),
-                                              ),
-                                              const Text(
-                                                'BHAKTA SAMMILANI, PUNE - 2024',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14,
-                                                    color: Colors
-                                                        .black // Text color
-                                                    ),
-                                              ),
+                                              // const Text(
+                                              //   '73RD UTKALA PRADESHIKA',
+                                              //   style: TextStyle(
+                                              //       fontWeight: FontWeight.bold,
+                                              //       fontSize: 14,
+                                              //       color: Colors
+                                              //           .black // Text color
+                                              //       ),
+                                              // ),
+                                              // const Text(
+                                              //   'BHAKTA SAMMILANI, PUNE - 2024',
+                                              //   style: TextStyle(
+                                              //       fontWeight: FontWeight.bold,
+                                              //       fontSize: 14,
+                                              //       color: Colors
+                                              //           .black // Text color
+                                              //       ),
+                                              // ),
                                               const SizedBox(
                                                 height: 10,
                                               ),
@@ -599,7 +602,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           itemBuilder: (BuildContext context,
                                               int index) {
                                             return SvgPicture.asset(
-                                              'assets/images/3.svg',
+                                              'assets/images/4.svg',
                                               color: getColorByDevotee(
                                                   devoteedata),
                                               height: 20,
@@ -637,7 +640,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return SvgPicture.asset(
-                                          'assets/images/3.svg',
+                                          'assets/images/4.svg',
                                           height: 20,
                                           color: getColorByDevotee(devoteedata),
                                         );
@@ -651,56 +654,56 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                     ),
                   ),
                 );
-              } else {
-                return AlertDialog(
-                  title: const Text('New Event'),
-                  content: const SingleChildScrollView(
-                    child: ListBody(
-                      children: <Widget>[
-                        Text('Are you coming Puri on 14th april ?.'),
-                      ],
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text('Yes'),
-                      onPressed: () {
-                        EventModel eventData = EventModel(
-                          devoteeCode: devoteedata.devoteeCode,
-                          devoteeId: devoteedata.devoteeId,
-                          eventAntendeeId: Uuid().v4(),
-                          inDate: '2023-04-14',
-                          outDate: '2023-04-14',
-                          eventId: '1',
-                          eventName: 'Puri',
-                          eventAttendance: true,
-                        );
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    TextButton(
-                      child: const Text('No'),
-                      onPressed: () async {
-                        EventModel eventData = EventModel(
-                          devoteeCode: devoteedata.devoteeCode,
-                          devoteeId: devoteedata.devoteeId,
-                          eventAntendeeId: Uuid().v4(),
-                          inDate: '2023-04-14',
-                          outDate: '2023-04-14',
-                          eventId: '1',
-                          eventName: 'Puri',
-                          eventAttendance: false,
-                        );
-                        await EventsAPI().addEvent(eventData);
+                // } else {
+                // return AlertDialog(
+                //   title: const Text('New Event'),
+                //   content: const SingleChildScrollView(
+                //     child: ListBody(
+                //       children: <Widget>[
+                //         Text('Are you coming Puri on 14th april ?.'),
+                //       ],
+                //     ),
+                //   ),
+                //   actions: <Widget>[
+                //     TextButton(
+                //       child: const Text('Yes'),
+                //       onPressed: () {
+                //         EventModel eventData = EventModel(
+                //           devoteeCode: devoteedata.devoteeCode,
+                //           devoteeId: devoteedata.devoteeId,
+                //           eventAntendeeId: Uuid().v4(),
+                //           inDate: '2023-04-14',
+                //           outDate: '2023-04-14',
+                //           eventId: '1',
+                //           eventName: 'Puri',
+                //           eventAttendance: true,
+                //         );
+                //         Navigator.of(context).pop();
+                //       },
+                //     ),
+                //     TextButton(
+                //       child: const Text('No'),
+                //       onPressed: () async {
+                //         EventModel eventData = EventModel(
+                //           devoteeCode: devoteedata.devoteeCode,
+                //           devoteeId: devoteedata.devoteeId,
+                //           eventAntendeeId: Uuid().v4(),
+                //           inDate: '2023-04-14',
+                //           outDate: '2023-04-14',
+                //           eventId: '1',
+                //           eventName: 'Puri',
+                //           eventAttendance: false,
+                //         );
+                //         await EventsAPI().addEvent(eventData);
 
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
+                //         Navigator.of(context).pop();
+                //       },
+                //     ),
+                //   ],
+                // );
               }
-            },
-          ),
+              // },
+              ),
         ),
         const SizedBox(
           height: 5,

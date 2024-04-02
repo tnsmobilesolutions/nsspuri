@@ -106,37 +106,39 @@ class _DelegateCardState extends State<DelegateCard> {
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
-                
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PranamiInfoScreen(),
-                          ),
-                        );
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.resolveWith((states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return IconButtonColor;
-                            }
-                            return IconButtonColor;
-                          }),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(40)))),
-                      child: const Text('Payment Info'),
-                    ),
-                  ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: SizedBox(
+                //     width: MediaQuery.of(context).size.width,
+                //     height: 50,
+                //     child: ElevatedButton(
+                //       onPressed: () {
+                //         Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //             builder: (context) => const PranamiInfoScreen(),
+                //           ),
+                //         );
+                //       },
+                //       style: ButtonStyle(
+                //           backgroundColor:
+                //               MaterialStateProperty.resolveWith((states) {
+                //             if (states.contains(MaterialState.pressed)) {
+                //               return IconButtonColor;
+                //             }
+                //             return IconButtonColor;
+                //           }),
+                //           shape:
+                //               MaterialStateProperty.all<RoundedRectangleBorder>(
+                //                   RoundedRectangleBorder(
+                //                       borderRadius:
+                //                           BorderRadius.circular(40)))),
+                //       child: const Text('Payment Info'),
+                //     ),
+                //   ),
+                // ),
+                SizedBox(
+                  height: 12,
                 ),
                 // RelativeDelegate(
                 //   devoteeData: allDevotees,
