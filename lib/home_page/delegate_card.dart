@@ -21,7 +21,7 @@ class DelegateCard extends StatefulWidget {
   State<DelegateCard> createState() => _DelegateCardState();
 }
 
-DateTime sammilaniDate = DateTime(2024, 2, 23);
+DateTime sammilaniDate = DateTime(2025, 2, 11);
 //int _currentIndex = 0;
 
 class _DelegateCardState extends State<DelegateCard> {
@@ -72,11 +72,11 @@ class _DelegateCardState extends State<DelegateCard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "Pune Sammilani",
+                "Soro Sammilani",
                 style: TextStyle(color: Colors.white),
               ),
               Text(
-                '${timeUntilSammilani.inDays} days to go (23, 24, 25 Feb 2024)',
+                '${timeUntilSammilani.inDays} days to go (11, 12, 13 Feb 2025)',
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.white,
@@ -103,39 +103,42 @@ class _DelegateCardState extends State<DelegateCard> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PranamiInfoScreen(),
-                          ),
-                        );
-                      },
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.resolveWith((states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return IconButtonColor;
-                            }
-                            return IconButtonColor;
-                          }),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(40)))),
-                      child: const Text('Payment Info'),
-                    ),
-                  ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: SizedBox(
+                //     width: MediaQuery.of(context).size.width,
+                //     height: 50,
+                //     child: ElevatedButton(
+                //       onPressed: () {
+                //         Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //             builder: (context) => const PranamiInfoScreen(),
+                //           ),
+                //         );
+                //       },
+                //       style: ButtonStyle(
+                //           backgroundColor:
+                //               MaterialStateProperty.resolveWith((states) {
+                //             if (states.contains(MaterialState.pressed)) {
+                //               return IconButtonColor;
+                //             }
+                //             return IconButtonColor;
+                //           }),
+                //           shape:
+                //               MaterialStateProperty.all<RoundedRectangleBorder>(
+                //                   RoundedRectangleBorder(
+                //                       borderRadius:
+                //                           BorderRadius.circular(40)))),
+                //       child: const Text('Payment Info'),
+                //     ),
+                //   ),
+                // ),
+                SizedBox(
+                  height: 12,
                 ),
                 // RelativeDelegate(
                 //   devoteeData: allDevotees,

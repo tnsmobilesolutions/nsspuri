@@ -20,6 +20,7 @@ import 'package:sammilani_delegate/reusable_widgets/common_style.dart';
 import 'package:sammilani_delegate/sangha_list/sangha_list.dart';
 import 'package:sammilani_delegate/utilities/color_palette.dart';
 import 'package:sammilani_delegate/utilities/custom_calender.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import 'package:uuid/uuid.dart';
 
 class EditDevoteeDetailsPage extends StatefulWidget {
@@ -818,6 +819,22 @@ class _EditDevoteeDetailsPageState extends State<EditDevoteeDetailsPage> {
                         },
                       ),
                     ), //Checkbox
+                  ], //<Widget>[]
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    //SizedBox
+                    //Text
+                    //SizedBox
+                    /** Checkbox Widget **/
+                    //Checkbox
                   ], //<Widget>[]
                 ),
               ),

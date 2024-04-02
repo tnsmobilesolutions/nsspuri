@@ -68,7 +68,8 @@ class GetDevoteeAPI extends DioFuctionAPI {
 
   Future<Map<String, dynamic>?> devoteeWithRelatives() async {
     try {
-      final response = await getAPI("devotee/relatives");
+      final response = await getAPI("devotee/relatives?eventId=1");
+
       return {"statusCode": 200, "data": response["data"]["singleDevotee"]};
     } catch (e) {
       print(e);

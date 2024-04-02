@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:sammilani_delegate/model/address_model.dart';
 
 class DevoteeModel {
@@ -24,6 +25,7 @@ class DevoteeModel {
   bool? isAllowedToScanPrasad;
   bool? isApproved;
   bool? isAdmin;
+  bool? eventAttendance;
   bool? isGruhasanaApproved;
   String? createdOn;
   String? updatedOn;
@@ -54,6 +56,7 @@ class DevoteeModel {
     this.isAllowedToScanPrasad,
     this.isApproved,
     this.isAdmin,
+    this.eventAttendance,
     this.isGruhasanaApproved,
     this.createdOn,
     this.updatedOn,
@@ -85,6 +88,7 @@ class DevoteeModel {
     bool? isAllowedToScanPrasad,
     bool? isApproved,
     bool? isAdmin,
+    bool? eventAttendance,
     bool? isGruhasanaApproved,
     String? createdOn,
     String? updatedOn,
@@ -112,10 +116,10 @@ class DevoteeModel {
       dob: dob ?? this.dob,
       ageGroup: ageGroup ?? this.ageGroup,
       isKYDVerified: isKYDVerified ?? this.isKYDVerified,
-      isAllowedToScanPrasad:
-          isAllowedToScanPrasad ?? this.isAllowedToScanPrasad,
+      isAllowedToScanPrasad: isAllowedToScanPrasad ?? this.isAllowedToScanPrasad,
       isApproved: isApproved ?? this.isApproved,
       isAdmin: isAdmin ?? this.isAdmin,
+      eventAttendance: eventAttendance ?? this.eventAttendance,
       isGruhasanaApproved: isGruhasanaApproved ?? this.isGruhasanaApproved,
       createdOn: createdOn ?? this.createdOn,
       updatedOn: updatedOn ?? this.updatedOn,
@@ -127,36 +131,97 @@ class DevoteeModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'devoteeId': devoteeId,
-      'devoteeCode': devoteeCode,
-      'name': name,
-      'emailId': emailId,
-      'mobileNumber': mobileNumber,
-      'bloodGroup': bloodGroup,
-      'profilePhotoUrl': profilePhotoUrl,
-      'gender': gender,
-      'sangha': sangha,
-      'role': role,
-      'uid': uid,
-      'isGuest': isGuest,
-      'remarks': remarks,
-      'isOrganizer': isOrganizer,
-      'isSpeciallyAbled': isSpeciallyAbled,
-      'dob': dob,
-      'ageGroup': ageGroup,
-      'isKYDVerified': isKYDVerified,
-      'isAllowedToScanPrasad': isAllowedToScanPrasad,
-      'isApproved': isApproved,
-      'isAdmin': isAdmin,
-      'isGruhasanaApproved': isGruhasanaApproved,
-      'createdOn': createdOn,
-      'updatedOn': updatedOn,
-      'status': status,
-      'createdById': createdById,
-      'hasParichayaPatra': hasParichayaPatra,
-      'address': address?.toMap(),
-    };
+    final result = <String, dynamic>{};
+  
+    if(devoteeId != null){
+      result.addAll({'devoteeId': devoteeId});
+    }
+    if(devoteeCode != null){
+      result.addAll({'devoteeCode': devoteeCode});
+    }
+    if(name != null){
+      result.addAll({'name': name});
+    }
+    if(emailId != null){
+      result.addAll({'emailId': emailId});
+    }
+    if(mobileNumber != null){
+      result.addAll({'mobileNumber': mobileNumber});
+    }
+    if(bloodGroup != null){
+      result.addAll({'bloodGroup': bloodGroup});
+    }
+    if(profilePhotoUrl != null){
+      result.addAll({'profilePhotoUrl': profilePhotoUrl});
+    }
+    if(gender != null){
+      result.addAll({'gender': gender});
+    }
+    if(sangha != null){
+      result.addAll({'sangha': sangha});
+    }
+    if(role != null){
+      result.addAll({'role': role});
+    }
+    if(uid != null){
+      result.addAll({'uid': uid});
+    }
+    if(isGuest != null){
+      result.addAll({'isGuest': isGuest});
+    }
+    if(remarks != null){
+      result.addAll({'remarks': remarks});
+    }
+    if(isOrganizer != null){
+      result.addAll({'isOrganizer': isOrganizer});
+    }
+    if(isSpeciallyAbled != null){
+      result.addAll({'isSpeciallyAbled': isSpeciallyAbled});
+    }
+    if(dob != null){
+      result.addAll({'dob': dob});
+    }
+    if(ageGroup != null){
+      result.addAll({'ageGroup': ageGroup});
+    }
+    if(isKYDVerified != null){
+      result.addAll({'isKYDVerified': isKYDVerified});
+    }
+    if(isAllowedToScanPrasad != null){
+      result.addAll({'isAllowedToScanPrasad': isAllowedToScanPrasad});
+    }
+    if(isApproved != null){
+      result.addAll({'isApproved': isApproved});
+    }
+    if(isAdmin != null){
+      result.addAll({'isAdmin': isAdmin});
+    }
+    if(eventAttendance != null){
+      result.addAll({'eventAttendance': eventAttendance});
+    }
+    if(isGruhasanaApproved != null){
+      result.addAll({'isGruhasanaApproved': isGruhasanaApproved});
+    }
+    if(createdOn != null){
+      result.addAll({'createdOn': createdOn});
+    }
+    if(updatedOn != null){
+      result.addAll({'updatedOn': updatedOn});
+    }
+    if(status != null){
+      result.addAll({'status': status});
+    }
+    if(createdById != null){
+      result.addAll({'createdById': createdById});
+    }
+    if(hasParichayaPatra != null){
+      result.addAll({'hasParichayaPatra': hasParichayaPatra});
+    }
+    if(address != null){
+      result.addAll({'address': address!.toMap()});
+    }
+  
+    return result;
   }
 
   factory DevoteeModel.fromMap(Map<String, dynamic> map) {
@@ -182,14 +247,14 @@ class DevoteeModel {
       isAllowedToScanPrasad: map['isAllowedToScanPrasad'],
       isApproved: map['isApproved'],
       isAdmin: map['isAdmin'],
+      eventAttendance: map['eventAttendance'],
       isGruhasanaApproved: map['isGruhasanaApproved'],
       createdOn: map['createdOn'],
       updatedOn: map['updatedOn'],
       status: map['status'],
       createdById: map['createdById'],
       hasParichayaPatra: map['hasParichayaPatra'],
-      address:
-          map['address'] != null ? AddressModel.fromMap(map['address']) : null,
+      address: map['address'] != null ? AddressModel.fromMap(map['address']) : null,
     );
   }
 
@@ -200,73 +265,75 @@ class DevoteeModel {
 
   @override
   String toString() {
-    return 'DevoteeModel(devoteeId: $devoteeId, devoteeCode: $devoteeCode, name: $name, emailId: $emailId, mobileNumber: $mobileNumber, bloodGroup: $bloodGroup, profilePhotoUrl: $profilePhotoUrl, gender: $gender, sangha: $sangha, role: $role, uid: $uid, isGuest: $isGuest, remarks: $remarks, isOrganizer: $isOrganizer, isSpeciallyAbled: $isSpeciallyAbled, dob: $dob, ageGroup: $ageGroup, isKYDVerified: $isKYDVerified, isAllowedToScanPrasad: $isAllowedToScanPrasad, isApproved: $isApproved, isAdmin: $isAdmin, isGruhasanaApproved: $isGruhasanaApproved, createdOn: $createdOn, updatedOn: $updatedOn, status: $status, createdById: $createdById, hasParichayaPatra: $hasParichayaPatra, address: $address)';
+    return 'DevoteeModel(devoteeId: $devoteeId, devoteeCode: $devoteeCode, name: $name, emailId: $emailId, mobileNumber: $mobileNumber, bloodGroup: $bloodGroup, profilePhotoUrl: $profilePhotoUrl, gender: $gender, sangha: $sangha, role: $role, uid: $uid, isGuest: $isGuest, remarks: $remarks, isOrganizer: $isOrganizer, isSpeciallyAbled: $isSpeciallyAbled, dob: $dob, ageGroup: $ageGroup, isKYDVerified: $isKYDVerified, isAllowedToScanPrasad: $isAllowedToScanPrasad, isApproved: $isApproved, isAdmin: $isAdmin, eventAttendance: $eventAttendance, isGruhasanaApproved: $isGruhasanaApproved, createdOn: $createdOn, updatedOn: $updatedOn, status: $status, createdById: $createdById, hasParichayaPatra: $hasParichayaPatra, address: $address)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-
+  
     return other is DevoteeModel &&
-        other.devoteeId == devoteeId &&
-        other.devoteeCode == devoteeCode &&
-        other.name == name &&
-        other.emailId == emailId &&
-        other.mobileNumber == mobileNumber &&
-        other.bloodGroup == bloodGroup &&
-        other.profilePhotoUrl == profilePhotoUrl &&
-        other.gender == gender &&
-        other.sangha == sangha &&
-        other.role == role &&
-        other.uid == uid &&
-        other.isGuest == isGuest &&
-        other.remarks == remarks &&
-        other.isOrganizer == isOrganizer &&
-        other.isSpeciallyAbled == isSpeciallyAbled &&
-        other.dob == dob &&
-        other.ageGroup == ageGroup &&
-        other.isKYDVerified == isKYDVerified &&
-        other.isAllowedToScanPrasad == isAllowedToScanPrasad &&
-        other.isApproved == isApproved &&
-        other.isAdmin == isAdmin &&
-        other.isGruhasanaApproved == isGruhasanaApproved &&
-        other.createdOn == createdOn &&
-        other.updatedOn == updatedOn &&
-        other.status == status &&
-        other.createdById == createdById &&
-        other.hasParichayaPatra == hasParichayaPatra &&
-        other.address == address;
+      other.devoteeId == devoteeId &&
+      other.devoteeCode == devoteeCode &&
+      other.name == name &&
+      other.emailId == emailId &&
+      other.mobileNumber == mobileNumber &&
+      other.bloodGroup == bloodGroup &&
+      other.profilePhotoUrl == profilePhotoUrl &&
+      other.gender == gender &&
+      other.sangha == sangha &&
+      other.role == role &&
+      other.uid == uid &&
+      other.isGuest == isGuest &&
+      other.remarks == remarks &&
+      other.isOrganizer == isOrganizer &&
+      other.isSpeciallyAbled == isSpeciallyAbled &&
+      other.dob == dob &&
+      other.ageGroup == ageGroup &&
+      other.isKYDVerified == isKYDVerified &&
+      other.isAllowedToScanPrasad == isAllowedToScanPrasad &&
+      other.isApproved == isApproved &&
+      other.isAdmin == isAdmin &&
+      other.eventAttendance == eventAttendance &&
+      other.isGruhasanaApproved == isGruhasanaApproved &&
+      other.createdOn == createdOn &&
+      other.updatedOn == updatedOn &&
+      other.status == status &&
+      other.createdById == createdById &&
+      other.hasParichayaPatra == hasParichayaPatra &&
+      other.address == address;
   }
 
   @override
   int get hashCode {
     return devoteeId.hashCode ^
-        devoteeCode.hashCode ^
-        name.hashCode ^
-        emailId.hashCode ^
-        mobileNumber.hashCode ^
-        bloodGroup.hashCode ^
-        profilePhotoUrl.hashCode ^
-        gender.hashCode ^
-        sangha.hashCode ^
-        role.hashCode ^
-        uid.hashCode ^
-        isGuest.hashCode ^
-        remarks.hashCode ^
-        isOrganizer.hashCode ^
-        isSpeciallyAbled.hashCode ^
-        dob.hashCode ^
-        ageGroup.hashCode ^
-        isKYDVerified.hashCode ^
-        isAllowedToScanPrasad.hashCode ^
-        isApproved.hashCode ^
-        isAdmin.hashCode ^
-        isGruhasanaApproved.hashCode ^
-        createdOn.hashCode ^
-        updatedOn.hashCode ^
-        status.hashCode ^
-        createdById.hashCode ^
-        hasParichayaPatra.hashCode ^
-        address.hashCode;
+      devoteeCode.hashCode ^
+      name.hashCode ^
+      emailId.hashCode ^
+      mobileNumber.hashCode ^
+      bloodGroup.hashCode ^
+      profilePhotoUrl.hashCode ^
+      gender.hashCode ^
+      sangha.hashCode ^
+      role.hashCode ^
+      uid.hashCode ^
+      isGuest.hashCode ^
+      remarks.hashCode ^
+      isOrganizer.hashCode ^
+      isSpeciallyAbled.hashCode ^
+      dob.hashCode ^
+      ageGroup.hashCode ^
+      isKYDVerified.hashCode ^
+      isAllowedToScanPrasad.hashCode ^
+      isApproved.hashCode ^
+      isAdmin.hashCode ^
+      eventAttendance.hashCode ^
+      isGruhasanaApproved.hashCode ^
+      createdOn.hashCode ^
+      updatedOn.hashCode ^
+      status.hashCode ^
+      createdById.hashCode ^
+      hasParichayaPatra.hashCode ^
+      address.hashCode;
   }
 }
