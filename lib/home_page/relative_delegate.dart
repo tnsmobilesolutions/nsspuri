@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:page_indicator/page_indicator.dart';
 import 'package:sammilani_delegate/API/events.dart';
 import 'package:sammilani_delegate/API/get_devotee.dart';
@@ -11,12 +10,12 @@ import 'package:sammilani_delegate/home_page/constants.dart';
 import 'package:sammilani_delegate/model/devotte_model.dart';
 import 'package:sammilani_delegate/model/event_model.dart';
 import 'package:sammilani_delegate/screen/edit_devotee.dart';
-import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:uuid/uuid.dart';
 
-// ignore: must_be_immutable
+
 class RelativeDelegate extends StatefulWidget {
   RelativeDelegate({
     super.key,
