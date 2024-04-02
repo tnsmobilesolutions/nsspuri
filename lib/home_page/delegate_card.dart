@@ -21,7 +21,7 @@ class DelegateCard extends StatefulWidget {
   State<DelegateCard> createState() => _DelegateCardState();
 }
 
-DateTime sammilaniDate = DateTime(2024, 2, 23);
+DateTime sammilaniDate = DateTime(2025, 2, 11);
 //int _currentIndex = 0;
 
 class _DelegateCardState extends State<DelegateCard> {
@@ -72,11 +72,11 @@ class _DelegateCardState extends State<DelegateCard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "Pune Sammilani",
+                "Soro Sammilani",
                 style: TextStyle(color: Colors.white),
               ),
               Text(
-                '${timeUntilSammilani.inDays} days to go (23, 24, 25 Feb 2024)',
+                '${timeUntilSammilani.inDays} days to go (11, 12, 13 Feb 2025)',
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.white,
@@ -106,6 +106,9 @@ class _DelegateCardState extends State<DelegateCard> {
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
+                Text(
+                    'Are you coming to Centenary Celebration at Puri on 14th April?',
+                    textAlign: TextAlign.center),
                 // Padding(
                 //   padding: const EdgeInsets.all(8.0),
                 //   child: SizedBox(
