@@ -15,8 +15,8 @@ class KnowMore extends StatelessWidget {
                   .size
                   .height, // Adjust the height as needed
               child: InAppWebView(
-                initialUrlRequest: URLRequest(
-                    url: Uri.parse('https://punesammilani.nsspuri.org/')),
+                initialUrlRequest:
+                    URLRequest(url: Uri.parse('https://nsspuri.org/')),
                 initialOptions: InAppWebViewGroupOptions(
                   crossPlatform: InAppWebViewOptions(
                     useShouldOverrideUrlLoading: true,
