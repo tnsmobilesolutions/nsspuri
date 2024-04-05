@@ -106,10 +106,10 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                 // {
                 return Column(
                   children: [
-                    Text(
+                    const Text(
                         'Are you coming to Centenary Celebration at Puri on 14th April?',
                         textAlign: TextAlign.center),
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
                     ToggleSwitch(
@@ -133,7 +133,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                           EventModel eventData = EventModel(
                             devoteeCode: devoteedata.devoteeCode,
                             devoteeId: devoteedata.devoteeId,
-                            eventAntendeeId: Uuid().v4(),
+                            eventAntendeeId: const Uuid().v4(),
                             inDate: '2023-04-14',
                             outDate: '2023-04-14',
                             eventId: '1',
@@ -146,12 +146,12 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text("Thanks"),
-                                content: Text(
+                                title: const Text("Thanks"),
+                                content: const Text(
                                     "For giving your confirmation to attend centenary event"),
                                 actions: <Widget>[
                                   TextButton(
-                                    child: Text("OK"),
+                                    child: const Text("OK"),
                                     onPressed: () {
                                       Navigator.of(context)
                                           .pop(); // Close the dialog
@@ -163,39 +163,52 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                           );
                           // Navigator.of(context).pop();
                         } else {
-                          EventModel eventData = EventModel(
-                            devoteeCode: devoteedata.devoteeCode,
-                            devoteeId: devoteedata.devoteeId,
-                            eventAntendeeId: Uuid().v4(),
-                            inDate: '2023-04-14',
-                            outDate: '2023-04-14',
-                            eventId: '1',
-                            eventName: 'Puri',
-                            eventAttendance: false,
-                          );
-                          await EventsAPI().addEvent(eventData);
                           print("NO");
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text("We wish you will come to event"),
-                                content: Text("Want to change your mind?"),
+                                title: const Text("We wish you will come to event"),
+                                content: const Text("Want to change your mind?"),
                                 actions: <Widget>[
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       TextButton(
-                                        child: Text("Yes"),
-                                        onPressed: () {
+                                        child: const Text("Yes"),
+                                        onPressed: () async {
+                                          EventModel eventData = EventModel(
+                                            devoteeCode:
+                                                devoteedata.devoteeCode,
+                                            devoteeId: devoteedata.devoteeId,
+                                            eventAntendeeId: const Uuid().v4(),
+                                            inDate: '2023-04-14',
+                                            outDate: '2023-04-14',
+                                            eventId: '1',
+                                            eventName: 'Puri',
+                                            eventAttendance: true,
+                                          );
+                                          await EventsAPI().addEvent(eventData);
                                           Navigator.of(context)
                                               .pop(); // Close the dialog
                                         },
                                       ),
                                       TextButton(
-                                        child: Text("No"),
-                                        onPressed: () {
+                                        child: const Text("No"),
+                                        onPressed: () async {
+                                          EventModel eventData = EventModel(
+                                            devoteeCode:
+                                                devoteedata.devoteeCode,
+                                            devoteeId: devoteedata.devoteeId,
+                                            eventAntendeeId: const Uuid().v4(),
+                                            inDate: '2023-04-14',
+                                            outDate: '2023-04-14',
+                                            eventId: '1',
+                                            eventName: 'Puri',
+                                            eventAttendance: false,
+                                          );
+                                          await EventsAPI().addEvent(eventData);
                                           Navigator.of(context)
                                               .pop(); // Close the dialog
                                         },
