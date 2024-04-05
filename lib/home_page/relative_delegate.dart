@@ -142,6 +142,25 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                           );
                           await EventsAPI().addEvent(eventData);
                           print("yes");
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Thanks"),
+                                content: Text(
+                                    "For giving your confirmation to attend centenary event"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                           // Navigator.of(context).pop();
                         } else {
                           EventModel eventData = EventModel(
@@ -156,6 +175,37 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                           );
                           await EventsAPI().addEvent(eventData);
                           print("NO");
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("We wish you will come to event"),
+                                content: Text("Want to change your mind?"),
+                                actions: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextButton(
+                                        child: Text("Yes"),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: Text("No"),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          );
 
                           // Navigator.of(context).pop();
                         }
@@ -213,7 +263,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           const Expanded(
                                             flex: 4,
                                             child: Text(
-                                              'DELEGATE',
+                                              'Centenary Event',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -323,24 +373,33 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             const SizedBox(
                                               height: 10,
                                             ),
+                                            // const Text(
+                                            //   '74TH UTKALA PRADESHIKA',
+                                            //   style: TextStyle(
+                                            //       fontWeight: FontWeight.bold,
+                                            //       fontSize: 14,
+                                            //       color:
+                                            //           Colors.black // Text color
+                                            //       ),
+                                            // ),
                                             const Text(
-                                              '74TH UTKALA PRADESHIKA',
+                                              'SATABARSHIKA UTSAV',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
+                                                  fontSize: 18,
                                                   color:
                                                       Colors.black // Text color
                                                   ),
                                             ),
-                                            const Text(
-                                              'BHAKTA SAMMILANI, SORO - 2025',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
-                                                  color:
-                                                      Colors.black // Text color
-                                                  ),
-                                            ),
+                                            // const Text(
+                                            //   'BHAKTA SAMMILANI, SORO - 2025',
+                                            //   style: TextStyle(
+                                            //       fontWeight: FontWeight.bold,
+                                            //       fontSize: 14,
+                                            //       color:
+                                            //           Colors.black // Text color
+                                            //       ),
+                                            // ),
                                             const SizedBox(
                                               height: 10,
                                             ),
