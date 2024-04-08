@@ -71,18 +71,22 @@ class _DelegateCardState extends State<DelegateCard> {
           title: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // const Text(
+              //   "Soro Sammilani",
+              //   style: TextStyle(color: Colors.white),
+              // ),
               const Text(
-                "Soro Sammilani",
-                style: TextStyle(color: Colors.white),
+                "SATABARSHIKA UTSAV",
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
-              Text(
-                '${timeUntilSammilani.inDays} days to go (11, 12, 13 Feb 2025)',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              // Text(
+              //   '${timeUntilSammilani.inDays} days to go (11, 12, 13 Feb 2025)',
+              //   style: const TextStyle(
+              //     fontSize: 14,
+              //     color: Colors.white,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
             ],
           ),
           centerTitle: true,

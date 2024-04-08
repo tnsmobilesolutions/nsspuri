@@ -105,10 +105,10 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                 // {
                 return Column(
                   children: [
-                    Text(
+                    const Text(
                         'Are you coming to Centenary Celebration at Puri on 14th April?',
                         textAlign: TextAlign.center),
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
                     ToggleSwitch(
@@ -132,7 +132,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                           EventModel eventData = EventModel(
                             devoteeCode: devoteedata.devoteeCode,
                             devoteeId: devoteedata.devoteeId,
-                            eventAntendeeId: Uuid().v4(),
+                            eventAntendeeId: const Uuid().v4(),
                             inDate: '2023-04-14',
                             outDate: '2023-04-14',
                             eventId: '1',
@@ -141,20 +141,72 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                           );
                           await EventsAPI().addEvent(eventData);
                           print("yes");
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Thanks"),
+                                content: const Text(
+                                    "Thank you for your confirmation"),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text("OK"),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Close the dialog
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                           // Navigator.of(context).pop();
                         } else {
-                          EventModel eventData = EventModel(
-                            devoteeCode: devoteedata.devoteeCode,
-                            devoteeId: devoteedata.devoteeId,
-                            eventAntendeeId: Uuid().v4(),
-                            inDate: '2023-04-14',
-                            outDate: '2023-04-14',
-                            eventId: '1',
-                            eventName: 'Puri',
-                            eventAttendance: false,
-                          );
-                          await EventsAPI().addEvent(eventData);
                           print("NO");
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text(
+                                    "Are you sure not attending the event ?"),
+                                // content: const Text("Want to change your mind?"),
+                                actions: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextButton(
+                                        child: const Text("Cancel"),
+                                        onPressed: () async {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                      ),
+                                      TextButton(
+                                        child: const Text("Yes"),
+                                        onPressed: () async {
+                                          EventModel eventData = EventModel(
+                                            devoteeCode:
+                                                devoteedata.devoteeCode,
+                                            devoteeId: devoteedata.devoteeId,
+                                            eventAntendeeId: const Uuid().v4(),
+                                            inDate: '2023-04-14',
+                                            outDate: '2023-04-14',
+                                            eventId: '1',
+                                            eventName: 'Puri',
+                                            eventAttendance: false,
+                                          );
+                                          await EventsAPI().addEvent(eventData);
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          );
 
                           // Navigator.of(context).pop();
                         }
@@ -212,7 +264,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           const Expanded(
                                             flex: 4,
                                             child: Text(
-                                              'DELEGATE',
+                                              'Centenary Event',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -322,24 +374,33 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             const SizedBox(
                                               height: 10,
                                             ),
+                                            // const Text(
+                                            //   '74TH UTKALA PRADESHIKA',
+                                            //   style: TextStyle(
+                                            //       fontWeight: FontWeight.bold,
+                                            //       fontSize: 14,
+                                            //       color:
+                                            //           Colors.black // Text color
+                                            //       ),
+                                            // ),
                                             const Text(
-                                              '74TH UTKALA PRADESHIKA',
+                                              'SATABARSHIKA UTSAV',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
+                                                  fontSize: 18,
                                                   color:
                                                       Colors.black // Text color
                                                   ),
                                             ),
-                                            const Text(
-                                              'BHAKTA SAMMILANI, SORO - 2025',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14,
-                                                  color:
-                                                      Colors.black // Text color
-                                                  ),
-                                            ),
+                                            // const Text(
+                                            //   'BHAKTA SAMMILANI, SORO - 2025',
+                                            //   style: TextStyle(
+                                            //       fontWeight: FontWeight.bold,
+                                            //       fontSize: 14,
+                                            //       color:
+                                            //           Colors.black // Text color
+                                            //       ),
+                                            // ),
                                             const SizedBox(
                                               height: 10,
                                             ),

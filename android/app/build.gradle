@@ -31,7 +31,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.tnsmobilesolutions.sammilani_delegate"
-    compileSdkVersion 33
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
