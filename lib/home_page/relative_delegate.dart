@@ -148,7 +148,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                               return AlertDialog(
                                 title: const Text("Thanks"),
                                 content: const Text(
-                                    "For giving your confirmation to attend centenary event"),
+                                    "Thank you for your confirmation"),
                                 actions: <Widget>[
                                   TextButton(
                                     child: const Text("OK"),
@@ -168,34 +168,23 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text("We wish you will come to event"),
-                                content: const Text("Want to change your mind?"),
+                                title: const Text(
+                                    "Are you sure not attending the event ?"),
+                                // content: const Text("Want to change your mind?"),
                                 actions: <Widget>[
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       TextButton(
-                                        child: const Text("Yes"),
+                                        child: const Text("Cancel"),
                                         onPressed: () async {
-                                          EventModel eventData = EventModel(
-                                            devoteeCode:
-                                                devoteedata.devoteeCode,
-                                            devoteeId: devoteedata.devoteeId,
-                                            eventAntendeeId: const Uuid().v4(),
-                                            inDate: '2023-04-14',
-                                            outDate: '2023-04-14',
-                                            eventId: '1',
-                                            eventName: 'Puri',
-                                            eventAttendance: true,
-                                          );
-                                          await EventsAPI().addEvent(eventData);
                                           Navigator.of(context)
                                               .pop(); // Close the dialog
                                         },
                                       ),
                                       TextButton(
-                                        child: const Text("No"),
+                                        child: const Text("Yes"),
                                         onPressed: () async {
                                           EventModel eventData = EventModel(
                                             devoteeCode:
