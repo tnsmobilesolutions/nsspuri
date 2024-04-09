@@ -76,7 +76,7 @@ class _DelegateCardState extends State<DelegateCard> {
               //   style: TextStyle(color: Colors.white),
               // ),
               const Text(
-                "SATABARSHIKA UTSAV",
+                "SATABARSHIKI UTSAV",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
               // Text(
