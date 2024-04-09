@@ -278,40 +278,40 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                           //   width: 50,
                                           // ),
                                           Expanded(
-                                            flex: 2,
-                                            child: devoteedata.status ==
-                                                        "dataSubmitted" ||
-                                                    devoteedata.status ==
-                                                        "rejected"
-                                                ? IconButton(
-                                                    onPressed: () async {
-                                                      await Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) {
-                                                            return EditDevoteeDetailsPage(
-                                                              title: "edit",
-                                                              isRelatives: currentDevotee
-                                                                          ?.devoteeId ==
-                                                                      devoteedata
-                                                                          .devoteeId
-                                                                  ? false
-                                                                  : true,
-                                                              devotee:
-                                                                  devoteedata,
-                                                              devoteeIndex:
-                                                                  index,
-                                                            );
-                                                          },
-                                                        ),
-                                                      );
-                                                    },
-                                                    icon: const Icon(Icons.edit,
-                                                        size: 20,
-                                                        color: Colors.white),
-                                                  )
-                                                : const SizedBox(),
-                                          )
+                                              flex: 2,
+                                              child:
+                                                  //  devoteedata.status ==
+                                                  //             "dataSubmitted" ||
+                                                  //         devoteedata.status ==
+                                                  //             "rejected"
+                                                  //     ?
+                                                  IconButton(
+                                                onPressed: () async {
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) {
+                                                        return EditDevoteeDetailsPage(
+                                                          title: "edit",
+                                                          isRelatives: currentDevotee
+                                                                      ?.devoteeId ==
+                                                                  devoteedata
+                                                                      .devoteeId
+                                                              ? false
+                                                              : true,
+                                                          devotee: devoteedata,
+                                                          devoteeIndex: index,
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                                icon: const Icon(Icons.edit,
+                                                    size: 20,
+                                                    color: Colors.white),
+                                              )
+                                              // : const SizedBox(),
+                                              )
                                         ],
                                       ),
                                     ),
@@ -385,7 +385,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                             //       ),
                                             // ),
                                             const Text(
-                                              'SATABARSHIKA UTSAV',
+                                              'SATABARSHIKI UTSAV',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 18,
