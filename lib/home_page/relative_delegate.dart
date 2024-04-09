@@ -82,6 +82,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
   @override
   Widget build(BuildContext context) {
     final devotees = widget.devoteeData["data"];
+
     if (devotees.isEmpty) {
       return const Center(child: Text("No data"));
     }
@@ -104,6 +105,8 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                     DevoteeModel.fromMap(devotees[index]);
                 // if (devoteedata.eventAttendance != null)
                 // {
+                int selectedIndex = devoteedata.eventAttendance == true ? 0 : 1;
+
                 return Column(
                   children: [
                     const Text(
@@ -114,8 +117,7 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                     ),
                     ToggleSwitch(
                       minWidth: 45.0,
-                      initialLabelIndex:
-                          devoteedata.eventAttendance == true ? 0 : 1,
+                      initialLabelIndex: selectedIndex,
                       cornerRadius: 12.0,
                       activeFgColor: Colors.white,
                       inactiveBgColor: Colors.white,
@@ -179,6 +181,9 @@ class _RelativeDelegateState extends State<RelativeDelegate> {
                                       TextButton(
                                         child: const Text("Cancel"),
                                         onPressed: () async {
+                                          setState(() {
+                                            selectedIndex = 0;
+                                          });
                                           Navigator.of(context)
                                               .pop(); // Close the dialog
                                         },
